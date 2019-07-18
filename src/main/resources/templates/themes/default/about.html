@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title th:text="${category.cnname} + '-' + ${system.title}"></title> 
+<meta name="Keywords" th:attr="content=${system.keywords}" />
+<meta name="Description" th:attr="content=${system.describe}" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link th:href="@{${templatesdir}} + '/css/base.css'" rel="stylesheet">
+<link th:href="@{${templatesdir}} + '/css/index.css'" rel="stylesheet">
+<link th:href="@{${templatesdir}} + '/css/m.css'" rel="stylesheet">
+<!--[if lt IE 9]>
+<script th:src="@{${templatesdir}} + '/js/modernizr.js'"></script>
+<![endif]-->
+<script>
+window.onload = function ()
+{
+	var oH2 = document.getElementsByTagName("h2")[0];
+	var oUl = document.getElementsByTagName("ul")[0];
+	oH2.onclick = function ()
+	{
+		var style = oUl.style;
+		style.display = style.display == "block" ? "none" : "block";
+		oH2.className = style.display == "block" ? "open" : ""
+	}
+}
+</script>
+</head>
+<body>
+<header th:include="${templatesdir} + '/header' :: content"></header>
+<article>
+  <h1 class="t_nav"><span>像“草根”一样，紧贴着地面，低调的存在，冬去春来，枯荣无恙。</span><a href="/" class="n1">网站首页</a><a href="/" class="n2">关于我</a></h1>
+  <div class="ab_box">
+    <div class="leftbox">
+      <div class="newsview">
+        <div class="news_infos" th:utext="${category.mdContent}" th:if="${category.defaultEditor} == 'md'"></div>
+        <div class="news_infos" th:utext="${category.htmlContent}" th:if="${category.defaultEditor} == 'ue'"></div>
+      </div>
+    </div>
+    <div class="rightbox" th:include="${templatesdir} + '/right' :: content"></div>
+  </div>
+</article>
+<footer th:include="${templatesdir} + '/footer' :: content"></footer>
+<script th:src="@{${templatesdir}} + '/js/nav.js'"></script>
+</body>
+</html>

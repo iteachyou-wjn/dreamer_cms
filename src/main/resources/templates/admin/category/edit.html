@@ -1,0 +1,333 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dreamer Blog - 后台管理系统</title> 
+    <!-- bootstrap 3.0.2 -->
+    <link href="/resource/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <!-- font Awesome -->
+    <link href="/resource/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <!-- Ionicons -->
+    <link href="/resource/css/ionicons.min.css" rel="stylesheet" type="text/css" />
+    <!-- iCheck for checkboxes and radio inputs -->
+    <link href="/resource/css/iCheck/all.css" rel="stylesheet" type="text/css" />
+    <!-- Theme style -->
+    <link href="/resource/css/style.css" rel="stylesheet" type="text/css" />
+    <link href="/resource/js/editor.md-master/css/editormd.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="/resource/js/webuploader-0.1.5/webuploader.css" />
+</head>
+
+<body>
+	<div class="row">
+	    <div class="col-md-12">
+	    	<h1 class="panel-heading">添加栏目</h1>
+	        <!--breadcrumbs start -->
+	        <ul class="breadcrumb">
+	            <li><a href="#"><i class="fa fa-home"></i> Home</a></li>
+	            <li><a href="#">Dashboard</a></li>
+	            <li class="active">Current page</li>
+	        </ul>
+	        <!--breadcrumbs end -->
+	    </div>
+	</div>
+	<div class="row">
+		<div class="col-lg-12">
+			<section class="panel">
+				<header class="panel-heading tab-bg-dark-navy-blue">
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a data-toggle="tab" href="#baseinfo"><i class="fa fa-cog"></i>基本设置</a>
+                        </li>
+                        <li class="">
+                            <a data-toggle="tab" href="#templates">模版管理</a>
+                        </li>
+                        <li class="">
+                            <a data-toggle="tab" href="#extend">扩展</a>
+                        </li>
+                    </ul>
+                </header>
+                <div class="panel-body">
+			        <form class="col s12" id="form" enctype="multipart/form-data" th:action="@{/admin/category/edit}" th:object="${category}" onsubmit="return validateForm();" method="post">
+	                    <div class="tab-content">
+                        	<div id="baseinfo" class="tab-pane active"><!-- 基础信息 --->
+		                   		<input name="id" id="id" th:value="*{id}" type="hidden">
+								<input name="parentId" type="hidden" th:value="*{parentId}">
+								<input name="level" type="hidden" th:value="*{level}">
+								<input name="imagePath" id="filepath" type="hidden" th:value="*{imagePath}">
+								<input name="defaultEditor" type="hidden" id="defaultEditor" th:value="*{defaultEditor}" />
+								<input name="mdContent" id="mdContent" type="hidden" th:value="*{mdContent}" />
+								<input name="htmlContent" id="htmlContent" type="hidden" th:value="*{htmlContent}" />
+								<div class="form-group form-control-medium">
+									<label for="cnname">栏目名称：</label>
+									<input id="cnname" name="cnname" type="text" class="form-control" th:value="*{cnname}">
+								</div>
+								<div class="form-group form-control-medium">
+									<label for="enname">栏目英文名称：</label>
+									<input id="enname" name="enname" type="text" class="form-control" th:value="*{enname}">
+								</div>
+								<div class="form-group form-control-small">
+									<label for="arcdir">表单模型：</label>
+									<select class="form-control m-b-10" name="formId">
+		                                <option th:each="form : ${forms}" th:text="${form.formName}+' | '+${form.code}" th:value="${form.id}" th:selected="${category.formId eq form.id}"></option>
+		                            </select>
+								</div>
+								<div class="form-group form-control-medium">
+									<label for="imagePath">栏目图片：</label>
+									<div id="uploader" class="wu-example">
+									    <!--用来存放文件信息-->
+									    <div id="file-priview" class="file-priview">
+									    	<img th:src="${system.website} + ${system.uploaddir} + '/' + *{imagePath}" th:if="*{imagePath} != null and *{imagePath} != ''" />
+									    </div>
+									    <div class="btns">
+									        <div id="picker">选择文件...</div>
+									    </div>
+									</div>
+								</div>
+								<div class="form-group form-control-small">
+									<label>上级栏目：</label>
+									<select class="form-control m-b-10" disabled="disabled">
+		                                <option th:value="${category.id}" th:text="${category.parentName}">Option 1</option>
+		                            </select>
+								</div>
+								<div class="form-group form-control-small">
+									<label>上级栏目：</label>
+									<select class="form-control m-b-10" name="linkTarget">
+		                                <option value="1" th:selected="${category.linkTarget eq '1'}">当前页（_self）</option>
+		                                <option value="2" th:selected="${category.linkTarget eq '2'}">新标签页（_blank）</option>
+		                            </select>
+								</div>
+								<div class="form-group form-control-small">
+									<label for="pageSize">分页大小：</label>
+									<input id="pageSize" name="pageSize" type="text" class="form-control" th:value="*{pageSize}">
+								</div>
+								<div class="form-group">
+									<label>显示/隐藏：</label>
+									<div class="checkbox-inline">
+		                                <input type="radio" name="isShow" id="show" value="1" th:value="*{isShow}" th:checked="*{isShow}==1?checked:''">显示
+		                            </div>
+		                            <div class="checkbox-inline">
+		                                <input type="radio" name="isShow" id="hide" value="0" th:value="*{isShow}" th:checked="*{isShow}==0?checked:''">隐藏
+		                            </div>
+								</div>
+								<div class="form-group">
+									<label for="description">栏目描述：</label>
+									<textarea id="description" name="description" class="form-control" th:text="*{description}"></textarea>
+								</div>
+	                        	<div class="form-group">
+		                        	<label>栏目内容：<a href="javascript:void(0);" class="btn btn-xs btn-success" onclick="changeEdit();">切换为富文本编辑器</a></label>
+									<div class="mdeditor">
+										<div id="md-editormd"></div>
+									</div>
+									<div class="ueeditor">
+										<script id="ue-editor" type="text/plain" style="width:100%;height:320px;"></script>
+									</div>
+								</div>
+                        	</div><!-- 基础信息 --->
+	                        <div id="templates" class="tab-pane">
+	                        	<div class="form-group form-control-small">
+									<label for="catModel">栏目模型：</label>
+									<select class="form-control m-b-10" name="catModel">
+		                                <option value="1" th:selected="${category.catModel} == 1">封面</option>
+		                                <option value="2" th:selected="${category.catModel} == 2">列表</option>
+		                                <option value="3" th:selected="${category.catModel} == 3">外部链接</option>
+		                            </select>
+								</div>
+								<div class="form-group form-control-medium">
+									<label for="visitUrl">访问地址：</label>
+									<input id="visitUrl" name="visitUrl" type="text" class="form-control" th:value="*{visitUrl}">
+								</div>
+								<div class="form-group form-control-medium">
+									<label for="coverTemp">封面模版：</label>
+									<input id="coverTemp" name="coverTemp" type="text" class="form-control" th:value="*{coverTemp}">
+								</div>
+								<div class="form-group form-control-medium">
+									<label for="listTemp">列表模版：</label>
+									<input id="listTemp" name="listTemp" type="text" class="form-control" th:value="*{listTemp}">
+								</div>
+								<div class="form-group form-control-medium">
+									<label for="articleTemp">内容页模版：</label>
+									<input id="articleTemp" name="articleTemp" type="text" class="form-control" th:value="*{articleTemp}">
+								</div>
+								<div class="form-group form-control-medium">
+									<label for="linkUrl">链接地址：</label>
+									<input id="linkUrl" name="linkUrl" type="text" class="form-control" th:value="*{linkUrl}">
+								</div>
+	                        </div>
+	                        <div id="extend" class="tab-pane">
+	                        	<div class="form-group form-control-medium">
+									<label for="ext01">扩展字段1：</label>
+									<input id="ext01" name="ext01" type="text" class="form-control" th:value="*{ext01}">
+								</div>
+								<div class="form-group form-control-medium">
+									<label for="ext02">扩展字段2：</label>
+									<input id="ext02" name="ext02" type="text" class="form-control" th:value="*{ext02}">
+								</div>
+								<div class="form-group form-control-medium">
+									<label for="ext03">扩展字段3：</label>
+									<input id="ext03" name="ext03" type="text" class="form-control" th:value="*{ext03}">
+								</div>
+								<div class="form-group form-control-medium">
+									<label for="ext04">扩展字段4：</label>
+									<input id="ext04" name="ext04" type="text" class="form-control" th:value="*{ext04}">
+								</div>
+								<div class="form-group form-control-medium">
+									<label for="ext05">扩展字段5：</label>
+									<input id="ext05" name="ext05" type="text" class="form-control" th:value="*{ext05}">
+								</div>
+	                        </div>
+	                    </div>
+						<div class="form-btn-group-left">
+			            	<button type="submit" class="btn btn-info">保存</button>
+			            </div>
+					</form>
+                </div>
+			</section>
+		</div>
+	</div>
+	<script src="/resource/js/jquery.min.js" type="text/javascript"></script>
+    <!-- Bootstrap -->
+    <script src="/resource/js/bootstrap.min.js" type="text/javascript"></script>
+	<script src="/resource/js/editor.md-master/editormd.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/resource/js/ueditor-1.4.3.3/ueditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/resource/js/ueditor-1.4.3.3/ueditor.all.min.js"></script>
+    <script type="text/javascript" src="/resource/js/webuploader-0.1.5/webuploader.js"></script>
+    <script type="text/javascript" src="/resource/js/jQueryMessage/js/jquery.plugin.message.js"></script>
+    <script type="text/javascript">
+    	var thumbnailWidth = 178,thumbnailHeight = 178;
+    	var defaultEditor = "md";
+	    var mdEditor,ueEditor;
+	    var mdContent,htmlContent;
+        
+	    $(document).ready(function () {
+	    	defaultEditor = $("#defaultEditor").val();
+	    	if(defaultEditor == null || defaultEditor == "" || defaultEditor == "undefined"){
+	    		defaultEditor = "md";
+	    		$("#defaultEditor").val("md");
+	    	}
+	    	
+	    	if(defaultEditor == "md"){
+		    	mdContent = $("#mdContent").val();
+		    	htmlContent = "";
+		    	$("#htmlContent").val("");
+	    	}else if(defaultEditor == "ue"){
+	    		htmlContent = $("#htmlContent").val();
+	    		mdContent = "";
+	    	}
+	    	if(mdEditor == null){
+		    	//初始化MD编辑器
+            	initMdEditor("md-editormd");
+	    	}
+	    	if(ueEditor == null){
+		    	//初始化UE编辑器
+		    	ueEditor = UE.getEditor('ue-editor');
+		    	ueEditor.addListener("ready", function () {
+		            // editor准备好之后才可以使用
+		            ueEditor.setContent(htmlContent);
+		            if(defaultEditor == "md"){
+		            	ueEditor.setHide();
+		            }
+		        });
+	    	}
+	    	
+	    	initUploader("picker","file-priview","filepath");
+	    });
+	    
+	    function initMdEditor(el){
+	    	//初始化MD编辑器
+	    	mdEditor = editormd(el, {
+                width: "100%",
+                height: 350,
+                path : '/resource/js/editor.md-master/lib/',
+                markdown : null,
+                codeFold : true,
+                saveHTMLToTextarea : true,    // 保存 HTML 到 Textarea
+                searchReplace : true,
+                htmlDecode : "style,script,iframe|on*",            // 开启 HTML 标签解析，为了安全性，默认不开启    
+                emoji : true,
+                taskList : true,
+                tocm : true,         // Using [TOCM]
+                tex : true,                   // 开启科学公式TeX语言支持，默认关闭
+                flowChart : true,             // 开启流程图支持，默认关闭
+                sequenceDiagram : true,       // 开启时序/序列图支持，默认关闭,
+                imageUpload : true,
+                imageFormats : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+                imageUploadURL : "/upload/uploadMarkDown",
+                onload : function() {
+                	this.setMarkdown(mdContent);
+                    if(defaultEditor == "ue"){
+                    	this.hide();
+                    }
+                }
+            });
+	    }
+	    
+	    function initUploader(picker,el,inputEl){
+	    	var uploader = WebUploader.create({
+	    		auto: true,
+		        // swf文件路径
+		        swf: '/resource/js/webuploader-0.1.5/Uploader.swf',
+		        // 文件接收服务端。
+		        server: '/upload/uploadFile',
+		        // 选择文件的按钮。可选。
+		        // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+		        pick: '#' + picker,
+		        fileNumLimit: 1,
+		        // 不压缩image, 默认如果是jpeg，文件上传前会压缩一把再上传！
+		        resize: false
+		    });
+	    	uploader.on('fileQueued', function(file) {
+	    		$("#"+el).children().remove();
+	    		$img = $("<img />");
+	    		uploader.makeThumb( file, function(error, src) {
+	    	        if ( error ) {
+	    	            $img.replaceWith('<span>不能预览</span>');
+	    	            return;
+	    	        }
+	    	        $img.attr( 'src', src );
+	    	    }, thumbnailWidth, thumbnailHeight );
+	    	    $("#"+el).append($img);
+	    	});
+		    uploader.on('uploadSuccess', function(file, response) {
+		    	console.log(response);
+		    	$("#"+el).children().remove();
+		        $("#"+el).append($("<img src='"+response.data.url+"'/>"));
+		        $("#"+inputEl).val(response.data.filepath);
+		    });
+		    uploader.on('uploadError', function( file ) {
+		    	$("body").MessageBox({
+					type: 'error',
+					message: '上传失败！',
+					timeout:3000,
+					callbak:null
+				});
+		    });
+	    }
+	    
+	    function changeEdit(){
+	    	if(defaultEditor == "md"){
+	    		mdEditor.hide();
+	    		ueEditor.setShow();
+	    		defaultEditor = "ue"
+	    	}else{
+	    		mdEditor.show();
+	    		ueEditor.setHide();
+	    		defaultEditor = "md"
+	    	}
+	    	//改变编辑器
+	    	$("#defaultEditor").val(defaultEditor);
+	    }
+	    
+	    function validateForm(){
+	    	if(defaultEditor == "md"){
+	    		$("#mdContent").val(mdEditor.getMarkdown());
+	    		$("#htmlContent").val(mdEditor.getHTML());
+	    	}else{
+	    		$("#htmlContent").val(ueEditor.getContent());
+	    	}
+	    	//console.log($("#content").val());
+	    	return true;
+	    }
+    </script>
+</body>
+</html>

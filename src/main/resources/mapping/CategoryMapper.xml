@@ -1,0 +1,495 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.itechyou.blog.dao.CategoryMapper" >
+  <resultMap id="BaseResultMap" type="cn.itechyou.blog.entity.Category" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="cnname" property="cnname" jdbcType="VARCHAR" />
+    <result column="enname" property="enname" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="cat_seq" property="catSeq" jdbcType="VARCHAR" />
+    <result column="form_id" property="formId" jdbcType="VARCHAR" />
+    <result column="image_path" property="imagePath" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="link_target" property="linkTarget" jdbcType="VARCHAR" />
+    <result column="page_size" property="pageSize" jdbcType="INTEGER" />
+    <result column="cat_model" property="catModel" jdbcType="INTEGER" />
+    <result column="visit_url" property="visitUrl" jdbcType="VARCHAR" />
+    <result column="cover_temp" property="coverTemp" jdbcType="VARCHAR" />
+    <result column="list_temp" property="listTemp" jdbcType="VARCHAR" />
+    <result column="article_temp" property="articleTemp" jdbcType="VARCHAR" />
+    <result column="link_url" property="linkUrl" jdbcType="VARCHAR" />
+    <result column="default_editor" property="defaultEditor" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="VARCHAR" />
+    <result column="is_show" property="isShow" jdbcType="INTEGER" />
+    <result column="level" property="level" jdbcType="VARCHAR" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="ext01" property="ext01" jdbcType="VARCHAR" />
+    <result column="ext02" property="ext02" jdbcType="VARCHAR" />
+    <result column="ext03" property="ext03" jdbcType="VARCHAR" />
+    <result column="ext04" property="ext04" jdbcType="VARCHAR" />
+    <result column="ext05" property="ext05" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="cn.itechyou.blog.entity.CategoryWithBLOBs" extends="BaseResultMap" >
+    <result column="md_content" property="mdContent" jdbcType="LONGVARCHAR" />
+    <result column="html_content" property="htmlContent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, cnname, enname, code, cat_seq, form_id, image_path, description, link_target, 
+    page_size, cat_model, visit_url, cover_temp, list_temp, article_temp, link_url, default_editor, 
+    parent_id, is_show, level, sort, create_by, create_time, update_by, update_time, 
+    ext01, ext02, ext03, ext04, ext05
+  </sql>
+  <sql id="Blob_Column_List" >
+    md_content, html_content
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from system_category
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from system_category
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="cn.itechyou.blog.entity.CategoryWithBLOBs" >
+    insert into system_category (id, cnname, enname, 
+      code, cat_seq, form_id, 
+      image_path, description, link_target, 
+      page_size, cat_model, visit_url, 
+      cover_temp, list_temp, article_temp, 
+      link_url, default_editor, parent_id, 
+      is_show, level, sort, 
+      create_by, create_time, update_by, 
+      update_time, ext01, ext02, 
+      ext03, ext04, ext05, 
+      md_content, html_content)
+    values (#{id,jdbcType=VARCHAR}, #{cnname,jdbcType=VARCHAR}, #{enname,jdbcType=VARCHAR}, 
+      #{code,jdbcType=VARCHAR}, #{catSeq,jdbcType=VARCHAR}, #{formId,jdbcType=VARCHAR}, 
+      #{imagePath,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{linkTarget,jdbcType=VARCHAR}, 
+      #{pageSize,jdbcType=INTEGER}, #{catModel,jdbcType=INTEGER}, #{visitUrl,jdbcType=VARCHAR}, 
+      #{coverTemp,jdbcType=VARCHAR}, #{listTemp,jdbcType=VARCHAR}, #{articleTemp,jdbcType=VARCHAR}, 
+      #{linkUrl,jdbcType=VARCHAR}, #{defaultEditor,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR}, 
+      #{isShow,jdbcType=INTEGER}, #{level,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER}, 
+      #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{ext01,jdbcType=VARCHAR}, #{ext02,jdbcType=VARCHAR}, 
+      #{ext03,jdbcType=VARCHAR}, #{ext04,jdbcType=VARCHAR}, #{ext05,jdbcType=VARCHAR}, 
+      #{mdContent,jdbcType=LONGVARCHAR}, #{htmlContent,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.itechyou.blog.entity.CategoryWithBLOBs" >
+    insert into system_category
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="cnname != null" >
+        cnname,
+      </if>
+      <if test="enname != null" >
+        enname,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="catSeq != null" >
+        cat_seq,
+      </if>
+      <if test="formId != null" >
+        form_id,
+      </if>
+      <if test="imagePath != null" >
+        image_path,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="linkTarget != null" >
+        link_target,
+      </if>
+      <if test="pageSize != null" >
+        page_size,
+      </if>
+      <if test="catModel != null" >
+        cat_model,
+      </if>
+      <if test="visitUrl != null" >
+        visit_url,
+      </if>
+      <if test="coverTemp != null" >
+        cover_temp,
+      </if>
+      <if test="listTemp != null" >
+        list_temp,
+      </if>
+      <if test="articleTemp != null" >
+        article_temp,
+      </if>
+      <if test="linkUrl != null" >
+        link_url,
+      </if>
+      <if test="defaultEditor != null" >
+        default_editor,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
+      </if>
+      <if test="isShow != null" >
+        is_show,
+      </if>
+      <if test="level != null" >
+        level,
+      </if>
+      <if test="sort != null" >
+        sort,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="ext01 != null" >
+        ext01,
+      </if>
+      <if test="ext02 != null" >
+        ext02,
+      </if>
+      <if test="ext03 != null" >
+        ext03,
+      </if>
+      <if test="ext04 != null" >
+        ext04,
+      </if>
+      <if test="ext05 != null" >
+        ext05,
+      </if>
+      <if test="mdContent != null" >
+        md_content,
+      </if>
+      <if test="htmlContent != null" >
+        html_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="cnname != null" >
+        #{cnname,jdbcType=VARCHAR},
+      </if>
+      <if test="enname != null" >
+        #{enname,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="catSeq != null" >
+        #{catSeq,jdbcType=VARCHAR},
+      </if>
+      <if test="formId != null" >
+        #{formId,jdbcType=VARCHAR},
+      </if>
+      <if test="imagePath != null" >
+        #{imagePath,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="linkTarget != null" >
+        #{linkTarget,jdbcType=VARCHAR},
+      </if>
+      <if test="pageSize != null" >
+        #{pageSize,jdbcType=INTEGER},
+      </if>
+      <if test="catModel != null" >
+        #{catModel,jdbcType=INTEGER},
+      </if>
+      <if test="visitUrl != null" >
+        #{visitUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="coverTemp != null" >
+        #{coverTemp,jdbcType=VARCHAR},
+      </if>
+      <if test="listTemp != null" >
+        #{listTemp,jdbcType=VARCHAR},
+      </if>
+      <if test="articleTemp != null" >
+        #{articleTemp,jdbcType=VARCHAR},
+      </if>
+      <if test="linkUrl != null" >
+        #{linkUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="defaultEditor != null" >
+        #{defaultEditor,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="isShow != null" >
+        #{isShow,jdbcType=INTEGER},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ext01 != null" >
+        #{ext01,jdbcType=VARCHAR},
+      </if>
+      <if test="ext02 != null" >
+        #{ext02,jdbcType=VARCHAR},
+      </if>
+      <if test="ext03 != null" >
+        #{ext03,jdbcType=VARCHAR},
+      </if>
+      <if test="ext04 != null" >
+        #{ext04,jdbcType=VARCHAR},
+      </if>
+      <if test="ext05 != null" >
+        #{ext05,jdbcType=VARCHAR},
+      </if>
+      <if test="mdContent != null" >
+        #{mdContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="htmlContent != null" >
+        #{htmlContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.itechyou.blog.entity.CategoryWithBLOBs" >
+    update system_category
+    <set >
+      <if test="cnname != null" >
+        cnname = #{cnname,jdbcType=VARCHAR},
+      </if>
+      <if test="enname != null" >
+        enname = #{enname,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="catSeq != null" >
+        cat_seq = #{catSeq,jdbcType=VARCHAR},
+      </if>
+      <if test="formId != null" >
+        form_id = #{formId,jdbcType=VARCHAR},
+      </if>
+      <if test="imagePath != null" >
+        image_path = #{imagePath,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="linkTarget != null" >
+        link_target = #{linkTarget,jdbcType=VARCHAR},
+      </if>
+      <if test="pageSize != null" >
+        page_size = #{pageSize,jdbcType=INTEGER},
+      </if>
+      <if test="catModel != null" >
+        cat_model = #{catModel,jdbcType=INTEGER},
+      </if>
+      <if test="visitUrl != null" >
+        visit_url = #{visitUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="coverTemp != null" >
+        cover_temp = #{coverTemp,jdbcType=VARCHAR},
+      </if>
+      <if test="listTemp != null" >
+        list_temp = #{listTemp,jdbcType=VARCHAR},
+      </if>
+      <if test="articleTemp != null" >
+        article_temp = #{articleTemp,jdbcType=VARCHAR},
+      </if>
+      <if test="linkUrl != null" >
+        link_url = #{linkUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="defaultEditor != null" >
+        default_editor = #{defaultEditor,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="isShow != null" >
+        is_show = #{isShow,jdbcType=INTEGER},
+      </if>
+      <if test="level != null" >
+        level = #{level,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ext01 != null" >
+        ext01 = #{ext01,jdbcType=VARCHAR},
+      </if>
+      <if test="ext02 != null" >
+        ext02 = #{ext02,jdbcType=VARCHAR},
+      </if>
+      <if test="ext03 != null" >
+        ext03 = #{ext03,jdbcType=VARCHAR},
+      </if>
+      <if test="ext04 != null" >
+        ext04 = #{ext04,jdbcType=VARCHAR},
+      </if>
+      <if test="ext05 != null" >
+        ext05 = #{ext05,jdbcType=VARCHAR},
+      </if>
+      <if test="mdContent != null" >
+        md_content = #{mdContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="htmlContent != null" >
+        html_content = #{htmlContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.itechyou.blog.entity.CategoryWithBLOBs" >
+    update system_category
+    set cnname = #{cnname,jdbcType=VARCHAR},
+      enname = #{enname,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      cat_seq = #{catSeq,jdbcType=VARCHAR},
+      form_id = #{formId,jdbcType=VARCHAR},
+      image_path = #{imagePath,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      link_target = #{linkTarget,jdbcType=VARCHAR},
+      page_size = #{pageSize,jdbcType=INTEGER},
+      cat_model = #{catModel,jdbcType=INTEGER},
+      visit_url = #{visitUrl,jdbcType=VARCHAR},
+      cover_temp = #{coverTemp,jdbcType=VARCHAR},
+      list_temp = #{listTemp,jdbcType=VARCHAR},
+      article_temp = #{articleTemp,jdbcType=VARCHAR},
+      link_url = #{linkUrl,jdbcType=VARCHAR},
+      default_editor = #{defaultEditor,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=VARCHAR},
+      is_show = #{isShow,jdbcType=INTEGER},
+      level = #{level,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      ext01 = #{ext01,jdbcType=VARCHAR},
+      ext02 = #{ext02,jdbcType=VARCHAR},
+      ext03 = #{ext03,jdbcType=VARCHAR},
+      ext04 = #{ext04,jdbcType=VARCHAR},
+      ext05 = #{ext05,jdbcType=VARCHAR},
+      md_content = #{mdContent,jdbcType=LONGVARCHAR},
+      html_content = #{htmlContent,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.itechyou.blog.entity.Category" >
+    update system_category
+    set cnname = #{cnname,jdbcType=VARCHAR},
+      enname = #{enname,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      cat_seq = #{catSeq,jdbcType=VARCHAR},
+      form_id = #{formId,jdbcType=VARCHAR},
+      image_path = #{imagePath,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      link_target = #{linkTarget,jdbcType=VARCHAR},
+      page_size = #{pageSize,jdbcType=INTEGER},
+      cat_model = #{catModel,jdbcType=INTEGER},
+      visit_url = #{visitUrl,jdbcType=VARCHAR},
+      cover_temp = #{coverTemp,jdbcType=VARCHAR},
+      list_temp = #{listTemp,jdbcType=VARCHAR},
+      article_temp = #{articleTemp,jdbcType=VARCHAR},
+      link_url = #{linkUrl,jdbcType=VARCHAR},
+      default_editor = #{defaultEditor,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=VARCHAR},
+      is_show = #{isShow,jdbcType=INTEGER},
+      level = #{level,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      ext01 = #{ext01,jdbcType=VARCHAR},
+      ext02 = #{ext02,jdbcType=VARCHAR},
+      ext03 = #{ext03,jdbcType=VARCHAR},
+      ext04 = #{ext04,jdbcType=VARCHAR},
+      ext05 = #{ext05,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="queryListByPage" parameterType="java.util.Map" resultMap="ResultMapWithBLOBs">
+  	select 
+  	<include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+  	from system_category
+  	where parent_id = "-1"
+  	order by sort asc
+  </select>
+  
+  <select id="selectByParentId" resultMap="ResultMapWithBLOBs">
+  	select 
+  	<include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+  	from system_category
+  	where parent_id = #{parentId,jdbcType=VARCHAR}
+  	order by sort asc
+  </select>
+  
+  <select id="queryCategoryByCode" resultMap="ResultMapWithBLOBs">
+  	select 
+  	<include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+  	from system_category
+  	where code = #{code,jdbcType=VARCHAR}
+  	order by sort asc
+  </select>
+  
+  <select id="queryListByParams" parameterType="java.util.Map" resultMap="ResultMapWithBLOBs">
+  	select 
+  	<include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+  	from system_category
+  	where 
+  		parent_id = #{parentId,jdbcType=VARCHAR}
+  	<if test="isShow != null and isShow != ''">
+    	and is_show = #{isShow,jdbcType=VARCHAR}
+    </if>
+    order by sort asc
+  </select>
+</mapper>

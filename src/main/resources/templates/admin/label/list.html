@@ -1,0 +1,102 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Dreamer Blog - 后台管理系统</title>
+<!-- bootstrap 3.0.2 -->
+<link href="/resource/css/bootstrap.min.css" rel="stylesheet"
+	type="text/css" />
+<!-- font Awesome -->
+<link href="/resource/css/font-awesome.min.css" rel="stylesheet"
+	type="text/css" />
+<!-- Ionicons -->
+<link href="/resource/css/ionicons.min.css" rel="stylesheet"
+	type="text/css" />
+<!-- Morris chart -->
+<link href="/resource/css/morris/morris.css" rel="stylesheet"
+	type="text/css" />
+<!-- jvectormap -->
+<link href="/resource/css/jvectormap/jquery-jvectormap-1.2.2.css"
+	rel="stylesheet" type="text/css" />
+<!-- Theme style -->
+<link href="/resource/css/style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+	<div class="row">
+		<div class="col-md-12">
+			<h1 class="panel-heading">标签管理</h1>
+			<!--breadcrumbs start -->
+			<ul class="breadcrumb">
+				<li><a href="#"><i class="fa fa-home"></i> Home</a></li>
+				<li><a href="#">Dashboard</a></li>
+				<li class="active">Current page</li>
+			</ul>
+			<!--breadcrumbs end -->
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-12">
+			<section class="panel">
+				<div class="panel-body">
+					<section class="panel" th:each="value,key : ${labels}">
+						<header class="panel-heading">
+							<h2 th:text="${key.current.key}">A</h2>
+						</header>
+						<div class="panel-body">
+							<h3 th:id="${item.id}" class="label-h3" th:each="item :${key.current.value}">
+								<span th:class="'label '+${obj}" th:if="${iterStat.index} eq ${item.cls}" th:each="obj,iterStat:${classs}">
+									<span th:text="${item.tagName}+| (${item.tagCount})|">Java</span>
+										<a data-toggle="modal" th:class="'label-close'" th:onclick="'javascript: confrimRemove(\''+${item.tagName}+'\')'">
+											<i th:class="'fa fa-times'"></i>
+										</a>
+									</span>
+								</span>
+							</h3>
+						</div>
+					</section>
+				</div>
+			</section>
+		</div>
+	</div>
+	<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="remove-dialog" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                        <h4 class="modal-title">操作提示？</h4>
+                    </div>
+                    <div class="modal-body">
+						<h4 class="modal-title">您确定要删除该记录吗？</h4>
+						<input type="hidden" id="cacheID" />
+                    </div>
+                    <div class="modal-footer">
+                    	<button type="button" class="btn btn-primary btn-addon btn-sm" onclick="remove();">确定</button>
+                    	<button type="button" class="btn btn-default btn-sm" data-dismiss="modal">取消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+	<!-- jQuery 2.0.2 -->
+	<script src="/resource/js/jquery.min.js" type="text/javascript"></script>
+	<!-- jQuery UI 1.10.3 -->
+	<script src="/resource/js/jquery-ui-1.10.3.min.js"
+		type="text/javascript"></script>
+	<!-- Bootstrap -->
+	<script src="/resource/js/bootstrap.min.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		function confrimRemove(id){
+			$("#remove-dialog").modal();
+			$("#cacheID").val(id);
+		}
+		
+		function remove(){
+			var current = $("#cacheID").val();
+			window.location.href="/admin/label/delete?tagName="+current;
+			$("#remove-dialog").modal('hide');
+		}
+	</script>
+</body>
+</html>

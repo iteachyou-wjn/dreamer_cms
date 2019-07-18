@@ -1,0 +1,57 @@
+server:
+  port: 8888
+  servlet:
+    context-path: /
+
+web:
+  upload-path: D:/dreamer-blog/
+
+spring:    
+  mvc:
+    static-path-pattern: /**
+    favicon:
+      enabled: false
+  resources:
+    static-locations: classpath:/META-INF/resources/,classpath:/static,classpath:/resources/,classpath:/templates/,file:${web.upload-path}
+  datasource: 
+      name: test
+      url: jdbc:mysql://127.0.0.1:3306/dreamer-blog?useSSL=false&useUnicode=true&characterEncoding=utf-8
+      username: root
+      password: root
+      driver-class-name: com.mysql.jdbc.Driver
+  redis:
+    host: 10.18.111.31
+    port: 6379
+    timeout: 2000
+    jedis:
+      pool:
+        max-idle: 100
+        min-idle: 50
+        max-wait: 10000
+  thymeleaf:
+    cache: false
+    suffix: .html
+    encoding: UTF-8
+  servlet: 
+    multipart: 
+      enabled: true
+      file-size-threshold: 0
+      max-file-size: 10Mb
+      max-request-size: 10Mb
+## 该配置节点为独立的节点，有很多同学容易将这个配置放在spring的节点下，导致配置无法被识别
+mybatis: 
+  configuration:    call-setters-on-nulls: true
+  mapper-locations: classpath:mapping/*.xml  #注意：一定要对应mapper映射xml文件的所在路径
+  type-aliases-package: cn.itechyou.blog.entity  # 注意：对应实体类的路径
+
+#pagehelper分页插件
+pagehelper: 
+    helperDialect: mysql
+    reasonable: true
+    supportMethodsArguments: true
+    params: count=countSql
+
+logging: 
+  config: classpath:log4j2.yml
+
+

@@ -1,0 +1,106 @@
+﻿<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title th:text="${system.title}"></title> 
+<meta name="Keywords" th:attr="content=${system.keywords}" />
+<meta name="Description" th:attr="content=${system.describe}" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link th:href="@{${templatesdir}} + '/css/base.css'" rel="stylesheet">
+<link th:href="@{${templatesdir}} + '/css/index.css'" rel="stylesheet">
+<link th:href="@{${templatesdir}} + '/css/m.css'" rel="stylesheet">
+<!--[if lt IE 9]>
+<script th:src="@{${templatesdir}} + '/js/modernizr.js'"></script>
+<![endif]-->
+<script>
+window.onload = function ()
+{
+	var oH2 = document.getElementsByTagName("h2")[0];
+	var oUl = document.getElementsByTagName("ul")[0];
+	oH2.onclick = function ()
+	{
+		var style = oUl.style;
+		style.display = style.display == "block" ? "none" : "block";
+		oH2.className = style.display == "block" ? "open" : ""
+	}
+}
+</script>
+</head>
+<body>
+<header th:include="${templatesdir} + '/header' :: content"></header>
+<div class="picshow">
+  <ul>
+    <li th:each="item : ${archives.list('flag=h,p','start=0','length=5')}"><a th:href="${constant.articleurl} + ${item.aid}"><i><img th:src="${system.website} + ${system.uploaddir} + ${item.imagePath}"></i>
+      <div class="font">
+        <h3 th:text="${item.title}"></h3>
+      </div>
+      </a></li>
+  </ul>
+</div>
+<article>
+  <div class="blogs">
+    <li th:each="item : ${archives.list('flag=p','start=0','length=20')}"> <span class="blogpic"><a  th:href="${constant.articleurl} + ${item.aid}"><img th:src="${system.website} + ${system.uploaddir} + ${item.imagePath}" th:if="${!#strings.isEmpty(item.imagePath)}"></a></span>
+      <h3 class="blogtitle"><a th:href="${constant.articleurl} + ${item.aid}" th:text="${item.title}"></a></h3>
+      <div class="bloginfo">
+        <p th:text="${item.description}"></p>
+      </div>
+      <div class="autor">
+      	<span class="lm"><a th:href="${constant.articleurl} + ${item.aid}" th:title="${item.tag}" target="_blank" class="classname" th:text="${item.tag}"></a></span>
+      	<span class="dtime" th:text="${#dates.format(item.createTime, 'yyyy-MM-dd')}">2018-05-04</span>
+      	<span class="viewnum">浏览（<a href="/" th:text="${item.clicks}">0</a>）</span>
+      	<span class="readmore"><a th:href="${constant.articleurl} + ${item.aid}">阅读原文</a></span>
+      </div>
+    </li>
+  </div>
+  <div class="sidebar">
+    <div class="about">
+      <div class="avatar"><img th:src="@{${templatesdir}} + 'images/avatar.jpg'" alt=""></div>
+      <div class="abtext" th:utext="${pages.pageinfo('KH15F1C0').htmlContent}" th:if="${pages.pageinfo('KH15F1C0').defaultEditor} == 'ue'"></div>
+    </div>
+    <div class="search">
+      <form action="/search" method="post" name="searchform" id="searchform">
+        <input name="entity[keywords]" id="keywords" class="input_text" value="请输入关键字" style="color: rgb(153, 153, 153);" onfocus="if(value=='请输入关键字'){this.style.color='#000';value=''}" onblur="if(value==''){this.style.color='#999';value='请输入关键字'}" type="text">
+        <input name="Submit" class="input_submit" value="搜索" type="submit">
+      </form>
+    </div>
+    <div class="cloud">
+      <h2 class="hometitle">标签云</h2>
+      <ul>
+        <a href="#" th:each="item : ${labels.all()}" th:text="${item.tagName}"></a>
+      </ul>
+    </div>
+    <div class="paihang">
+      <h2 class="hometitle">点击排行</h2>
+      <ul>
+        <li th:each="item : ${archives.list('flag=p','start=0','length=5','sortBy=clicks','sortWay=desc')}"><b><a th:href="${constant.articleurl} + ${item.aid}" target="_blank" th:text="${item.title}"></a></b>
+          <p><i><img th:src="${system.website} + ${system.uploaddir} + ${item.imagePath}" th:if="${!#strings.isEmpty(item.imagePath)}"></i><span th:text="${#strings.length(item.description)} > 40 ?  ${#strings.substring(item.description,0,40)} + '...' : ${item.description}"></span></p>
+        </li>
+      </ul>
+    </div>
+    <div class="paihang">
+      <h2 class="hometitle">站长推荐</h2>
+      <ul>
+        <li th:each="item : ${archives.recommend('start=0','length=5')}"><b><a th:href="${constant.articleurl} + ${item.id}" target="_blank" th:text="${item.title}">【活动作品】柠檬绿兔小白个人博客模板30...</a></b>
+          <p><i><img th:src="${system.website} + ${system.uploaddir} + ${item.imagePath}" th:if="${!#strings.isEmpty(item.imagePath)}"></i><span th:text="${#strings.length(item.description)} > 40 ?  ${#strings.substring(item.description,0,40)} + '...' : ${item.description}"></span></p>
+        </li>
+      </ul>
+    </div>
+    <div class="links">
+      <h2 class="hometitle">友情链接</h2>
+      <ul>
+        <li th:each="item : ${archives.list('cid=6N88T7FC','start=0','length=5','formId=80AZ783M')}"><a target="_blank" th:href="${item.link_url}" th:title="${item.title}" th:text="${item.title}"></a></li>
+      </ul>
+    </div>
+    <div class="weixin">
+      <h2 class="hometitle">官方微信</h2>
+      <ul>
+        <img th:src="@{${templatesdir}} + 'images/wx.jpg'">
+      </ul>
+    </div>
+  </div>
+</article>
+<div class="blank"></div>
+<footer th:include="${templatesdir} + '/footer' :: content"></footer>
+<script th:src="@{${templatesdir}} + '/js/nav.js'"></script>
+</body>
+</html>

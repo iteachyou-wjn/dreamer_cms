@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.itechyou.blog.dao.FieldMapper" >
+  <resultMap id="BaseResultMap" type="cn.itechyou.blog.entity.Field" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="form_id" property="formId" jdbcType="VARCHAR" />
+    <result column="field_text" property="fieldText" jdbcType="VARCHAR" />
+    <result column="field_name" property="fieldName" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="data_type" property="dataType" jdbcType="VARCHAR" />
+    <result column="default_value" property="defaultValue" jdbcType="VARCHAR" />
+    <result column="max_length" property="maxLength" jdbcType="INTEGER" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="ext01" property="ext01" jdbcType="VARCHAR" />
+    <result column="ext02" property="ext02" jdbcType="VARCHAR" />
+    <result column="ext03" property="ext03" jdbcType="VARCHAR" />
+    <result column="ext04" property="ext04" jdbcType="VARCHAR" />
+    <result column="ext05" property="ext05" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, form_id, field_text, field_name, type, data_type, default_value, max_length, 
+    create_by, create_time, update_by, update_time, ext01, ext02, ext03, ext04, ext05
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from system_fields
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from system_fields
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="cn.itechyou.blog.entity.Field" >
+    insert into system_fields (id, form_id, field_text, 
+      field_name, type, data_type, 
+      default_value, max_length, create_by, 
+      create_time, update_by, update_time, 
+      ext01, ext02, ext03, 
+      ext04, ext05)
+    values (#{id,jdbcType=VARCHAR}, #{formId,jdbcType=VARCHAR}, #{fieldText,jdbcType=VARCHAR}, 
+      #{fieldName,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, #{dataType,jdbcType=INTEGER}, 
+      #{defaultValue,jdbcType=VARCHAR}, #{maxLength,jdbcType=INTEGER}, #{createBy,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{ext01,jdbcType=VARCHAR}, #{ext02,jdbcType=VARCHAR}, #{ext03,jdbcType=VARCHAR}, 
+      #{ext04,jdbcType=VARCHAR}, #{ext05,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.itechyou.blog.entity.Field" >
+    insert into system_fields
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="formId != null" >
+        form_id,
+      </if>
+      <if test="fieldText != null" >
+        field_text,
+      </if>
+      <if test="fieldName != null" >
+        field_name,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="dataType != null" >
+        data_type,
+      </if>
+      <if test="defaultValue != null" >
+        default_value,
+      </if>
+      <if test="maxLength != null" >
+        max_length,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="ext01 != null" >
+        ext01,
+      </if>
+      <if test="ext02 != null" >
+        ext02,
+      </if>
+      <if test="ext03 != null" >
+        ext03,
+      </if>
+      <if test="ext04 != null" >
+        ext04,
+      </if>
+      <if test="ext05 != null" >
+        ext05,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="formId != null" >
+        #{formId,jdbcType=VARCHAR},
+      </if>
+      <if test="fieldText != null" >
+        #{fieldText,jdbcType=VARCHAR},
+      </if>
+      <if test="fieldName != null" >
+        #{fieldName,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="dataType != null" >
+        #{dataType,jdbcType=INTEGER},
+      </if>
+      <if test="defaultValue != null" >
+        #{defaultValue,jdbcType=VARCHAR},
+      </if>
+      <if test="maxLength != null" >
+        #{maxLength,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ext01 != null" >
+        #{ext01,jdbcType=VARCHAR},
+      </if>
+      <if test="ext02 != null" >
+        #{ext02,jdbcType=VARCHAR},
+      </if>
+      <if test="ext03 != null" >
+        #{ext03,jdbcType=VARCHAR},
+      </if>
+      <if test="ext04 != null" >
+        #{ext04,jdbcType=VARCHAR},
+      </if>
+      <if test="ext05 != null" >
+        #{ext05,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.itechyou.blog.entity.Field" >
+    update system_fields
+    <set >
+      <if test="formId != null" >
+        form_id = #{formId,jdbcType=VARCHAR},
+      </if>
+      <if test="fieldText != null" >
+        field_text = #{fieldText,jdbcType=VARCHAR},
+      </if>
+      <if test="fieldName != null" >
+        field_name = #{fieldName,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="dataType != null" >
+        data_type = #{dataType,jdbcType=INTEGER},
+      </if>
+      <if test="defaultValue != null" >
+        default_value = #{defaultValue,jdbcType=VARCHAR},
+      </if>
+      <if test="maxLength != null" >
+        max_length = #{maxLength,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ext01 != null" >
+        ext01 = #{ext01,jdbcType=VARCHAR},
+      </if>
+      <if test="ext02 != null" >
+        ext02 = #{ext02,jdbcType=VARCHAR},
+      </if>
+      <if test="ext03 != null" >
+        ext03 = #{ext03,jdbcType=VARCHAR},
+      </if>
+      <if test="ext04 != null" >
+        ext04 = #{ext04,jdbcType=VARCHAR},
+      </if>
+      <if test="ext05 != null" >
+        ext05 = #{ext05,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.itechyou.blog.entity.Field" >
+    update system_fields
+    set form_id = #{formId,jdbcType=VARCHAR},
+      field_text = #{fieldText,jdbcType=VARCHAR},
+      field_name = #{fieldName,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      data_type = #{dataType,jdbcType=INTEGER},
+      default_value = #{defaultValue,jdbcType=VARCHAR},
+      max_length = #{maxLength,jdbcType=INTEGER},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      ext01 = #{ext01,jdbcType=VARCHAR},
+      ext02 = #{ext02,jdbcType=VARCHAR},
+      ext03 = #{ext03,jdbcType=VARCHAR},
+      ext04 = #{ext04,jdbcType=VARCHAR},
+      ext05 = #{ext05,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="queryFieldByFormId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from system_fields
+    where form_id = #{formId,jdbcType=VARCHAR}
+  </select>
+</mapper>

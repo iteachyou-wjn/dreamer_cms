@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.itechyou.blog.dao.NavigateMapper" >
+  <resultMap id="BaseResultMap" type="cn.itechyou.blog.entity.Navigate" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="nav_name" property="navName" jdbcType="VARCHAR" />
+    <result column="position" property="position" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="ext01" property="ext01" jdbcType="VARCHAR" />
+    <result column="ext02" property="ext02" jdbcType="VARCHAR" />
+    <result column="ext03" property="ext03" jdbcType="VARCHAR" />
+    <result column="ext04" property="ext04" jdbcType="VARCHAR" />
+    <result column="ext05" property="ext05" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, nav_name, position, code, create_by, create_time, update_by, update_time, ext01, 
+    ext02, ext03, ext04, ext05
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from system_navigate
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from system_navigate
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="cn.itechyou.blog.entity.Navigate" >
+    insert into system_navigate (id, nav_name, position, 
+      code, create_by, create_time, 
+      update_by, update_time, ext01, 
+      ext02, ext03, ext04, 
+      ext05)
+    values (#{id,jdbcType=VARCHAR}, #{navName,jdbcType=VARCHAR}, #{position,jdbcType=VARCHAR}, 
+      #{code,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{ext01,jdbcType=VARCHAR}, 
+      #{ext02,jdbcType=VARCHAR}, #{ext03,jdbcType=VARCHAR}, #{ext04,jdbcType=VARCHAR}, 
+      #{ext05,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.itechyou.blog.entity.Navigate" >
+    insert into system_navigate
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="navName != null" >
+        nav_name,
+      </if>
+      <if test="position != null" >
+        position,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="ext01 != null" >
+        ext01,
+      </if>
+      <if test="ext02 != null" >
+        ext02,
+      </if>
+      <if test="ext03 != null" >
+        ext03,
+      </if>
+      <if test="ext04 != null" >
+        ext04,
+      </if>
+      <if test="ext05 != null" >
+        ext05,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="navName != null" >
+        #{navName,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null" >
+        #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ext01 != null" >
+        #{ext01,jdbcType=VARCHAR},
+      </if>
+      <if test="ext02 != null" >
+        #{ext02,jdbcType=VARCHAR},
+      </if>
+      <if test="ext03 != null" >
+        #{ext03,jdbcType=VARCHAR},
+      </if>
+      <if test="ext04 != null" >
+        #{ext04,jdbcType=VARCHAR},
+      </if>
+      <if test="ext05 != null" >
+        #{ext05,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.itechyou.blog.entity.Navigate" >
+    update system_navigate
+    <set >
+      <if test="navName != null" >
+        nav_name = #{navName,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null" >
+        position = #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ext01 != null" >
+        ext01 = #{ext01,jdbcType=VARCHAR},
+      </if>
+      <if test="ext02 != null" >
+        ext02 = #{ext02,jdbcType=VARCHAR},
+      </if>
+      <if test="ext03 != null" >
+        ext03 = #{ext03,jdbcType=VARCHAR},
+      </if>
+      <if test="ext04 != null" >
+        ext04 = #{ext04,jdbcType=VARCHAR},
+      </if>
+      <if test="ext05 != null" >
+        ext05 = #{ext05,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.itechyou.blog.entity.Navigate" >
+    update system_navigate
+    set nav_name = #{navName,jdbcType=VARCHAR},
+      position = #{position,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      ext01 = #{ext01,jdbcType=VARCHAR},
+      ext02 = #{ext02,jdbcType=VARCHAR},
+      ext03 = #{ext03,jdbcType=VARCHAR},
+      ext04 = #{ext04,jdbcType=VARCHAR},
+      ext05 = #{ext05,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+    <select id="queryListByPage" parameterType="java.util.Map" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List" />
+  	from system_navigate
+  </select>
+  
+  <select id="queryNavigateByCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List" />
+  	from system_navigate 
+  	where code = #{code,jdbcType=VARCHAR}
+  </select>
+</mapper>

@@ -1,0 +1,19 @@
+.message-box{margin:0 auto;position:absolute;z-index: 65535;width:300px;height:40px;top:30px;border-radius:5px;overflow:hidden;}
+.message-box-close{position: absolute;z-index: 101;top:0;right:5px;cursor: pointer;}
+.message-box-close i{font-style:normal;}
+.message-box-close i::before {content: "\2716";}
+.message-success{border:#67C23A solid 1px;}
+.message-success-background{height:40px;background:#f0f9eb;}
+.message-success-label{color:#67C23A;text-indent:10px;}
+
+.message-tips{border:#909399 solid 1px;}
+.message-tips-background{height:40px;background:#f4f4f5;}
+.message-tips-label{color:#909399;text-indent:10px;}
+
+.message-warn{border:#E6A23C solid 1px;}
+.message-warn-background{height:40px;background:#fdf6ec;}
+.message-warn-label{color:#E6A23C;text-indent:10px;}
+
+.message-error{border:#F56C6C solid 1px;}
+.message-error-background{height:40px;background:#fef0f0;}
+.message-error-label{color:#F56C6C;text-indent:10px;}

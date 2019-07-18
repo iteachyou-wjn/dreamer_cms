@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"> 
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dreamer Blog - 后台登录</title> 
+    <!-- Bootstrap Styles-->
+    <link href="/resource/css/login/normalize.css" rel="stylesheet" />
+    <!-- Custom Styles-->
+    <link href="/resource/css/custom-login.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="/resource/js/jQueryMessage/css/message.skin.css" />
+</head>
+
+<body>
+	<canvas></canvas>
+	<div class="login">
+		<h1>Dreamer CMS</h1>
+		<form method="post" id="loginForm">
+			<input type="text" name="username" placeholder="用户名" required="required" />
+			<input type="password" name="password" placeholder="密码" required="required" />
+			<button type="button" class="btn btn-primary btn-block btn-large" onclick="login();">登录</button>
+		</form>
+	</div>
+		<div class="copyright">
+		Copyright © 2018 I Tech You,我教你  京ICP备16039432号
+		</div>
+	<script type="text/javascript" src="/resource/js/jquery.min.js"></script>
+	<script type="text/javascript" src="/resource/js/jQueryMessage/js/jquery.plugin.message.js"></script>
+    <script type="text/javascript" src="/resource/js/vector.js"></script>
+    <script type="text/javascript">
+	    $(function () {
+	    	$('input[name="username"]').focus();
+	    	
+	    	$("#loginForm").keyup(function(event){
+	    		if(event.keyCode ==13){
+	    			login();
+	    		}
+	    	});
+		});
+	    function login(){
+			var username = $('input[name="username"]').val();
+			var password = $('input[name="password"]').val();
+			
+			var data = {
+				username : username,
+				password : password,
+				rememberMe : false
+			};
+
+			$.ajax({
+				url : "/admin/login",
+				contentType : 'application/json',
+				data : JSON.stringify(data),
+				type : "POST",
+				dataType : "JSON",
+				success : function(result) {
+					console.log(result);
+					if(result.success){
+						sessionStorage.setItem("dreamer-blog-user", JSON.stringify(result.data));
+						setTimeout(function() {
+							//登录返回
+							window.location.href = "/admin/toIndex";
+						}, 500);
+					}else{
+						$("body").MessageBox({
+							type: 'error',
+							message:result.info,
+							timeout:3000,
+							callbak:null
+						});
+					}
+				}
+			});
+		}
+	</script>
+</body>
+</html>

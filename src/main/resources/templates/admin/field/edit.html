@@ -1,0 +1,155 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dreamer Blog - 后台管理系统</title> 
+    <!-- bootstrap 3.0.2 -->
+    <link href="/resource/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <!-- font Awesome -->
+    <link href="/resource/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <!-- Ionicons -->
+    <link href="/resource/css/ionicons.min.css" rel="stylesheet" type="text/css" />
+    <!-- iCheck for checkboxes and radio inputs -->
+    <link href="/resource/css/iCheck/all.css" rel="stylesheet" type="text/css" />
+    <!-- Theme style -->
+    <link href="/resource/css/style.css" rel="stylesheet" type="text/css" />
+    <link href="/resource/js/bootstrap-fileinput/css/fileinput.css" media="all" rel="stylesheet" type="text/css"/>
+    
+    <link href="/resource/js/bootstrap-fileinput/css/fileinput.css" media="all" rel="stylesheet" type="text/css"/>
+    <link href="/resource/js/bootstrap-fileinput/css/fileinput.css" media="all" rel="stylesheet" type="text/css"/>
+    <link href="/resource/js/editor.md-master/css/editormd.css" rel="stylesheet" type="text/css"/>
+    <link href="/resource/js/tagit/jquery.tagit.css" rel="stylesheet" type="text/css"/>
+    <link href="/resource/js/tagit/tagit.ui-zendesk.css" rel="stylesheet" type="text/css"/>
+</head>
+
+<body>
+	<div class="row">
+	    <div class="col-md-12">
+	    	<h1 class="panel-heading">修改字段</h1>
+	        <!--breadcrumbs start -->
+	        <ul class="breadcrumb">
+	            <li><a href="#"><i class="fa fa-home"></i> Home</a></li>
+	            <li><a href="#">Dashboard</a></li>
+	            <li class="active">Current page</li>
+	        </ul>
+	        <!--breadcrumbs end -->
+	    </div>
+	</div>
+	<div class="row">
+		<div class="col-lg-12">
+			<section class="panel">
+				<div class="panel-body">
+					<form class="col s12" id="form1" th:object="${field}" th:action="@{/admin/field/edit}" onsubmit="return validateForm();" method="post">
+						<input name="id" id="id" type="hidden" th:value="*{id}" />
+						<input name="formId" id="formId" type="hidden" th:value="*{formId}" />
+						<div class="form-group form-control-medium">
+							<label for="fieldText">表单提示文字：</label>
+							<input id="fieldText" name="fieldText" type="text" class="form-control" th:value="*{fieldText}">
+						</div>
+						<div class="form-group form-control-medium">
+                            <label for="fieldName">字段名称：</label>
+                            <input id="fieldName" name="fieldName" type="text" class="form-control" th:value="*{fieldName}">
+						</div>
+						<div class="form-group">
+							<label for="dataType">数据类型：</label>
+							<div class="clearfix"></div>
+							<div class="row">
+								<div class="checkbox-item">
+		                            <label class="checkbox-inline">
+		                                <input type="radio" name="dataType" id="dataType-1" value="varchar" th:checked="${field.dataType} == 'varchar'">单行文本（VARCHAR）
+		                            </label>
+	                            </div>
+	                            <div class="checkbox-item">
+		                            <label class="checkbox-inline">
+		                                <input type="radio" name="dataType" id="dataType-2" value="char" th:checked="${field.dataType} == 'char'">单行文本（CHAR）
+		                            </label>
+	                            </div>
+	                            <div class="checkbox-item">
+		                            <label class="checkbox-inline">
+		                                <input type="radio" name="dataType" id="dataType-3" value="textarea" th:checked="${field.dataType} == 'textarea'">多行文本（TEXT）
+		                            </label>
+	                            </div>
+	                            <div class="clearfix"></div>
+							</div>
+							<div class="row">
+	                            <div class="checkbox-item">
+		                            <label class="checkbox-inline">
+		                                <input type="radio" name="dataType" id="dataType-4" value="html" th:checked="${field.dataType} == 'html'">HTML文本
+		                            </label>
+	                            </div>
+	                            <div class="checkbox-item">
+		                            <label class="checkbox-inline">
+		                                <input type="radio" name="dataType" id="dataType-5" value="markdown" th:checked="${field.dataType} == 'markdown'">MARKDOWN文本
+		                            </label>
+	                            </div>
+	                            <div class="checkbox-item">
+		                            <label class="checkbox-inline">
+		                                <input type="radio" name="dataType" id="dataType-6" value="file" th:checked="${field.dataType} == 'file'">附件类型
+		                            </label>
+	                            </div>
+	                            <div class="clearfix"></div>
+                            </div>
+                            <div class="row">
+                            	<div class="checkbox-item">
+		                            <label class="checkbox-inline">
+		                                <input type="radio" name="dataType" id="dataType-7" value="datetime" th:checked="${field.dataType} == 'datetime'">时间类型
+		                            </label>
+	                            </div>
+	                            <div class="checkbox-item">
+		                            <label class="checkbox-inline">
+		                                <input type="radio" name="dataType" id="dataType-8" value="radio" th:checked="${field.dataType} == 'radio'">单选（RADIO）
+		                            </label>
+	                            </div>
+	                            <div class="checkbox-item">
+		                            <label class="checkbox-inline">
+		                                <input type="radio" name="dataType" id="dataType-9" value="checkbox" th:checked="${field.dataType} == 'checkbox'">多选（CHECKBOX）
+		                            </label>
+	                            </div>
+	                            <div class="clearfix"></div>
+                            </div>
+                            <div class="row">
+                            	<div class="checkbox-item">
+		                            <label class="checkbox-inline">
+		                                <input type="radio" name="dataType" id="dataType-10" value="select" th:checked="${field.dataType} == 'select'">下拉选（SELECT）
+		                            </label>
+	                            </div>
+	                            <div class="checkbox-item">
+		                            <label class="checkbox-inline">
+		                                <input type="radio" name="dataType" id="dataType-11" value="image">图片类型（IMAGE）
+		                            </label>
+	                            </div>
+	                            <div class="checkbox-item">
+		                            <label class="checkbox-inline">
+		                                <input type="radio" name="dataType" id="dataType-12" value="imageset">图集（IMAGESET）
+		                            </label>
+	                            </div>
+                            </div>
+						</div>
+						<div class="form-group">
+                            <label for="defaultValue">默认值：</label>
+                            <textarea id="defaultValue" name="defaultValue" class="form-control" th:text="*{defaultValue}"></textarea>
+                            <span>如果定义数据类型为select、radio、checkbox时，此处填写被选择的项目(用“,”分开，如“男,女,人妖”)</span>
+						</div>
+						<div class="form-group form-control-small">
+                            <label for="maxLength">字段长度：</label>
+                            <input id="maxLength" name="maxLength" type="text" class="form-control" th:value="*{maxLength}">
+						</div>
+						<div class="form-btn-group-left">
+			            	<button type="submit" class="btn btn-info">保存</button>
+			            </div>
+					</form>
+				</div>
+			</section>
+		</div>
+	</div>
+	<script src="/resource/js/jquery.min.js" type="text/javascript"></script>
+    
+    <script type="text/javascript">
+	    function validateForm(){
+	    	
+	    	return true;
+	    }
+    </script>
+</body>
+</html>

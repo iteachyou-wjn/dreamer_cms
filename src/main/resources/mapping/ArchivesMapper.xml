@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.itechyou.blog.dao.ArchivesMapper">
+  <resultMap id="BaseResultMap" type="cn.itechyou.blog.entity.Archives">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="properties" jdbcType="VARCHAR" property="properties" />
+    <result column="image_path" jdbcType="VARCHAR" property="imagePath" />
+    <result column="tag" jdbcType="VARCHAR" property="tag" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="category_id" jdbcType="VARCHAR" property="categoryId" />
+    <result column="comment" jdbcType="INTEGER" property="comment" />
+    <result column="subscribe" jdbcType="INTEGER" property="subscribe" />
+    <result column="clicks" jdbcType="INTEGER" property="clicks" />
+    <result column="weight" jdbcType="INTEGER" property="weight" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  
+  <resultMap id="BaseResultMapWithRownum" type="cn.itechyou.blog.entity.ArchivesWithRownum">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+  	<result column="rownum" jdbcType="INTEGER" property="rownum" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="properties" jdbcType="VARCHAR" property="properties" />
+    <result column="image_path" jdbcType="VARCHAR" property="imagePath" />
+    <result column="tag" jdbcType="VARCHAR" property="tag" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="category_id" jdbcType="VARCHAR" property="categoryId" />
+    <result column="comment" jdbcType="INTEGER" property="comment" />
+    <result column="subscribe" jdbcType="INTEGER" property="subscribe" />
+    <result column="clicks" jdbcType="INTEGER" property="clicks" />
+    <result column="weight" jdbcType="INTEGER" property="weight" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+    id, title, properties, image_path, tag, description, category_id, comment, subscribe, 
+    clicks, weight, status, create_by, create_time, update_by, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from system_archives
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from system_archives
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="cn.itechyou.blog.entity.Archives">
+    insert into system_archives (id, title, properties, 
+      image_path, tag, description, 
+      category_id, comment, subscribe, 
+      clicks, weight, status, 
+      create_by, create_time, update_by, 
+      update_time)
+    values (#{id,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{properties,jdbcType=VARCHAR}, 
+      #{imagePath,jdbcType=VARCHAR}, #{tag,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{categoryId,jdbcType=VARCHAR}, #{comment,jdbcType=INTEGER}, #{subscribe,jdbcType=INTEGER}, 
+      #{clicks,jdbcType=INTEGER}, #{weight,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.itechyou.blog.entity.Archives">
+    insert into system_archives
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="properties != null">
+        properties,
+      </if>
+      <if test="imagePath != null">
+        image_path,
+      </if>
+      <if test="tag != null">
+        tag,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="categoryId != null">
+        category_id,
+      </if>
+      <if test="comment != null">
+        comment,
+      </if>
+      <if test="subscribe != null">
+        subscribe,
+      </if>
+      <if test="clicks != null">
+        clicks,
+      </if>
+      <if test="weight != null">
+        weight,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="properties != null">
+        #{properties,jdbcType=VARCHAR},
+      </if>
+      <if test="imagePath != null">
+        #{imagePath,jdbcType=VARCHAR},
+      </if>
+      <if test="tag != null">
+        #{tag,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryId != null">
+        #{categoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="comment != null">
+        #{comment,jdbcType=INTEGER},
+      </if>
+      <if test="subscribe != null">
+        #{subscribe,jdbcType=INTEGER},
+      </if>
+      <if test="clicks != null">
+        #{clicks,jdbcType=INTEGER},
+      </if>
+      <if test="weight != null">
+        #{weight,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.itechyou.blog.entity.Archives">
+    update system_archives
+    <set>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="properties != null">
+        properties = #{properties,jdbcType=VARCHAR},
+      </if>
+      <if test="imagePath != null">
+        image_path = #{imagePath,jdbcType=VARCHAR},
+      </if>
+      <if test="tag != null">
+        tag = #{tag,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryId != null">
+        category_id = #{categoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="comment != null">
+        comment = #{comment,jdbcType=INTEGER},
+      </if>
+      <if test="subscribe != null">
+        subscribe = #{subscribe,jdbcType=INTEGER},
+      </if>
+      <if test="clicks != null">
+        clicks = #{clicks,jdbcType=INTEGER},
+      </if>
+      <if test="weight != null">
+        weight = #{weight,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.itechyou.blog.entity.Archives">
+    update system_archives
+    set title = #{title,jdbcType=VARCHAR},
+      properties = #{properties,jdbcType=VARCHAR},
+      image_path = #{imagePath,jdbcType=VARCHAR},
+      tag = #{tag,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      category_id = #{categoryId,jdbcType=VARCHAR},
+      comment = #{comment,jdbcType=INTEGER},
+      subscribe = #{subscribe,jdbcType=INTEGER},
+      clicks = #{clicks,jdbcType=INTEGER},
+      weight = #{weight,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="queryListByPage" parameterType="java.util.HashMap" resultType="java.util.Map">
+  	select 
+  		a.id aid
+  		, a.title
+  		, a.properties
+  		, a.image_path imagePath
+  		, a.tag
+  		, a.description
+  		, a.category_id categoryId
+  		, a.comment
+  		, a.subscribe
+  		, a.clicks
+  		, a.weight
+  		, a.status
+  		, a.create_by createBy
+  		, a.create_time createTime
+  		, a.update_by updateBy
+  		, a.update_time updateTime
+  		, CASE WHEN a.category_id = '-1' THEN '顶级栏目' ELSE c.cnname END AS categoryCnName
+  		, CASE WHEN a.category_id = '-1' THEN 'Top Column' ELSE c.enname END AS categoryEnName
+  		<if test="tableName != null and tableName != ''">
+  		, f.*
+  		</if>
+    from system_archives a
+    left join system_category c on a.category_id = c.id
+    <if test="tableName != null and tableName != ''">
+    LEFT JOIN `${tableName}` f ON a.id = f.aid
+    </if>
+    where 1 = 1
+    <if test="cid != null and cid != ''">
+    	and c.code = #{cid,jdbcType=VARCHAR}
+    </if>
+    <if test="code != null and code != ''">
+    	and c.cat_seq like concat('%',concat(#{code,jdbcType=VARCHAR},'%'))
+    </if>
+    <if test="flag != null and flag != ''">
+    	and a.properties like concat(concat('%',#{flag,jdbcType=VARCHAR}),'%')
+    </if>
+    order by 
+    <if test="(sortBy != null and sortBy != '')">
+    	${sortBy} ${sortWay},
+    </if>
+    a.update_time desc
+  </select>
+  
+  <select id="queryListByTagName" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List" /> 
+  	from system_archives
+  	where tag like concat('%',concat(#{tag,jdbcType=VARCHAR},'%'))
+  </select>
+  
+  <select id="queryListByKeywords" resultType="cn.itechyou.blog.vo.ArchivesVo">
+  	select 
+  		a.id
+  		, a.title
+  		, a.properties
+  		, a.image_path imagePath
+  		, a.tag
+  		, a.description
+  		, a.category_id categoryId
+  		, a.comment
+  		, a.subscribe
+  		, a.clicks
+  		, a.weight
+  		, a.status
+  		, a.create_by createBy
+  		, a.create_time createTime
+  		, a.update_by updateBy
+  		, a.update_time updateTime
+  		, CASE WHEN a.category_id = '-1' THEN '顶级栏目' ELSE c.cnname END AS categoryCnName
+  		, CASE WHEN a.category_id = '-1' THEN 'Top Column' ELSE c.enname END AS categoryEnName
+  	from system_archives a
+  	LEFT JOIN system_category c ON a.category_id = c.id
+  	where title like concat('%',concat(#{keywords,jdbcType=VARCHAR},'%'))
+  </select>
+  
+  <select id="queryArticleById" parameterType="java.util.Map" resultType="java.util.Map">
+  	SELECT 
+		a.id aid,
+		a.title title,
+		a.properties properties,
+		a.image_path imagePath,
+		a.tag tag,
+		a.description description,
+		a.category_id categoryId,
+		a.comment `comment`,
+		a.subscribe subscribe,
+		a.clicks clicks,
+		a.weight weight,
+		a.status `status`,
+		a.create_by createBy,
+		a.create_time createTime,
+		a.update_by updateBy,
+		a.update_time updateTime,
+		f.*,
+		c.cnname categoryCnName,
+		c.enname categoryEnName
+	FROM 
+	`system_archives` a
+	LEFT JOIN system_category c ON a.category_id = c.id
+	LEFT JOIN `${tableName}` f ON a.id = f.aid
+	WHERE a.id = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <insert id="insertAdditional" keyProperty="id" useGeneratedKeys="true" parameterType="hashmap">
+    INSERT INTO `${tableName}` (
+    <foreach collection="cols" index="key" item="value" separator="," >
+        `${key}`
+    </foreach>
+    ) VALUES(
+    <foreach collection="cols" index="key" item="value" separator="," >
+        #{value}
+    </foreach>
+    )
+  </insert>
+  
+  <update id="updateAdditional" parameterType="hashmap">
+  	UPDATE `${tableName}` SET
+  	<foreach collection="cols" index="key" item="value" separator="," >
+        `${key}` = #{value}
+    </foreach>
+    WHERE id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <delete id="deleteAdditional" parameterType="hashmap">
+  	DELETE FROM `${tableName}` WHERE id = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <update id="updateTagByPrimaryKey" parameterType="cn.itechyou.blog.entity.Archives">
+  	update system_archives set tag = #{tag,jdbcType=VARCHAR}
+  	where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="queryArticleRowNum" parameterType="java.util.Map" resultMap="BaseResultMapWithRownum">
+  	SELECT * FROM (
+		SELECT @rownum:=@rownum+1 AS rownum,t.* FROM (SELECT @rownum:=0) r,system_archives t
+		WHERE 1 = 1
+			<if test="categoryId != null and categoryId != ''">
+			and t.category_id = #{categoryId,jdbcType=VARCHAR}
+			</if>
+	) t1
+	where 1 = 1
+	<if test="arcid != null and arcid != ''">
+		and t1.id = #{arcid,jdbcType=VARCHAR}
+	</if>
+	<if test="privNum != null and privNum != ''">
+		and t1.rownum = #{privNum,jdbcType=VARCHAR}
+	</if>
+	<if test="nextNum != null and nextNum != ''">
+		and t1.rownum = #{nextNum,jdbcType=VARCHAR}
+	</if>
+  </select>
+  
+  <select id="queryRecommend" parameterType="java.util.Map" resultType="cn.itechyou.blog.vo.ArchivesVo">
+  	SELECT 
+  		t1.id
+  		, t1.title
+  		, t1.properties
+  		, t1.image_path imagePath
+  		, t1.tag
+  		, t1.description
+  		, t1.category_id categoryId
+  		, t1.comment
+  		, t1.subscribe
+  		, t1.clicks
+  		, t1.weight
+  		, t1.status
+  		, t1.create_by createBy
+  		, t1.create_time createTime
+  		, t1.update_by updateBy
+  		, t1.update_time updateTime
+  		, CASE WHEN t1.category_id = '-1' THEN '顶级栏目' ELSE c.cnname END AS categoryCnName
+  		, CASE WHEN t1.category_id = '-1' THEN 'Top Column' ELSE c.enname END AS categoryEnName
+	FROM system_archives t1
+	LEFT JOIN system_category c ON t1.category_id = c.id
+	INNER JOIN (
+		SELECT keywords	FROM system_search GROUP BY keywords order by count(keywords) desc limit 0,5
+	) t2 ON INSTR(t1.title,t2.keywords) > 0
+	GROUP BY t1.id
+  </select>
+</mapper>
