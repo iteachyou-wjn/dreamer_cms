@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.itechyou.blog.dao.ThemeMapper" >
+  <resultMap id="BaseResultMap" type="cn.itechyou.blog.entity.Theme" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="theme_name" property="themeName" jdbcType="VARCHAR" />
+    <result column="theme_author" property="themeAuthor" jdbcType="VARCHAR" />
+    <result column="theme_img" property="themeImg" jdbcType="VARCHAR" />
+    <result column="theme_path" property="themePath" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, theme_name, theme_author, theme_img, theme_path, status, create_by, create_time, update_by, 
+    update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from system_theme
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from system_theme
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="cn.itechyou.blog.entity.Theme" >
+    insert into system_theme (id, theme_name, theme_author, 
+      theme_img, theme_path, status, create_by, 
+      create_time, update_by, update_time
+      )
+    values (#{id,jdbcType=VARCHAR}, #{themeName,jdbcType=VARCHAR}, #{themeAuthor,jdbcType=VARCHAR}, 
+      #{themeImg,jdbcType=VARCHAR}, #{themePath,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{createBy,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.itechyou.blog.entity.Theme" >
+    insert into system_theme
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="themeName != null" >
+        theme_name,
+      </if>
+      <if test="themeAuthor != null" >
+        theme_author,
+      </if>
+      <if test="themeImg != null" >
+        theme_img,
+      </if>
+      <if test="themePath != null" >
+        theme_path,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="themeName != null" >
+        #{themeName,jdbcType=VARCHAR},
+      </if>
+      <if test="themeAuthor != null" >
+        #{themeAuthor,jdbcType=VARCHAR},
+      </if>
+      <if test="themeImg != null" >
+        #{themeImg,jdbcType=VARCHAR},
+      </if>
+      <if test="themePath != null" >
+        #{themePath,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.itechyou.blog.entity.Theme" >
+    update system_theme
+    <set >
+      <if test="themeName != null" >
+        theme_name = #{themeName,jdbcType=VARCHAR},
+      </if>
+      <if test="themeAuthor != null" >
+        theme_author = #{themeAuthor,jdbcType=VARCHAR},
+      </if>
+      <if test="themeImg != null" >
+        theme_img = #{themeImg,jdbcType=VARCHAR},
+      </if>
+      <if test="themePath != null" >
+        theme_path = #{themePath,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.itechyou.blog.entity.Theme" >
+    update system_theme
+    set theme_name = #{themeName,jdbcType=VARCHAR},
+      theme_author = #{themeAuthor,jdbcType=VARCHAR},
+      theme_img = #{themeImg,jdbcType=VARCHAR},
+      theme_path = #{themePath,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="queryListByPage" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+  	select 
+	  	<include refid="Base_Column_List" />
+    from system_theme
+    where 1 = 1
+    order by update_time desc
+  </select>
+  
+  <update id="batchUpdateStatus" parameterType="java.util.Map">
+  	update system_theme
+    set status = #{status,jdbcType=INTEGER}
+    where 
+    	id != #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="queryByPathName" parameterType="java.lang.String" resultMap="BaseResultMap">
+  	select 
+  		<include refid="Base_Column_List" />
+  	from system_theme
+  	where theme_path = #{themePath,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="getCurrentTheme" resultMap="BaseResultMap">
+  	select 
+  		<include refid="Base_Column_List" />
+  	from system_theme
+  	where status = 1
+  	limit 0,1
+  </select>
+</mapper>

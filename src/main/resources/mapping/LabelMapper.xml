@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.itechyou.blog.dao.LabelMapper" >
+  <resultMap id="BaseResultMap" type="cn.itechyou.blog.entity.Label" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="tag_name" property="tagName" jdbcType="VARCHAR" />
+    <result column="tag_count" property="tagCount" jdbcType="VARCHAR" />
+    <result column="pinyin" property="pinyin" jdbcType="VARCHAR" />
+    <result column="first_char" property="firstChar" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, tag_name, tag_count, pinyin, first_char, create_by, create_time, update_by, update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from system_labels
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from system_labels
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="cn.itechyou.blog.entity.Label" >
+    insert into system_labels (id, tag_name, tag_count, 
+      pinyin, first_char, 
+      create_by, create_time, update_by, 
+      update_time)
+    values (#{id,jdbcType=VARCHAR}, #{tagName,jdbcType=VARCHAR}, #{tagCount,jdbcType=VARCHAR}, 
+      #{pinyin,jdbcType=VARCHAR}, #{firstChar,jdbcType=VARCHAR}, 
+      #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.itechyou.blog.entity.Label" >
+    insert into system_labels
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="tagName != null" >
+        tag_name,
+      </if>
+      <if test="tagCount != null" >
+        tag_count,
+      </if>
+      <if test="pinyin != null" >
+        pinyin,
+      </if>
+      <if test="firstChar != null" >
+        first_char,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="tagName != null" >
+        #{tagName,jdbcType=VARCHAR},
+      </if>
+      <if test="tagCount != null" >
+        #{tagCount,jdbcType=VARCHAR},
+      </if>
+      <if test="pinyin != null" >
+        #{pinyin,jdbcType=VARCHAR},
+      </if>
+      <if test="firstChar != null" >
+        #{firstChar,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.itechyou.blog.entity.Label" >
+    update system_labels
+    <set >
+      <if test="tagName != null" >
+        tag_name = #{tagName,jdbcType=VARCHAR},
+      </if>
+      <if test="tagCount != null" >
+        tag_count = #{tagCount,jdbcType=VARCHAR},
+      </if>
+      <if test="pinyin != null" >
+        pinyin = #{pinyin,jdbcType=VARCHAR},
+      </if>
+      <if test="firstChar != null" >
+        first_char = #{firstChar,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.itechyou.blog.entity.Label" >
+    update system_labels
+    set tag_name = #{tagName,jdbcType=VARCHAR},
+      tag_count = #{tagCount,jdbcType=VARCHAR},
+      pinyin = #{pinyin,jdbcType=VARCHAR},
+      first_char = #{firstChar,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="selectByLabelName" parameterType="java.lang.String" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List" />
+    from system_labels
+    where tag_name = #{tagName,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="queryGroup" resultType="java.lang.String">
+  	SELECT DISTINCT first_char FROM `system_labels` order by first_char
+  </select>
+  
+  <select id="queryLabelByGroup" resultType="java.util.HashMap">
+  	select id,tag_name as 'tagName',tag_count as 'tagCount',CONCAT(FLOOR((RAND() * 7)),'') AS cls from system_labels
+  	where first_char=#{firstChar,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByTagName" parameterType="java.lang.String" >
+    delete from system_labels
+    where tag_name = #{tagName,jdbcType=VARCHAR}
+  </delete>
+  
+  <select id="queryAll" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List" />
+    from system_labels
+    order by tag_count desc
+  </select>
+</mapper>

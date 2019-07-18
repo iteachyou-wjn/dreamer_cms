@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+</head>
+<body>
+<header th:fragment="content">
+  <div class="tophead">
+    <div class="logo"><img th:src="${templatesdir} + '/images/logo.png'" height="40" /><a href="/">Dreamer CMS</a></div>
+    <div id="mnav">
+      <h2><span class="navicon"></span></h2>
+      <ul>
+      	<li><a href="/">首页</a></li>
+        <li th:each="item : ${categorys.navigate('top')}"><a th:href="${item.visitUrl} + '?typeid=' + ${item.id}" th:text="${item.cnname}">关于我</a></li>
+      </ul>
+    </div>
+    <nav class="topnav" id="topnav">
+      <ul>
+      	<li><a href="/">首页</a></li>
+        <li th:each="item : ${categorys.navigate('top')}"><a th:href="${item.visitUrl} + '?typeid=' + ${item.id}" th:text="${item.cnname}">关于我</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+</body>
+</html>

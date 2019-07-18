@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<properties name="default">
+    <name>默认主题</name>
+    <author>王俊南</author>
+    <img>http://a.hiphotos.baidu.com/image/h%3D300/sign=75708ef69425bc31345d07986edf8de7/8694a4c27d1ed21b567175dda06eddc451da3f49.jpg</img>
+    <cssDir></cssDir>
+    <imagesDir></imagesDir>
+    <jsDir></jsDir>
+    <files>
+        <file type="index"></file>
+        <file></file>
+    </files>
+</properties>

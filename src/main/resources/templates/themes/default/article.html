@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title th:text="${article.title} + '-' + ${category.cnname} + '-' + ${system.title}"></title> 
+<meta name="Keywords" th:attr="content=${system.keywords}" />
+<meta name="Description" th:attr="content=${system.describe}" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link th:href="@{${templatesdir}} + '/css/base.css'" rel="stylesheet">
+<link th:href="@{${templatesdir}} + '/css/index.css'" rel="stylesheet">
+<link th:href="@{${templatesdir}} + '/css/m.css'" rel="stylesheet">
+<!--[if lt IE 9]>
+<script th:src="@{${templatesdir}} + '/js/modernizr.js'"></script>
+<![endif]-->
+<script>
+window.onload = function ()
+{
+	var oH2 = document.getElementsByTagName("h2")[0];
+	var oUl = document.getElementsByTagName("ul")[0];
+	oH2.onclick = function ()
+	{
+		var style = oUl.style;
+		style.display = style.display == "block" ? "none" : "block";
+		oH2.className = style.display == "block" ? "open" : ""
+	}
+}
+</script>
+</head>
+<body>
+<header th:include="${templatesdir} + '/header' :: content"></header>
+<article>
+  <h1 class="t_nav"><span>您现在的位置是：首页 > 慢生活 > 程序人生</span><a href="/" class="n1">网站首页</a><a href="/" class="n2">慢生活</a></h1>
+  <div class="infos">
+    <div class="newsview">
+      <h3 class="news_title" th:text="${article.title}"></h3>
+      <div class="news_author">
+      	<span class="au02" th:text="${#dates.format(article.createTime, 'yyyy-MM-dd')}">2018-04-27</span>
+      	<span class="au03">共<b th:text="${article.clicks}">1833</b>人围观</span>
+      </div>
+      <div class="tags">
+      	<a href="#" target="_blank" th:each="tag : ${#strings.arraySplit(article.tag,',')}" th:text="${tag}"></a>
+      </div>
+      <div class="news_about" th:utext="'<strong>简介</strong>' + ${article.description}"></div>
+      <div class="news_infos" th:utext="${article.content}"></div>
+    </div>
+    <div class="share"></div>
+    <div class="nextinfo">
+      <p>上一篇：<a th:href="${prevnext['previous'].id} ? ${constant.articleurl} + ${prevnext['previous'].id} : 'javascript:void(0)'" th:text="${prevnext['previous'].title}">上一篇</a></p>
+      <p>下一篇：<a th:href="${prevnext['next'].id} ? ${constant.articleurl} + ${prevnext['next'].id} : 'javascript:void(0)'" th:text="${prevnext['next'].title}">下一篇</a></p>
+    </div>
+    <div class="otherlink">
+      <h2>相关文章</h2>
+      <ul>
+        <li><a href="/download/div/2018-04-22/815.html" title="html5个人博客模板《黑色格调》">html5个人博客模板《黑色格调》</a></li>
+        <li><a href="/download/div/2018-04-18/814.html" title="html5个人博客模板主题《清雅》">html5个人博客模板主题《清雅》</a></li>
+        <li><a href="/download/div/2018-03-18/807.html" title="html5个人博客模板主题《绅士》">html5个人博客模板主题《绅士》</a></li>
+        <li><a href="/download/div/2018-02-22/798.html" title="html5时尚个人博客模板-技术门户型">html5时尚个人博客模板-技术门户型</a></li>
+        <li><a href="/download/div/2017-09-08/789.html" title="html5个人博客模板主题《心蓝时间轴》">html5个人博客模板主题《心蓝时间轴》</a></li>
+        <li><a href="/download/div/2017-07-16/785.html" title="古典个人博客模板《江南墨卷》">古典个人博客模板《江南墨卷》</a></li>
+        <li><a href="/download/div/2017-07-13/783.html" title="古典风格-个人博客模板">古典风格-个人博客模板</a></li>
+        <li><a href="/download/div/2015-06-28/748.html" title="个人博客《草根寻梦》―手机版模板">个人博客《草根寻梦》―手机版模板</a></li>
+        <li><a href="/download/div/2015-04-10/746.html" title="【活动作品】柠檬绿兔小白个人博客模板">【活动作品】柠檬绿兔小白个人博客模板</a></li>
+        <li><a href="/jstt/bj/2015-01-09/740.html" title="【匆匆那些年】总结个人博客经历的这四年…">【匆匆那些年】总结个人博客经历的这四年…</a></li>
+      </ul>
+    </div>
+    <div class="news_pl" th:if="${article.comment} == '1'">
+      <h2>文章评论</h2>
+      <ul>
+        <div class="gbko">
+        	<!--PC版-->
+			<div id="SOHUCS" th:attr="sid=${article.aid}"></div>
+			<script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js" ></script>
+			<script type="text/javascript" th:inline="javascript">
+			var appid = [[${system.appid}]];
+			var appkey = [[${system.appkey}]];
+			window.changyan.api.config({
+			appid: appid,
+			conf: appkey
+			});
+			</script>
+        </div>
+      </ul>
+    </div>
+  </div>
+  <div class="sidebar" th:include="${templatesdir} + '/right2' :: content"></div>
+</article>
+<footer th:include="${templatesdir} + '/footer' :: content"></footer>
+<script th:src="@{${templatesdir}} + '/js/nav.js'"></script>
+<script type="text/javascript">
+jQuery.noConflict();
+jQuery(function() { 
+    var elm = jQuery('#left_flow2'); 
+    var startPos = jQuery(elm).offset().top; 
+    jQuery.event.add(window, "scroll", function() { 
+        var p = jQuery(window).scrollTop(); 
+        jQuery(elm).css('position',((p) > startPos) ? 'fixed' : ''); 
+
+        jQuery(elm).css('top',((p) > startPos) ? '0' : '');
+    }); 
+}); 
+</script>
+</body>
+</html>
