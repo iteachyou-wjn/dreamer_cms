@@ -55,6 +55,13 @@ CMS包括两个部分（代码部分、资源部分）代码不多说。资源�
 9. 模版标签开发教程请参考：http://doc.itechyou.cn 
 
 
+# 快速入门
+* 克隆项目到本地
+* 导入Eclipse或Sts等开发工具
+* 将项目主页附件标签页里的dreamer-blog.zip附件下载并解压到D盘根目录
+* 运行项目DreamerBlogApplication.java
+* 项目首页：http://localhost:8888；项目管理后台：http://localhost:8888/admin
+
 # 系统美图
 ![后台登录](http://img.075400.cn/20190821102434.png)
 
