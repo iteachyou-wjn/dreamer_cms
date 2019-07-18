@@ -40,6 +40,13 @@ Dreamer CMS 梦想家内容发布系统是国内首款java开发的内容发布�
 * DB：Mysql 5.7
 * JDK：jdk8
 
+# 快速入门
+* 克隆项目到本地
+* 导入Eclipse或Sts等开发工具
+* 将项目主页附件标签页里的dreamer-blog.zip附件下载并解压到D盘根目录
+* 运行项目DreamerBlogApplication.java
+* 项目首页：http://localhost:8888；项目管理后台：http://localhost:8888/admin
+
 # 系统美图
 ![后台登录](http://itechyou.cn/uploads/allimg/180930/1-1P9301135560-L.png)
 
