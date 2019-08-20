@@ -28,7 +28,7 @@ public class LabelController extends BaseController{
 		Map<String,List<Map<String,String>>> map = labelService.queryLabel();
 		model.addAttribute("labels", map);
 		model.addAttribute("classs", classs);
-		return "/admin/label/list";
+		return "admin/label/list";
 	}
 	
 	@RequestMapping("/delete")

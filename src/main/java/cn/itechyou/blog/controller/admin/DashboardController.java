@@ -5,13 +5,13 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 @RestController
-@RequestMapping("dashboard")
+@RequestMapping("/admin/dashboard")
 public class DashboardController {
 	
 	@RequestMapping("index")
 	public ModelAndView jump() {
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("/dashboard/index");
+		mv.setViewName("dashboard/index");
 		return mv;
 	}
 }

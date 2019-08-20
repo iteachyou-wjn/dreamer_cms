@@ -1,6 +1,7 @@
 package cn.itechyou.blog.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.github.pagehelper.PageInfo;
 
@@ -25,5 +26,11 @@ public interface CategoryService {
 	CategoryWithBLOBs queryCategoryByCode(String code);
 
 	void updateSort(List<Category> list);
+
+	List<CategoryWithBLOBs> getTreeList(String parentId);
+	
+	List<CategoryWithBLOBs> getTreeList(String parentId,String isShow);
+
+	List<CategoryWithBLOBs> queryListByCode(Map<String, Object> entity);
 
 }

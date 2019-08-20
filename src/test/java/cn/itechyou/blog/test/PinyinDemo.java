@@ -18,7 +18,7 @@ public class PinyinDemo {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		System.out.println(ToFirstChar("🇨🇳共产主义接班人汉字转换为拼音").toUpperCase()); // 转为首字母大写
+		System.out.println(ToFirstChar("共产主义接班人汉字转换为拼音").toUpperCase()); // 转为首字母大写
 		System.out.println(ToPinyin("汉字转换为拼音长城"));
 		System.out.println(ToFirstChar("JAVA").toUpperCase()); // 转为首字母大写
 		System.out.println(ToPinyin("java"));

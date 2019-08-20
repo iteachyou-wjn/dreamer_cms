@@ -32,13 +32,13 @@ public class PageController extends BaseController {
 		Map<String,Object> map = new HashMap<>();
 		PageInfo<Pages> pages = pagesService.queryListByPage(params);
 		model.addAttribute("pages", pages);
-		return "/admin/pages/list";
+		return "admin/pages/list";
 	}
 	
 	
 	@RequestMapping("/toAdd")
 	public String toAdd(Model model) {
-		return "/admin/pages/add";
+		return "admin/pages/add";
 	}
 	
 	@RequestMapping("/add")
@@ -69,7 +69,7 @@ public class PageController extends BaseController {
 	public String toEdit(Model model, String id) {
 		PagesWithBLOBs page = pagesService.queryPageById(id);
 		model.addAttribute("page", page);
-		return "/admin/pages/edit";
+		return "admin/pages/edit";
 	}
 	
 	@RequestMapping("/edit")

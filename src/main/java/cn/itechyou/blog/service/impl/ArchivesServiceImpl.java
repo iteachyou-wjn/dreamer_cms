@@ -53,7 +53,7 @@ public class ArchivesServiceImpl implements ArchivesService {
 	 */
 	@Transactional(propagation=Propagation.NOT_SUPPORTED)
 	@Override
-	public PageInfo<ArchivesVo> queryListByPage(SearchEntity params) {
+	public PageInfo<Map<String, Object>> queryListByPage(SearchEntity params) {
 		if(params.getPageNum() == null || params.getPageNum() == 0) {
 			params.setPageNum(1);
 		}
@@ -61,8 +61,8 @@ public class ArchivesServiceImpl implements ArchivesService {
 			params.setPageSize(10);
 		}
 		PageHelper.startPage(params.getPageNum(), params.getPageSize());
-		List<ArchivesVo> list = archivesMapper.queryListByPage(params.getEntity());
-		PageInfo<ArchivesVo> page = new PageInfo<ArchivesVo>(list);
+		List<Map<String, Object>> list = archivesMapper.queryListByPage(params.getEntity());
+		PageInfo<Map<String, Object>> page = new PageInfo<Map<String, Object>>(list);
 		return page;
 	}
 

@@ -23,7 +23,7 @@ import cn.itechyou.blog.entity.Form;
 import cn.itechyou.blog.security.token.TokenManager;
 import cn.itechyou.blog.service.CategoryService;
 import cn.itechyou.blog.service.FormService;
-import cn.itechyou.blog.utils.StringUtils;
+import cn.itechyou.blog.utils.StringUtil;
 import cn.itechyou.blog.utils.UUIDUtils;
 
 @Controller
@@ -40,7 +40,7 @@ public class CategoryController extends BaseController{
 	public String list(Model model,SearchEntity params) {
 		PageInfo<CategoryWithBLOBs> page = categoryService.queryListByPage(params);
 		model.addAttribute("categorys", page);
-		return "/admin/category/list";
+		return "admin/category/list";
 	}
 	
 	@RequestMapping("/toAdd")
@@ -60,7 +60,7 @@ public class CategoryController extends BaseController{
 		
 		model.addAttribute("category", category);
 		model.addAttribute("forms", forms);
-		return "/admin/category/add";
+		return "admin/category/add";
 	}
 	
 	@RequestMapping("/toEdit")
@@ -76,7 +76,7 @@ public class CategoryController extends BaseController{
 		List<Form> forms = formService.queryAll();
 		model.addAttribute("category", category);
 		model.addAttribute("forms", forms);
-		return "/admin/category/edit";
+		return "admin/category/edit";
 	}
 	
 	@RequestMapping("/add")
@@ -84,7 +84,7 @@ public class CategoryController extends BaseController{
 		category.setId(UUIDUtils.getPrimaryKey());
 		category.setCode(UUIDUtils.getCharAndNumr(8));
 		category.setLevel(category.getParentId().equals("-1")?"1":category.getLevel());
-		category.setParentId(StringUtils.isBlank(category.getParentId())? "-1" : category.getParentId());
+		category.setParentId(StringUtil.isBlank(category.getParentId())? "-1" : category.getParentId());
 		category.setCreateBy(TokenManager.getToken().getId());
 		category.setCreateTime(new Date());
 		if(!"-1".equals(category.getParentId())) {
@@ -95,13 +95,13 @@ public class CategoryController extends BaseController{
 		}
 		
 		//处理模版
-		if(StringUtils.isNotBlank(category.getCoverTemp()) && !category.getCoverTemp().startsWith("/")) {
+		if(StringUtil.isNotBlank(category.getCoverTemp()) && !category.getCoverTemp().startsWith("/")) {
 			category.setCoverTemp("/" + category.getCoverTemp());
 		}
-		if(StringUtils.isNotBlank(category.getListTemp()) && !category.getListTemp().startsWith("/")) {
+		if(StringUtil.isNotBlank(category.getListTemp()) && !category.getListTemp().startsWith("/")) {
 			category.setListTemp("/" + category.getListTemp());
 		}
-		if(StringUtils.isNotBlank(category.getArticleTemp()) && !category.getArticleTemp().startsWith("/")) {
+		if(StringUtil.isNotBlank(category.getArticleTemp()) && !category.getArticleTemp().startsWith("/")) {
 			category.setArticleTemp("/" + category.getArticleTemp());
 		}
 		categoryService.save(category);
@@ -113,13 +113,13 @@ public class CategoryController extends BaseController{
 		category.setUpdateBy(TokenManager.getToken().getId());
 		category.setUpdateTime(new Date());
 		//处理模版
-		if(StringUtils.isNotBlank(category.getCoverTemp()) && !category.getCoverTemp().startsWith("/")) {
+		if(StringUtil.isNotBlank(category.getCoverTemp()) && !category.getCoverTemp().startsWith("/")) {
 			category.setCoverTemp("/" + category.getCoverTemp());
 		}
-		if(StringUtils.isNotBlank(category.getListTemp()) && !category.getListTemp().startsWith("/")) {
+		if(StringUtil.isNotBlank(category.getListTemp()) && !category.getListTemp().startsWith("/")) {
 			category.setListTemp("/" + category.getListTemp());
 		}
-		if(StringUtils.isNotBlank(category.getArticleTemp()) && !category.getArticleTemp().startsWith("/")) {
+		if(StringUtil.isNotBlank(category.getArticleTemp()) && !category.getArticleTemp().startsWith("/")) {
 			category.setArticleTemp("/" + category.getArticleTemp());
 		}
 		int num = categoryService.update(category);

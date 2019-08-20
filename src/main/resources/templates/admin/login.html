@@ -28,6 +28,9 @@
 	<script type="text/javascript" src="/resource/js/jQueryMessage/js/jquery.plugin.message.js"></script>
     <script type="text/javascript" src="/resource/js/vector.js"></script>
     <script type="text/javascript">
+		if (window.frames.length != parent.frames.length) {
+			window.parent.location.href = "/admin/u/logout";
+		}
 	    $(function () {
 	    	$('input[name="username"]').focus();
 	    	
@@ -48,7 +51,7 @@
 			};
 
 			$.ajax({
-				url : "/admin/login",
+				url : "/admin/u/login",
 				contentType : 'application/json',
 				data : JSON.stringify(data),
 				type : "POST",
@@ -59,7 +62,7 @@
 						sessionStorage.setItem("dreamer-blog-user", JSON.stringify(result.data));
 						setTimeout(function() {
 							//登录返回
-							window.location.href = "/admin/toIndex";
+							window.location.href = "/admin/u/toIndex";
 						}, 500);
 					}else{
 						$("body").MessageBox({

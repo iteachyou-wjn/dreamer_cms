@@ -53,4 +53,9 @@ public class VariableServiceImpl implements VariableService{
 		variableMapper.deleteByPrimaryKey(id);
 	}
 
+	@Override
+	public Variable queryVariableByName(String name) {
+		return variableMapper.queryVariableByName(name);
+	}
+
 }

@@ -5,8 +5,6 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.github.pagehelper.PageInfo;
-
 import cn.itechyou.blog.entity.Archives;
 import cn.itechyou.blog.entity.ArchivesWithRownum;
 import cn.itechyou.blog.vo.ArchivesVo;
@@ -24,7 +22,7 @@ public interface ArchivesMapper {
 
     int updateByPrimaryKey(Archives record);
     
-    List<ArchivesVo> queryListByPage(Map<String, Object> entity);
+    List<Map<String,Object>> queryListByPage(Map<String, Object> entity);
     
     List<Archives> queryListByTagName(@Param("tag")String tagName);
 

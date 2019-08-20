@@ -15,7 +15,7 @@ public interface ArchivesService {
 
 	int save(Archives archives,String tableName, Map<String,Object> additional) throws TransactionException;
 	
-	PageInfo<ArchivesVo> queryListByPage(SearchEntity params);
+	PageInfo<Map<String, Object>> queryListByPage(SearchEntity params);
 
 	List<Archives> queryListByTagName(String tagName);
 
