@@ -14,6 +14,6 @@ public class AttachmentController extends BaseController {
 	@RequestMapping("/list")
 	public String toIndex(Model model ,SearchEntity params) {
 		
-		return "/admin/attachment/list";
+		return "admin/attachment/list";
 	}
 }

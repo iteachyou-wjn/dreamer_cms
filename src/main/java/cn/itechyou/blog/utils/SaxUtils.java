@@ -69,6 +69,8 @@ class ParseXmlHandler extends DefaultHandler {
 			theme.setThemeAuthor(value);
 		}else if("img".equals(currentTag)) {
 			theme.setThemeImg(value);
+		}else if("path".equals(currentTag)) {
+			theme.setThemePath(value);
 		}
 	}
 

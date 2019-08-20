@@ -26,10 +26,9 @@
 	    	<h1 class="panel-heading">表单管理</h1>
 	        <!--breadcrumbs start -->
 	        <ul class="breadcrumb">
-	            <li><a href="#"><i class="fa fa-home"></i> Home</a></li>
-	            <li><a href="#">Dashboard</a></li>
-	            <li class="active">Current page</li>
-	        </ul>
+				<li><a href="/admin/dashboard/index"><i class="fa fa-home"></i> 首页</a></li>
+				<li class="active">表单管理</li>
+			</ul>
 	        <!--breadcrumbs end -->
 	    </div>
 	</div>
@@ -65,8 +64,8 @@
 								<td th:text="${#dates.format(form.createTime, 'yyyy-MM-dd')}">2018-08-13</td>
 								<td>
 									<a th:href="@{/admin/forms/toEdit(id=${form.id})}" class="btn btn-xs btn-success">编辑</a>
-									<span>&nbsp;|&nbsp;</span>
-									<a href="javascript:void(0)" data-toggle="modal" class="btn btn-xs btn-danger" th:onclick="'javascript: confrimRemove(\''+${form.id}+'\')'">删除</a>
+									<span th:if="${form.type}=='1'">&nbsp;|&nbsp;</span>
+									<a href="javascript:void(0)" data-toggle="modal" class="btn btn-xs btn-danger" th:onclick="'javascript: confrimRemove(\''+${form.id}+'\')'" th:if="${form.type}=='1'">删除</a>
 								</td>
 							</tr>
 							<tr th:if="${#lists.isEmpty(forms.list)}">

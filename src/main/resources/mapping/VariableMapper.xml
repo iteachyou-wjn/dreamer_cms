@@ -158,4 +158,13 @@
   	</if>
   	order by CREATE_TIME desc
   </select>
+  
+  <select id="queryVariableByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List" />
+  	from system_variable
+  	<if test="name != null and name != ''">
+  		WHERE ITEM_NAME = #{name,jdbcType=VARCHAR} OR VALUE = #{name,jdbcType=VARCHAR} 
+  	</if>
+  </select>
 </mapper>

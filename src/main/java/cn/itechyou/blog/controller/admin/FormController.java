@@ -37,12 +37,12 @@ public class FormController {
 	public String toIndex(Model model ,SearchEntity params) {
 		PageInfo<Form> forms = formService.queryListByPage(params);
 		model.addAttribute("forms", forms);
-		return "/admin/forms/list";
+		return "admin/forms/list";
 	}
 	
 	@RequestMapping("/toAdd")
 	public String toAdd() {
-		return "/admin/forms/add";
+		return "admin/forms/add";
 	}
 	
 	@RequestMapping("/add")
@@ -69,7 +69,7 @@ public class FormController {
 		model.addAttribute("form", form);
 		model.addAttribute("fields", fields);
 		
-		return "/admin/forms/edit";
+		return "admin/forms/edit";
 	}
 	
 	@RequestMapping("/edit")

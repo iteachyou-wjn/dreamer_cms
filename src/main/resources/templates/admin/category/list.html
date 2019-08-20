@@ -18,6 +18,7 @@
     <link href="/resource/css/iCheck/all.css" rel="stylesheet" type="text/css" />
     <!-- Theme style -->
     <link href="/resource/css/style.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="/resource/js/jQueryMessage/css/message.skin.css" />
 </head>
 
 <body>
@@ -26,10 +27,9 @@
 	    	<h1 class="panel-heading">栏目管理</h1>
 	        <!--breadcrumbs start -->
 	        <ul class="breadcrumb">
-	            <li><a href="#"><i class="fa fa-home"></i> Home</a></li>
-	            <li><a href="#">Dashboard</a></li>
-	            <li class="active">Current page</li>
-	        </ul>
+				<li><a href="/admin/dashboard/index"><i class="fa fa-home"></i> 首页</a></li>
+				<li class="active">栏目管理</li>
+			</ul>
 	        <!--breadcrumbs end -->
 	    </div>
 	</div>
@@ -161,10 +161,11 @@
 				    dataType:"json",
 				    contentType:"application/json;charset=utf-8",
 					success: function(data) {
+						var trstr = "";
 						for(var i=0;i<data.list.length;i++){
-							var trstr = buildHTML(data.list[i]);
-						    $("#" + cid).after(trstr);
+							trstr += buildHTML(data.list[i]);
 						}
+						$("#" + cid).after(trstr);
 						renderCheckBox();
 					}
 				});
@@ -181,7 +182,7 @@
 		    trstr += '<td><input type="checkbox" class="flat-grey list-child"/></td>';
 		    trstr += '<td><img src="/resource/img/explode.gif" style="cursor:pointer;" onclick="loadSons(\''+ element.id +'\',this);" width="11" height="11" /></td>';
 		    trstr += '<td>' + element.code + '</td>';
-		    trstr += '<td style="padding-left:' + ((++element.level)*10) + 'px;"><a href="/admin/archives/list?entity%5Bcid%5D='+element.code+'">' + element.cnname + '</a></td>';
+		    trstr += '<td style="padding-left:' + ((element.level++)*20) + 'px;"><a href="/admin/archives/list?entity%5Bcid%5D='+element.code+'">' + element.cnname + '</a></td>';
 		    trstr += '<td>' + element.enname + '</td>';
 		    trstr += '<td>' + (element.isShow == 1 ? '<span class="label label-success">是</span>' : '<span class="label label-danger">否</span>') + '</td>';
 		    trstr += '<td>';

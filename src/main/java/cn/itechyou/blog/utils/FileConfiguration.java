@@ -6,14 +6,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class FileConfiguration {
 	@Value("${web.upload-path}")
-	private String uploadDir;
+	private String resourceDir;
 
-	public String getUploadDir() {
-		return uploadDir;
+	public String getResourceDir() {
+		return resourceDir;
 	}
 
-	public void setUploadDir(String uploadDir) {
-		this.uploadDir = uploadDir;
+	public void setResourceDir(String resourceDir) {
+		this.resourceDir = resourceDir;
 	}
-	
 }

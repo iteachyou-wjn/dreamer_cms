@@ -1,6 +1,8 @@
 package cn.itechyou.blog.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -104,6 +106,43 @@ public class CategoryServiceImpl implements CategoryService {
 			category.setSort(list.get(i).getSort());
 			this.categoryMapper.updateByPrimaryKeySelective(category);
 		}
+	}
+	
+	@Override
+	public List<CategoryWithBLOBs> getTreeList(String parentId) {
+		Map<String,Object> params = new HashMap<String,Object>();
+		params.put("parentId", parentId);
+		params.put("isShow", "1");
+		List<CategoryWithBLOBs> list = categoryMapper.queryListByParams(params);
+		if(list != null && list.size()>0) {
+			for(int i= 0;i < list.size();i++) {
+				CategoryWithBLOBs category = list.get(i);
+				category.setNodes(getTreeList(category.getId()));
+			}
+		}
+		return list;
+	}
+	
+	@Override
+	public List<CategoryWithBLOBs> getTreeList(String parentId,String isShow) {
+		Map<String,Object> params = new HashMap<String,Object>();
+		params.put("parentId", parentId);
+		if(null != isShow && !"".equals(isShow.trim()))
+			params.put("isShow", isShow);
+
+		List<CategoryWithBLOBs> list = categoryMapper.queryListByParams(params);
+		if(list != null && list.size()>0) {
+			for(int i= 0;i < list.size();i++) {
+				CategoryWithBLOBs category = list.get(i);
+				category.setNodes(getTreeList(category.getId()));
+			}
+		}
+		return list;
+	}
+
+	@Override
+	public List<CategoryWithBLOBs> queryListByCode(Map<String, Object> entity) {
+		return categoryMapper.queryListByParams(entity);
 	}
 	
 }

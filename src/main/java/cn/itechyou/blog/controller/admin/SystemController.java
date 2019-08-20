@@ -22,10 +22,9 @@ public class SystemController extends BaseController{
 	 */
 	@RequestMapping("toIndex")
 	public String toIndex(Model model) {
-		
-		System system = systemService.getSystemList();
+		System system = systemService.getSystem();
 		model.addAttribute("system", system);
-		return "/admin/system/system";
+		return "admin/system/system";
 	}
 	
 	/**
@@ -35,7 +34,6 @@ public class SystemController extends BaseController{
 	 */
 	@RequestMapping("update")
 	public String update(System system) {
-		
 		int num = systemService.update(system);
 		return "redirect:/admin/system/toIndex";
 	}

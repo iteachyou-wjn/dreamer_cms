@@ -29,6 +29,6 @@ public class UUIDUtils {
                 val += String.valueOf(random.nextInt(10));
             }
         }
-        return val.toUpperCase();
+        return val.toLowerCase();
     }
 }

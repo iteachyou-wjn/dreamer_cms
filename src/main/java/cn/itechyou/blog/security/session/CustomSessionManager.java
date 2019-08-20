@@ -15,7 +15,7 @@ import org.apache.shiro.subject.support.DefaultSubjectContext;
 import cn.itechyou.blog.entity.User;
 import cn.itechyou.blog.security.CustomShiroSessionDAO;
 import cn.itechyou.blog.utils.LoggerUtils;
-import cn.itechyou.blog.utils.StringUtils;
+import cn.itechyou.blog.utils.StringUtil;
 import cn.itechyou.blog.vo.UserOnlineBo;
 
 /**
@@ -58,7 +58,7 @@ public class CustomSessionManager {
 	@SuppressWarnings("unchecked")
 	public List<SimplePrincipalCollection> getSimplePrincipalCollectionByUserId(String...userIds){
 		//把userIds 转成Set，好判断
-		Set<String> idset = (Set<String>) StringUtils.array2Set(userIds);
+		Set<String> idset = (Set<String>) StringUtil.array2Set(userIds);
 		//获取所有session
 		Collection<Session> sessions = customShiroSessionDAO.getActiveSessions();
 		//定义返回

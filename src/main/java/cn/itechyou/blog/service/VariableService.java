@@ -17,4 +17,6 @@ public interface VariableService {
 
 	void deleteVariable(String id);
 
+	Variable queryVariableByName(String name);
+
 }

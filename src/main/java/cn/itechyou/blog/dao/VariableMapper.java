@@ -3,6 +3,8 @@ package cn.itechyou.blog.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+
 import cn.itechyou.blog.entity.Variable;
 
 public interface VariableMapper {
@@ -19,4 +21,6 @@ public interface VariableMapper {
     int updateByPrimaryKey(Variable record);
 
 	List<Variable> queryListByPage(Map<String, Object> entity);
+
+	Variable queryVariableByName(@Param("name") String name);
 }

@@ -19,8 +19,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import cn.itechyou.blog.common.BaseController;
 import cn.itechyou.blog.common.SearchEntity;
+import cn.itechyou.blog.entity.System;
 import cn.itechyou.blog.entity.Theme;
 import cn.itechyou.blog.security.token.TokenManager;
+import cn.itechyou.blog.service.SystemService;
 import cn.itechyou.blog.service.ThemeService;
 import cn.itechyou.blog.utils.FileConfiguration;
 import cn.itechyou.blog.utils.SaxUtils;
@@ -38,33 +40,30 @@ public class ThemesController extends BaseController {
 	
 	@Autowired
 	private FileConfiguration fileConfiguration;
+	@Autowired
+	private SystemService systemService;
 	
 	@RequestMapping("/list")
 	public String list(Model model, SearchEntity params) {
 		Map<String,Object> map = new HashMap<>();
 		List<Theme> themes = themeService.queryListByPage(params);
 		model.addAttribute("themes", themes);
-		return "/admin/themes/list";
+		return "admin/themes/list";
 	}
 	
 	@RequestMapping("/add")
 	public String add(String themePath) {
-		InputStream in = null;
 		Theme theme;
 		try {
-			String rootPath = fileConfiguration.getUploadDir();
-			File f = new File(rootPath + File.separator + "system.properties");
-			in = new FileInputStream(f);
-			Properties properties = new Properties();
-			properties.load(in);
-			String filepath = properties.getProperty("uploaddir");
+			String rootPath = fileConfiguration.getResourceDir();
+			System system = systemService.getSystem();
+			String uploadDir = system.getUploaddir();
 			
-			String uploadpath = rootPath + File.separator + filepath + File.separator + themePath;
+			String uploadpath = rootPath + File.separator + uploadDir + File.separator + themePath;
 			File zipFile = new File(uploadpath);
 			
 			//解压zip
-			String targetDir = ResourceUtils.getURL("classpath:").getPath();
-			targetDir += File.separator + "templates/themes/";
+			String targetDir = rootPath + "templates/";
 			theme = ZipUtils.unZipFiles(zipFile, targetDir);
 			
 			SaxUtils.parseXml(theme.getThemePath() + File.separator + "main.xml");
@@ -94,14 +93,7 @@ public class ThemesController extends BaseController {
 			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				in.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
 		}
-		
 		return "redirect:/admin/theme/list";
 	}
 	

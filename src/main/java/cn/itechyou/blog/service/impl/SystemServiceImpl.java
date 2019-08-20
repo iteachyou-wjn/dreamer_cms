@@ -42,7 +42,7 @@ public class SystemServiceImpl implements SystemService {
 	 * 系统设置列表
 	 */
 	@Override
-	public System getSystemList() {
+	public System getSystem() {
 		System System = systemMapper.selectAll();
 		return System;
 	}
@@ -52,56 +52,7 @@ public class SystemServiceImpl implements SystemService {
 	 */
 	@Override
 	public int update(System system) {
-		int num = 0;
-		ObjectOutputStream oos = null; 
-		OutputStream out = null;
-		InputStream in = null;
-		try {
-			num = systemMapper.updateByPrimaryKey(system);
-			String rootPath = fileConfiguration.getUploadDir();
-			File dir = new File(rootPath);
-			if(dir == null || !dir.exists()) {
-				dir.mkdirs();
-			}
-			String path = rootPath + File.separator + "system.properties";
-			File file = new File(path);
-			if (null == file || !file.exists()) {
-				file.createNewFile();
-			}
-			in = new FileInputStream(file);
-			Properties properties = new Properties();
-			properties.load(in);
-			properties.clear(); //清空Properties文件
-			properties.setProperty("id", system.getId());
-			properties.setProperty("website", system.getWebsite());
-			properties.setProperty("title", system.getTitle());
-			properties.setProperty("keywords", system.getKeywords());
-			properties.setProperty("describe", system.getDescribe());
-			properties.setProperty("icp", system.getIcp());
-			properties.setProperty("copyright", system.getCopyright());
-			properties.setProperty("uploaddir", system.getUploaddir());
-			properties.setProperty("appid", system.getAppid());
-			properties.setProperty("appkey", system.getAppkey());
-			out = new FileOutputStream(file);
-			properties.store(out, "update system_setting");
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if(in != null) {
-				try {
-					in.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-			if(out != null) {
-				try {
-					out.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
+		int num = systemMapper.updateByPrimaryKey(system);
 		return num;
 	}
 

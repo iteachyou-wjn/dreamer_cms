@@ -31,7 +31,7 @@ import cn.itechyou.blog.service.CategoryService;
 import cn.itechyou.blog.service.FieldService;
 import cn.itechyou.blog.service.FormService;
 import cn.itechyou.blog.service.LabelService;
-import cn.itechyou.blog.utils.StringUtils;
+import cn.itechyou.blog.utils.StringUtil;
 import cn.itechyou.blog.utils.UUIDUtils;
 import cn.itechyou.blog.vo.ArchivesVo;
 
@@ -56,10 +56,10 @@ public class ArchivesController {
 		if(params.getEntity() != null) {
 			cid = params.getEntity().containsKey("cid") ? params.getEntity().get("cid").toString() : "-1";
 		}
-		PageInfo<ArchivesVo> archives = archivesService.queryListByPage(params);
+		PageInfo<Map<String,Object>> archives = archivesService.queryListByPage(params);
 		model.addAttribute("cid", cid == null ? "-1" : cid);
 		model.addAttribute("archives", archives);
-		return "/admin/archives/list";
+		return "admin/archives/list";
 	}
 	
 	@RequestMapping("/toAdd")
@@ -78,7 +78,7 @@ public class ArchivesController {
 		List<Field> fields = fieldService.queryFieldByFormId(form.getId());
 		model.addAttribute("category", category);
 		model.addAttribute("fields", fields);
-		return "/admin/archives/add";
+		return "admin/archives/add";
 	}
 	
 	@RequestMapping("/add")
@@ -92,8 +92,8 @@ public class ArchivesController {
 		archives.setTag(entity.get("tag"));
 		archives.setCategoryId(entity.get("categoryId"));
 		archives.setImagePath(entity.get("imagePath"));
-		archives.setWeight(StringUtils.isBlank(entity.get("weight")) ? 0 : Integer.parseInt(entity.get("weight")));
-		archives.setClicks(StringUtils.isBlank(entity.get("clicks")) ? 0 : Integer.parseInt(entity.get("clicks")));
+		archives.setWeight(StringUtil.isBlank(entity.get("weight")) ? 0 : Integer.parseInt(entity.get("weight")));
+		archives.setClicks(StringUtil.isBlank(entity.get("clicks")) ? 0 : Integer.parseInt(entity.get("clicks")));
 		archives.setDescription(entity.get("description"));
 		archives.setComment(Integer.parseInt(entity.get("comment")));
 		archives.setSubscribe(Integer.parseInt(entity.get("subscribe")));
@@ -115,18 +115,18 @@ public class ArchivesController {
 			}
 			archives.setProperties(properties.subSequence(0, properties.length() - 1).toString());
 		}else {
-			archives.setProperties(StringUtils.isNotBlank(archives.getImagePath()) ? "p" : "n");
+			archives.setProperties(StringUtil.isNotBlank(archives.getImagePath()) ? "p" : "n");
 		}
 		
 		//处理标签
 		String tag = archives.getTag();
-		if(StringUtils.isNotBlank(tag)) {
+		if(StringUtil.isNotBlank(tag)) {
 			String[] tagArr = tag.split(",");
 			labelService.insertOrUpdate(tagArr);
 		}
 		
-		if(StringUtils.isNotBlank(archives.getImagePath())) {
-			if(StringUtils.isBlank(archives.getProperties())) {
+		if(StringUtil.isNotBlank(archives.getImagePath())) {
+			if(StringUtil.isBlank(archives.getProperties())) {
 				archives.setProperties("p");
 			}else if(!archives.getProperties().contains("p")) {
 				archives.setProperties(archives.getProperties() + ",p");
@@ -135,8 +135,10 @@ public class ArchivesController {
 		
 		//
 		String formId = formService.queryDefaultForm().getId();
+		String categoryCode = "";
 		if(!"-1".equals(entity.get("categoryId"))) {
 			Category category = categoryService.selectById(archives.getCategoryId());
+			categoryCode = category.getCode();
 			formId = category.getFormId();
 		}
 		Form form = formService.queryFormById(formId);
@@ -166,7 +168,7 @@ public class ArchivesController {
 			model.addAttribute("exception", e);
 			return Constant.ERROR;
 		}
-		return "redirect:/admin/archives/list";
+		return "redirect:/admin/archives/list?entity%5Bcid%5D=" + categoryCode;
 	}
 	
 	
@@ -188,7 +190,7 @@ public class ArchivesController {
 		}
 		model.addAttribute("article", article);
 		model.addAttribute("fields", fields);
-		return "/admin/archives/edit";
+		return "admin/archives/edit";
 	}
 	
 	@RequestMapping(value ="/edit")
@@ -198,8 +200,8 @@ public class ArchivesController {
 		archives.setTitle(entity.get("title"));
 		archives.setCategoryId(entity.get("categoryId"));
 		archives.setImagePath(entity.get("imagePath"));
-		archives.setWeight(StringUtils.isBlank(entity.get("weight")) ? 0 : Integer.parseInt(entity.get("weight")));
-		archives.setClicks(StringUtils.isBlank(entity.get("clicks")) ? 0 : Integer.parseInt(entity.get("clicks")));
+		archives.setWeight(StringUtil.isBlank(entity.get("weight")) ? 0 : Integer.parseInt(entity.get("weight")));
+		archives.setClicks(StringUtil.isBlank(entity.get("clicks")) ? 0 : Integer.parseInt(entity.get("clicks")));
 		archives.setDescription(entity.get("description"));
 		archives.setComment(Integer.parseInt(entity.get("comment")));
 		archives.setSubscribe(Integer.parseInt(entity.get("subscribe")));
@@ -223,12 +225,14 @@ public class ArchivesController {
 			}
 			archives.setProperties(properties.substring(0, properties.length() - 1).toString());
 		}else {
-			archives.setProperties(StringUtils.isNotBlank(archives.getImagePath()) ? "p" : "n");
+			archives.setProperties(StringUtil.isNotBlank(archives.getImagePath()) ? "p" : "n");
 		}
 		
 		String formId = formService.queryDefaultForm().getId();
+		String categoryCode = "";
 		if(!"-1".equals(entity.get("categoryId"))) {
 			Category category = categoryService.selectById(archives.getCategoryId());
+			categoryCode = category.getCode();
 			formId = category.getFormId();
 		}
 		Form form = formService.queryFormById(formId);
@@ -240,14 +244,17 @@ public class ArchivesController {
 		Map<String,Object> oldArchives = archivesService.queryArticleById(params);
 		
 		//对原有标签进行删除
-		String tag = oldArchives.get("tag").toString();
-		if(StringUtils.isNotBlank(tag)) {
-			String[] tagArr = tag.split(",");
-			labelService.updateCount(tagArr);
+		String tag = "";
+		if(oldArchives.get("tag") != null) {
+			tag = oldArchives.get("tag").toString();
+			if(StringUtil.isNotBlank(tag)) {
+				String[] tagArr = tag.split(",");
+				labelService.updateCount(tagArr);
+			}
 		}
 		//处理新标签
 		tag = archives.getTag();
-		if(StringUtils.isNotBlank(tag)) {
+		if(StringUtil.isNotBlank(tag)) {
 			String[] tagArr = tag.split(",");
 			labelService.insertOrUpdate(tagArr);
 		}
@@ -276,7 +283,7 @@ public class ArchivesController {
 			model.addAttribute("exception", e);
 			return Constant.ERROR;
 		}
-		return "redirect:/admin/archives/list";
+		return "redirect:/admin/archives/list?entity%5Bcid%5D=" + categoryCode;
 	}
 	
 	@RequestMapping(value ="/delete")
@@ -292,9 +299,9 @@ public class ArchivesController {
 		params.put("id", id);
 		Map<String,Object> article = archivesService.queryArticleById(params);
 		//对原有标签进行删除
-		if(StringUtils.isNotBlank(article.get("tag"))) {
+		if(StringUtil.isNotBlank(article.get("tag"))) {
 			String tag = article.get("tag").toString();
-			if(StringUtils.isNotBlank(tag)) {
+			if(StringUtil.isNotBlank(tag)) {
 				String[] tagArr = tag.split(",");
 				labelService.updateCount(tagArr);
 			}

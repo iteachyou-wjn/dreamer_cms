@@ -14,13 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.DisabledAccountException;
 import org.apache.shiro.crypto.hash.SimpleHash;
-import org.apache.shiro.session.Session;
-import org.apache.shiro.session.mgt.SessionKey;
-import org.apache.shiro.subject.support.DefaultSubjectContext;
 import org.apache.shiro.util.ByteSource;
-import org.apache.shiro.web.session.mgt.WebSessionKey;
-import org.apache.shiro.web.util.SavedRequest;
-import org.apache.shiro.web.util.WebUtils;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,11 +31,9 @@ import cn.itechyou.blog.common.Constant;
 import cn.itechyou.blog.common.ResponseResult;
 import cn.itechyou.blog.common.StateCodeEnum;
 import cn.itechyou.blog.entity.User;
-import cn.itechyou.blog.security.filter.ShiroFilterUtils;
 import cn.itechyou.blog.security.token.TokenManager;
 import cn.itechyou.blog.service.UserService;
 import cn.itechyou.blog.utils.LoggerUtils;
-import cn.itechyou.blog.utils.StringUtils;
 import cn.itechyou.blog.vo.UserVO;
 
 /**
@@ -49,7 +41,7 @@ import cn.itechyou.blog.vo.UserVO;
  * 
  */
 @Controller
-@RequestMapping("/admin")
+@RequestMapping("/admin/u")
 public class UserLoginController extends BaseController {
 
 	private static final Logger logger = LoggerUtils.getLogger(UserLoginController.class);
@@ -86,14 +78,7 @@ public class UserLoginController extends BaseController {
 	public ModelAndView toLogin() {
 		ModelAndView mv = new ModelAndView();
 		User user = (User) SecurityUtils.getSubject().getPrincipal();
-		
-		//已登录不显示登录页面,条首页
-		if(user != null) {
-			mv.setViewName("/admin/index");
-		}else {
-			mv.setViewName("/admin/login");
-		}
-		
+		mv.setViewName("admin/login");
 		return mv;
 	}
 	
@@ -105,7 +90,7 @@ public class UserLoginController extends BaseController {
 	@RequestMapping("toIndex")
 	public ModelAndView toIndex() {
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("/admin/index");
+		mv.setViewName("admin/index");
 		return mv;
 	}
 

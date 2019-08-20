@@ -26,10 +26,9 @@
 	    	<h1 class="panel-heading">文章管理</h1>
 	        <!--breadcrumbs start -->
 	        <ul class="breadcrumb">
-	            <li><a href="#"><i class="fa fa-home"></i> Home</a></li>
-	            <li><a href="#">Dashboard</a></li>
-	            <li class="active">Current page</li>
-	        </ul>
+				<li><a href="/admin/dashboard/index"><i class="fa fa-home"></i> 首页</a></li>
+				<li class="active">文章管理</li>
+			</ul>
 	        <!--breadcrumbs end -->
 	    </div>
 	</div>
@@ -66,7 +65,7 @@
 								<td th:text="${article.weight}">35</td>
 								<td><span th:text="${article.status}=='1'?'已发布':'未发布'" th:class="${article.status}=='1'?'label label-success':'label label-danger'">否</span></td>
 								<td>
-									<a target="_blank" th:href="${constant.articleurl} + ${article.aid}" class="btn btn-xs btn-warning">预览</a>
+									<a target="_blank" th:href="'/article/' + ${article.aid}" class="btn btn-xs btn-warning">预览</a>
 									<span>&nbsp;|&nbsp;</span>
 									<a th:href="@{/admin/archives/toEdit(id=${article.aid},cid=${article.categoryId})}" class="btn btn-xs btn-success">编辑</a>
 									<span>&nbsp;|&nbsp;</span>

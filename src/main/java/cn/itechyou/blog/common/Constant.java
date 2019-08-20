@@ -1,9 +1,5 @@
 package cn.itechyou.blog.common;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 /**
  * @ClassName: Constant 
  * @Description: 全局变量类
@@ -15,7 +11,7 @@ public class Constant {
 	/**
 	 * 项目名称
 	 */
-	public static String projecName = "chongzhou";
+	public static String projecName = "梦想家CMS内容管理系统";
 	
 	public static final String SESSION_USER = "SESSION_USER";
 	

@@ -1,9 +1,6 @@
 package cn.itechyou.blog.controller.admin;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,17 +8,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.github.pagehelper.PageInfo;
-
 import cn.itechyou.blog.common.Constant;
-import cn.itechyou.blog.common.SearchEntity;
 import cn.itechyou.blog.entity.Field;
 import cn.itechyou.blog.entity.Form;
 import cn.itechyou.blog.exception.TransactionException;
 import cn.itechyou.blog.security.token.TokenManager;
 import cn.itechyou.blog.service.FieldService;
 import cn.itechyou.blog.service.FormService;
-import cn.itechyou.blog.utils.StringUtils;
+import cn.itechyou.blog.utils.StringUtil;
 import cn.itechyou.blog.utils.UUIDUtils;
 
 @Controller
@@ -37,7 +31,7 @@ public class FieldController {
 	@RequestMapping("/toAdd")
 	public String toAdd(Model model, String formId) {
 		model.addAttribute("formId", formId);
-		return "/admin/field/add";
+		return "admin/field/add";
 	}
 	
 	@RequestMapping("/add")
@@ -45,7 +39,7 @@ public class FieldController {
 		field.setId(UUIDUtils.getPrimaryKey());
 		field.setCreateBy(TokenManager.getToken().getId());
 		field.setCreateTime(new Date());
-		if(StringUtils.isBlank(field.getMaxLength())) {
+		if(StringUtil.isBlank(field.getMaxLength())) {
 			field.setMaxLength(200);
 		}
 		try {
@@ -65,7 +59,7 @@ public class FieldController {
 		model.addAttribute("form", form);
 		model.addAttribute("field", field);
 		
-		return "/admin/field/edit";
+		return "admin/field/edit";
 	}
 	
 	@RequestMapping("/edit")
@@ -75,7 +69,7 @@ public class FieldController {
 		Field oldField = fieldService.queryFieldById(newField.getId());
 		newField.setUpdateBy(TokenManager.getToken().getId());
 		newField.setUpdateTime(new Date());
-		if(StringUtils.isBlank(newField.getMaxLength())) {
+		if(StringUtil.isBlank(newField.getMaxLength())) {
 			newField.setMaxLength(200);
 		}
 		try {
