@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dreamer Blog - 后台管理系统</title> 
-    <link rel="icon" href="/resource/img/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="/resource/icon/favicon.ico" type="image/x-icon" />
     <!-- bootstrap 3.0.2 -->
     <link href="/resource/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <!-- font Awesome -->
@@ -44,18 +44,15 @@
 					</a>
 					<ul class="dropdown-menu dropdown-custom dropdown-menu-right">
 						<li class="dropdown-header text-center">用户中心</li>
-
 						<li>
 							<a href="/index" target="_blank"><i class="fa fa-home pull-right"></i> 网站首页</a>
 						</li>
-
 						<li class="divider"></li>
 						<li>
 							<a href="#"><i class="fa fa-cog fa-fw pull-right"></i> 个人信息</a>
 							<a href="#"><i class="fa fa-user fa-fw pull-right"></i> 修改密码</a>
 						</li>
 						<li class="divider"></li>
-
 						<li>
 							<a href="javascript:void(0)" onclick="logout();"><i class="fa fa-sign-out pull-right"></i> 退出登录</a>
 						</li>
@@ -119,7 +116,7 @@
 	<!-- 右侧开始 -->
 	<aside class="right-side">
 		<section class="content">
-			<iframe id="mainframe" name="mainframe" style="width:100%; border:0;" src="/admin/system/toIndex"></iframe>
+			<iframe id="mainframe" name="mainframe" style="width:100%; border:0;" src="/admin/dashboard/toIndex"></iframe>
 		</section>
 		<div class="footer-main">
 			Copyright &copy Dreamer CMS, Powered by <a href="http://www.itechyou.cn" title="I Tech You,我教你！">I Tech You , 我教你!</a> 2018-2030
@@ -137,34 +134,34 @@
 <script src="/resource/js/Director/app.js" type="text/javascript"></script>
 <script type="text/javascript">
 	$(function () {
-iframeAutoHeight();
-$(".sidebar-menu li").click(function(){
-$(".sidebar-menu li").removeClass("active");
-$(this).addClass("active");
-});
+		iframeAutoHeight();
+		$(".sidebar-menu li").click(function(){
+		$(".sidebar-menu li").removeClass("active");
+		$(this).addClass("active");
+	});
 
-var userStr = sessionStorage.getItem("dreamer-blog-user");
-			  if(userStr == null || userStr == "" || userStr == "undefined"){
-				  window.location.href = "/admin/u/toLogin";
-			  }else{
-				  var user = JSON.parse(userStr);
-				  $("#user-name").text(user.realname);
-			  }
-		});
-		
-		function iframeAutoHeight() {
-		    var headerH = $(".header").height();
-		    var footerH = $(".footer-main").height() + 15;
-		    var sectionH = 45;
-		    var bodyerH = $(window).height() - headerH - footerH - sectionH;
-		    $("iframe#mainframe").height(bodyerH);
+	var userStr = sessionStorage.getItem("dreamer-blog-user");
+		if(userStr == null || userStr == "" || userStr == "undefined"){
+			window.location.href = "/admin/u/toLogin";
+		}else{
+			var user = JSON.parse(userStr);
+			$("#user-name").text(user.realname);
 		}
+	});
 		
-		//退出登录
-		function logout(){
-			sessionStorage.removeItem("dreamer-blog-user");
-			window.location.href = "/admin/u/logout";
-		}
-	</script>
+	function iframeAutoHeight() {
+	    var headerH = $(".header").height();
+	    var footerH = $(".footer-main").height() + 15;
+	    var sectionH = 45;
+	    var bodyerH = $(window).height() - headerH - footerH - sectionH;
+	    $("iframe#mainframe").height(bodyerH);
+	}
+		
+	//退出登录
+	function logout(){
+		sessionStorage.removeItem("dreamer-blog-user");
+		window.location.href = "/admin/u/logout";
+	}
+</script>
 </body>
 </html>

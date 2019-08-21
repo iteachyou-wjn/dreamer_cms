@@ -20,9 +20,11 @@ import cn.itechyou.blog.common.StateCodeEnum;
 import cn.itechyou.blog.entity.Category;
 import cn.itechyou.blog.entity.CategoryWithBLOBs;
 import cn.itechyou.blog.entity.Form;
+import cn.itechyou.blog.entity.System;
 import cn.itechyou.blog.security.token.TokenManager;
 import cn.itechyou.blog.service.CategoryService;
 import cn.itechyou.blog.service.FormService;
+import cn.itechyou.blog.service.SystemService;
 import cn.itechyou.blog.utils.StringUtil;
 import cn.itechyou.blog.utils.UUIDUtils;
 
@@ -35,6 +37,9 @@ public class CategoryController extends BaseController{
 	
 	@Autowired
 	private FormService formService;
+	
+	@Autowired
+	private SystemService systemService;
 	
 	@RequestMapping("/list")
 	public String list(Model model,SearchEntity params) {
@@ -74,8 +79,10 @@ public class CategoryController extends BaseController{
 		}
 		
 		List<Form> forms = formService.queryAll();
+		System system = systemService.getSystem();
 		model.addAttribute("category", category);
 		model.addAttribute("forms", forms);
+		model.addAttribute("system", system);
 		return "admin/category/edit";
 	}
 	
