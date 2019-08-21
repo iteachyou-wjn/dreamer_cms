@@ -8,10 +8,10 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/admin/dashboard")
 public class DashboardController {
 	
-	@RequestMapping("index")
+	@RequestMapping("toIndex")
 	public ModelAndView jump() {
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("dashboard/index");
+		mv.setViewName("admin/dashboard/index");
 		return mv;
 	}
 }

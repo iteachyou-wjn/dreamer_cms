@@ -24,6 +24,7 @@ import cn.itechyou.blog.entity.Archives;
 import cn.itechyou.blog.entity.Category;
 import cn.itechyou.blog.entity.Field;
 import cn.itechyou.blog.entity.Form;
+import cn.itechyou.blog.entity.System;
 import cn.itechyou.blog.exception.TransactionException;
 import cn.itechyou.blog.security.token.TokenManager;
 import cn.itechyou.blog.service.ArchivesService;
@@ -31,6 +32,7 @@ import cn.itechyou.blog.service.CategoryService;
 import cn.itechyou.blog.service.FieldService;
 import cn.itechyou.blog.service.FormService;
 import cn.itechyou.blog.service.LabelService;
+import cn.itechyou.blog.service.SystemService;
 import cn.itechyou.blog.utils.StringUtil;
 import cn.itechyou.blog.utils.UUIDUtils;
 import cn.itechyou.blog.vo.ArchivesVo;
@@ -48,6 +50,8 @@ public class ArchivesController {
 	private FieldService fieldService;
 	@Autowired
 	private FormService formService;
+	@Autowired
+	private SystemService systemService;
 	
 	@RequestMapping("/list")
 	public String toIndex(Model model ,SearchEntity params) {
@@ -188,8 +192,11 @@ public class ArchivesController {
 		if("-1".equals(article.get("categoryId"))) {
 			article.put("categoryCnName", "顶级栏目");
 		}
+		
+		System system = systemService.getSystem();
 		model.addAttribute("article", article);
 		model.addAttribute("fields", fields);
+		model.addAttribute("system", system);
 		return "admin/archives/edit";
 	}
 	
