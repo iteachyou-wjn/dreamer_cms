@@ -14,8 +14,6 @@ public interface UserService {
 
 	PageInfo<User> listByPage(SearchEntity page);
 
-	ResponseResult remove(String id);
-
-	ResponseResult getByID(String id);
+	User getByID(String id);
 
 }

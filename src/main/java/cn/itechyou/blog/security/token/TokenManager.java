@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.SimplePrincipalCollection;
+import org.apache.shiro.util.ByteSource;
 
 import cn.itechyou.blog.entity.User;
 import cn.itechyou.blog.security.session.CustomSessionManager;
@@ -66,25 +67,16 @@ public class TokenManager {
 	public static Object getVal2Session(Object key){
 		return getSession().getAttribute(key);
 	}
-	/**
-	 * 获取验证码，获取一次后删除
-	 * @return
-	 */
-	public static String getYZM(){
-		String code = (String) getSession().getAttribute("CODE");
-		getSession().removeAttribute("CODE");
-		return code ;
-	}
-	
 	
 	/**
 	 * 登录
 	 * @param user
 	 * @param rememberMe
+	 * @param salt 
 	 * @return
 	 */
-	public static User login(User user,Boolean rememberMe){
-		ShiroToken token = new ShiroToken(user.getUsername(), user.getPassword());
+	public static User login(User user,Boolean rememberMe, ByteSource salt){
+		ShiroToken token = new ShiroToken(user.getUsername(), user.getPassword(), salt);
 		token.setRememberMe(rememberMe);
 		SecurityUtils.getSubject().login(token);
 		return getToken();

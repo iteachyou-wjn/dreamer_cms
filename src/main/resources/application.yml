@@ -4,7 +4,7 @@ server:
     context-path: /
 
 web:
-  upload-path: D:/dreamer-cms/
+  upload-path: /opt/dreamer-cms/
 
 spring:    
   mvc:
@@ -15,6 +15,9 @@ spring:
     static-locations: classpath:/META-INF/resources/,classpath:/static,classpath:/resources/,file:${web.upload-path}
   datasource: 
       name: test
+      #url: jdbc:mysql://39.106.101.180:3306/dreamer-cms?useSSL=false&useUnicode=true&characterEncoding=utf-8
+      #username: wangyawei
+      #password: WangYaWei123!@#
       url: jdbc:mysql://127.0.0.1:3306/dreamer-blog?useSSL=false&useUnicode=true&characterEncoding=utf-8
       username: root
       password: root
