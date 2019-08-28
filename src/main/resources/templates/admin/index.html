@@ -49,8 +49,7 @@
 						</li>
 						<li class="divider"></li>
 						<li>
-							<a href="#"><i class="fa fa-cog fa-fw pull-right"></i> 个人信息</a>
-							<a href="#"><i class="fa fa-user fa-fw pull-right"></i> 修改密码</a>
+							<a href="/admin/user/toUpdatePwd" target="mainframe"><i class="fa fa-user fa-fw pull-right"></i> 修改密码</a>
 						</li>
 						<li class="divider"></li>
 						<li>
@@ -145,7 +144,7 @@
 			window.location.href = "/admin/u/toLogin";
 		}else{
 			var user = JSON.parse(userStr);
-			$("#user-name").text(user.realname);
+			$("#user-name").text(user.username + "[" + user.realname + "]");
 		}
 	});
 		

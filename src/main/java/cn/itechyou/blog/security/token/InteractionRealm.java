@@ -52,7 +52,7 @@ public class InteractionRealm extends AuthorizingRealm {
 		} else {
 			String password = user.getPassword();
 
-			ByteSource salt = ByteSource.Util.bytes("adminadmin");
+			ByteSource salt = token.getSalt();
 			// 更新登录时间 last login time
 			user.setLastLoginTime(new Date());
 			userService.save(user);

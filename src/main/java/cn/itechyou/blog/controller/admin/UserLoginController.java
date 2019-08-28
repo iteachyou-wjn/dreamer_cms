@@ -113,7 +113,7 @@ public class UserLoginController extends BaseController {
 			user.setUsername(entity.getUsername());
 			user.setPassword(sh.toString());
 			user.setSaltByte(salt);
-			user = TokenManager.login(user, rememberMe);
+			user = TokenManager.login(user, rememberMe, salt);
 
 			Map<String, Object> retMap = new HashMap<String, Object>();
 			retMap.put("users", user);
@@ -129,8 +129,8 @@ public class UserLoginController extends BaseController {
 			e.printStackTrace();
 			// 帐号或密码错误
 			result = ResponseResult.Factory.newInstance(Boolean.FALSE,
-					StateCodeEnum.USER_PASS_ERROR.getCode(), null,
-					StateCodeEnum.USER_PASS_ERROR.getDescription());
+					StateCodeEnum.USER_PASSWORD_ERROR.getCode(), null,
+					StateCodeEnum.USER_PASSWORD_ERROR.getDescription());
 		}
 		this.outJson(result);
 	}

@@ -9,6 +9,7 @@
     <result column="realname" property="realname" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="INTEGER" />
     <result column="page_style" property="pageStyle" jdbcType="VARCHAR" />
+    <result column="salt" property="salt" jdbcType="VARCHAR" />
     <result column="last_login_ip" property="lastLoginIp" jdbcType="VARCHAR" />
     <result column="last_login_time" property="lastLoginTime" jdbcType="TIMESTAMP" />
     <result column="portrait" property="portrait" jdbcType="VARCHAR" />
@@ -18,7 +19,7 @@
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, username, password, mobile, realname, status, page_style, last_login_ip, last_login_time, 
+    id, username, password, mobile, realname, status, page_style, salt, last_login_ip, last_login_time, 
     portrait, create_by, create_time, update_by, update_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
@@ -34,12 +35,12 @@
   <insert id="insert" parameterType="cn.itechyou.blog.entity.User" >
     insert into system_user (id, username, password, 
       mobile, realname, status, 
-      page_style, last_login_ip, last_login_time, 
+      page_style, salt, last_login_ip, last_login_time, 
       portrait, create_by, create_time, 
       update_by, update_time)
     values (#{id,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
       #{mobile,jdbcType=VARCHAR}, #{realname,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
-      #{pageStyle,jdbcType=VARCHAR}, #{lastLoginIp,jdbcType=VARCHAR}, #{lastLoginTime,jdbcType=TIMESTAMP}, 
+      #{pageStyle,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, #{lastLoginIp,jdbcType=VARCHAR}, #{lastLoginTime,jdbcType=TIMESTAMP}, 
       #{portrait,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
       #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
   </insert>
@@ -66,6 +67,9 @@
       </if>
       <if test="pageStyle != null" >
         page_style,
+      </if>
+      <if test="salt != null" >
+        salt,
       </if>
       <if test="lastLoginIp != null" >
         last_login_ip,
@@ -111,6 +115,9 @@
       <if test="pageStyle != null" >
         #{pageStyle,jdbcType=VARCHAR},
       </if>
+      <if test="salt != null" >
+        #{salt,jdbcType=VARCHAR},
+      </if>
       <if test="lastLoginIp != null" >
         #{lastLoginIp,jdbcType=VARCHAR},
       </if>
@@ -155,6 +162,9 @@
       <if test="pageStyle != null" >
         page_style = #{pageStyle,jdbcType=VARCHAR},
       </if>
+      <if test="salt != null" >
+        salt = #{salt,jdbcType=VARCHAR},
+      </if>
       <if test="lastLoginIp != null" >
         last_login_ip = #{lastLoginIp,jdbcType=VARCHAR},
       </if>
@@ -187,6 +197,7 @@
       realname = #{realname,jdbcType=VARCHAR},
       status = #{status,jdbcType=INTEGER},
       page_style = #{pageStyle,jdbcType=VARCHAR},
+      salt = #{salt,jdbcType=VARCHAR},
       last_login_ip = #{lastLoginIp,jdbcType=VARCHAR},
       last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
       portrait = #{portrait,jdbcType=VARCHAR},
@@ -196,16 +207,6 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=VARCHAR}
   </update>
-  
-  <select id="listByPage" parameterType="java.util.Map" resultMap="BaseResultMap">
-  	select 
-  	<include refid="Base_Column_List" />
-  	from system_user
-  	where 
-  		1 = 1
-  		
-  		order by create_time desc
-  </select>
   
   <select id="getByUserName" parameterType="java.lang.String" resultMap="BaseResultMap">
   	select 

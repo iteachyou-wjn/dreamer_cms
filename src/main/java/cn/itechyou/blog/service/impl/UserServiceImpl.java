@@ -46,21 +46,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public ResponseResult remove(String id) {
-		try {
-			return ResponseResult.Factory.newInstance(Boolean.TRUE, StateCodeEnum.HTTP_SUCCESS.getCode(), null, StateCodeEnum.HTTP_SUCCESS.getDescription());
-		} catch (Exception e) {
-			return ResponseResult.Factory.newInstance(Boolean.FALSE, StateCodeEnum.HTTP_ERROR.getCode(), null, StateCodeEnum.HTTP_ERROR.getDescription());
-		}
-	}
-
-	@Override
-	public ResponseResult getByID(String id) {
-		try {
-			return ResponseResult.Factory.newInstance(Boolean.TRUE, StateCodeEnum.HTTP_SUCCESS.getCode(), null, StateCodeEnum.HTTP_SUCCESS.getDescription());
-		} catch (Exception e) {
-			return ResponseResult.Factory.newInstance(Boolean.FALSE, StateCodeEnum.HTTP_ERROR.getCode(), null, StateCodeEnum.HTTP_ERROR.getDescription());
-		}
+	public User getByID(String id) {
+		return userMapper.selectByPrimaryKey(id);
 	}
 
 }

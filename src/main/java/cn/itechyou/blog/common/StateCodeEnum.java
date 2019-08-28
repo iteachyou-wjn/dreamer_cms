@@ -41,12 +41,12 @@ public enum StateCodeEnum {
 	USER_MOBILE_EMPTY("2006","您输入的账号不存在"),
 	USER_MOBILE_EXCEPTION("2007","此用户状态异常,请联系管理员"),
 	USER_LOGIN_TYPE_ERROR("2008","登录类型出错"),
-	USER_PASS_ERROR("2009","用户名或密码错误"),
+	USER_LOGIN_KICKOUT("2009","已经在其他地方登录，请重新登录"),
 	USER_INFO_NOT_FOUND("2010","未查找到当前用户信息"),
 	USER_USER_NOLOGIN("2011","用户未登录"),
 	USER_USER_NOPERMISSION("2012","用户未授权"),
 	USER_VCODE_ERROR("2013","服务器验证码出现异常"),
-	USER_LOGIN_KICKOUT("2014","已经在其他地方登录，请重新登录"),
+	USER_OLDPWD_ERROR("2014","原密码输入错误"),
 	
 	//用户信息Code 30
 	APP_TYPE_ERROR("3001","错误:没有版本发布"),

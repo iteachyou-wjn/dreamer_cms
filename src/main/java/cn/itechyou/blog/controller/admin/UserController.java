@@ -4,10 +4,13 @@ import java.util.Date;
 
 import javax.annotation.Resource;
 
+import org.apache.shiro.crypto.hash.SimpleHash;
+import org.apache.shiro.util.ByteSource;
 import org.slf4j.Logger;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -17,8 +20,10 @@ import cn.itechyou.blog.common.ResponseResult;
 import cn.itechyou.blog.common.SearchEntity;
 import cn.itechyou.blog.common.StateCodeEnum;
 import cn.itechyou.blog.entity.User;
+import cn.itechyou.blog.security.token.TokenManager;
 import cn.itechyou.blog.service.UserService;
 import cn.itechyou.blog.utils.LoggerUtils;
+import cn.itechyou.blog.vo.UserPasswordVO;
 
 /**
  * 用户管理
@@ -27,55 +32,46 @@ import cn.itechyou.blog.utils.LoggerUtils;
  *
  */
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/admin/user")
 public class UserController {
 	private Logger logger = LoggerUtils.getPlatformLogger();
 	
 	@Resource
 	private UserService userService;
 	
-	@RequestMapping("index")
+	@RequestMapping("info")
 	public ModelAndView index() {
-		logger.info(">>>>>>>>>>进入用户管理index方法<<<<<<<<<<");
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("/user/list");
+		mv.addObject("user", TokenManager.getToken());
+		mv.setViewName("admin/user/info");
 		return mv;
 	}
 	
-	@RequestMapping("/list")
-	public ResponseResult list(@RequestBody SearchEntity page) {
-		logger.info(">>>>>>>>>>进入用户管理list方法<<<<<<<<<<");
-		if(page.getPageNum() >= 1) {
-			page.setPageNum(page.getPageNum() - 1);
-		}
-		if(page.getPageSize() == 0) {
-			page.setPageSize(10);
-		}
-		PageInfo<User> list = userService.listByPage(page);
-		return ResponseResult.Factory.newInstance(Boolean.TRUE, StateCodeEnum.HTTP_SUCCESS.getCode(), list, StateCodeEnum.HTTP_SUCCESS.getDescription());
+	@RequestMapping("toUpdatePwd")
+	public ModelAndView toUpdatePwd() {
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("user", TokenManager.getToken());
+		mv.setViewName("admin/user/password");
+		return mv;
 	}
 	
-	@RequestMapping("/save")
-	public ResponseResult save(@RequestBody User user) {
-		logger.info(">>>>>>>>>>进入用户管理save方法<<<<<<<<<<");
-		ResponseResult result = null;
-		if(user.getId() == null) {
-			user.setCreateTime(new Date());
-		}else {
-			user.setUpdateTime(new Date());
+	@RequestMapping("/updatePwd")
+	@ResponseBody
+	public ResponseResult updatePwd(@RequestBody UserPasswordVO user) {
+		User user2 = userService.getByID(user.getId());
+		ByteSource oldSalt = ByteSource.Util.bytes(user2.getUsername() + user.getOldPwd());
+		SimpleHash sh = new SimpleHash("MD5", user.getOldPwd(), oldSalt, 1024);
+		
+		if(!user2.getPassword().equals(sh.toString())) {
+			return ResponseResult.Factory.newInstance(Boolean.FALSE, StateCodeEnum.USER_OLDPWD_ERROR.getCode(), null, StateCodeEnum.USER_OLDPWD_ERROR.getDescription());
 		}
-		result = this.userService.save(user);
-		return result;
-	}
-	
-	@RequestMapping("/remove/{id}")
-	public ResponseResult remove(@PathVariable("id") String id) {
-		logger.info(">>>>>>>>>>进入用户管理remove方法<<<<<<<<<<");
-		if(id == null || "".equals(id)) {
-			return ResponseResult.Factory.newInstance(Boolean.FALSE, StateCodeEnum.ARGUMENTERROR.getCode(), null, StateCodeEnum.ARGUMENTERROR.getDescription());
-		}
-		ResponseResult result = this.userService.remove(id);
-		return result;
+		
+		ByteSource newSalt = ByteSource.Util.bytes(user2.getUsername() + user.getNewPwd());
+		SimpleHash sh1 = new SimpleHash("MD5", user.getNewPwd(), newSalt, 1024);
+		user2.setSalt(newSalt.toString());
+		user2.setPassword(sh1.toString());
+		userService.save(user2);
+		return ResponseResult.Factory.newInstance(Boolean.FALSE, StateCodeEnum.HTTP_SUCCESS.getCode(), null, StateCodeEnum.HTTP_SUCCESS.getDescription());
 	}
 	
 	@RequestMapping("/get/{id}")
@@ -84,7 +80,7 @@ public class UserController {
 		if(id == null || "".equals(id)) {
 			return ResponseResult.Factory.newInstance(Boolean.FALSE, StateCodeEnum.ARGUMENTERROR.getCode(), null, StateCodeEnum.ARGUMENTERROR.getDescription());
 		}
-		ResponseResult result = this.userService.getByID(id);
-		return result;
+		//ResponseResult result = this.userService.getByID(id);
+		return null;
 	}
 }
