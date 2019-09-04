@@ -44,14 +44,14 @@ Dreamer CMS 梦想家内容发布系统是国内首款java开发的内容发布�
 # 快速入门
 CMS包括两个部分（代码部分、资源部分）代码不多说。资源就是图片、模版等，该目录在application.yml中web.upload-path配置项目中配置。
 1. 克隆项目到本地工作空间
-2. 导入Eclipse或Sts等开发工具（推荐使用Spring Tools Suite 4）
+2. 导入Eclipse或Sts等开发工具（推荐使用Spring Tools Suite 4）（项目中缺少的google/kaptcha.jar在附件中，大家自行下载）
 3. 项目需要Redis，请自行修改application.yml中Redis配置
 4. 修改项目资源目录，application.yml文件web.upload-path配置项（如D:/dreamer-cms/）
 5. 将项目src/main/resources/db/dreamer-cms.zip文件解析，保证解压后的目录路径和名称和资源目录一致
 6. 运行项目DreamerBlogApplication.java
 7. 网站首页：http://localhost:8888 项目管理后台：http://localhost:8888/admin
 8. 管理后台用户名：wangjn；密码：123456
-9. 模版标签开发教程请参考：http://cms.wechatbao.cn/cover-u8xo56nx/document （服务器目前在香港，有点慢）
+9. 模版标签开发教程请参考：http://doc.itechyou.cn 
 
 
 # 系统美图
