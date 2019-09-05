@@ -1,8 +1,9 @@
 # 梦想家CMS内容管理系统开源版J2EE代码
 
-当前版本：1.0.1
+当前版本：2.0.1
 
-梦想家CMS官网：[http://www.itechyou.cn](www.itechyou.cn)
+梦想家CMS官网：http://www.itechyou.cn
+模版标签开发教程请参考：http://doc.itechyou.cn 
 
 QQ群交流：
 - ①597652651
