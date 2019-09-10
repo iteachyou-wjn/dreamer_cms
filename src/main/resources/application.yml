@@ -4,7 +4,7 @@ server:
     context-path: /
 
 web:
-  upload-path: /opt/dreamer-cms/
+  resource-path: D:/dreamer-cms/
 
 spring:    
   mvc:
@@ -12,7 +12,7 @@ spring:
     favicon:
       enabled: false
   resources:
-    static-locations: classpath:/META-INF/resources/,classpath:/static,classpath:/resources/,file:${web.upload-path}
+    static-locations: classpath:/META-INF/resources/,classpath:/static,classpath:/resources/,file:${web.resource-path}
   datasource: 
       name: test
       #url: jdbc:mysql://39.106.101.180:3306/dreamer-cms?useSSL=false&useUnicode=true&characterEncoding=utf-8

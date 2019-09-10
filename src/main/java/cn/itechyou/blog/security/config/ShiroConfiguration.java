@@ -5,8 +5,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Properties;
 
-import javax.servlet.Filter;
-
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.session.SessionListener;
@@ -32,14 +30,9 @@ import cn.itechyou.blog.security.cache.JedisShiroSessionRepository;
 import cn.itechyou.blog.security.cache.ShiroCacheManager;
 import cn.itechyou.blog.security.cache.impl.CustomShiroCacheManager;
 import cn.itechyou.blog.security.cache.impl.JedisShiroCacheManager;
-import cn.itechyou.blog.security.filter.KickoutSessionFilter;
-import cn.itechyou.blog.security.filter.LoginFilter;
-import cn.itechyou.blog.security.filter.PermissionFilter;
-import cn.itechyou.blog.security.filter.RoleFilter;
-import cn.itechyou.blog.security.filter.SimpleAuthFilter;
 import cn.itechyou.blog.security.listener.CustomSessionListener;
 import cn.itechyou.blog.security.session.CustomSessionManager;
-import cn.itechyou.blog.security.token.InteractionRealm;
+import cn.itechyou.blog.security.token.DreamerCMSRealm;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
@@ -63,23 +56,11 @@ public class ShiroConfiguration {
         shiroFilterFactoryBean.setLoginUrl("/u/toLogin");
         //未授权界面;
         shiroFilterFactoryBean.setUnauthorizedUrl("/403");
-        //拦截器链
-        LinkedHashMap<String,Filter> filters = new LinkedHashMap<>();
-        filters.put("login", new LoginFilter());
-        filters.put("role", new RoleFilter());
-        filters.put("simple", new SimpleAuthFilter());
-        filters.put("permission", new PermissionFilter());
-        filters.put("kickout", kickoutSessionFilter());
-        shiroFilterFactoryBean.setFilters(filters);
-        
         LinkedHashMap<String,String> fc = new LinkedHashMap<>();
-        /*fc.put("/resource/**", "anon");
-        fc.put("/u/**", "anon");
-        */
-        fc.put("/admin/toLogin", "anon");
         fc.put("/**", "anon");
+        fc.put("/admin/toLogin", "anon");
         fc.put("/logout", "logout");
-        fc.put("/admin/**", "kickout,simple,login,permission");
+        fc.put("/admin/**", "authc");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(fc);
         // 登录成功后要跳转的链接
         shiroFilterFactoryBean.setSuccessUrl("/index");
@@ -92,7 +73,7 @@ public class ShiroConfiguration {
 	 */
 	@Bean("sessionIdCookie")
 	public SimpleCookie sessionIdCookie() {
-		SimpleCookie simpleCookie = new SimpleCookie("dreamer-blog-s");
+		SimpleCookie simpleCookie = new SimpleCookie("dreamer-cms-s");
 		simpleCookie.setHttpOnly(true);
 		simpleCookie.setMaxAge(-1);
 		return simpleCookie;
@@ -104,7 +85,7 @@ public class ShiroConfiguration {
 	 */
 	@Bean("rememberMeCookie")
 	public SimpleCookie rememberMeCookie() {
-		SimpleCookie rememberMeCookie = new SimpleCookie("dreamer-blog-r");
+		SimpleCookie rememberMeCookie = new SimpleCookie("dreamer-cms-r");
 		rememberMeCookie.setHttpOnly(true);
 		rememberMeCookie.setMaxAge(2592000);
 		return rememberMeCookie;
@@ -183,7 +164,7 @@ public class ShiroConfiguration {
 	@Bean("securityManager")
 	public DefaultWebSecurityManager defaultWebSecurityManager() {
 		DefaultWebSecurityManager defaultWebSecurityManager = new DefaultWebSecurityManager(); 
-		defaultWebSecurityManager.setRealm(chinecreditRealm());
+		defaultWebSecurityManager.setRealm(dreamerCMSRealm());
 		defaultWebSecurityManager.setSessionManager(defaultWebSessionManager());
 		defaultWebSecurityManager.setRememberMeManager(rememberMeManager());
 		defaultWebSecurityManager.setCacheManager(customShiroCacheManager());
@@ -253,29 +234,6 @@ public class ShiroConfiguration {
 	}
 	
 	/**
-	 * session 校验单个用户是否多次登录
-	 * @return
-	 */
-	@Bean("kickoutSessionFilter")
-	public KickoutSessionFilter kickoutSessionFilter() {
-		KickoutSessionFilter kickoutSessionFilter = new KickoutSessionFilter();
-		kickoutSessionFilter.setKickoutUrl("/u/toLogin?kickout");
-		return kickoutSessionFilter;
-	}
-	
-	/**
-	 * 静态注入jedisShiroSessionRepository
-	 * @return
-	 */
-	@Bean
-	public MethodInvokingFactoryBean setJedisShiroSessionRepository() {
-		MethodInvokingFactoryBean methodInvokingFactoryBean = new MethodInvokingFactoryBean();
-		methodInvokingFactoryBean.setStaticMethod("cn.itechyou.blog.security.filter.KickoutSessionFilter.setShiroSessionRepository");
-		methodInvokingFactoryBean.setArguments(getJedisShiroSessionRepository());
-		return methodInvokingFactoryBean;
-	}
-	
-	/**
 	 * session 管理器
 	 * @return
 	 */
@@ -302,9 +260,9 @@ public class ShiroConfiguration {
 	 * 自定义Realm
 	 * @return
 	 */
-    @Bean("interactionRealm")
-    public InteractionRealm chinecreditRealm(){
-    	InteractionRealm realm = new InteractionRealm();
+    @Bean("dreamerCMSRealm")
+    public DreamerCMSRealm dreamerCMSRealm(){
+    	DreamerCMSRealm realm = new DreamerCMSRealm();
         return realm;
     }
     

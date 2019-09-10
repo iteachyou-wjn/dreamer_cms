@@ -38,7 +38,7 @@ public class LoggerUtils {
 	 * @return
 	 */
 	public static Logger getDBLogger() {
-		return LoggerFactory.getLogger(LogEnum.DB.getCategory());
+		return LoggerFactory.getLogger(LogEnum.DATABASE.getCategory());
 	}
 
 	/**

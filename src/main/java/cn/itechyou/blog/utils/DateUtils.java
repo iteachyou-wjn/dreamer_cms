@@ -1,11 +1,11 @@
-package cn.itechyou.blog.common;
+package cn.itechyou.blog.utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class DateUtil {
+public class DateUtils {
 
     /**
      * 根据自定义格式返回日期格式化器

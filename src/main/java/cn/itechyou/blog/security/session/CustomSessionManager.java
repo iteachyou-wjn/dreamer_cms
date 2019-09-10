@@ -28,7 +28,7 @@ public class CustomSessionManager {
 	/**
 	 * session status 
 	 */
-	public static final String SESSION_STATUS ="blog-session-status";
+	public static final String SESSION_STATUS ="cms-session-status";
 	ShiroSessionRepository shiroSessionRepository;
 	
 	CustomShiroSessionDAO customShiroSessionDAO;

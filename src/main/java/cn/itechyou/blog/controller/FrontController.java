@@ -3,9 +3,6 @@ package cn.itechyou.blog.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,17 +18,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.github.pagehelper.PageInfo;
 
-import cn.itechyou.blog.common.Constant;
+import cn.itechyou.blog.common.ExceptionEnum;
 import cn.itechyou.blog.common.SearchEntity;
 import cn.itechyou.blog.entity.Archives;
-import cn.itechyou.blog.entity.ArchivesWithRownum;
 import cn.itechyou.blog.entity.Category;
 import cn.itechyou.blog.entity.CategoryWithBLOBs;
-import cn.itechyou.blog.entity.Field;
-import cn.itechyou.blog.entity.Form;
 import cn.itechyou.blog.entity.SearchRecord;
 import cn.itechyou.blog.entity.Theme;
+import cn.itechyou.blog.exception.CmsException;
 import cn.itechyou.blog.exception.TemplateNotFoundException;
+import cn.itechyou.blog.exception.TemplateReadException;
 import cn.itechyou.blog.service.ArchivesService;
 import cn.itechyou.blog.service.CategoryService;
 import cn.itechyou.blog.service.FieldService;
@@ -41,7 +37,6 @@ import cn.itechyou.blog.service.SearchRecordService;
 import cn.itechyou.blog.service.ThemeService;
 import cn.itechyou.blog.taglib.ParseEngine;
 import cn.itechyou.blog.utils.FileConfiguration;
-import cn.itechyou.blog.utils.StringUtil;
 import cn.itechyou.blog.utils.UUIDUtils;
 import cn.itechyou.blog.vo.ArchivesVo;
 
@@ -82,16 +77,10 @@ public class FrontController {
 	
 	/**
 	 * 首页方法
-	 * @param model
-	 * @param request
-	 * @param response
-	 * @throws TemplateNotFoundException
-	 * @throws IOException
+	 * @throws CmsException
 	 */
 	@RequestMapping("/index")
-	public void index(Model model
-			,HttpServletRequest request
-			,HttpServletResponse response) throws TemplateNotFoundException, IOException {
+	public void index() throws CmsException {
 		Theme theme = themeService.getCurrentTheme();
 		String templatePath = theme.getThemePath() + "/index.html";
 		String templateDir = fileConfiguration.getResourceDir() + "templates/";
@@ -99,7 +88,10 @@ public class FrontController {
 		String path = templateDir + templatePath;
 		File template = new File(path);
 		if(!template.exists()) {
-			throw new TemplateNotFoundException("");
+			throw new TemplateNotFoundException(
+					ExceptionEnum.TEMPLATE_NOTFOUND_EXCEPTION.getCode(),
+					ExceptionEnum.TEMPLATE_NOTFOUND_EXCEPTION.getMessage(),
+					"请仔细检查" + template.getAbsolutePath() + "文件，或检查application.yml中的资源目录配置项（web.resource-path）。");
 		}
 		String newHtml = "";
 		try {
@@ -107,22 +99,22 @@ public class FrontController {
 			newHtml = parseEngine.parse(html);
 			outHtml(newHtml);
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new TemplateReadException(
+					ExceptionEnum.TEMPLATE_READ_EXCEPTION.getCode(),
+					ExceptionEnum.TEMPLATE_READ_EXCEPTION.getMessage(),
+					"请仔细检查模版文件，或检查application.yml中的资源目录配置项（web.resource-path）。");
 		}
 	}
 	
 	/**
 	 * 封面方法
-	 * @param model
-	 * @param typeid
-	 * @param visitUrl
-	 * @throws TemplateNotFoundException
-	 * @throws IOException
+	 * @param typeid 栏目编码
+	 * @param visitUrl 访问URL
+	 * @throws CmsException
 	 */
 	@RequestMapping("cover-{typeid}/{visitUrl}")
-	public void cover(Model model
-			, @PathVariable String typeid
-			, @PathVariable String visitUrl) throws TemplateNotFoundException, IOException {
+	public void cover(@PathVariable String typeid
+			, @PathVariable String visitUrl) throws CmsException {
 		Theme theme = themeService.getCurrentTheme();
 		String templateDir = fileConfiguration.getResourceDir() + "templates/";
 		if(theme == null) {
@@ -147,7 +139,10 @@ public class FrontController {
 			String path = templateDir + templatePath;
 			File template = new File(path);
 			if(!template.exists()) {
-				throw new TemplateNotFoundException("");
+				throw new TemplateNotFoundException(
+						ExceptionEnum.TEMPLATE_NOTFOUND_EXCEPTION.getCode(),
+						ExceptionEnum.TEMPLATE_NOTFOUND_EXCEPTION.getMessage(),
+						"请仔细检查" + template.getAbsolutePath() + "文件，或检查application.yml中的资源目录配置项（web.resource-path）。");
 			}
 			String newHtml = "";
 			String html = FileUtils.readFileToString(template, "UTF-8");
@@ -155,25 +150,26 @@ public class FrontController {
 			newHtml = parseEngine.parseCategory(newHtml,typeid);
 			outHtml(newHtml);
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new TemplateReadException(
+					ExceptionEnum.TEMPLATE_READ_EXCEPTION.getCode(),
+					ExceptionEnum.TEMPLATE_READ_EXCEPTION.getMessage(),
+					"请仔细检查模版文件，或检查application.yml中的资源目录配置项（web.resource-path）。");
 		}
 	}
 	
 	/**
 	 * 列表方法
-	 * @param model
-	 * @param visitUrl
-	 * @param typeid
-	 * @param pageNum
-	 * @throws TemplateNotFoundException
-	 * @throws IOException
+	 * @param typeid 栏目编码
+	 * @param visitUrl 访问URL
+	 * @param pageNum 当前页
+	 * @param pageSize 分页大小
+	 * @throws CmsException
 	 */
 	@RequestMapping("list-{typeid}/{visitUrl}/{pageNum}/{pageSize}")
-	public void list(Model model
-			, @PathVariable String typeid
+	public void list(@PathVariable String typeid
 			, @PathVariable String visitUrl
 			, @PathVariable Integer pageNum
-			, @PathVariable Integer pageSize) throws TemplateNotFoundException, IOException {
+			, @PathVariable Integer pageSize) throws CmsException {
 		Theme theme = themeService.getCurrentTheme();
 		String templateDir = fileConfiguration.getResourceDir() + "templates/";
 		if(theme == null) {
@@ -197,7 +193,10 @@ public class FrontController {
 			String path = templateDir + templatePath;
 			File template = new File(path);
 			if(!template.exists()) {
-				throw new TemplateNotFoundException("");
+				throw new TemplateNotFoundException(
+						ExceptionEnum.TEMPLATE_NOTFOUND_EXCEPTION.getCode(),
+						ExceptionEnum.TEMPLATE_NOTFOUND_EXCEPTION.getMessage(),
+						"请仔细检查" + template.getAbsolutePath() + "文件，或检查application.yml中的资源目录配置项（web.resource-path）。");
 			}
 			String newHtml = "";
 			String html = FileUtils.readFileToString(template, "UTF-8");
@@ -206,13 +205,20 @@ public class FrontController {
 			newHtml = parseEngine.parsePageList(newHtml, typeid, pageNum, pageSize);
 			outHtml(newHtml);
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new TemplateReadException(
+					ExceptionEnum.TEMPLATE_READ_EXCEPTION.getCode(),
+					ExceptionEnum.TEMPLATE_READ_EXCEPTION.getMessage(),
+					"请仔细检查模版文件，或检查application.yml中的资源目录配置项（web.resource-path）。");
 		}
 	}
 	
+	/**
+	 * 文章详情方法
+	 * @param id 文章ID
+	 * @throws CmsException
+	 */
 	@RequestMapping("/article/{id}")
-	public void article(Model model
-			, @PathVariable String id) throws TemplateNotFoundException, IOException{
+	public void article(@PathVariable String id) throws CmsException{
 		StringBuffer templatePath = new StringBuffer();
 		Theme theme = themeService.getCurrentTheme();
 		String templateDir = fileConfiguration.getResourceDir() + "templates/";
@@ -239,7 +245,10 @@ public class FrontController {
 			String path = templateDir + templatePath;
 			File template = new File(path);
 			if(!template.exists()) {
-				throw new TemplateNotFoundException("");
+				throw new TemplateNotFoundException(
+						ExceptionEnum.TEMPLATE_NOTFOUND_EXCEPTION.getCode(),
+						ExceptionEnum.TEMPLATE_NOTFOUND_EXCEPTION.getMessage(),
+						"请仔细检查" + template.getAbsolutePath() + "文件，或检查application.yml中的资源目录配置项（web.resource-path）。");
 			}
 			String newHtml = "";
 			String html = FileUtils.readFileToString(template, "UTF-8");
@@ -248,7 +257,10 @@ public class FrontController {
 			newHtml = parseEngine.parseArticle(newHtml, id);
 			outHtml(newHtml);
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new TemplateReadException(
+					ExceptionEnum.TEMPLATE_READ_EXCEPTION.getCode(),
+					ExceptionEnum.TEMPLATE_READ_EXCEPTION.getMessage(),
+					"请仔细检查模版文件，或检查application.yml中的资源目录配置项（web.resource-path）。");
 		}
 		/*
 		 * //上一篇下一篇 params = new HashMap<String, Object>(); params.put("arcid",

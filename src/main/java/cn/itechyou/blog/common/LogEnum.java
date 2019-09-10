@@ -10,7 +10,7 @@ public enum LogEnum {
 
 	PLATFORM("platform"),
 
-	DB("db"),
+	DATABASE("database"),
 
 	EXCEPTION("exception"),
 
