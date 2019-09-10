@@ -1,17 +1,13 @@
 package cn.itechyou.blog.controller.admin;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
 import java.io.PrintWriter;
-import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,12 +16,12 @@ import org.springframework.web.multipart.MultipartFile;
 import com.alibaba.fastjson.JSONObject;
 
 import cn.itechyou.blog.common.BaseController;
-import cn.itechyou.blog.common.DateUtil;
 import cn.itechyou.blog.common.ResponseResult;
 import cn.itechyou.blog.common.StateCodeEnum;
 import cn.itechyou.blog.entity.System;
 import cn.itechyou.blog.service.SystemService;
 import cn.itechyou.blog.ueditor.ActionEnter;
+import cn.itechyou.blog.utils.DateUtils;
 import cn.itechyou.blog.utils.FileConfiguration;
 import cn.itechyou.blog.utils.UUIDUtils;
 
@@ -51,7 +47,7 @@ public class UploadController extends BaseController{
 				return;
 			}
 			String rootPath = fileConfiguration.getResourceDir();
-			String currentDate = DateUtil.getCurrentDate("yyyyMMdd");
+			String currentDate = DateUtils.getCurrentDate("yyyyMMdd");
 			System system = systemService.getSystem();
 			String uploadDir = system.getUploaddir();
 			File directory  = new File(rootPath + File.separator + uploadDir + File.separator + currentDate); 
@@ -86,7 +82,7 @@ public class UploadController extends BaseController{
 				return;
 			}
 			String rootPath = fileConfiguration.getResourceDir();
-			String currentDate = DateUtil.getCurrentDate("yyyyMMdd");
+			String currentDate = DateUtils.getCurrentDate("yyyyMMdd");
 			System system = systemService.getSystem();
 			String uploadDir = system.getUploaddir();
 			File directory  = new File(rootPath + File.separator + uploadDir + File.separator + currentDate); 

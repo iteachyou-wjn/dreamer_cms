@@ -1,36 +1,46 @@
 package cn.itechyou.blog.exception;
 
 public class CmsException extends Exception {
+	
+	private static final long serialVersionUID = 2415656102753230136L;
+	
 	private String code;
 	private String message;
-	
+	private String reason;
+
 	public CmsException() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
-	
-	public CmsException(String code,String message) {
+
+	public CmsException(String code, String message, String reason) {
 		super(message);
 		this.code = code;
 		this.message = message;
+		this.reason = reason;
 	}
-	
-	public CmsException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-		super(message, cause, enableSuppression, writableStackTrace);
-		// TODO Auto-generated constructor stub
+
+	public String getCode() {
+		return code;
 	}
-	public CmsException(String message, Throwable cause) {
-		super(message, cause);
-		// TODO Auto-generated constructor stub
+
+	public void setCode(String code) {
+		this.code = code;
 	}
-	public CmsException(String message) {
-		super(message);
-		// TODO Auto-generated constructor stub
+
+	public String getMessage() {
+		return message;
 	}
-	public CmsException(Throwable cause) {
-		super(cause);
-		// TODO Auto-generated constructor stub
+
+	public void setMessage(String message) {
+		this.message = message;
 	}
-	
-	
+
+	public String getReason() {
+		return reason;
+	}
+
+	public void setReason(String reason) {
+		this.reason = reason;
+	}
+
 }

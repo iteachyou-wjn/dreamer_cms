@@ -26,12 +26,12 @@ import cn.itechyou.blog.service.UserService;
  * shiro 认证 + 授权 重写
  * 
  */
-public class InteractionRealm extends AuthorizingRealm {
+public class DreamerCMSRealm extends AuthorizingRealm {
 
 	@Resource
 	UserService userService;
 
-	public InteractionRealm() {
+	public DreamerCMSRealm() {
 		super();
 	}
 

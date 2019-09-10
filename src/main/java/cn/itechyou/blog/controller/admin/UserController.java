@@ -39,14 +39,6 @@ public class UserController {
 	@Resource
 	private UserService userService;
 	
-	@RequestMapping("info")
-	public ModelAndView index() {
-		ModelAndView mv = new ModelAndView();
-		mv.addObject("user", TokenManager.getToken());
-		mv.setViewName("admin/user/info");
-		return mv;
-	}
-	
 	@RequestMapping("toUpdatePwd")
 	public ModelAndView toUpdatePwd() {
 		ModelAndView mv = new ModelAndView();
@@ -74,13 +66,4 @@ public class UserController {
 		return ResponseResult.Factory.newInstance(Boolean.FALSE, StateCodeEnum.HTTP_SUCCESS.getCode(), null, StateCodeEnum.HTTP_SUCCESS.getDescription());
 	}
 	
-	@RequestMapping("/get/{id}")
-	public ResponseResult get(@PathVariable("id") String id) {
-		logger.info(">>>>>>>>>>进入用户管理get方法<<<<<<<<<<");
-		if(id == null || "".equals(id)) {
-			return ResponseResult.Factory.newInstance(Boolean.FALSE, StateCodeEnum.ARGUMENTERROR.getCode(), null, StateCodeEnum.ARGUMENTERROR.getDescription());
-		}
-		//ResponseResult result = this.userService.getByID(id);
-		return null;
-	}
 }

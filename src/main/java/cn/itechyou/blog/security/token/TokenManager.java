@@ -16,7 +16,7 @@ import cn.itechyou.blog.utils.SpringContextUtil;
  */
 public class TokenManager {
 	//用户登录管理
-	public static final InteractionRealm realm = SpringContextUtil.getBean("interactionRealm", InteractionRealm.class);
+	public static final DreamerCMSRealm realm = SpringContextUtil.getBean("dreamerCMSRealm", DreamerCMSRealm.class);
 	//用户session管理
 	public static final CustomSessionManager customSessionManager = SpringContextUtil.getBean("customSessionManager",CustomSessionManager.class);
 	/**
