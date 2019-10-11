@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="cn.itechyou.blog.dao.FormMapper" >
-  <resultMap id="BaseResultMap" type="cn.itechyou.blog.entity.Form" >
+<mapper namespace="cn.itechyou.cms.dao.FormMapper" >
+  <resultMap id="BaseResultMap" type="cn.itechyou.cms.entity.Form" >
     <id column="id" property="id" jdbcType="VARCHAR" />
     <result column="form_name" property="formName" jdbcType="VARCHAR" />
     <result column="table_name" property="tableName" jdbcType="VARCHAR" />
@@ -31,7 +31,7 @@
     delete from system_forms
     where id = #{id,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="cn.itechyou.blog.entity.Form" >
+  <insert id="insert" parameterType="cn.itechyou.cms.entity.Form" >
     insert into system_forms (id, form_name, table_name, 
       code, type, create_by, 
       create_time, update_by, update_time, 
@@ -43,7 +43,7 @@
       #{ext01,jdbcType=VARCHAR}, #{ext02,jdbcType=VARCHAR}, #{ext03,jdbcType=VARCHAR}, 
       #{ext04,jdbcType=VARCHAR}, #{ext05,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="cn.itechyou.blog.entity.Form" >
+  <insert id="insertSelective" parameterType="cn.itechyou.cms.entity.Form" >
     insert into system_forms
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -134,7 +134,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.itechyou.blog.entity.Form" >
+  <update id="updateByPrimaryKeySelective" parameterType="cn.itechyou.cms.entity.Form" >
     update system_forms
     <set >
       <if test="formName != null" >
@@ -179,7 +179,7 @@
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="cn.itechyou.blog.entity.Form">
+  <update id="updateByPrimaryKey" parameterType="cn.itechyou.cms.entity.Form">
     update system_forms
     set form_name = #{formName,jdbcType=VARCHAR},
       table_name = #{tableName,jdbcType=VARCHAR},
@@ -197,7 +197,7 @@
     where id = #{id,jdbcType=VARCHAR}
   </update>
 
-  <update id="createTable" parameterType="cn.itechyou.blog.entity.Form">
+  <update id="createTable" parameterType="cn.itechyou.cms.entity.Form">
   	create table `system_${tableName}` (
   	   `id` varchar(32) NOT NULL,
   	   `aid` varchar(32) NOT NULL COMMENT '主表ID',

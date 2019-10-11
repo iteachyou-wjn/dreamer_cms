@@ -61,7 +61,7 @@
 							<tr th:id="${category.id}" th:attr="parent=${category.parentId}" th:each="category : ${categorys.list}">
 								<td><input type="checkbox" class="flat-grey list-child" th:value="${category.id}" /></td>
 								<td>
-									<img src="/resource/img/explode.gif" style="cursor:pointer;" th:attr="level=${category.level}" th:onclick="'javascript: loadSons(\''+${category.id}+'\',this)'" width="11" height="11" />
+									<img src="/resource/img/explode.gif" style="cursor:pointer;" th:typeid="${category.id}" th:attr="level=${category.level}" onclick="javascript:loadSons(this.getAttribute('typeid'),this)" width="11" height="11" />
 								</td>
 								<td th:text="${category.code}"></td>
 								<td><a th:href="@{/admin/archives/list(entity[cid]=${category.code})}" th:text="${category.cnname}"></a></td>
@@ -75,7 +75,7 @@
 									<span>&nbsp;|&nbsp;</span>
 									<a th:href="@{/admin/category/toEdit(id=${category.id})}" class="btn btn-xs btn-success">编辑</a>
 									<span>&nbsp;|&nbsp;</span>
-									<a href="javascript:void(0)" data-toggle="modal" class="btn btn-xs btn-danger" th:onclick="'javascript: confrimRemove(\''+${category.id}+'\')'">删除</a>
+									<a href="javascript:void(0)" data-toggle="modal" class="btn btn-xs btn-danger" th:typeid="${category.id}" th:onclick="javascript:confrimRemove(this.getAttribute('typeid'))">删除</a>
 								</td>
 							</tr>
 							<tr th:if="${#lists.isEmpty(categorys.list)}">

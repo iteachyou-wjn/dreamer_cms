@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="cn.itechyou.blog.dao.PagesMapper" >
-  <resultMap id="BaseResultMap" type="cn.itechyou.blog.entity.Pages" >
+<mapper namespace="cn.itechyou.cms.dao.PagesMapper" >
+  <resultMap id="BaseResultMap" type="cn.itechyou.cms.entity.Pages" >
     <id column="id" property="id" jdbcType="VARCHAR" />
     <result column="page_name" property="pageName" jdbcType="VARCHAR" />
     <result column="page_url" property="pageUrl" jdbcType="VARCHAR" />
@@ -14,7 +14,7 @@
     <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="cn.itechyou.blog.entity.PagesWithBLOBs" extends="BaseResultMap" >
+  <resultMap id="ResultMapWithBLOBs" type="cn.itechyou.cms.entity.PagesWithBLOBs" extends="BaseResultMap" >
     <result column="md_content" property="mdContent" jdbcType="LONGVARCHAR" />
     <result column="html_content" property="htmlContent" jdbcType="LONGVARCHAR" />
   </resultMap>
@@ -37,7 +37,7 @@
     delete from system_pages
     where id = #{id,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="cn.itechyou.blog.entity.PagesWithBLOBs" >
+  <insert id="insert" parameterType="cn.itechyou.cms.entity.PagesWithBLOBs" >
     insert into system_pages (id, page_name, page_url, 
       page_temp, code, status, default_eidtor, 
       create_by, create_time, update_by, 
@@ -49,7 +49,7 @@
       #{updateTime,jdbcType=TIMESTAMP}, #{mdContent,jdbcType=LONGVARCHAR}, #{htmlContent,jdbcType=LONGVARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="cn.itechyou.blog.entity.PagesWithBLOBs" >
+  <insert id="insertSelective" parameterType="cn.itechyou.cms.entity.PagesWithBLOBs" >
     insert into system_pages
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -134,7 +134,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.itechyou.blog.entity.PagesWithBLOBs" >
+  <update id="updateByPrimaryKeySelective" parameterType="cn.itechyou.cms.entity.PagesWithBLOBs" >
     update system_pages
     <set >
       <if test="pageName != null" >
@@ -176,7 +176,7 @@
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.itechyou.blog.entity.PagesWithBLOBs" >
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.itechyou.cms.entity.PagesWithBLOBs" >
     update system_pages
     set page_name = #{pageName,jdbcType=VARCHAR},
       page_url = #{pageUrl,jdbcType=VARCHAR},
@@ -192,7 +192,7 @@
       html_content = #{htmlContent,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="cn.itechyou.blog.entity.Pages" >
+  <update id="updateByPrimaryKey" parameterType="cn.itechyou.cms.entity.Pages" >
     update system_pages
     set page_name = #{pageName,jdbcType=VARCHAR},
       page_url = #{pageUrl,jdbcType=VARCHAR},

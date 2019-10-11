@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="cn.itechyou.blog.dao.CategoryMapper" >
-  <resultMap id="BaseResultMap" type="cn.itechyou.blog.entity.Category" >
+<mapper namespace="cn.itechyou.cms.dao.CategoryMapper" >
+  <resultMap id="BaseResultMap" type="cn.itechyou.cms.entity.Category" >
     <id column="id" property="id" jdbcType="VARCHAR" />
     <result column="cnname" property="cnname" jdbcType="VARCHAR" />
     <result column="enname" property="enname" jdbcType="VARCHAR" />
@@ -33,7 +33,7 @@
     <result column="ext04" property="ext04" jdbcType="VARCHAR" />
     <result column="ext05" property="ext05" jdbcType="VARCHAR" />
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="cn.itechyou.blog.entity.CategoryWithBLOBs" extends="BaseResultMap" >
+  <resultMap id="ResultMapWithBLOBs" type="cn.itechyou.cms.entity.CategoryWithBLOBs" extends="BaseResultMap" >
     <result column="md_content" property="mdContent" jdbcType="LONGVARCHAR" />
     <result column="html_content" property="htmlContent" jdbcType="LONGVARCHAR" />
   </resultMap>
@@ -58,7 +58,7 @@
     delete from system_category
     where id = #{id,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="cn.itechyou.blog.entity.CategoryWithBLOBs" >
+  <insert id="insert" parameterType="cn.itechyou.cms.entity.CategoryWithBLOBs" >
     insert into system_category (id, cnname, enname, 
       code, cat_seq, form_id, 
       image_path, description, link_target, 
@@ -82,7 +82,7 @@
       #{ext03,jdbcType=VARCHAR}, #{ext04,jdbcType=VARCHAR}, #{ext05,jdbcType=VARCHAR}, 
       #{mdContent,jdbcType=LONGVARCHAR}, #{htmlContent,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="cn.itechyou.blog.entity.CategoryWithBLOBs" >
+  <insert id="insertSelective" parameterType="cn.itechyou.cms.entity.CategoryWithBLOBs" >
     insert into system_category
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -281,7 +281,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.itechyou.blog.entity.CategoryWithBLOBs" >
+  <update id="updateByPrimaryKeySelective" parameterType="cn.itechyou.cms.entity.CategoryWithBLOBs" >
     update system_category
     <set >
       <if test="cnname != null" >
@@ -380,7 +380,7 @@
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.itechyou.blog.entity.CategoryWithBLOBs" >
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.itechyou.cms.entity.CategoryWithBLOBs" >
     update system_category
     set cnname = #{cnname,jdbcType=VARCHAR},
       enname = #{enname,jdbcType=VARCHAR},
@@ -415,7 +415,7 @@
       html_content = #{htmlContent,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="cn.itechyou.blog.entity.Category" >
+  <update id="updateByPrimaryKey" parameterType="cn.itechyou.cms.entity.Category" >
     update system_category
     set cnname = #{cnname,jdbcType=VARCHAR},
       enname = #{enname,jdbcType=VARCHAR},

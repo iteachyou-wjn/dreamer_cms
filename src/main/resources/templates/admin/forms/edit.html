@@ -78,7 +78,7 @@
                         <div id="fields" class="tab-pane">
                         	<div class="panel-body">
 				                 <!-- <span class="pull-right badge badge-info">32</span> -->
-				                 <button class="btn btn-primary btn-addon btn-sm"  th:onclick="'javascript: toAdd(\''+${form.id}+'\')'">
+				                 <button class="btn btn-primary btn-addon btn-sm" th:formid="${form.id}" th:onclick="javascript: toAdd(this.getAttribute('formid'))">
 				                     <i class="fa fa-plus"></i>添加字段
 				                 </button>
 				            </div>
@@ -101,7 +101,7 @@
 										<td>
 											<a th:href="@{/admin/field/toEdit(id=${field.id})}" class="btn btn-xs btn-success">编辑</a>
 											<span>&nbsp;|&nbsp;</span>
-											<a href="javascript:void(0)" data-toggle="modal" class="btn btn-xs btn-danger" th:onclick="'javascript: confrimRemove(\''+${field.id}+'\')'">删除</a>
+											<a href="javascript:void(0)" data-toggle="modal" class="btn btn-xs btn-danger" th:fieldid="${field.id}" th:onclick="javascript: confrimRemove(this.getAttribute('fieldid'))">删除</a>
 										</td>
 									</tr>
 								</tbody>

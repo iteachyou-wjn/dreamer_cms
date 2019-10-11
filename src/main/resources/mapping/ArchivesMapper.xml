@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.itechyou.blog.dao.ArchivesMapper">
-  <resultMap id="BaseResultMap" type="cn.itechyou.blog.entity.Archives">
+<mapper namespace="cn.itechyou.cms.dao.ArchivesMapper">
+  <resultMap id="BaseResultMap" type="cn.itechyou.cms.entity.Archives">
     <id column="id" jdbcType="VARCHAR" property="id" />
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="properties" jdbcType="VARCHAR" property="properties" />
@@ -20,7 +20,7 @@
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
   
-  <resultMap id="BaseResultMapWithRownum" type="cn.itechyou.blog.entity.ArchivesWithRownum">
+  <resultMap id="BaseResultMapWithRownum" type="cn.itechyou.cms.entity.ArchivesWithRownum">
     <id column="id" jdbcType="VARCHAR" property="id" />
   	<result column="rownum" jdbcType="INTEGER" property="rownum" />
     <result column="title" jdbcType="VARCHAR" property="title" />
@@ -54,7 +54,7 @@
     delete from system_archives
     where id = #{id,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="cn.itechyou.blog.entity.Archives">
+  <insert id="insert" parameterType="cn.itechyou.cms.entity.Archives">
     insert into system_archives (id, title, properties, 
       image_path, tag, description, 
       category_id, comment, subscribe, 
@@ -68,7 +68,7 @@
       #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, 
       #{updateTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="cn.itechyou.blog.entity.Archives">
+  <insert id="insertSelective" parameterType="cn.itechyou.cms.entity.Archives">
     insert into system_archives
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -171,7 +171,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.itechyou.blog.entity.Archives">
+  <update id="updateByPrimaryKeySelective" parameterType="cn.itechyou.cms.entity.Archives">
     update system_archives
     <set>
       <if test="title != null">
@@ -222,7 +222,7 @@
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="cn.itechyou.blog.entity.Archives">
+  <update id="updateByPrimaryKey" parameterType="cn.itechyou.cms.entity.Archives">
     update system_archives
     set title = #{title,jdbcType=VARCHAR},
       properties = #{properties,jdbcType=VARCHAR},
@@ -294,7 +294,7 @@
   	where tag like concat('%',concat(#{tag,jdbcType=VARCHAR},'%'))
   </select>
   
-  <select id="queryListByKeywords" resultType="cn.itechyou.blog.vo.ArchivesVo">
+  <select id="queryListByKeywords" resultType="cn.itechyou.cms.vo.ArchivesVo">
   	select 
   		a.id
   		, a.title
@@ -371,7 +371,7 @@
   	DELETE FROM `${tableName}` WHERE id = #{id,jdbcType=VARCHAR}
   </delete>
   
-  <update id="updateTagByPrimaryKey" parameterType="cn.itechyou.blog.entity.Archives">
+  <update id="updateTagByPrimaryKey" parameterType="cn.itechyou.cms.entity.Archives">
   	update system_archives set tag = #{tag,jdbcType=VARCHAR}
   	where id = #{id,jdbcType=VARCHAR}
   </update>
@@ -396,7 +396,7 @@
 	</if>
   </select>
   
-  <select id="queryRecommend" parameterType="java.util.Map" resultType="cn.itechyou.blog.vo.ArchivesVo">
+  <select id="queryRecommend" parameterType="java.util.Map" resultType="cn.itechyou.cms.vo.ArchivesVo">
   	SELECT 
   		t1.id
   		, t1.title

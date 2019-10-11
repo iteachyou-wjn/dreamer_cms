@@ -37,7 +37,7 @@
 			<section class="panel">
 				<div class="panel-body">
 	                 <!-- <span class="pull-right badge badge-info">32</span> -->
-	                 <button class="btn btn-primary btn-addon btn-sm"  th:onclick="'toAddArticle();'">
+	                 <button class="btn btn-primary btn-addon btn-sm" th:onclick="toAddArticle();">
 	                     <i class="fa fa-plus"></i>添加变量
 	                 </button>
 	            </div>
@@ -63,7 +63,7 @@
 								<td>
 									<a th:href="@{/admin/variable/toEdit(id=${variable.id})}" class="btn btn-xs btn-success">编辑</a>
 									<span>&nbsp;|&nbsp;</span>
-									<a href="javascript:void(0)" data-toggle="modal" class="btn btn-xs btn-danger" th:onclick="'confrimRemove(\'' + ${variable.id} + '\');'">删除</a>
+									<a href="javascript:void(0)" data-toggle="modal" class="btn btn-xs btn-danger" th:variableid="${variable.id}" th:onclick="confrimRemove(this.getAttribute('variableid'));">删除</a>
 								</td>
 							</tr>
 							<tr th:if="${#lists.isEmpty(variables.list)}">
