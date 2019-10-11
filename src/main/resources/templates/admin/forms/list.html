@@ -37,7 +37,7 @@
 			<section class="panel">
 				<div class="panel-body">
 	                 <!-- <span class="pull-right badge badge-info">32</span> -->
-	                 <button class="btn btn-primary btn-addon btn-sm"  th:onclick="'javascript: toAdd()'">
+	                 <button class="btn btn-primary btn-addon btn-sm"  th:onclick="javascript: toAdd()">
 	                     <i class="fa fa-plus"></i>添加表单
 	                 </button>
 	            </div>
@@ -65,7 +65,7 @@
 								<td>
 									<a th:href="@{/admin/forms/toEdit(id=${form.id})}" class="btn btn-xs btn-success">编辑</a>
 									<span th:if="${form.type}=='1'">&nbsp;|&nbsp;</span>
-									<a href="javascript:void(0)" data-toggle="modal" class="btn btn-xs btn-danger" th:onclick="'javascript: confrimRemove(\''+${form.id}+'\')'" th:if="${form.type}=='1'">删除</a>
+									<a href="javascript:void(0)" data-toggle="modal" class="btn btn-xs btn-danger" th:formid="${form.id}" th:onclick="javascript: confrimRemove(this.getAttribute('formid'))" th:if="${form.type}=='1'">删除</a>
 								</td>
 							</tr>
 							<tr th:if="${#lists.isEmpty(forms.list)}">

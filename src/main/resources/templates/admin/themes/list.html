@@ -48,13 +48,13 @@
 										<li>
 											<a th:href="@{'/admin/theme/updateStatus?id=' + ${item.id} + '&status=1'}" th:if="${item.status} eq '0'">启用</a>
 										</li>
-										<li th:if="${item.themePath != 'default'}"><a href="javascript:void(0)" data-toggle="modal" th:onclick="'javascript: confrimRemove(\''+${item.id}+'\')'">删除</a></li>
+										<li th:if="${item.themePath != 'default'}"><a href="javascript:void(0)" data-toggle="modal" th:themeid="${item.id}" th:onclick="javascript: confrimRemove(this.getAttribute('themeid'))">删除</a></li>
 									</ul>
 								</div>
                             </div>
                         </div>
                         <div class="col-md-2 theme-box">
-                        	<a href="javascript:void(0)" data-toggle="modal" th:onclick="'javascript: openUploadDialog()'">
+                        	<a href="javascript:void(0)" data-toggle="modal" th:onclick="javascript: openUploadDialog()">
 	                            <div class="theme-img">
 	                            	<img src="/resource/img/theme-plus.png" data-toggle="modal"  />
 	                            </div>

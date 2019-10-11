@@ -47,7 +47,7 @@
 							<h3 th:id="${item.id}" class="label-h3" th:each="item :${key.current.value}">
 								<span th:class="'label '+${obj}" th:if="${iterStat.index} eq ${item.cls}" th:each="obj,iterStat:${classs}">
 									<span th:text="${item.tagName}+| (${item.tagCount})|">Java</span>
-										<a data-toggle="modal" th:class="'label-close'" th:onclick="'javascript: confrimRemove(\''+${item.tagName}+'\')'">
+										<a data-toggle="modal" th:class="'label-close'" th:tagname="${item.tagName}" th:onclick="javascript: confrimRemove(this.getAttribute('tagname'))">
 											<i th:class="'fa fa-times'"></i>
 										</a>
 									</span>

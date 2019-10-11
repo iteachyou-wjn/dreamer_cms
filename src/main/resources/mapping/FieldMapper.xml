@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="cn.itechyou.blog.dao.FieldMapper" >
-  <resultMap id="BaseResultMap" type="cn.itechyou.blog.entity.Field" >
+<mapper namespace="cn.itechyou.cms.dao.FieldMapper" >
+  <resultMap id="BaseResultMap" type="cn.itechyou.cms.entity.Field" >
     <id column="id" property="id" jdbcType="VARCHAR" />
     <result column="form_id" property="formId" jdbcType="VARCHAR" />
     <result column="field_text" property="fieldText" jdbcType="VARCHAR" />
@@ -34,7 +34,7 @@
     delete from system_fields
     where id = #{id,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="cn.itechyou.blog.entity.Field" >
+  <insert id="insert" parameterType="cn.itechyou.cms.entity.Field" >
     insert into system_fields (id, form_id, field_text, 
       field_name, type, data_type, 
       default_value, max_length, create_by, 
@@ -48,7 +48,7 @@
       #{ext01,jdbcType=VARCHAR}, #{ext02,jdbcType=VARCHAR}, #{ext03,jdbcType=VARCHAR}, 
       #{ext04,jdbcType=VARCHAR}, #{ext05,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="cn.itechyou.blog.entity.Field" >
+  <insert id="insertSelective" parameterType="cn.itechyou.cms.entity.Field" >
     insert into system_fields
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -157,7 +157,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.itechyou.blog.entity.Field" >
+  <update id="updateByPrimaryKeySelective" parameterType="cn.itechyou.cms.entity.Field" >
     update system_fields
     <set >
       <if test="formId != null" >
@@ -211,7 +211,7 @@
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="cn.itechyou.blog.entity.Field" >
+  <update id="updateByPrimaryKey" parameterType="cn.itechyou.cms.entity.Field" >
     update system_fields
     set form_id = #{formId,jdbcType=VARCHAR},
       field_text = #{fieldText,jdbcType=VARCHAR},

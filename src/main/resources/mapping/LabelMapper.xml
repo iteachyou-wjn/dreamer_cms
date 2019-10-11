@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="cn.itechyou.blog.dao.LabelMapper" >
-  <resultMap id="BaseResultMap" type="cn.itechyou.blog.entity.Label" >
+<mapper namespace="cn.itechyou.cms.dao.LabelMapper" >
+  <resultMap id="BaseResultMap" type="cn.itechyou.cms.entity.Label" >
     <id column="id" property="id" jdbcType="VARCHAR" />
     <result column="tag_name" property="tagName" jdbcType="VARCHAR" />
     <result column="tag_count" property="tagCount" jdbcType="VARCHAR" />
@@ -25,7 +25,7 @@
     delete from system_labels
     where id = #{id,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="cn.itechyou.blog.entity.Label" >
+  <insert id="insert" parameterType="cn.itechyou.cms.entity.Label" >
     insert into system_labels (id, tag_name, tag_count, 
       pinyin, first_char, 
       create_by, create_time, update_by, 
@@ -35,7 +35,7 @@
       #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, 
       #{updateTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="cn.itechyou.blog.entity.Label" >
+  <insert id="insertSelective" parameterType="cn.itechyou.cms.entity.Label" >
     insert into system_labels
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -96,7 +96,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.itechyou.blog.entity.Label" >
+  <update id="updateByPrimaryKeySelective" parameterType="cn.itechyou.cms.entity.Label" >
     update system_labels
     <set >
       <if test="tagName != null" >
@@ -126,7 +126,7 @@
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="cn.itechyou.blog.entity.Label" >
+  <update id="updateByPrimaryKey" parameterType="cn.itechyou.cms.entity.Label" >
     update system_labels
     set tag_name = #{tagName,jdbcType=VARCHAR},
       tag_count = #{tagCount,jdbcType=VARCHAR},
