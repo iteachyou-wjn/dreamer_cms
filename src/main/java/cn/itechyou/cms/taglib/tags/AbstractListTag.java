@@ -33,6 +33,8 @@ public abstract class AbstractListTag {
 		item = item.replaceAll(FieldEnum.FIELD_TAG.getRegexp(), StringUtil.isBlank(archivesVo.get("tag")) ? "" : archivesVo.get("tag").toString());
 		item = item.replaceAll(FieldEnum.FIELD_REMARK.getRegexp(), StringUtil.isBlank(archivesVo.get("description")) ? "" : archivesVo.get("description").toString());
 		item = item.replaceAll(FieldEnum.FIELD_CATEGORYID.getRegexp(), StringUtil.isBlank(archivesVo.get("categoryId")) ? "-1" : archivesVo.get("categoryId").toString());
+		item = item.replaceAll(FieldEnum.FIELD_TYPENAMECN.getRegexp(), StringUtil.isBlank(archivesVo.get("categoryCnName")) ? "" : archivesVo.get("categoryCnName").toString());
+		item = item.replaceAll(FieldEnum.FIELD_TYPENAMEEN.getRegexp(), StringUtil.isBlank(archivesVo.get("categoryEnName")) ? "-1" : archivesVo.get("categoryEnName").toString());
 		item = item.replaceAll(FieldEnum.FIELD_COMMENT.getRegexp(), StringUtil.isBlank(archivesVo.get("comment")) ? "" : archivesVo.get("comment").toString());
 		item = item.replaceAll(FieldEnum.FIELD_SUBSCRIBE.getRegexp(), StringUtil.isBlank(archivesVo.get("subscribe")) ? "" : archivesVo.get("subscribe").toString());
 		item = item.replaceAll(FieldEnum.FIELD_CLICKS.getRegexp(), StringUtil.isBlank(archivesVo.get("clicks")) ? "" : archivesVo.get("clicks").toString());
