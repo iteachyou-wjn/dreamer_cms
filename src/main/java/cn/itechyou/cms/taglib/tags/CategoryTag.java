@@ -125,7 +125,14 @@ public class CategoryTag implements IParse {
 				}else if (FieldEnum.FIELD_TUPDATETIME.getField().equalsIgnoreCase(name)) {
 					newHtml = newHtml.replace(string, StringUtil.isBlank(temp.getUpdateTime()) ? "" : temp.getUpdateTime().toString());
 				}else if (FieldEnum.FIELD_TYPEURL.getField().equalsIgnoreCase(name)) {
-					newHtml = newHtml.replace(string, "/list" + visitUrl + "/" + typeCode);
+					if(temp.getCatModel() == 1) {
+						newHtml = newHtml.replace(string, "/cover-" + typeCode + visitUrl);
+					}else if(temp.getCatModel() == 2) {
+						newHtml = newHtml.replace(string, "/list-" + typeCode + visitUrl + "/1/"
+								+ (StringUtil.isBlank(temp.getPageSize()) ? Constant.PAGE_SIZE_VALUE + "" : temp.getPageSize().toString()));
+					}else if(temp.getCatModel() == 3) {
+						newHtml = newHtml.replace(string, StringUtil.isBlank(temp.getLinkUrl()) ? "" : temp.getLinkUrl());
+					}
 				}else if (FieldEnum.FIELD_EXT01.getField().equalsIgnoreCase(name)) {
 					newHtml = newHtml.replace(string, StringUtil.isBlank(temp.getExt01()) ? "" : temp.getExt01());
 				}else if (FieldEnum.FIELD_EXT02.getField().equalsIgnoreCase(name)) {

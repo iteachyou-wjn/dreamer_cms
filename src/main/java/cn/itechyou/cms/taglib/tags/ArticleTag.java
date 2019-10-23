@@ -120,6 +120,10 @@ public class ArticleTag implements IParse {
 					newHtml = newHtml.replace(string, StringUtil.isBlank(archivesVo.get("description")) ? "" : archivesVo.get("description").toString());
 				}else if (FieldEnum.FIELD_CATEGORYID.getField().equalsIgnoreCase(name)) {
 					newHtml = newHtml.replace(string, StringUtil.isBlank(archivesVo.get("categoryId")) ? "-1" : archivesVo.get("categoryId").toString());
+				}else if (FieldEnum.FIELD_TYPENAMECN.getField().equalsIgnoreCase(name)) {
+					newHtml = newHtml.replace(string, StringUtil.isBlank(archivesVo.get("categoryId")) ? "-1" : archivesVo.get("categoryId").toString());
+				}else if (FieldEnum.FIELD_TYPENAMEEN.getField().equalsIgnoreCase(name)) {
+					newHtml = newHtml.replace(string, StringUtil.isBlank(archivesVo.get("categoryId")) ? "-1" : archivesVo.get("categoryId").toString());
 				}else if (FieldEnum.FIELD_COMMENT.getField().equalsIgnoreCase(name)) {
 					newHtml = newHtml.replace(string, StringUtil.isBlank(archivesVo.get("comment")) ? "" : archivesVo.get("comment").toString());
 				}else if (FieldEnum.FIELD_SUBSCRIBE.getField().equalsIgnoreCase(name)) {
