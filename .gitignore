@@ -26,3 +26,4 @@ buildNumber.properties
 /.sts4-cache
 .sts4-cache
 rebel.xml
+.factorypath
