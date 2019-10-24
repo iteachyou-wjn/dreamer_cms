@@ -3,10 +3,13 @@ server:
   servlet:
     context-path: /
 
-web:
-  resource-path: D:/dreamer-cms/
+#web:
+#  resource-path: D:/dreamer-cms/
 
-spring:    
+spring:
+  
+  profiles:
+     active: dev
   mvc:
     static-path-pattern: /**
     favicon:
@@ -15,9 +18,6 @@ spring:
     static-locations: classpath:/META-INF/resources/,classpath:/static,classpath:/resources/,file:${web.resource-path}
   datasource: 
       name: test
-      #url: jdbc:mysql://39.106.101.180:3306/dreamer-cms?useSSL=false&useUnicode=true&characterEncoding=utf-8
-      #username: wangyawei
-      #password: WangYaWei123!@#
       url: jdbc:mysql://127.0.0.1:3306/dreamer-blog?serverTimezone=GMT&useSSL=false&useUnicode=true&characterEncoding=UTF8
       username: root
       password: root
