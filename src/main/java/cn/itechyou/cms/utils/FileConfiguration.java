@@ -5,14 +5,15 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class FileConfiguration {
-	@Value("${web.resource-path}")
-	private String resourceDir;
 
-	public String getResourceDir() {
-		return resourceDir;
-	}
+    @Value("${web.resource-path}")
+    private String resourceDir;
 
-	public void setResourceDir(String resourceDir) {
-		this.resourceDir = resourceDir;
-	}
+    public String getResourceDir() {
+        return resourceDir;
+    }
+
+    public void setResourceDir(String resourceDir) {
+        this.resourceDir = resourceDir;
+    }
 }

@@ -1,11 +1,16 @@
 package cn.itechyou.cms.exception;
 
-public class TemplateReadException extends CmsException{
+import cn.itechyou.cms.common.ExceptionEnum;
 
-	private static final long serialVersionUID = 3969404221975913175L;
+public class TemplateReadException extends CmsException {
 
-	public TemplateReadException(String code, String message, String reason) {
-		super(code, message, reason);
-	}
-	
+    private static final long serialVersionUID = 3969404221975913175L;
+
+    public TemplateReadException(String code, String message, String reason) {
+        super(code, message, reason);
+    }
+
+    public TemplateReadException(ExceptionEnum exceptionEnum, String reason) {
+        super(exceptionEnum.getCode(), exceptionEnum.getMessage(), reason);
+    }
 }
