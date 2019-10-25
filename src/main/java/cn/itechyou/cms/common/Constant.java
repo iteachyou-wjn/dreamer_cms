@@ -1,5 +1,22 @@
+/**
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER
+ * Copyright © Dreamer CMS 2019 All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package cn.itechyou.cms.common;
 
+import java.io.Serializable;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
@@ -9,30 +26,37 @@ import java.nio.charset.StandardCharsets;
  * @author LIGW
  * @date 2018年5月10日 上午9:19:08
  */
-public class Constant {
+public interface Constant extends Serializable {
 
-    /**
-     * 项目名称
-     */
-    public static String projecName = "梦想家CMS内容管理系统";
+    /** 项目名称 */
+    String projecName = "梦想家CMS内容管理系统";
 
-    public static final String SESSION_USER = "SESSION_USER";
+    String SESSION_USER = "SESSION_USER";
 
-    public static final String PAGE_NUM_KEY = "pageNum";
+    String PAGE_NUM_KEY = "pageNum";
 
-    public static final String PAGE_SIZE_KEY = "pageSize";
+    String PAGE_SIZE_KEY = "pageSize";
 
-    public static final Integer PAGE_NUM_VALUE = 1;
+    Integer PAGE_NUM_VALUE = 1;
 
-    public static final Integer PAGE_SIZE_VALUE = 10;
+    Integer PAGE_SIZE_VALUE = 10;
 
-    public static final String KAPTCHA = "KAPTCHA";
+    String KAPTCHA = "KAPTCHA";
 
-    public static final String ERROR = "/admin/common/error";
+    String ERROR = "/admin/common/error";
 
-    public static final String BLANK = "";
+    String BLANK = "";
 
-    public static final String DEFAULT_ENCODING = "UTF-8";
-    public static final Charset DEFAULT_CHARSET = StandardCharsets.UTF_8;
+    String DEFAULT_ENCODING = "UTF-8";
+    Charset DEFAULT_CHARSET = StandardCharsets.UTF_8;
 
+    String OPERATION_OK = CmsStatus.HTTP_SUCCESS.getDescription();
+    String OPERATION_ERROR = CmsStatus.HTTP_ERROR.getDescription();
+
+    String NOT_FOUND = "Not Found";
+    String BAD_REQUEST = "Bad Request";
+    String UNAUTHORIZED = "Unauthorized";
+    String ACCESS_FORBIDDEN = "Access Forbidden";
+    String METHOD_NOT_ALLOWED = "Method Not Allowed";
+    String INTERNAL_SERVER_ERROR = "Internal Server Error";
 }

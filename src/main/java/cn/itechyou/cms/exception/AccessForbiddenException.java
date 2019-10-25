@@ -16,33 +16,28 @@
  */
 package cn.itechyou.cms.exception;
 
-public class CmsException extends Exception {
+import cn.itechyou.cms.common.Constant;
 
-    private static final long serialVersionUID = 2415656102753230136L;
+/**
+ * @author TODAY <br>
+ *         2018-11-26 20:06
+ */
+@SuppressWarnings("serial")
+public class AccessForbiddenException extends ApplicationRuntimeException {
 
-    private String code;
-    private String reason;
+    public AccessForbiddenException(Throwable cause) {
+        super(cause);
+    }
 
-    public CmsException(String code, String message, String reason) {
+    public AccessForbiddenException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    public AccessForbiddenException(String message) {
         super(message);
-        this.code = code;
-        this.reason = reason;
     }
 
-    public String getCode() {
-        return code;
+    public AccessForbiddenException() {
+        super(Constant.ACCESS_FORBIDDEN);
     }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getReason() {
-        return reason;
-    }
-
-    public void setReason(String reason) {
-        this.reason = reason;
-    }
-
 }
