@@ -10,7 +10,7 @@ import org.apache.shiro.util.ByteSource;
  */
 public class ShiroToken extends UsernamePasswordToken implements java.io.Serializable {
 
-	private static final long serialVersionUID = -6451794657814516274L;
+	private static final long serialVersionUID = 1;
 
 	public ShiroToken(String username, String password, ByteSource salt) {
 		super(username, password);

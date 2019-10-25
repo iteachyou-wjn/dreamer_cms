@@ -16,33 +16,31 @@
  */
 package cn.itechyou.cms.exception;
 
-public class CmsException extends Exception {
+/**
+ * @author TODAY <br>
+ *         2019-06-03 10:27
+ */
+@SuppressWarnings("serial")
+public class ApplicationRuntimeException extends RuntimeException {
 
-    private static final long serialVersionUID = 2415656102753230136L;
+    public ApplicationRuntimeException() {
+        super();
+    }
 
-    private String code;
-    private String reason;
-
-    public CmsException(String code, String message, String reason) {
+    public ApplicationRuntimeException(String message) {
         super(message);
-        this.code = code;
-        this.reason = reason;
     }
 
-    public String getCode() {
-        return code;
+    public ApplicationRuntimeException(Throwable cause) {
+        super(cause);
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public ApplicationRuntimeException(String message, Throwable cause) {
+        super(message, cause);
     }
 
-    public String getReason() {
-        return reason;
-    }
-
-    public void setReason(String reason) {
-        this.reason = reason;
+    public ApplicationRuntimeException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+        super(message, cause, enableSuppression, writableStackTrace);
     }
 
 }

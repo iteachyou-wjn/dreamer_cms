@@ -10,7 +10,7 @@ public interface UserService {
 
 	User getByUserName(String username);
 
-	ResponseResult save(User user);
+	int save(User user);
 
 	PageInfo<User> listByPage(SearchEntity page);
 
