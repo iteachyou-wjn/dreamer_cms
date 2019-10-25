@@ -16,33 +16,32 @@
  */
 package cn.itechyou.cms.exception;
 
-public class CmsException extends Exception {
+import org.slf4j.LoggerFactory;
 
-    private static final long serialVersionUID = 2415656102753230136L;
+import cn.itechyou.cms.common.Constant;
 
-    private String code;
-    private String reason;
+/**
+ * @author TODAY <br>
+ *         2018-12-02 09:14
+ */
+@SuppressWarnings("serial")
+public class InternalServerException extends ApplicationRuntimeException {
 
-    public CmsException(String code, String message, String reason) {
+    public InternalServerException(Throwable cause) {
+        super(cause);
+    }
+
+    public InternalServerException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    public InternalServerException(String message) {
         super(message);
-        this.code = code;
-        this.reason = reason;
+        LoggerFactory.getLogger(InternalServerException.class).error(message);
     }
 
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getReason() {
-        return reason;
-    }
-
-    public void setReason(String reason) {
-        this.reason = reason;
+    public InternalServerException() {
+        super(Constant.INTERNAL_SERVER_ERROR);
     }
 
 }

@@ -16,33 +16,33 @@
  */
 package cn.itechyou.cms.exception;
 
-public class CmsException extends Exception {
+import cn.itechyou.cms.common.Constant;
 
-    private static final long serialVersionUID = 2415656102753230136L;
+/**
+ * @author TODAY <br>
+ *         2019-07-20 15:51
+ */
+@SuppressWarnings("serial")
+public class UnauthorizedException extends ApplicationRuntimeException {
 
-    private String code;
-    private String reason;
+    public UnauthorizedException() {
+        super(Constant.UNAUTHORIZED);
+    }
 
-    public CmsException(String code, String message, String reason) {
+    public UnauthorizedException(String message) {
         super(message);
-        this.code = code;
-        this.reason = reason;
     }
 
-    public String getCode() {
-        return code;
+    public UnauthorizedException(String message, Throwable cause) {
+        super(message, cause);
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public UnauthorizedException(Throwable cause) {
+        super(cause);
     }
 
-    public String getReason() {
-        return reason;
+    protected UnauthorizedException(String message, Throwable cause, //
+            boolean enableSuppression, boolean writableStackTrace) {
+        super(message, cause, enableSuppression, writableStackTrace);
     }
-
-    public void setReason(String reason) {
-        this.reason = reason;
-    }
-
 }

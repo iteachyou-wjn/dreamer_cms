@@ -16,33 +16,28 @@
  */
 package cn.itechyou.cms.exception;
 
-public class CmsException extends Exception {
+import cn.itechyou.cms.common.Constant;
 
-    private static final long serialVersionUID = 2415656102753230136L;
+/**
+ * @author TODAY <br>
+ *         2018-11-26 20:04
+ */
+@SuppressWarnings("serial")
+public class NotFoundException extends ApplicationRuntimeException {
 
-    private String code;
-    private String reason;
+    public NotFoundException(Throwable cause) {
+        super(cause);
+    }
 
-    public CmsException(String code, String message, String reason) {
+    public NotFoundException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    public NotFoundException(String message) {
         super(message);
-        this.code = code;
-        this.reason = reason;
     }
 
-    public String getCode() {
-        return code;
+    public NotFoundException() {
+        super(Constant.NOT_FOUND);
     }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getReason() {
-        return reason;
-    }
-
-    public void setReason(String reason) {
-        this.reason = reason;
-    }
-
 }
