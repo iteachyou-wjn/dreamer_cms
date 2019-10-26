@@ -17,7 +17,7 @@ import cn.itechyou.cms.taglib.annotation.Tag;
 import cn.itechyou.cms.taglib.enums.FieldEnum;
 import cn.itechyou.cms.taglib.utils.RegexUtil;
 import cn.itechyou.cms.utils.PinyinUtils;
-import cn.itechyou.cms.utils.StringUtil;
+import cn.itechyou.cms.utils.StringUtils;
 
 /**
  * Include标签解析
@@ -42,7 +42,7 @@ public class TypeTag extends AbstractChannelTag implements IParse {
 		Attribute[] attributes = annotations.attributes();
 		List<String> tags = RegexUtil.parseAll(html, annotations.regexp(), 0);
 		List<String> contents = RegexUtil.parseAll(html, annotations.regexp(), 1);
-		if(StringUtil.isBlank(tags)) {
+		if(StringUtils.isBlank(tags)) {
 			return html;
 		}
 		String newHtml = html;
@@ -53,7 +53,7 @@ public class TypeTag extends AbstractChannelTag implements IParse {
 			String content = contents.get(i);
 			for (Attribute attribute : attributes) {
 				String condition = RegexUtil.parseFirst(tag, attribute.regex(), 0);
-				if(StringUtil.isBlank(condition)) {
+				if(StringUtils.isBlank(condition)) {
 					continue;
 				}
 				String key = condition.split("=")[0];

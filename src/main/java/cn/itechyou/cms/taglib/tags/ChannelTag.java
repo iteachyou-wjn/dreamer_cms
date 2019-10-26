@@ -20,7 +20,7 @@ import cn.itechyou.cms.taglib.annotation.Tag;
 import cn.itechyou.cms.taglib.enums.FieldEnum;
 import cn.itechyou.cms.taglib.utils.RegexUtil;
 import cn.itechyou.cms.utils.PinyinUtils;
-import cn.itechyou.cms.utils.StringUtil;
+import cn.itechyou.cms.utils.StringUtils;
 
 /**
  * Channel标签解析器
@@ -63,7 +63,7 @@ public class ChannelTag extends AbstractChannelTag implements IParse {
 			Map<String,Object> entity = new HashMap<String,Object>();
 			for (Attribute attribute : attributes) {
 				String condition = RegexUtil.parseFirst(tag, attribute.regex(), 0);
-				if(StringUtil.isBlank(condition)) {
+				if(StringUtils.isBlank(condition)) {
 					continue;
 				}
 				String key = condition.split("=")[0];
@@ -83,10 +83,10 @@ public class ChannelTag extends AbstractChannelTag implements IParse {
 			List<CategoryWithBLOBs> list = null;
 			
 			CategoryWithBLOBs category = null;
-			String code = StringUtil.isBlank(entity.get("type")) ? "top" : entity.get("type").toString();
+			String code = StringUtils.isBlank(entity.get("type")) ? "top" : entity.get("type").toString();
 			
 			String isShow = null;
-			if(!entity.containsKey("showall") || StringUtil.isBlank(entity.get("showall"))) {
+			if(!entity.containsKey("showall") || StringUtils.isBlank(entity.get("showall"))) {
 				isShow = "1";
 			}else {
 				if(!"true".equalsIgnoreCase(entity.get("showall").toString())) {
@@ -139,7 +139,7 @@ public class ChannelTag extends AbstractChannelTag implements IParse {
 			Map<String,Object> entity = new HashMap<String,Object>();
 			for (Attribute attribute : attributes) {
 				String condition = RegexUtil.parseFirst(tag, attribute.regex(), 0);
-				if(StringUtil.isBlank(condition)) {
+				if(StringUtils.isBlank(condition)) {
 					continue;
 				}
 				String key = condition.split("=")[0];
@@ -158,7 +158,7 @@ public class ChannelTag extends AbstractChannelTag implements IParse {
 
 			List<CategoryWithBLOBs> list = null;
 			CategoryWithBLOBs category = null;
-			String isShow = StringUtil.isBlank(entity.get("isall")) ? "1" : entity.get("isall").toString();
+			String isShow = StringUtils.isBlank(entity.get("isall")) ? "1" : entity.get("isall").toString();
 			
 			category = categoryService.queryCategoryByCode(typeid);
 			if(category != null) {

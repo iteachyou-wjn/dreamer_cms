@@ -21,10 +21,9 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
 /**
- * @ClassName: Constant
- * @Description: 全局变量类
- * @author LIGW
- * @date 2018年5月10日 上午9:19:08
+ * 
+ * @author TODAY <br>
+ *         2019-10-26 22:34
  */
 public interface Constant extends Serializable {
 
@@ -60,4 +59,11 @@ public interface Constant extends Serializable {
     String ACCESS_FORBIDDEN = "Access Forbidden";
     String METHOD_NOT_ALLOWED = "Method Not Allowed";
     String INTERNAL_SERVER_ERROR = "Internal Server Error";
+
+    int DEFAULT_LIST_SIZE = 8;
+    
+    String  PARAMETER_SIZE              = "size";
+    String  PARAMETER_CURRENT           = "current";
+    String SPLIT_REGEXP = "[;|,]";
+
 }

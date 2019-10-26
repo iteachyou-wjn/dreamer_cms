@@ -17,7 +17,7 @@ import cn.itechyou.cms.taglib.annotation.Attribute;
 import cn.itechyou.cms.taglib.annotation.Tag;
 import cn.itechyou.cms.taglib.utils.RegexUtil;
 import cn.itechyou.cms.utils.PinyinUtils;
-import cn.itechyou.cms.utils.StringUtil;
+import cn.itechyou.cms.utils.StringUtils;
 
 @Component
 @Tag(beginTag="{dreamer-cms:pagination /}",endTag="",regexp="(\\{dreamer-cms:pagination[ \\t]+.*?/\\})|(\\{dreamer-cms:pagination[ \\t]+.*\\}\\{/dreamer-cms:pagination\\})", attributes={
@@ -42,14 +42,14 @@ public class PaginationTag implements IParse {
 	public String parse(String html, String typeid, PageInfo<Map<String, Object>> pageInfo) {
 		Tag annotations = PaginationTag.class.getAnnotation(Tag.class);
 		String tag = RegexUtil.parseFirst(html, annotations.regexp(), 0);
-		if(StringUtil.isBlank(tag)) {
+		if(StringUtils.isBlank(tag)) {
 			return html;
 		}
 		String newHtml = html;
 		
 		CategoryWithBLOBs category = categoryService.queryCategoryByCode(typeid);
-		String typeCode = StringUtil.isBlank(category.getCode()) ? "" : category.getCode();
-		String visitUrl = StringUtil.isBlank(category.getVisitUrl()) ? PinyinUtils.toPinyin(category.getCnname()) : category.getVisitUrl();
+		String typeCode = StringUtils.isBlank(category.getCode()) ? "" : category.getCode();
+		String visitUrl = StringUtils.isBlank(category.getVisitUrl()) ? PinyinUtils.toPinyin(category.getCnname()) : category.getVisitUrl();
 		if(!visitUrl.startsWith("/")) {
 			visitUrl = "/" + visitUrl;
 		}
@@ -59,7 +59,7 @@ public class PaginationTag implements IParse {
 		Map<String,Object> entity = new HashMap<String,Object>();
 		for (Attribute attribute : attributes) {
 			String condition = RegexUtil.parseFirst(tag, attribute.regex(), 0);
-			if(StringUtil.isBlank(condition)) {
+			if(StringUtils.isBlank(condition)) {
 				continue;
 			}
 			String key = condition.split("=")[0];
