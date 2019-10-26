@@ -18,7 +18,7 @@ import cn.itechyou.cms.taglib.IParse;
 import cn.itechyou.cms.taglib.annotation.Attribute;
 import cn.itechyou.cms.taglib.annotation.Tag;
 import cn.itechyou.cms.taglib.utils.RegexUtil;
-import cn.itechyou.cms.utils.StringUtil;
+import cn.itechyou.cms.utils.StringUtils;
 
 /**
  * List标签解析器
@@ -70,7 +70,7 @@ public class PageListTag extends AbstractListTag implements IParse {
 			Map<String,Object> entity = new HashMap<String,Object>();
 			for (Attribute attribute : attributes) {
 				String condition = RegexUtil.parseFirst(tag, attribute.regex(), 0);
-				if(StringUtil.isBlank(condition)) {
+				if(StringUtils.isBlank(condition)) {
 					continue;
 				}
 				String key = condition.split("=")[0];

@@ -15,7 +15,7 @@ import cn.itechyou.cms.exception.TransactionException;
 import cn.itechyou.cms.security.token.TokenManager;
 import cn.itechyou.cms.service.FieldService;
 import cn.itechyou.cms.service.FormService;
-import cn.itechyou.cms.utils.StringUtil;
+import cn.itechyou.cms.utils.StringUtils;
 import cn.itechyou.cms.utils.UUIDUtils;
 
 @Controller
@@ -39,7 +39,7 @@ public class FieldController {
 		field.setId(UUIDUtils.getPrimaryKey());
 		field.setCreateBy(TokenManager.getToken().getId());
 		field.setCreateTime(new Date());
-		if(StringUtil.isBlank(field.getMaxLength())) {
+		if(StringUtils.isBlank(field.getMaxLength())) {
 			field.setMaxLength(200);
 		}
 		try {
@@ -69,7 +69,7 @@ public class FieldController {
 		Field oldField = fieldService.queryFieldById(newField.getId());
 		newField.setUpdateBy(TokenManager.getToken().getId());
 		newField.setUpdateTime(new Date());
-		if(StringUtil.isBlank(newField.getMaxLength())) {
+		if(StringUtils.isBlank(newField.getMaxLength())) {
 			newField.setMaxLength(200);
 		}
 		try {

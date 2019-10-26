@@ -24,7 +24,7 @@ import cn.itechyou.cms.taglib.annotation.Tag;
 import cn.itechyou.cms.taglib.enums.FieldEnum;
 import cn.itechyou.cms.taglib.utils.RegexUtil;
 import cn.itechyou.cms.utils.PinyinUtils;
-import cn.itechyou.cms.utils.StringUtil;
+import cn.itechyou.cms.utils.StringUtils;
 
 /**
  * Category标签解析
@@ -57,7 +57,7 @@ public class ArticleTag implements IParse {
 	public String parse(String html,String id) {
 		Tag annotations = ArticleTag.class.getAnnotation(Tag.class);
 		List<String> all = RegexUtil.parseAll(html, annotations.regexp(), 0);
-		if(StringUtil.isBlank(all)) {
+		if(StringUtils.isBlank(all)) {
 			return html;
 		}
 		cn.itechyou.cms.entity.System system = systemService.getSystem();
@@ -68,7 +68,7 @@ public class ArticleTag implements IParse {
 			Map<String,Object> entity = new HashMap<String,Object>();
 			for (Attribute attribute : attributes) {
 				String condition = RegexUtil.parseFirst(string, attribute.regex(), 0);
-				if(StringUtil.isBlank(condition)) {
+				if(StringUtils.isBlank(condition)) {
 					continue;
 				}
 				String key = condition.split("=")[0];
@@ -109,45 +109,45 @@ public class ArticleTag implements IParse {
 				if(FieldEnum.FIELD_ID.getField().equalsIgnoreCase(name)) {
 					newHtml = newHtml.replace(string, archivesVo.get("aid").toString());
 				}else if (FieldEnum.FIELD_TITLE.getField().equalsIgnoreCase(name)) {
-					newHtml = newHtml.replace(string, StringUtil.isBlank(archivesVo.get("title")) ? "" : archivesVo.get("title").toString());
+					newHtml = newHtml.replace(string, StringUtils.isBlank(archivesVo.get("title")) ? "" : archivesVo.get("title").toString());
 				}else if (FieldEnum.FIELD_PROPERTIES.getField().equalsIgnoreCase(name)) {
-					newHtml = newHtml.replace(string, StringUtil.isBlank(archivesVo.get("properties")) ? "" : archivesVo.get("properties").toString());
+					newHtml = newHtml.replace(string, StringUtils.isBlank(archivesVo.get("properties")) ? "" : archivesVo.get("properties").toString());
 				}else if (FieldEnum.FIELD_LITPIC.getField().equalsIgnoreCase(name)) {
 					newHtml = newHtml.replace(string, system.getWebsite() + system.getUploaddir() + "/" + imagePath);
 				}else if (FieldEnum.FIELD_TAG.getField().equalsIgnoreCase(name)) {
-					newHtml = newHtml.replace(string, StringUtil.isBlank(archivesVo.get("tag")) ? "" : archivesVo.get("tag").toString());
+					newHtml = newHtml.replace(string, StringUtils.isBlank(archivesVo.get("tag")) ? "" : archivesVo.get("tag").toString());
 				}else if (FieldEnum.FIELD_REMARK.getField().equalsIgnoreCase(name)) {
-					newHtml = newHtml.replace(string, StringUtil.isBlank(archivesVo.get("description")) ? "" : archivesVo.get("description").toString());
+					newHtml = newHtml.replace(string, StringUtils.isBlank(archivesVo.get("description")) ? "" : archivesVo.get("description").toString());
 				}else if (FieldEnum.FIELD_CATEGORYID.getField().equalsIgnoreCase(name)) {
-					newHtml = newHtml.replace(string, StringUtil.isBlank(archivesVo.get("categoryId")) ? "-1" : archivesVo.get("categoryId").toString());
+					newHtml = newHtml.replace(string, StringUtils.isBlank(archivesVo.get("categoryId")) ? "-1" : archivesVo.get("categoryId").toString());
 				}else if (FieldEnum.FIELD_TYPENAMECN.getField().equalsIgnoreCase(name)) {
-					newHtml = newHtml.replace(string, StringUtil.isBlank(archivesVo.get("categoryId")) ? "-1" : archivesVo.get("categoryId").toString());
+					newHtml = newHtml.replace(string, StringUtils.isBlank(archivesVo.get("categoryId")) ? "-1" : archivesVo.get("categoryId").toString());
 				}else if (FieldEnum.FIELD_TYPENAMEEN.getField().equalsIgnoreCase(name)) {
-					newHtml = newHtml.replace(string, StringUtil.isBlank(archivesVo.get("categoryId")) ? "-1" : archivesVo.get("categoryId").toString());
+					newHtml = newHtml.replace(string, StringUtils.isBlank(archivesVo.get("categoryId")) ? "-1" : archivesVo.get("categoryId").toString());
 				}else if (FieldEnum.FIELD_COMMENT.getField().equalsIgnoreCase(name)) {
-					newHtml = newHtml.replace(string, StringUtil.isBlank(archivesVo.get("comment")) ? "" : archivesVo.get("comment").toString());
+					newHtml = newHtml.replace(string, StringUtils.isBlank(archivesVo.get("comment")) ? "" : archivesVo.get("comment").toString());
 				}else if (FieldEnum.FIELD_SUBSCRIBE.getField().equalsIgnoreCase(name)) {
-					newHtml = newHtml.replace(string, StringUtil.isBlank(archivesVo.get("subscribe")) ? "" : archivesVo.get("subscribe").toString());
+					newHtml = newHtml.replace(string, StringUtils.isBlank(archivesVo.get("subscribe")) ? "" : archivesVo.get("subscribe").toString());
 				}else if (FieldEnum.FIELD_CLICKS.getField().equalsIgnoreCase(name)) {
-					newHtml = newHtml.replace(string, StringUtil.isBlank(archivesVo.get("clicks")) ? "" : archivesVo.get("clicks").toString());
+					newHtml = newHtml.replace(string, StringUtils.isBlank(archivesVo.get("clicks")) ? "" : archivesVo.get("clicks").toString());
 				}else if (FieldEnum.FIELD_WEIGHT.getField().equalsIgnoreCase(name)) {
-					newHtml = newHtml.replace(string, StringUtil.isBlank(archivesVo.get("weight")) ? "" : archivesVo.get("weight").toString());
+					newHtml = newHtml.replace(string, StringUtils.isBlank(archivesVo.get("weight")) ? "" : archivesVo.get("weight").toString());
 				}else if (FieldEnum.FIELD_STATUS.getField().equalsIgnoreCase(name)) {
-					newHtml = newHtml.replace(string, StringUtil.isBlank(archivesVo.get("status")) ? "" : archivesVo.get("status").toString());
+					newHtml = newHtml.replace(string, StringUtils.isBlank(archivesVo.get("status")) ? "" : archivesVo.get("status").toString());
 				}else if (FieldEnum.FIELD_CREATEBY.getField().equalsIgnoreCase(name)) {
-					newHtml = newHtml.replace(string, StringUtil.isBlank(archivesVo.get("createBy")) ? "" : archivesVo.get("createBy").toString());
+					newHtml = newHtml.replace(string, StringUtils.isBlank(archivesVo.get("createBy")) ? "" : archivesVo.get("createBy").toString());
 				}else if (FieldEnum.FIELD_CREATETIME.getField().equalsIgnoreCase(name)) {
-					newHtml = newHtml.replace(string, StringUtil.isBlank(archivesVo.get("createTime")) ? "" : archivesVo.get("createTime").toString());
+					newHtml = newHtml.replace(string, StringUtils.isBlank(archivesVo.get("createTime")) ? "" : archivesVo.get("createTime").toString());
 				}else if (FieldEnum.FIELD_UPDATEBY.getField().equalsIgnoreCase(name)) {
-					newHtml = newHtml.replace(string, StringUtil.isBlank(archivesVo.get("updateBy")) ? "" : archivesVo.get("updateBy").toString());
+					newHtml = newHtml.replace(string, StringUtils.isBlank(archivesVo.get("updateBy")) ? "" : archivesVo.get("updateBy").toString());
 				}else if (FieldEnum.FIELD_UPDATETIME.getField().equalsIgnoreCase(name)) {
-					newHtml = newHtml.replace(string, StringUtil.isBlank(archivesVo.get("updateTime")) ? "" : archivesVo.get("updateTime").toString());
+					newHtml = newHtml.replace(string, StringUtils.isBlank(archivesVo.get("updateTime")) ? "" : archivesVo.get("updateTime").toString());
 				}else if (FieldEnum.FIELD_ARCURL.getField().equalsIgnoreCase(name)) {
 					newHtml = newHtml.replace(string, "/article/"+archivesVo.get("aid").toString());
 				}else {
 					//处理附加字段
 					if(archivesVo.containsKey(name))
-						newHtml = newHtml.replace(string, StringUtil.isBlank(archivesVo.get(name)) ? "" : archivesVo.get(name).toString());
+						newHtml = newHtml.replace(string, StringUtils.isBlank(archivesVo.get(name)) ? "" : archivesVo.get(name).toString());
 				}
 				
 			}

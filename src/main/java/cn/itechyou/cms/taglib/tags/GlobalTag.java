@@ -12,7 +12,7 @@ import cn.itechyou.cms.taglib.IParse;
 import cn.itechyou.cms.taglib.annotation.Attribute;
 import cn.itechyou.cms.taglib.annotation.Tag;
 import cn.itechyou.cms.taglib.utils.RegexUtil;
-import cn.itechyou.cms.utils.StringUtil;
+import cn.itechyou.cms.utils.StringUtils;
 
 /**
  * Global标签解析
@@ -32,7 +32,7 @@ public class GlobalTag implements IParse {
 	public String parse(String html) {
 		Tag annotations = GlobalTag.class.getAnnotation(Tag.class);
 		List<String> all = RegexUtil.parseAll(html, annotations.regexp(), 0);
-		if(StringUtil.isBlank(all)) {
+		if(StringUtils.isBlank(all)) {
 			return html;
 		}
 		cn.itechyou.cms.entity.System system = systemService.getSystem();
@@ -43,7 +43,7 @@ public class GlobalTag implements IParse {
 			Map<String,Object> entity = new HashMap<String,Object>();
 			for (Attribute attribute : attributes) {
 				String condition = RegexUtil.parseFirst(string, attribute.regex(), 0);
-				if(StringUtil.isBlank(condition)) {
+				if(StringUtils.isBlank(condition)) {
 					continue;
 				}
 				String key = condition.split("=")[0];

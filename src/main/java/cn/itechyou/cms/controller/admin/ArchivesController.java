@@ -48,7 +48,7 @@ import cn.itechyou.cms.service.FieldService;
 import cn.itechyou.cms.service.FormService;
 import cn.itechyou.cms.service.LabelService;
 import cn.itechyou.cms.service.SystemService;
-import cn.itechyou.cms.utils.StringUtil;
+import cn.itechyou.cms.utils.StringUtils;
 import cn.itechyou.cms.utils.UUIDUtils;
 
 @Controller
@@ -111,8 +111,8 @@ public class ArchivesController {
         archives.setTag(entity.get("tag"));
         archives.setCategoryId(entity.get("categoryId"));
         archives.setImagePath(entity.get("imagePath"));
-        archives.setWeight(StringUtil.isBlank(entity.get("weight")) ? 0 : Integer.parseInt(entity.get("weight")));
-        archives.setClicks(StringUtil.isBlank(entity.get("clicks")) ? 0 : Integer.parseInt(entity.get("clicks")));
+        archives.setWeight(StringUtils.isBlank(entity.get("weight")) ? 0 : Integer.parseInt(entity.get("weight")));
+        archives.setClicks(StringUtils.isBlank(entity.get("clicks")) ? 0 : Integer.parseInt(entity.get("clicks")));
         archives.setDescription(entity.get("description"));
         archives.setComment(Integer.parseInt(entity.get("comment")));
         archives.setSubscribe(Integer.parseInt(entity.get("subscribe")));
@@ -135,18 +135,18 @@ public class ArchivesController {
             archives.setProperties(properties.subSequence(0, properties.length() - 1).toString());
         }
         else {
-            archives.setProperties(StringUtil.isNotBlank(archives.getImagePath()) ? "p" : "n");
+            archives.setProperties(StringUtils.isNotBlank(archives.getImagePath()) ? "p" : "n");
         }
 
         //处理标签
         String tag = archives.getTag();
-        if (StringUtil.isNotBlank(tag)) {
+        if (StringUtils.isNotBlank(tag)) {
             String[] tagArr = tag.split(",");
             labelService.insertOrUpdate(tagArr);
         }
 
-        if (StringUtil.isNotBlank(archives.getImagePath())) {
-            if (StringUtil.isBlank(archives.getProperties())) {
+        if (StringUtils.isNotBlank(archives.getImagePath())) {
+            if (StringUtils.isBlank(archives.getProperties())) {
                 archives.setProperties("p");
             }
             else if (!archives.getProperties().contains("p")) {
@@ -224,8 +224,8 @@ public class ArchivesController {
         archives.setTitle(entity.get("title"));
         archives.setCategoryId(entity.get("categoryId"));
         archives.setImagePath(entity.get("imagePath"));
-        archives.setWeight(StringUtil.isBlank(entity.get("weight")) ? 0 : Integer.parseInt(entity.get("weight")));
-        archives.setClicks(StringUtil.isBlank(entity.get("clicks")) ? 0 : Integer.parseInt(entity.get("clicks")));
+        archives.setWeight(StringUtils.isBlank(entity.get("weight")) ? 0 : Integer.parseInt(entity.get("weight")));
+        archives.setClicks(StringUtils.isBlank(entity.get("clicks")) ? 0 : Integer.parseInt(entity.get("clicks")));
         archives.setDescription(entity.get("description"));
         archives.setComment(Integer.parseInt(entity.get("comment")));
         archives.setSubscribe(Integer.parseInt(entity.get("subscribe")));
@@ -250,7 +250,7 @@ public class ArchivesController {
             archives.setProperties(properties.substring(0, properties.length() - 1).toString());
         }
         else {
-            archives.setProperties(StringUtil.isNotBlank(archives.getImagePath()) ? "p" : "n");
+            archives.setProperties(StringUtils.isNotBlank(archives.getImagePath()) ? "p" : "n");
         }
 
         String formId = formService.queryDefaultForm().getId();
@@ -272,14 +272,14 @@ public class ArchivesController {
         String tag = "";
         if (oldArchives.get("tag") != null) {
             tag = oldArchives.get("tag").toString();
-            if (StringUtil.isNotBlank(tag)) {
+            if (StringUtils.isNotBlank(tag)) {
                 String[] tagArr = tag.split(",");
                 labelService.updateCount(tagArr);
             }
         }
         //处理新标签
         tag = archives.getTag();
-        if (StringUtil.isNotBlank(tag)) {
+        if (StringUtils.isNotBlank(tag)) {
             String[] tagArr = tag.split(",");
             labelService.insertOrUpdate(tagArr);
         }
@@ -327,9 +327,9 @@ public class ArchivesController {
         Map<String, Object> article = archivesService.queryArticleById(params);
         //对原有标签进行删除
         Object object = article.get("tag");
-        if (StringUtil.isNotBlank(object)) {
+        if (StringUtils.isNotBlank(object)) {
             final String tag = object.toString();
-            if (StringUtil.isNotBlank(tag)) {
+            if (StringUtils.isNotBlank(tag)) {
                 String[] tagArr = tag.split(",");
                 labelService.updateCount(tagArr);
             }
