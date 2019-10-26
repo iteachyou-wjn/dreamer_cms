@@ -49,6 +49,7 @@ public interface Constant extends Serializable {
 
     String DEFAULT_ENCODING = "UTF-8";
     Charset DEFAULT_CHARSET = StandardCharsets.UTF_8;
+    String DEFAULT_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss.SSS";
 
     String OPERATION_OK = CmsStatus.HTTP_SUCCESS.getDescription();
     String OPERATION_ERROR = CmsStatus.HTTP_ERROR.getDescription();
