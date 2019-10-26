@@ -1,3 +1,19 @@
+/**
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER
+ * Copyright © Dreamer CMS 2019 All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package cn.itechyou.cms.entity;
 
 import java.io.Serializable;
@@ -8,35 +24,29 @@ import org.springframework.data.annotation.Transient;
 
 import com.alibaba.fastjson.annotation.JSONField;
 
+import cn.itechyou.cms.common.UserStatus;
+
 public class User implements Serializable {
+    
+    private static final long serialVersionUID = 1L;
+
     private String id;
 
     private String username;
-
     private String password;
-
     private String mobile;
-
     private String realname;
-
     private Integer status;
+    private UserStatus UserStatus;
 
     private String pageStyle;
-    
     private String salt;
-
     private String lastLoginIp;
-
     private Date lastLoginTime;
-
     private String portrait;
-
     private String createBy;
-
     private Date createTime;
-
     private String updateBy;
-
     private Date updateTime;
     
     @JSONField(serialize=false)
