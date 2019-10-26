@@ -27,6 +27,7 @@ import org.springframework.core.Ordered;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.context.ConfigurableWebApplicationContext;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -51,6 +52,12 @@ public class WebMvcAutoConfiguration implements WebMvcConfigurer,
         converters.add(new DefaultHttpMessageConverter());
         converters.add(new StringHttpMessageConverter(Constant.DEFAULT_CHARSET));
     }
+    
+    @Override
+    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
+        resolvers.add(new PageableMethodArgumentResolver());
+    }
+
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
