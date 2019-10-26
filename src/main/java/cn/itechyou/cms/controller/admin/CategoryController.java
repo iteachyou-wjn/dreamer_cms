@@ -25,7 +25,7 @@ import cn.itechyou.cms.security.token.TokenManager;
 import cn.itechyou.cms.service.CategoryService;
 import cn.itechyou.cms.service.FormService;
 import cn.itechyou.cms.service.SystemService;
-import cn.itechyou.cms.utils.StringUtil;
+import cn.itechyou.cms.utils.StringUtils;
 import cn.itechyou.cms.utils.UUIDUtils;
 
 @Controller
@@ -95,7 +95,7 @@ public class CategoryController extends BaseController {
         category.setId(UUIDUtils.getPrimaryKey());
         category.setCode(UUIDUtils.getCharAndNumr(8));
         category.setLevel(category.getParentId().equals("-1") ? "1" : category.getLevel());
-        category.setParentId(StringUtil.isBlank(category.getParentId()) ? "-1" : category.getParentId());
+        category.setParentId(StringUtils.isBlank(category.getParentId()) ? "-1" : category.getParentId());
         category.setCreateBy(TokenManager.getToken().getId());
         category.setCreateTime(new Date());
         if (!"-1".equals(category.getParentId())) {
@@ -107,13 +107,13 @@ public class CategoryController extends BaseController {
         }
 
         //处理模版
-        if (StringUtil.isNotBlank(category.getCoverTemp()) && !category.getCoverTemp().startsWith("/")) {
+        if (StringUtils.isNotBlank(category.getCoverTemp()) && !category.getCoverTemp().startsWith("/")) {
             category.setCoverTemp("/" + category.getCoverTemp());
         }
-        if (StringUtil.isNotBlank(category.getListTemp()) && !category.getListTemp().startsWith("/")) {
+        if (StringUtils.isNotBlank(category.getListTemp()) && !category.getListTemp().startsWith("/")) {
             category.setListTemp("/" + category.getListTemp());
         }
-        if (StringUtil.isNotBlank(category.getArticleTemp()) && !category.getArticleTemp().startsWith("/")) {
+        if (StringUtils.isNotBlank(category.getArticleTemp()) && !category.getArticleTemp().startsWith("/")) {
             category.setArticleTemp("/" + category.getArticleTemp());
         }
         categoryService.save(category);
@@ -125,13 +125,13 @@ public class CategoryController extends BaseController {
         category.setUpdateBy(TokenManager.getToken().getId());
         category.setUpdateTime(new Date());
         //处理模版
-        if (StringUtil.isNotBlank(category.getCoverTemp()) && !category.getCoverTemp().startsWith("/")) {
+        if (StringUtils.isNotBlank(category.getCoverTemp()) && !category.getCoverTemp().startsWith("/")) {
             category.setCoverTemp("/" + category.getCoverTemp());
         }
-        if (StringUtil.isNotBlank(category.getListTemp()) && !category.getListTemp().startsWith("/")) {
+        if (StringUtils.isNotBlank(category.getListTemp()) && !category.getListTemp().startsWith("/")) {
             category.setListTemp("/" + category.getListTemp());
         }
-        if (StringUtil.isNotBlank(category.getArticleTemp()) && !category.getArticleTemp().startsWith("/")) {
+        if (StringUtils.isNotBlank(category.getArticleTemp()) && !category.getArticleTemp().startsWith("/")) {
             category.setArticleTemp("/" + category.getArticleTemp());
         }
         categoryService.update(category);

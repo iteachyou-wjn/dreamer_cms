@@ -10,7 +10,7 @@ import cn.itechyou.cms.taglib.IParse;
 import cn.itechyou.cms.taglib.annotation.Attribute;
 import cn.itechyou.cms.taglib.annotation.Tag;
 import cn.itechyou.cms.taglib.utils.RegexUtil;
-import cn.itechyou.cms.utils.StringUtil;
+import cn.itechyou.cms.utils.StringUtils;
 
 /**
  * Include标签解析
@@ -29,7 +29,7 @@ public class IfTag implements IParse {
 		Attribute[] attributes = annotations.attributes();
 		List<String> tags = RegexUtil.parseAll(html, annotations.regexp(), 0);
 		List<String> contents = RegexUtil.parseAll(html, annotations.regexp(), 1);
-		if(StringUtil.isBlank(tags)) {
+		if(StringUtils.isBlank(tags)) {
 			return html;
 		}
 		String newHtml = html;
@@ -40,7 +40,7 @@ public class IfTag implements IParse {
 			String content = contents.get(i);
 			for (Attribute attribute : attributes) {
 				String condition = RegexUtil.parseFirst(tag, attribute.regex(), 0);
-				if(StringUtil.isBlank(condition)) {
+				if(StringUtils.isBlank(condition)) {
 					continue;
 				}
 				String key = condition.split("=")[0];
@@ -62,7 +62,7 @@ public class IfTag implements IParse {
 			String value1 = values[0];
 			String value2 = values[1];
 			
-			if(StringUtil.isBlank(value1) || StringUtil.isBlank(value2)) {
+			if(StringUtils.isBlank(value1) || StringUtils.isBlank(value2)) {
 				//
 			}
 			switch (operation) {

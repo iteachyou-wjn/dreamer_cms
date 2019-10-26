@@ -17,56 +17,28 @@
 package cn.itechyou.cms.common;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
+import lombok.Getter;
+import lombok.Setter;
+
+/**
+ * @author TODAY <br>
+ *         2019-10-26 22:27
+ */
+@Getter
+@Setter
 public class BaseEntity implements Serializable {
-	private String id;
-	
-	private Date createTime;
 
-	private String createBy;
+    private static final long serialVersionUID = 1L;
 
-	private Date updateTime;
-
-	private String updateBy;
-	
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-	
-	public Date getCreateTime() {
-		return createTime;
-	}
-
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
-
-	public String getCreateBy() {
-		return createBy;
-	}
-
-	public void setCreateBy(String createBy) {
-		this.createBy = createBy;
-	}
-
-	public Date getUpdateTime() {
-		return updateTime;
-	}
-
-	public void setUpdateTime(Date updateTime) {
-		this.updateTime = updateTime;
-	}
-
-	public String getUpdateBy() {
-		return updateBy;
-	}
-
-	public void setUpdateBy(String updateBy) {
-		this.updateBy = updateBy;
-	}
+    private String id;
+    //	private Date createTime;
+    /** 创建时间 */
+    private LocalDateTime createTime;
+    private String createBy;
+    /** 最后更改时间 */
+    //    private LocalDateTime lastModify;
+    private String updateBy;
+    private LocalDateTime updateTime;
 }

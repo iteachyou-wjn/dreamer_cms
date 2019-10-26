@@ -17,7 +17,7 @@ import cn.itechyou.cms.taglib.annotation.Attribute;
 import cn.itechyou.cms.taglib.annotation.Tag;
 import cn.itechyou.cms.taglib.utils.RegexUtil;
 import cn.itechyou.cms.utils.FileConfiguration;
-import cn.itechyou.cms.utils.StringUtil;
+import cn.itechyou.cms.utils.StringUtils;
 
 /**
  * Include标签解析
@@ -40,7 +40,7 @@ public class IncludeTag implements IParse {
 		Tag annotations = IncludeTag.class.getAnnotation(Tag.class);
 		Attribute[] attributes = annotations.attributes();
 		List<String> all = RegexUtil.parseAll(html, annotations.regexp(), 0);
-		if(StringUtil.isBlank(all)) {
+		if(StringUtils.isBlank(all)) {
 			return html;
 		}
 		String newHtml = html;
@@ -54,7 +54,7 @@ public class IncludeTag implements IParse {
 			String includeTag = all.get(i);
 			for (Attribute attribute : attributes) {
 				String condition = RegexUtil.parseFirst(includeTag, attribute.regex(), 0);
-				if(StringUtil.isBlank(condition)) {
+				if(StringUtils.isBlank(condition)) {
 					continue;
 				}
 				String key = condition.split("=")[0];

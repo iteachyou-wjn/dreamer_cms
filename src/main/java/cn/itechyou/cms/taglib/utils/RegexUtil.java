@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import cn.itechyou.cms.utils.StringUtil;
+import cn.itechyou.cms.utils.StringUtils;
 
 /**
  * 解析模版中正则表达式的工具类
@@ -119,7 +119,7 @@ public class RegexUtil {
 			Matcher _matcherList = _patternList.matcher(matcherList.group());
 			
 			while (_matcherList.find()) {
-				if(!StringUtil.isBlank(_matcherList.group(1)) && !StringUtil.isBlank(_matcherList.group(2))){
+				if(!StringUtils.isBlank(_matcherList.group(1)) && !StringUtils.isBlank(_matcherList.group(2))){
 					map.put(_matcherList.group(1), _matcherList.group(2));
 				}
 			}		
@@ -148,7 +148,7 @@ public class RegexUtil {
 			while (_matcherList.find()) {
 				
 				for(int i=0;i<find;i++){
-					if(!StringUtil.isBlank(_matcherList.group(i+1))){
+					if(!StringUtils.isBlank(_matcherList.group(i+1))){
 						map.put(i, _matcherList.group(i+1));
 					}
 				}
