@@ -19,15 +19,10 @@ package cn.itechyou.cms.common;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-import lombok.Getter;
-import lombok.Setter;
-
 /**
  * @author TODAY <br>
  *         2019-10-26 22:27
  */
-@Getter
-@Setter
 public class BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -41,4 +36,44 @@ public class BaseEntity implements Serializable {
     //    private LocalDateTime lastModify;
     private String updateBy;
     private LocalDateTime updateTime;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public LocalDateTime getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(LocalDateTime createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
+    }
+
+    public String getUpdateBy() {
+        return updateBy;
+    }
+
+    public void setUpdateBy(String updateBy) {
+        this.updateBy = updateBy;
+    }
+
+    public LocalDateTime getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(LocalDateTime updateTime) {
+        this.updateTime = updateTime;
+    }
 }

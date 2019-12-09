@@ -25,13 +25,10 @@ import org.apache.commons.collections.CollectionUtils;
 
 import com.alibaba.fastjson.annotation.JSONField;
 
-import lombok.Setter;
-
 /**
  * @author TODAY <br>
  *         2019-10-26 22:32
  */
-@Setter
 public class Pagination<T> implements ListableResult<T>, Pageable {
 
     private static final long serialVersionUID = 1L;
@@ -310,5 +307,31 @@ public class Pagination<T> implements ListableResult<T>, Pageable {
                 .append('=')
                 .append(Arrays.toString(descs));
         return builder.toString();
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public Pagination<T> setMsg(String msg) {
+        this.msg = msg;
+        return this;
+    }
+
+    public Pagination<T> setCode(int code) {
+        this.code = code;
+        return this;
+
+    }
+
+    public Pagination<T> setSuccess(boolean success) {
+        this.success = success;
+        return this;
+
+    }
+
+    public Pagination<T> setData(List<T> data) {
+        this.data = data;
+        return this;
     }
 }

@@ -16,14 +16,10 @@
  */
 package cn.itechyou.cms.common;
 
-
-import lombok.Getter;
-
 /**
  * @author TODAY <br>
  * 		   2019-10-26 15:29
  */
-@Getter
 public enum UserStatus {
 
     NORMAL(0, "正常"),
@@ -38,6 +34,14 @@ public enum UserStatus {
     UserStatus(int code, String msg) {
         this.msg = msg;
         this.code = code;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public int getCode() {
+        return code;
     }
 
 }
