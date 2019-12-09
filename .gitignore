@@ -12,3 +12,21 @@ buildNumber.properties
 # Avoid ignoring Maven wrapper jar file (.jar files are usually ignored)
 !/.mvn/wrapper/maven-wrapper.jar
 *.log.gz
+.settings/
+
+*.class
+
+*.jar
+*.war
+*.ear
+/target
+/.settings
+.classpath
+/.project
+/.sts4-cache
+.sts4-cache
+.factorypath
+
+rebel.xml
+log4j2-dev.yml
+application-dev.yml
