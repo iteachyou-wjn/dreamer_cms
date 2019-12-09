@@ -8,10 +8,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement //开启注解事务管理,等同于xml配置方式的 <tx:annotation-driven />
 @SpringBootApplication
 @MapperScan("cn.itechyou.cms.dao")
-public class DreamerBlogApplication {
+public class DreamerCMSApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(DreamerBlogApplication.class, args);
+		SpringApplication.run(DreamerCMSApplication.class, args);
 	}
 	
 }
