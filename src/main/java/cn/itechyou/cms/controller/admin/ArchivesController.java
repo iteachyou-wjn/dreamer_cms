@@ -19,12 +19,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.github.pagehelper.PageInfo;
 
 import cn.itechyou.cms.common.Constant;
+import cn.itechyou.cms.common.ExceptionEnum;
 import cn.itechyou.cms.common.SearchEntity;
 import cn.itechyou.cms.entity.Archives;
 import cn.itechyou.cms.entity.Category;
 import cn.itechyou.cms.entity.Field;
 import cn.itechyou.cms.entity.Form;
 import cn.itechyou.cms.entity.System;
+import cn.itechyou.cms.exception.AdminGeneralException;
+import cn.itechyou.cms.exception.CmsException;
+import cn.itechyou.cms.exception.TemplateReadException;
 import cn.itechyou.cms.exception.TransactionException;
 import cn.itechyou.cms.security.token.TokenManager;
 import cn.itechyou.cms.service.ArchivesService;
@@ -86,7 +90,7 @@ public class ArchivesController {
 	}
 	
 	@RequestMapping("/add")
-	public String add(Model model,HttpServletRequest request,@RequestParam Map<String,String> entity) {
+	public String add(Model model,HttpServletRequest request,@RequestParam Map<String,String> entity) throws CmsException {
 		Archives archives = new Archives();
 		archives.setId(UUIDUtils.getPrimaryKey());
 		archives.setCreateTime(new Date());
@@ -169,8 +173,10 @@ public class ArchivesController {
 		try {
 			archivesService.save(archives,tableName,additional);
 		} catch (TransactionException e) {
-			model.addAttribute("exception", e);
-			return Constant.ERROR;
+			throw new AdminGeneralException(
+					ExceptionEnum.HTTP_INTERNAL_SERVER_ERROR.getCode(),
+					ExceptionEnum.HTTP_INTERNAL_SERVER_ERROR.getMessage(),
+					e.getMessage());
 		}
 		return "redirect:/admin/archives/list?entity%5Bcid%5D=" + categoryCode;
 	}
@@ -201,7 +207,7 @@ public class ArchivesController {
 	}
 	
 	@RequestMapping(value ="/edit")
-	public String edit(Model model,HttpServletRequest request,@RequestParam Map<String,String> entity) {
+	public String edit(Model model,HttpServletRequest request,@RequestParam Map<String,String> entity) throws CmsException {
 		Archives archives = new Archives();
 		archives.setId(entity.get("id"));
 		archives.setTitle(entity.get("title"));
@@ -287,14 +293,16 @@ public class ArchivesController {
 		try {
 			archivesService.update(archives,tableName,additional,entity.get("fid"));
 		} catch (TransactionException e) {
-			model.addAttribute("exception", e);
-			return Constant.ERROR;
+			throw new AdminGeneralException(
+					ExceptionEnum.HTTP_INTERNAL_SERVER_ERROR.getCode(),
+					ExceptionEnum.HTTP_INTERNAL_SERVER_ERROR.getMessage(),
+					e.getMessage());
 		}
 		return "redirect:/admin/archives/list?entity%5Bcid%5D=" + categoryCode;
 	}
 	
 	@RequestMapping(value ="/delete")
-	public String delete(Model model, String id,String cid) {
+	public String delete(Model model, String id,String cid) throws CmsException {
 		Map<String,Object> params = new HashMap<String,Object>();
 		if(!"-1".equals(cid)) {
 			Category category = categoryService.selectById(cid);
@@ -317,8 +325,10 @@ public class ArchivesController {
 		try {
 			archivesService.delete(id,params);
 		} catch (TransactionException e) {
-			model.addAttribute("exception", e);
-			return Constant.ERROR;
+			throw new AdminGeneralException(
+					ExceptionEnum.HTTP_INTERNAL_SERVER_ERROR.getCode(),
+					ExceptionEnum.HTTP_INTERNAL_SERVER_ERROR.getMessage(),
+					e.getMessage());
 		}
 		return "redirect:/admin/archives/list";
 	}

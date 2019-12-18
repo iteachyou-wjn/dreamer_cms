@@ -11,8 +11,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.github.pagehelper.PageInfo;
 
 import cn.itechyou.cms.common.Constant;
+import cn.itechyou.cms.common.ExceptionEnum;
 import cn.itechyou.cms.common.SearchEntity;
 import cn.itechyou.cms.entity.Variable;
+import cn.itechyou.cms.exception.AdminGeneralException;
+import cn.itechyou.cms.exception.CmsException;
 import cn.itechyou.cms.security.token.TokenManager;
 import cn.itechyou.cms.service.VariableService;
 import cn.itechyou.cms.utils.UUIDUtils;
@@ -49,17 +52,20 @@ public class VariableController {
 	
 	/**
 	 * 添加
+	 * @throws CmsException 
 	 */
 	@RequestMapping("/add")
-	public String add(Model model, Variable variable) {
+	public String add(Model model, Variable variable) throws CmsException {
 		variable.setId(UUIDUtils.getPrimaryKey());
 		variable.setCreateBy(TokenManager.getToken().getId());
 		variable.setCreateTime(new Date());
 		try {
 			variableService.add(variable);
-		} catch (Exception e1) {
-			model.addAttribute("exception", e1);
-			return Constant.ERROR;
+		} catch (Exception e) {
+			throw new AdminGeneralException(
+					ExceptionEnum.HTTP_INTERNAL_SERVER_ERROR.getCode(),
+					ExceptionEnum.HTTP_INTERNAL_SERVER_ERROR.getMessage(),
+					e.getMessage());
 		}
 		return "redirect:/admin/variable/list";
 	}

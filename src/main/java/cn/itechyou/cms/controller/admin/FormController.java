@@ -12,9 +12,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.github.pagehelper.PageInfo;
 
 import cn.itechyou.cms.common.Constant;
+import cn.itechyou.cms.common.ExceptionEnum;
 import cn.itechyou.cms.common.SearchEntity;
 import cn.itechyou.cms.entity.Field;
 import cn.itechyou.cms.entity.Form;
+import cn.itechyou.cms.exception.AdminGeneralException;
+import cn.itechyou.cms.exception.CmsException;
 import cn.itechyou.cms.exception.TransactionException;
 import cn.itechyou.cms.security.token.TokenManager;
 import cn.itechyou.cms.service.FieldService;
@@ -44,7 +47,7 @@ public class FormController {
 	}
 	
 	@RequestMapping("/add")
-	public String add(Model model,Form form) {
+	public String add(Model model,Form form) throws CmsException {
 		form.setId(UUIDUtils.getPrimaryKey());
 		form.setCreateBy(TokenManager.getToken().getId());
 		form.setCreateTime(new Date());
@@ -53,8 +56,10 @@ public class FormController {
 		try {
 			formService.add(form);
 		} catch (TransactionException e) {
-			model.addAttribute("exception", e);
-			return Constant.ERROR;
+			throw new AdminGeneralException(
+					ExceptionEnum.HTTP_INTERNAL_SERVER_ERROR.getCode(),
+					ExceptionEnum.HTTP_INTERNAL_SERVER_ERROR.getMessage(),
+					e.getMessage());
 		}
 		return "redirect:/admin/forms/list";
 	}
@@ -71,7 +76,7 @@ public class FormController {
 	}
 	
 	@RequestMapping("/edit")
-	public String edit(Model model,Form newForm) {
+	public String edit(Model model,Form newForm) throws CmsException {
 		Form oldForm = formService.queryFormById(newForm.getId());
 		
 		newForm.setUpdateBy(TokenManager.getToken().getId());
@@ -80,14 +85,16 @@ public class FormController {
 		try {
 			formService.update(newForm,oldForm);
 		} catch (TransactionException e) {
-			model.addAttribute("exception", e);
-			return Constant.ERROR;
+			throw new AdminGeneralException(
+					ExceptionEnum.HTTP_INTERNAL_SERVER_ERROR.getCode(),
+					ExceptionEnum.HTTP_INTERNAL_SERVER_ERROR.getMessage(),
+					e.getMessage());
 		}
 		return "redirect:/admin/forms/list";
 	}
 	
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public String delete(Model model, String id) {
+	public String delete(Model model, String id) throws CmsException {
 		Form form = formService.queryFormById(id);
 		if(form.getType() == 0) {
 			throw new RuntimeException("系统表单不允许删除！");
@@ -98,8 +105,10 @@ public class FormController {
 		try {
 			formService.delete(form,fields);
 		} catch (TransactionException e) {
-			model.addAttribute("exception", e);
-			return Constant.ERROR;
+			throw new AdminGeneralException(
+					ExceptionEnum.HTTP_INTERNAL_SERVER_ERROR.getCode(),
+					ExceptionEnum.HTTP_INTERNAL_SERVER_ERROR.getMessage(),
+					e.getMessage());
 		}
 		return "redirect:/admin/forms/list";
 	}

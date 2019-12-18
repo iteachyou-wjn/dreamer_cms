@@ -347,7 +347,7 @@
 	WHERE a.id = #{id,jdbcType=VARCHAR}
   </select>
   
-  <insert id="insertAdditional" keyProperty="id" useGeneratedKeys="true" parameterType="hashmap">
+  <insert id="insertAdditional" parameterType="hashmap">
     INSERT INTO `${tableName}` (
     <foreach collection="cols" index="key" item="value" separator="," >
         `${key}`

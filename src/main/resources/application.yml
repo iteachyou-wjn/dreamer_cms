@@ -26,6 +26,7 @@ spring:
     host: 127.0.0.1
     port: 6379
     timeout: 2000
+    password: YTU3e^u!gN^6HHPm
     jedis:
       pool:
         max-idle: 100

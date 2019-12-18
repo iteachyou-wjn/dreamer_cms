@@ -25,5 +25,5 @@ public class Constant {
 	
 	public static final String KAPTCHA = "KAPTCHA";
 	
-	public static final String ERROR = "/admin/common/error";
+	public static final String ERROR = "error/exception";
 }
