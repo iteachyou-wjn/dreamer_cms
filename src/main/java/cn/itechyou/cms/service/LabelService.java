@@ -3,7 +3,6 @@ package cn.itechyou.cms.service;
 import java.util.List;
 import java.util.Map;
 
-import cn.itechyou.cms.common.SearchEntity;
 import cn.itechyou.cms.entity.Label;
 
 public interface LabelService {
@@ -16,5 +15,4 @@ public interface LabelService {
 	public int deleteByTagName(String tagName);
 	
 	public List<Label> queryAll();
-
 }

@@ -58,9 +58,6 @@ public enum FieldEnum {
 	FIELD_ADDFIELDS_END("addfields_end","[ \\t]*.*?/\\])"),
 	
 	FIELD_AUTOINDEX("autoindex","(\\[field:autoindex[ \\t]*.*?/\\])"),
-	FIELD_TAGNAME("tagname","(\\[field:tagname[ \\t]*.*?/\\])"),
-	FIELD_TAGPINYIN("tagpinyin","(\\[field:tagpinyin[ \\t]*.*?/\\])"),
-	FIELD_TAGFIRSTCHAR("tagfirstchar","(\\[field:tagfirstchar[ \\t]*.*?/\\])"),
 	;
 	private String field;
 	private String regexp;

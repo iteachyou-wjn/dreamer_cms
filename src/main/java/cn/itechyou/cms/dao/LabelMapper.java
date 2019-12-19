@@ -29,6 +29,4 @@ public interface LabelMapper {
 	int deleteByTagName(String tagName);
 
 	List<Label> queryAll();
-
-	List<Label> queryLabelByPage(Map<String, Object> entity);
 }
