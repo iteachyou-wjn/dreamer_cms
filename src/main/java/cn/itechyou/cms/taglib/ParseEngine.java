@@ -10,6 +10,7 @@ import cn.itechyou.cms.taglib.tags.ChannelTag;
 import cn.itechyou.cms.taglib.tags.GlobalTag;
 import cn.itechyou.cms.taglib.tags.IfTag;
 import cn.itechyou.cms.taglib.tags.IncludeTag;
+import cn.itechyou.cms.taglib.tags.LabelTag;
 import cn.itechyou.cms.taglib.tags.ListTag;
 import cn.itechyou.cms.taglib.tags.PageListTag;
 import cn.itechyou.cms.taglib.tags.TemplateTag;
@@ -31,6 +32,8 @@ public class ParseEngine {
 	private ChannelTag channelTag;
 	@Autowired
 	private ListTag listTag;
+	@Autowired
+	private LabelTag labelTag;
 	@Autowired
 	private TypeTag typeTag;
 	@Autowired 
@@ -59,6 +62,7 @@ public class ParseEngine {
 		newHtml = channelArtListTag.parse(newHtml);
 		newHtml = channelTag.parse(newHtml);
 		newHtml = listTag.parse(newHtml);
+		newHtml = labelTag.parse(newHtml);
 		newHtml = ifTag.parse(newHtml);
 		return newHtml;
 	}
@@ -71,18 +75,35 @@ public class ParseEngine {
 	public String parseCategory(String html, String typeid) {
 		String newHtml = new String(html);
 		newHtml = categoryTag.parse(newHtml, typeid);
+		newHtml = labelTag.parse(newHtml);
 		return newHtml;
 	}
-
+	
+	/**
+	 * 列表页面解析
+	 * @param html
+	 * @param typeid
+	 * @param pageNum
+	 * @param pageSize
+	 * @return
+	 */
 	public String parsePageList(String html, String typeid, Integer pageNum, Integer pageSize) {
 		String newHtml = new String(html);
 		newHtml = pageListTag.parse(newHtml,typeid,pageNum,pageSize);
+		newHtml = labelTag.parse(newHtml);
 		return newHtml;
 	}
-
+	
+	/**
+	 * 文章详情页面解析
+	 * @param html
+	 * @param id
+	 * @return
+	 */
 	public String parseArticle(String html, String id) {
 		String newHtml = new String(html);
 		newHtml = articleTag.parse(newHtml, id);
+		newHtml = labelTag.parse(newHtml);
 		return newHtml;
 	}
 

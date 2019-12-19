@@ -182,6 +182,7 @@ public class ListTag extends AbstractListTag implements IParse {
 					imagePath = archivesVo.get("imagePath").toString();
 					imagePath = imagePath.replace("\\", "/");
 				}
+				item = item.replaceAll(FieldEnum.FIELD_AUTOINDEX.getRegexp(), String.valueOf(j+1));
 				item = item.replaceAll(FieldEnum.FIELD_ID.getRegexp(), archivesVo.get("aid").toString());
 				item = item.replaceAll(FieldEnum.FIELD_TITLE.getRegexp(), archivesVo.get("title").toString());
 				item = item.replaceAll(FieldEnum.FIELD_ARCURL.getRegexp(), "url");
