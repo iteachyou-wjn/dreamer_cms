@@ -166,4 +166,11 @@
     from system_labels
     order by tag_count desc
   </select>
+  
+  <select id="queryLabelByPage" parameterType="java.util.Map" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List" />
+    from system_labels
+    order by tag_count desc
+  </select>
 </mapper>

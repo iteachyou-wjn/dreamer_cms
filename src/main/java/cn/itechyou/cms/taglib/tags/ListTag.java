@@ -104,11 +104,6 @@ public class ListTag extends AbstractListTag implements IParse {
 			
 			for (int j = 0; j < list.size(); j++) {
 				Map<String, Object> archivesVo = list.get(j);
-				String imagePath = "";
-				if(archivesVo.containsKey("imagePath")) {
-					imagePath = archivesVo.get("imagePath").toString();
-					imagePath = imagePath.replace("\\", "/");
-				}
 				String item = new String(content);
 				item = this.buildHTML(item, archivesVo, addfields, (j + 1));
 				sb.append(item);
@@ -177,21 +172,7 @@ public class ListTag extends AbstractListTag implements IParse {
 			for (int j = 0; j < list.size(); j++) {
 				Map<String, Object> archivesVo = list.get(j);
 				String item = new String(content);
-				String imagePath = "";
-				if(archivesVo.containsKey("imagePath")) {
-					imagePath = archivesVo.get("imagePath").toString();
-					imagePath = imagePath.replace("\\", "/");
-				}
-				item = item.replaceAll(FieldEnum.FIELD_ID.getRegexp(), archivesVo.get("aid").toString());
-				item = item.replaceAll(FieldEnum.FIELD_TITLE.getRegexp(), archivesVo.get("title").toString());
-				item = item.replaceAll(FieldEnum.FIELD_ARCURL.getRegexp(), "url");
-				item = item.replaceAll(FieldEnum.FIELD_LITPIC.getRegexp(), system.getWebsite() + system.getUploaddir() + "/" + imagePath);
-				
-				for (int k = 0; k < addfields.length; k++) {
-					String field = addfields[k];
-					item = item.replaceAll(FieldEnum.FIELD_ADDFIELDS_START.getRegexp() + field + FieldEnum.FIELD_ADDFIELDS_END.getRegexp(), archivesVo.containsKey(field) ? archivesVo.get(field).toString() : "");
-				}
-				
+				item = this.buildHTML(item, archivesVo, addfields, (j + 1));
 				sb.append(item);
 			}
 			newHtml = newHtml.replace(tag, sb.toString());

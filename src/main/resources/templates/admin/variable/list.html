@@ -45,7 +45,7 @@
 					<table class="table table-hover">
 						<thead>
 							<tr>
-								<th style="width:50px;">序号</th>
+								<th style="width:50px;">选择</th>
 								<th>变量名</th>
 								<th>描述</th>
 								<th>组</th>
@@ -55,7 +55,7 @@
 						</thead>
 						<tbody>
 							<tr th:each="variable,stat : ${variables.list}">
-								<td th:text="${stat.index+1}"></td>
+								<td><input type="checkbox" class="flat-grey list-child" th:value="${variable.id}" /></td>
 								<td th:text="${variable.itemName}"></td>
 								<td th:text="${variable.info}"></td>
 								<td th:text="${variable.groupId}"></td>

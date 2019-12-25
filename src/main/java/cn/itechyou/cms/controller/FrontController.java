@@ -1,7 +1,10 @@
 package cn.itechyou.cms.controller;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,19 +24,24 @@ import com.github.pagehelper.PageInfo;
 import cn.itechyou.cms.common.ExceptionEnum;
 import cn.itechyou.cms.common.SearchEntity;
 import cn.itechyou.cms.entity.Archives;
+import cn.itechyou.cms.entity.Attachment;
 import cn.itechyou.cms.entity.Category;
 import cn.itechyou.cms.entity.CategoryWithBLOBs;
 import cn.itechyou.cms.entity.SearchRecord;
+import cn.itechyou.cms.entity.System;
 import cn.itechyou.cms.entity.Theme;
+import cn.itechyou.cms.exception.AdminGeneralException;
 import cn.itechyou.cms.exception.CmsException;
 import cn.itechyou.cms.exception.TemplateNotFoundException;
 import cn.itechyou.cms.exception.TemplateReadException;
 import cn.itechyou.cms.service.ArchivesService;
+import cn.itechyou.cms.service.AttachmentService;
 import cn.itechyou.cms.service.CategoryService;
 import cn.itechyou.cms.service.FieldService;
 import cn.itechyou.cms.service.FormService;
 import cn.itechyou.cms.service.PagesService;
 import cn.itechyou.cms.service.SearchRecordService;
+import cn.itechyou.cms.service.SystemService;
 import cn.itechyou.cms.service.ThemeService;
 import cn.itechyou.cms.taglib.ParseEngine;
 import cn.itechyou.cms.utils.FileConfiguration;
@@ -71,7 +79,10 @@ public class FrontController {
 	private SearchRecordService searchRecordService;
 	@Autowired
 	private FileConfiguration fileConfiguration;
-	
+	@Autowired
+	private SystemService systemService;
+	@Autowired
+	private AttachmentService attachmentService;
 	@Autowired
 	private ParseEngine parseEngine;
 	
@@ -278,6 +289,45 @@ public class FrontController {
 		 * new ArchivesWithRownum(); prevArc.setTitle("没有了"); } if(nextArc == null) {
 		 * nextArc = new ArchivesWithRownum(); nextArc.setTitle("没有了"); }
 		 */
+	}
+	
+	/**
+	 * 附件下载
+	 * @param id
+	 * @param request
+	 * @param response
+	 * @throws AdminGeneralException
+	 */
+	@RequestMapping("/download/{id}")
+	public void download(@PathVariable String id, HttpServletRequest request,HttpServletResponse response) throws AdminGeneralException {
+		try {
+			System system = systemService.getSystem();
+			Attachment attachment = attachmentService.queryAttachmentById(id);
+		    //设置响应头和客户端保存文件名
+		    response.setCharacterEncoding("utf-8");
+		    response.setContentType("multipart/form-data");
+		    response.setHeader("Content-Disposition", "attachment;fileName=" + attachment.getFilename());
+	        //打开本地文件流
+		    String filePath = fileConfiguration.getResourceDir() + system.getUploaddir() + attachment.getFilepath();
+	        InputStream inputStream = new FileInputStream(filePath);
+	        //激活下载操作
+	        OutputStream os = response.getOutputStream();
+	        //循环写入输出流
+	        byte[] b = new byte[1024];
+	        int length;
+	        while ((length = inputStream.read(b)) > 0) {
+	            os.write(b, 0, length);
+	        }
+
+	        // 这里主要关闭。
+	        os.close();
+	        inputStream.close();
+		}catch (Exception e) {
+			throw new AdminGeneralException(
+					ExceptionEnum.HTTP_INTERNAL_SERVER_ERROR.getCode(),
+					ExceptionEnum.HTTP_INTERNAL_SERVER_ERROR.getMessage(),
+					e.getMessage());
+		}
 	}
 	
 	@RequestMapping(value = "/search")

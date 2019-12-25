@@ -60,6 +60,9 @@ public class UploadController extends BaseController{
 			file.transferTo(uploadpath);
 			result.put("filepath", currentDate+File.separator + newFileName);
 			result.put("name", newFileName);
+			result.put("originalFilename", file.getOriginalFilename());
+			result.put("filesize", file.getSize());
+			result.put("filetype", file.getContentType());
 			result.put("url", system.getWebsite() + File.separator + uploadDir + File.separator + currentDate + File.separator + newFileName);
 			respResult = ResponseResult.Factory.newInstance(Boolean.TRUE,
 					StateCodeEnum.HTTP_SUCCESS.getCode(), result,
