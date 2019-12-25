@@ -1,6 +1,6 @@
 /*
 SQLyog 企业版 - MySQL GUI v8.14 
-MySQL - 5.5.53 : Database - dreamer-cms
+MySQL - 5.5.53 : Database - dreamer-blog
 *********************************************************************
 */
 
@@ -68,6 +68,28 @@ CREATE TABLE `system_article` (
 /*Data for the table `system_article` */
 
 insert  into `system_article`(`id`,`aid`,`create_by`,`create_time`,`update_by`,`update_time`,`ext01`,`ext02`,`ext03`,`ext04`,`ext05`,`html_content`,`content`) values ('1db4bded81e5487fb977dc08c8c0994d','4f884e12b4be456a89156a51316c3f04',NULL,'2018-01-01 00:00:00',NULL,'2019-08-16 10:07:06',NULL,NULL,NULL,NULL,NULL,NULL,''),('3847200101314c1e98ea78658ac54409','ae451258a33642d2b6e57729c83f3eb7',NULL,'2018-01-01 00:00:00',NULL,'2019-08-16 10:11:22',NULL,NULL,NULL,NULL,NULL,NULL,''),('8a457c20a8bc4159a728a75f329678da','31ca333eb9b04c8f8cc6f0f1c1447615',NULL,'2018-01-01 00:00:00',NULL,'2019-08-16 10:02:00',NULL,NULL,NULL,NULL,NULL,NULL,'');
+
+/*Table structure for table `system_attachment` */
+
+DROP TABLE IF EXISTS `system_attachment`;
+
+CREATE TABLE `system_attachment` (
+  `id` varchar(32) COLLATE utf8mb4_bin NOT NULL,
+  `code` varchar(32) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '标识码',
+  `filename` varchar(64) COLLATE utf8mb4_bin NOT NULL COMMENT '文件名',
+  `filesize` int(11) DEFAULT NULL COMMENT '文件大小',
+  `filetype` varchar(128) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '文件类型',
+  `filepath` varchar(256) COLLATE utf8mb4_bin NOT NULL COMMENT '文件路径',
+  `create_by` varchar(32) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '创建人',
+  `create_time` timestamp NULL DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(32) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '更新人',
+  `update_time` timestamp NULL DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+/*Data for the table `system_attachment` */
+
+insert  into `system_attachment`(`id`,`code`,`filename`,`filesize`,`filetype`,`filepath`,`create_by`,`create_time`,`update_by`,`update_time`) values ('abd987209da941349001c85ffece6eb1','ez159g51','java1.8新特性.pptx',113690,'application/vnd.openxmlformats-officedocument.presentationml.presentation','20191225\\acb604753b4c4d9ea281ae977d712f31.pptx','9f4b807db2e94670bb02cdc212ea7389','2019-12-25 05:47:34','9f4b807db2e94670bb02cdc212ea7389','2019-12-25 05:47:34');
 
 /*Table structure for table `system_category` */
 
@@ -209,7 +231,7 @@ CREATE TABLE `system_labels` (
 
 /*Data for the table `system_labels` */
 
-insert  into `system_labels`(`id`,`tag_name`,`pinyin`,`first_char`,`tag_count`,`create_by`,`create_time`,`update_by`,`update_time`) values ('241d2e14a9764795acc29ff6b4ef0a4a','hbase','hbase','h','1',NULL,'2018-09-27 11:29:08',NULL,'2018-09-27 11:29:08'),('27ee21fd44ee4b3996d2546e700ca68a','css','css','c','1',NULL,'2018-09-21 12:47:09',NULL,'2018-09-21 12:47:09'),('2df0b5c5dc474fc38969ce4fab5b1ee7','花开','huakai','h','1',NULL,'2018-09-21 13:40:16',NULL,'2018-09-21 13:40:15'),('30b42859b3b2400396b123947fb4f5b4','单例','danli','d','1',NULL,'2018-09-27 10:54:28',NULL,'2018-09-27 10:54:28'),('3459b5788ec04732b336c484db6c8806','大数据','dashuju','d','1',NULL,'2018-09-27 11:29:08',NULL,'2018-09-27 11:29:08'),('3808d4ebd78a4861bc49cf3d653000aa','职业发展','zhiyefazhan','z','1',NULL,'2018-09-21 13:44:36',NULL,'2018-09-21 13:44:35'),('4ccffe77671a4c3bbbf7854fdc44d0c8','css3','css3','c','1',NULL,'2019-08-20 11:32:05',NULL,'2019-08-20 11:32:05'),('5b471f24146144899e5227a5dc4eaadd','原型','yuanxing','y','1',NULL,'2018-09-27 11:19:00',NULL,'2018-09-27 11:18:59'),('77eae8930c30458aac733a4e778ba498','商务','shangwu','s','1',NULL,'2019-08-21 16:47:41',NULL,'2019-08-21 16:47:41'),('8daeee953c764a33ba2c91ae0f3610b7','html5','html5','h','1',NULL,'2019-08-20 11:32:05',NULL,'2019-08-20 11:32:05'),('96f315f72dfa498e8e65afe85a22775e','hive','hive','h','1',NULL,'2018-09-27 11:29:08',NULL,'2018-09-27 11:29:08'),('a49146f9af0b43a592998f6072af08bf','html','html','h','1',NULL,'2018-09-21 12:47:09',NULL,'2018-09-21 12:47:08'),('a96f5f9c526d447cbee797b2536af1b3','要强','yaoqiang','y','1',NULL,'2018-09-21 13:42:05',NULL,'2018-09-21 13:42:04'),('a9d47da353be4e10aac3e1e23338862a','js','js','j','1',NULL,'2018-09-21 12:47:09',NULL,'2018-09-21 12:47:08'),('cd6cd19104ab4bdf86bad96c0c9ac0cf','factory','factory','f','1',NULL,'2018-09-27 11:16:22',NULL,'2018-09-27 11:16:21'),('d51ddfca743b47f686120300691cecd0','工厂模式','gongchangmoshi','g','1',NULL,'2018-09-27 11:16:22',NULL,'2018-09-27 11:16:21'),('e281ef86dfbb4d75b8141f8abfb7291b','建造者','jianzaozhe','j','1',NULL,'2018-09-27 11:19:00',NULL,'2018-09-27 11:18:59'),('e4bf078774b840b5a13eafa48c03a3a7','singleton','singleton','s','1',NULL,'2018-09-27 10:54:28',NULL,'2018-09-27 10:54:27'),('e6d72c095f9c4532a298337e6a612c22','script','script','s','1',NULL,'2018-09-21 12:47:09',NULL,'2018-09-21 12:47:09'),('f4d45bfa3b284792b6411390831063d7','bootstrap','bootstrap','b','1',NULL,'2019-08-20 11:32:05',NULL,'2019-08-20 11:32:05'),('f55bab7dc7234dfa9883c181e8d29825','hadoop','hadoop','h','1',NULL,'2018-09-27 11:29:08',NULL,'2018-09-27 11:29:08'),('fdf1a43c32a7454dbfd42626ec4d4263','thymeleaf','thymeleaf','t','1',NULL,'2018-09-28 16:52:32',NULL,'2018-09-28 16:52:31');
+insert  into `system_labels`(`id`,`tag_name`,`pinyin`,`first_char`,`tag_count`,`create_by`,`create_time`,`update_by`,`update_time`) values ('0ebca91a708a4fd8ba9548c3817e437d','32','32','3','2',NULL,'2019-12-18 02:09:02',NULL,'2019-12-18 10:09:02'),('241d2e14a9764795acc29ff6b4ef0a4a','hbase','hbase','h','1',NULL,'2018-09-27 11:29:08',NULL,'2018-09-27 11:29:08'),('27ee21fd44ee4b3996d2546e700ca68a','css','css','c','1',NULL,'2018-09-21 12:47:09',NULL,'2018-09-21 12:47:09'),('2df0b5c5dc474fc38969ce4fab5b1ee7','花开','huakai','h','1',NULL,'2018-09-21 13:40:16',NULL,'2018-09-21 13:40:15'),('30b42859b3b2400396b123947fb4f5b4','单例','danli','d','1',NULL,'2018-09-27 10:54:28',NULL,'2018-09-27 10:54:28'),('3459b5788ec04732b336c484db6c8806','大数据','dashuju','d','1',NULL,'2018-09-27 11:29:08',NULL,'2018-09-27 11:29:08'),('3808d4ebd78a4861bc49cf3d653000aa','职业发展','zhiyefazhan','z','1',NULL,'2018-09-21 13:44:36',NULL,'2018-09-21 13:44:35'),('4ccffe77671a4c3bbbf7854fdc44d0c8','css3','css3','c','1',NULL,'2019-08-20 11:32:05',NULL,'2019-08-20 11:32:05'),('5b471f24146144899e5227a5dc4eaadd','原型','yuanxing','y','1',NULL,'2018-09-27 11:19:00',NULL,'2018-09-27 11:18:59'),('5e7586fcb4d44c15a3d94e93f6281c54','eee','eee','e','1',NULL,'2019-12-18 02:18:59',NULL,'2019-12-18 10:18:59'),('77eae8930c30458aac733a4e778ba498','商务','shangwu','s','1',NULL,'2019-08-21 16:47:41',NULL,'2019-08-21 16:47:41'),('8daeee953c764a33ba2c91ae0f3610b7','html5','html5','h','1',NULL,'2019-08-20 11:32:05',NULL,'2019-08-20 11:32:05'),('96f315f72dfa498e8e65afe85a22775e','hive','hive','h','1',NULL,'2018-09-27 11:29:08',NULL,'2018-09-27 11:29:08'),('a49146f9af0b43a592998f6072af08bf','html','html','h','1',NULL,'2018-09-21 12:47:09',NULL,'2018-09-21 12:47:08'),('a8e12dfe133a4bd8808e029f8a8c4a05','eeee','eeee','e','1',NULL,'2019-12-18 02:21:34',NULL,'2019-12-18 10:21:34'),('a96f5f9c526d447cbee797b2536af1b3','要强','yaoqiang','y','1',NULL,'2018-09-21 13:42:05',NULL,'2018-09-21 13:42:04'),('a9d47da353be4e10aac3e1e23338862a','js','js','j','1',NULL,'2018-09-21 12:47:09',NULL,'2018-09-21 12:47:08'),('cd6cd19104ab4bdf86bad96c0c9ac0cf','factory','factory','f','1',NULL,'2018-09-27 11:16:22',NULL,'2018-09-27 11:16:21'),('d51ddfca743b47f686120300691cecd0','工厂模式','gongchangmoshi','g','1',NULL,'2018-09-27 11:16:22',NULL,'2018-09-27 11:16:21'),('e281ef86dfbb4d75b8141f8abfb7291b','建造者','jianzaozhe','j','1',NULL,'2018-09-27 11:19:00',NULL,'2018-09-27 11:18:59'),('e39a57377c814132b9db8d7c1105a3db','qqq','qqq','q','1',NULL,'2019-12-18 02:34:41',NULL,'2019-12-18 10:34:41'),('e4bf078774b840b5a13eafa48c03a3a7','singleton','singleton','s','1',NULL,'2018-09-27 10:54:28',NULL,'2018-09-27 10:54:27'),('e6d72c095f9c4532a298337e6a612c22','script','script','s','1',NULL,'2018-09-21 12:47:09',NULL,'2018-09-21 12:47:09'),('f0a3ce8ba0594bc6975b600eeb33015f','3333','3333','3','1',NULL,'2019-12-18 02:14:45',NULL,'2019-12-18 10:14:45'),('f4d45bfa3b284792b6411390831063d7','bootstrap','bootstrap','b','1',NULL,'2019-08-20 11:32:05',NULL,'2019-08-20 11:32:05'),('f55bab7dc7234dfa9883c181e8d29825','hadoop','hadoop','h','1',NULL,'2018-09-27 11:29:08',NULL,'2018-09-27 11:29:08'),('fdf1a43c32a7454dbfd42626ec4d4263','thymeleaf','thymeleaf','t','1',NULL,'2018-09-28 16:52:32',NULL,'2018-09-28 16:52:31');
 
 /*Table structure for table `system_links` */
 
@@ -289,7 +311,7 @@ CREATE TABLE `system_setting` (
 
 /*Data for the table `system_setting` */
 
-insert  into `system_setting`(`id`,`website`,`title`,`keywords`,`describe`,`icp`,`copyright`,`uploaddir`,`appid`,`appkey`) values ('1','http://localhost:8888/','Dreamer CMS 梦想家内容发布系统','Dreamer CMS 梦想家内容发布系统','Dreamer CMS 梦想家内容发布系统是国内首款java开发的内容发布系统，采用最流行的springboot+thymeleaf框架搭建，灵活小巧，配置简单。','京ICP备16039432号','Copyright © 2018 Powered by I Tech You,我教你，Dreamer CMS 梦想家内容发布系统','uploads\\','cytQcJUcb','2dd87fd430f0509cf00e18de4328e100');
+insert  into `system_setting`(`id`,`website`,`title`,`keywords`,`describe`,`icp`,`copyright`,`uploaddir`,`appid`,`appkey`) values ('1','http://localhost:8888/','Dreamer CMS 梦想家内容发布系统','Dreamer CMS 梦想家内容发布系统','Dreamer CMS 梦想家内容发布系统是国内首款java开发的内容发布系统，采用最流行的springboot+thymeleaf框架搭建，灵活小巧，配置简单。','冀ICP备19026223号','Copyright © 2018 Powered by I Tech You,我教你，Dreamer CMS 梦想家内容发布系统','uploads\\','cytQcJUcb','2dd87fd430f0509cf00e18de4328e100');
 
 /*Table structure for table `system_templates` */
 
@@ -331,7 +353,7 @@ CREATE TABLE `system_theme` (
 
 /*Data for the table `system_theme` */
 
-insert  into `system_theme`(`id`,`theme_name`,`theme_author`,`theme_img`,`theme_path`,`status`,`create_by`,`create_time`,`update_by`,`update_time`) values ('782c003ac9024eba94ae3b59dab17b5d','新版主题','王俊南','http://localhost:8888/uploads\\20180921\\558bd24d87e845be89274fd9660d1258.jpg','default',1,'9f4b807db2e94670bb02cdc212ea7389','2018-01-01 00:00:00','9f4b807db2e94670bb02cdc212ea7389','2019-08-20 15:55:57');
+insert  into `system_theme`(`id`,`theme_name`,`theme_author`,`theme_img`,`theme_path`,`status`,`create_by`,`create_time`,`update_by`,`update_time`) values ('782c003ac9024eba94ae3b59dab17b5d','新版主题','王俊南','http://localhost:8888/uploads\\20190815\\18c8a53e1b63493b821c9ab865c4b395.jpg','default',1,'9f4b807db2e94670bb02cdc212ea7389','2018-01-01 00:00:00','9f4b807db2e94670bb02cdc212ea7389','2019-12-25 12:00:51');
 
 /*Table structure for table `system_user` */
 
@@ -358,7 +380,7 @@ CREATE TABLE `system_user` (
 
 /*Data for the table `system_user` */
 
-insert  into `system_user`(`id`,`username`,`password`,`mobile`,`realname`,`status`,`page_style`,`salt`,`last_login_ip`,`last_login_time`,`portrait`,`create_by`,`create_time`,`update_by`,`update_time`) values ('9f4b807db2e94670bb02cdc212ea7389','wangjn','51c04b026c6cf5f785622796aba7e56f',NULL,'超级管理员',1,NULL,'d2FuZ2puMTIzNDU2',NULL,'2019-10-11 03:21:21',NULL,NULL,'2018-01-01 00:00:00',NULL,'2019-10-11 11:21:13');
+insert  into `system_user`(`id`,`username`,`password`,`mobile`,`realname`,`status`,`page_style`,`salt`,`last_login_ip`,`last_login_time`,`portrait`,`create_by`,`create_time`,`update_by`,`update_time`) values ('9f4b807db2e94670bb02cdc212ea7389','wangjn','51c04b026c6cf5f785622796aba7e56f',NULL,'超级管理员',1,NULL,'d2FuZ2puMTIzNDU2',NULL,'2019-12-25 05:36:01',NULL,NULL,'2018-01-01 00:00:00',NULL,'2019-10-11 11:21:13');
 
 /*Table structure for table `system_variable` */
 
