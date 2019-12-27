@@ -1,23 +1,17 @@
 package cn.itechyou.cms.controller.admin;
 
-import java.util.Date;
-
 import javax.annotation.Resource;
 
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.util.ByteSource;
 import org.slf4j.Logger;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.github.pagehelper.PageInfo;
-
 import cn.itechyou.cms.common.ResponseResult;
-import cn.itechyou.cms.common.SearchEntity;
 import cn.itechyou.cms.common.StateCodeEnum;
 import cn.itechyou.cms.entity.User;
 import cn.itechyou.cms.security.token.TokenManager;
@@ -63,7 +57,7 @@ public class UserController {
 		user2.setSalt(newSalt.toString());
 		user2.setPassword(sh1.toString());
 		userService.save(user2);
-		return ResponseResult.Factory.newInstance(Boolean.FALSE, StateCodeEnum.HTTP_SUCCESS.getCode(), null, StateCodeEnum.HTTP_SUCCESS.getDescription());
+		return ResponseResult.Factory.newInstance(Boolean.TRUE, StateCodeEnum.HTTP_SUCCESS.getCode(), null, StateCodeEnum.HTTP_SUCCESS.getDescription());
 	}
 	
 }

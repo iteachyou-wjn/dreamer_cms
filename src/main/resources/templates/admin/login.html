@@ -22,7 +22,7 @@
 		</form>
 	</div>
 		<div class="copyright">
-		Copyright © 2018 I Tech You,我教你  京ICP备16039432号
+		Copyright © 2018 I Tech You,我教你  冀ICP备19026223号
 		</div>
 	<script type="text/javascript" src="/resource/js/jquery.min.js"></script>
 	<script type="text/javascript" src="/resource/js/jQueryMessage/js/jquery.plugin.message.js"></script>
@@ -59,7 +59,7 @@
 				success : function(result) {
 					console.log(result);
 					if(result.success){
-						sessionStorage.setItem("dreamer-blog-user", JSON.stringify(result.data));
+						sessionStorage.setItem("dreamer-cms-user", JSON.stringify(result.data));
 						setTimeout(function() {
 							//登录返回
 							window.location.href = "/admin/u/toIndex";

@@ -26,6 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.code.kaptcha.Producer;
 
+import cn.itechyou.cms.annotation.Log;
 import cn.itechyou.cms.common.BaseController;
 import cn.itechyou.cms.common.Constant;
 import cn.itechyou.cms.common.ResponseResult;
@@ -101,6 +102,7 @@ public class UserLoginController extends BaseController {
 	 * @param request，用来取登录之前Url地址，用来登录后跳转到没有登录之前的页面。
 	 * @return
 	 */
+	@Log(module = "登录模块",content = "用户登录操作")
 	@RequestMapping(value = "login", method = RequestMethod.POST)
 	@ResponseBody
 	public void login(@RequestBody UserVO entity,HttpServletRequest request) {

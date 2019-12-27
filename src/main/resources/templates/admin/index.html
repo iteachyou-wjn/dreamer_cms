@@ -139,7 +139,7 @@
 		$(this).addClass("active");
 	});
 
-	var userStr = sessionStorage.getItem("dreamer-blog-user");
+	var userStr = sessionStorage.getItem("dreamer-cms-user");
 		if(userStr == null || userStr == "" || userStr == "undefined"){
 			window.location.href = "/admin/u/toLogin";
 		}else{
@@ -158,7 +158,7 @@
 		
 	//退出登录
 	function logout(){
-		sessionStorage.removeItem("dreamer-blog-user");
+		sessionStorage.removeItem("dreamer-cms-user");
 		window.location.href = "/admin/u/logout";
 	}
 </script>

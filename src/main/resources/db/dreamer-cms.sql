@@ -12,9 +12,9 @@ MySQL - 5.5.53 : Database - dreamer-blog
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-CREATE DATABASE /*!32312 IF NOT EXISTS*/`dreamer-cms` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`dreamer-blog` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin */;
 
-USE `dreamer-cms`;
+USE `dreamer-blog`;
 
 /*Table structure for table `system_archives` */
 
@@ -253,6 +253,33 @@ CREATE TABLE `system_links` (
 
 insert  into `system_links`(`id`,`aid`,`ext01`,`ext02`,`ext03`,`ext04`,`ext05`,`link_url`) values ('00de5fcc84f44d07ba2fd3b80098dd3a','47864f1e06334cdc8c87b9419dc63abf',NULL,NULL,NULL,NULL,NULL,'http://www.itechyou.cn'),('60534518cfa04fb8bc864119035f6970','598fb8d59fbf4bdca544d71cb64c1ce0',NULL,NULL,NULL,NULL,NULL,'http://www.baidu.com');
 
+/*Table structure for table `system_logger` */
+
+DROP TABLE IF EXISTS `system_logger`;
+
+CREATE TABLE `system_logger` (
+  `id` varchar(32) COLLATE utf8mb4_bin NOT NULL,
+  `level` varchar(32) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '级别',
+  `oper_user` varchar(64) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '操作用户',
+  `oper_type` int(11) DEFAULT NULL COMMENT '操作类型',
+  `oper_source` varchar(128) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '操作源',
+  `ip` varchar(64) COLLATE utf8mb4_bin DEFAULT NULL COMMENT 'IP',
+  `module` varchar(64) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '模块',
+  `browser` varchar(128) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '浏览器',
+  `platform` varchar(128) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '平台',
+  `content` text COLLATE utf8mb4_bin COMMENT '内容',
+  `create_by` varchar(32) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '创建人',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_by` varchar(32) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '更新人',
+  `update_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '更新时间',
+  `extend1` varchar(256) COLLATE utf8mb4_bin DEFAULT NULL,
+  `extend2` varchar(256) COLLATE utf8mb4_bin DEFAULT NULL,
+  `extend3` varchar(256) COLLATE utf8mb4_bin DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+/*Data for the table `system_logger` */
+
 /*Table structure for table `system_pages` */
 
 DROP TABLE IF EXISTS `system_pages`;
@@ -380,7 +407,7 @@ CREATE TABLE `system_user` (
 
 /*Data for the table `system_user` */
 
-insert  into `system_user`(`id`,`username`,`password`,`mobile`,`realname`,`status`,`page_style`,`salt`,`last_login_ip`,`last_login_time`,`portrait`,`create_by`,`create_time`,`update_by`,`update_time`) values ('9f4b807db2e94670bb02cdc212ea7389','wangjn','51c04b026c6cf5f785622796aba7e56f',NULL,'超级管理员',1,NULL,'d2FuZ2puMTIzNDU2',NULL,'2019-12-25 05:36:01',NULL,NULL,'2018-01-01 00:00:00',NULL,'2019-10-11 11:21:13');
+insert  into `system_user`(`id`,`username`,`password`,`mobile`,`realname`,`status`,`page_style`,`salt`,`last_login_ip`,`last_login_time`,`portrait`,`create_by`,`create_time`,`update_by`,`update_time`) values ('9f4b807db2e94670bb02cdc212ea7389','wangjn','51c04b026c6cf5f785622796aba7e56f',NULL,'超级管理员',1,NULL,'d2FuZ2puMTIzNDU2',NULL,'2019-12-27 02:53:02',NULL,NULL,'2018-01-01 00:00:00',NULL,'2019-10-11 11:21:13');
 
 /*Table structure for table `system_variable` */
 
