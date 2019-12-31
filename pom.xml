@@ -10,7 +10,7 @@
 	<packaging>jar</packaging>
 
 	<name>dreamer-cms</name>
-	<description>Dreamer CMS（梦想家CMS内容管理系统）</description>
+	<description>Dreamer CMS</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -23,7 +23,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
-		<fastjson.version>1.2.62</fastjson.version>
+		<fastjson.version>1.1.41</fastjson.version>
 		<shiro.version>1.4.0</shiro.version>
 		<jedis.version>2.8.0</jedis.version>
 		<kaptcha.version>2.3.2</kaptcha.version>
@@ -48,12 +48,6 @@
 			</exclusions>
 		</dependency>
 
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-jdbc</artifactId>
@@ -76,6 +70,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-configuration-processor</artifactId>
 			<optional>true</optional>
+		</dependency>
+		
+		<!--AOP依赖-->
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-aop</artifactId>
 		</dependency>
 
 		<!-- log4j2相关jar包 -->
