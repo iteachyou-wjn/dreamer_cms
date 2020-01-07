@@ -33,7 +33,7 @@ Dreamer CMS 梦想家内容发布系统是国内首款java开发的内容发布�
 * 富文本：Ueditor、editor.md
 
 # 系统结构
-![系统结构](http://cdn.itechyou.cn/20190821103015.jpg "系统结构")
+![系统结构](http://cdn.itechyou.cn/20200107103015.jpg "系统结构")
 
 # 开发环境
 建议开发者使用以下环境，这样避免版本带来的问题
