@@ -304,8 +304,10 @@ public class ArchivesController {
 	@RequestMapping(value ="/delete")
 	public String delete(Model model, String id,String cid) throws CmsException {
 		Map<String,Object> params = new HashMap<String,Object>();
+		String categoryCode = "";
 		if(!"-1".equals(cid)) {
 			Category category = categoryService.selectById(cid);
+			categoryCode = category.getCode();
 			Form form = formService.queryFormById(category.getFormId());
 			params.put("tableName", "system_" + form.getTableName());
 		}else {
@@ -330,6 +332,6 @@ public class ArchivesController {
 					ExceptionEnum.HTTP_INTERNAL_SERVER_ERROR.getMessage(),
 					e.getMessage());
 		}
-		return "redirect:/admin/archives/list";
+		return "redirect:/admin/archives/list?entity%5Bcid%5D=" + categoryCode;
 	}
 }

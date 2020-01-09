@@ -1,6 +1,6 @@
 /*
 SQLyog 企业版 - MySQL GUI v8.14 
-MySQL - 5.5.53 : Database - dreamer-blog
+MySQL - 5.5.53 : Database - dreamer-cms
 *********************************************************************
 */
 
@@ -12,33 +12,33 @@ MySQL - 5.5.53 : Database - dreamer-blog
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-CREATE DATABASE /*!32312 IF NOT EXISTS*/`dreamer-blog` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`dreamer-cms` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin */;
 
-USE `dreamer-blog`;
+USE `dreamer-cms`;
 
 /*Table structure for table `system_archives` */
 
 DROP TABLE IF EXISTS `system_archives`;
 
 CREATE TABLE `system_archives` (
-  `id` varchar(32) NOT NULL,
-  `title` varchar(128) NOT NULL COMMENT '文章标题',
-  `properties` varchar(32) DEFAULT 'n' COMMENT '自定义属性',
-  `image_path` varchar(128) DEFAULT NULL COMMENT '缩略图',
-  `tag` varchar(128) DEFAULT NULL COMMENT '标签',
-  `description` varchar(256) DEFAULT NULL COMMENT '内容摘要',
-  `category_id` varchar(32) NOT NULL COMMENT '上级栏目',
+  `id` varchar(32) CHARACTER SET utf8 NOT NULL,
+  `title` varchar(128) CHARACTER SET utf8 NOT NULL COMMENT '文章标题',
+  `properties` varchar(32) CHARACTER SET utf8 DEFAULT 'n' COMMENT '自定义属性',
+  `image_path` varchar(128) CHARACTER SET utf8 DEFAULT NULL COMMENT '缩略图',
+  `tag` varchar(128) CHARACTER SET utf8 DEFAULT NULL COMMENT '标签',
+  `description` varchar(256) CHARACTER SET utf8 DEFAULT NULL COMMENT '内容摘要',
+  `category_id` varchar(32) CHARACTER SET utf8 NOT NULL COMMENT '上级栏目',
   `comment` int(11) DEFAULT '1' COMMENT '允许评论',
   `subscribe` int(11) DEFAULT '1' COMMENT '允许订阅',
   `clicks` int(11) DEFAULT '0' COMMENT '浏览量',
   `weight` int(11) DEFAULT '0' COMMENT '权重',
   `status` int(11) DEFAULT '1' COMMENT '状态1:已发布0未发布',
-  `create_by` varchar(32) DEFAULT NULL,
+  `create_by` varchar(32) CHARACTER SET utf8 DEFAULT NULL,
   `create_time` timestamp NOT NULL DEFAULT '2018-01-01 00:00:00',
-  `update_by` varchar(32) DEFAULT NULL,
+  `update_by` varchar(32) CHARACTER SET utf8 DEFAULT NULL,
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `system_archives` */
 
@@ -96,40 +96,40 @@ insert  into `system_attachment`(`id`,`code`,`filename`,`filesize`,`filetype`,`f
 DROP TABLE IF EXISTS `system_category`;
 
 CREATE TABLE `system_category` (
-  `id` varchar(32) NOT NULL,
-  `cnname` varchar(128) NOT NULL COMMENT '栏目名称',
-  `enname` varchar(64) DEFAULT NULL COMMENT '栏目英文名称',
-  `code` varchar(32) DEFAULT NULL COMMENT '编码',
-  `cat_seq` varchar(128) DEFAULT NULL COMMENT '层级关系',
-  `form_id` varchar(32) NOT NULL COMMENT '表单ID',
-  `image_path` varchar(128) DEFAULT NULL COMMENT '栏目图片',
-  `description` varchar(128) DEFAULT NULL COMMENT '栏目描述',
-  `link_target` varchar(8) DEFAULT NULL COMMENT '链接目标',
+  `id` varchar(32) CHARACTER SET utf8 NOT NULL,
+  `cnname` varchar(128) CHARACTER SET utf8 NOT NULL COMMENT '栏目名称',
+  `enname` varchar(64) CHARACTER SET utf8 DEFAULT NULL COMMENT '栏目英文名称',
+  `code` varchar(32) CHARACTER SET utf8 DEFAULT NULL COMMENT '编码',
+  `cat_seq` varchar(128) CHARACTER SET utf8 DEFAULT NULL COMMENT '层级关系',
+  `form_id` varchar(32) CHARACTER SET utf8 NOT NULL COMMENT '表单ID',
+  `image_path` varchar(128) CHARACTER SET utf8 DEFAULT NULL COMMENT '栏目图片',
+  `description` varchar(128) CHARACTER SET utf8 DEFAULT NULL COMMENT '栏目描述',
+  `link_target` varchar(8) CHARACTER SET utf8 DEFAULT NULL COMMENT '链接目标',
   `page_size` int(11) DEFAULT '20' COMMENT '分页数量',
   `cat_model` int(11) DEFAULT '20' COMMENT '栏目模型（1封面，2列表，3外部链接）',
-  `visit_url` varchar(128) DEFAULT NULL COMMENT '访问路径',
-  `cover_temp` varchar(128) DEFAULT NULL COMMENT '封面模版',
-  `list_temp` varchar(128) DEFAULT NULL COMMENT '列表模版',
-  `article_temp` varchar(32) DEFAULT NULL COMMENT '内容页模版',
-  `link_url` varchar(128) DEFAULT NULL COMMENT '链接路径',
-  `default_editor` varchar(10) NOT NULL COMMENT '默认编辑器',
-  `md_content` text COMMENT 'md内容',
-  `html_content` text COMMENT 'html内容',
-  `parent_id` varchar(128) NOT NULL COMMENT '上级栏目',
+  `visit_url` varchar(128) CHARACTER SET utf8 DEFAULT NULL COMMENT '访问路径',
+  `cover_temp` varchar(128) CHARACTER SET utf8 DEFAULT NULL COMMENT '封面模版',
+  `list_temp` varchar(128) CHARACTER SET utf8 DEFAULT NULL COMMENT '列表模版',
+  `article_temp` varchar(32) CHARACTER SET utf8 DEFAULT NULL COMMENT '内容页模版',
+  `link_url` varchar(128) CHARACTER SET utf8 DEFAULT NULL COMMENT '链接路径',
+  `default_editor` varchar(10) CHARACTER SET utf8 NOT NULL COMMENT '默认编辑器',
+  `md_content` text CHARACTER SET utf8 COMMENT 'md内容',
+  `html_content` text CHARACTER SET utf8 COMMENT 'html内容',
+  `parent_id` varchar(128) CHARACTER SET utf8 NOT NULL COMMENT '上级栏目',
   `is_show` int(11) DEFAULT '1' COMMENT '是否显示1显示0隐藏',
-  `level` varchar(10) DEFAULT NULL COMMENT '栏目级别',
+  `level` varchar(10) CHARACTER SET utf8 DEFAULT NULL COMMENT '栏目级别',
   `sort` int(11) DEFAULT '50' COMMENT '排序',
-  `create_by` varchar(32) DEFAULT NULL,
+  `create_by` varchar(32) CHARACTER SET utf8 DEFAULT NULL,
   `create_time` timestamp NOT NULL DEFAULT '2018-01-01 00:00:00',
-  `update_by` varchar(32) DEFAULT NULL,
+  `update_by` varchar(32) CHARACTER SET utf8 DEFAULT NULL,
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `ext01` varchar(32) DEFAULT NULL,
-  `ext02` varchar(32) DEFAULT NULL,
-  `ext03` varchar(32) DEFAULT NULL,
-  `ext04` varchar(32) DEFAULT NULL,
-  `ext05` varchar(32) DEFAULT NULL,
+  `ext01` varchar(32) CHARACTER SET utf8 DEFAULT NULL,
+  `ext02` varchar(32) CHARACTER SET utf8 DEFAULT NULL,
+  `ext03` varchar(32) CHARACTER SET utf8 DEFAULT NULL,
+  `ext04` varchar(32) CHARACTER SET utf8 DEFAULT NULL,
+  `ext05` varchar(32) CHARACTER SET utf8 DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `system_category` */
 
@@ -280,6 +280,8 @@ CREATE TABLE `system_logger` (
 
 /*Data for the table `system_logger` */
 
+insert  into `system_logger`(`id`,`level`,`oper_user`,`oper_type`,`oper_source`,`ip`,`module`,`browser`,`platform`,`content`,`create_by`,`create_time`,`update_by`,`update_time`,`extend1`,`extend2`,`extend3`) values ('47bbd1fd58da463d83f02c7de833047c','INFO','wangjn',1,'cn.itechyou.cms.controller.admin.UserLoginController.login()','本地主机','登录模块','Chrome/79.0.3945.88','Windows 7','用户登录操作','9f4b807db2e94670bb02cdc212ea7389','2020-01-09 03:19:21',NULL,'0000-00-00 00:00:00',NULL,NULL,NULL);
+
 /*Table structure for table `system_pages` */
 
 DROP TABLE IF EXISTS `system_pages`;
@@ -327,7 +329,7 @@ CREATE TABLE `system_setting` (
   `website` varchar(128) NOT NULL COMMENT '网站地址',
   `title` varchar(64) NOT NULL COMMENT '站点标题',
   `keywords` varchar(128) NOT NULL COMMENT '站点关键词',
-  `describe` varchar(128) NOT NULL COMMENT '站点描述',
+  `describe` varchar(256) NOT NULL COMMENT '站点描述',
   `icp` varchar(32) NOT NULL COMMENT '备案号',
   `copyright` varchar(128) NOT NULL COMMENT '版权',
   `uploaddir` varchar(32) DEFAULT 'uploads' COMMENT '文档HTML默认保存路径',
@@ -407,7 +409,7 @@ CREATE TABLE `system_user` (
 
 /*Data for the table `system_user` */
 
-insert  into `system_user`(`id`,`username`,`password`,`mobile`,`realname`,`status`,`page_style`,`salt`,`last_login_ip`,`last_login_time`,`portrait`,`create_by`,`create_time`,`update_by`,`update_time`) values ('9f4b807db2e94670bb02cdc212ea7389','wangjn','51c04b026c6cf5f785622796aba7e56f',NULL,'超级管理员',1,NULL,'d2FuZ2puMTIzNDU2',NULL,'2019-12-27 02:53:02',NULL,NULL,'2018-01-01 00:00:00',NULL,'2019-10-11 11:21:13');
+insert  into `system_user`(`id`,`username`,`password`,`mobile`,`realname`,`status`,`page_style`,`salt`,`last_login_ip`,`last_login_time`,`portrait`,`create_by`,`create_time`,`update_by`,`update_time`) values ('9f4b807db2e94670bb02cdc212ea7389','wangjn','51c04b026c6cf5f785622796aba7e56f',NULL,'超级管理员',1,NULL,'d2FuZ2puMTIzNDU2',NULL,'2020-01-09 03:19:21',NULL,NULL,'2018-01-01 00:00:00',NULL,'2019-10-11 11:21:13');
 
 /*Table structure for table `system_variable` */
 

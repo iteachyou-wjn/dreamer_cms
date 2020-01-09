@@ -47,7 +47,6 @@ public class FormServiceImpl implements FormService {
 
 	@Override
 	public int add(Form form) throws TransactionException {
-		
 		int num = 0;
 		try {
 			num = formMapper.insertSelective(form);

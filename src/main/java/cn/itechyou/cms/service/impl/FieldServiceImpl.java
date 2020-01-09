@@ -52,7 +52,7 @@ public class FieldServiceImpl implements FieldService {
 						"html".equals(field.getDataType()) ||
 						"markdown".equals(field.getDataType()) ||
 						"imageset".equals(field.getDataType())) {
-					sql.append("add `" + field.getFieldName() + "` text");
+					sql.append("add `" + field.getFieldName() + "` mediumtext");
 				}else if("datetime".equals(field.getDataType())) {
 					sql.append("add `" + field.getFieldName() + "` datetime");
 				}else if("radio".equals(field.getDataType()) ||
