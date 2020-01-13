@@ -80,11 +80,11 @@
 			    </div>
 			    <div class="panel-footer bg-white text-right">
                      <ul class="pagination">
-                         <li><a th:href="@{/admin/category/list(pageNum=${archives.navigateFirstPage},pageSize=${archives.pageSize})}" title="首页" th:class="${archives.isFirstPage} ? 'paginationNotAllowed' : ''">«</a></li>
-                         <li><a th:href="@{/admin/category/list(pageNum=${archives.prePage},pageSize=${archives.pageSize})}" title="上一页" th:if="${archives.hasPreviousPage}">‹</a></li>
-                         <li th:each="pageinfo : ${archives.navigatepageNums}"><a th:href="@{/admin/category/list(pageNum=${pageinfo},pageSize=${archives.pageSize})}" th:class="${pageinfo == archives.pageNum} ? 'paginationActive' : ''" th:text="${pageinfo}"></a></li>
-                         <li><a th:href="@{/admin/category/list(pageNum=${archives.nextPage},pageSize=${archives.pageSize})}" title="下一页" th:if="${archives.hasNextPage}">›</a></li>
-                         <li><a th:href="@{/admin/category/list(pageNum=${archives.navigateLastPage},pageSize=${archives.pageSize})}" title="未页" th:class="${archives.isLastPage} ? 'paginationNotAllowed' : ''">»</a></li>
+                         <li><a th:href="@{/admin/archives/list(pageNum=${archives.navigateFirstPage},pageSize=${archives.pageSize},entity[cid]=${cid})}" title="首页" th:class="${archives.isFirstPage} ? 'paginationNotAllowed' : ''">«</a></li>
+                         <li><a th:href="@{/admin/archives/list(pageNum=${archives.prePage},pageSize=${archives.pageSize},entity[cid]=${cid})}" title="上一页" th:if="${archives.hasPreviousPage}">‹</a></li>
+                         <li th:each="pageinfo : ${archives.navigatepageNums}"><a th:href="@{/admin/archives/list(pageNum=${pageinfo},pageSize=${archives.pageSize},entity[cid]=${cid})}" th:class="${pageinfo == archives.pageNum} ? 'paginationActive' : ''" th:text="${pageinfo}"></a></li>
+                         <li><a th:href="@{/admin/archives/list(pageNum=${archives.nextPage},pageSize=${archives.pageSize},entity[cid]=${cid})}" title="下一页" th:if="${archives.hasNextPage}">›</a></li>
+                         <li><a th:href="@{/admin/archives/list(pageNum=${archives.navigateLastPage},pageSize=${archives.pageSize},entity[cid]=${cid})}" title="未页" th:class="${archives.isLastPage} ? 'paginationNotAllowed' : ''">»</a></li>
                      </ul>
                  </div>
 			</section>
