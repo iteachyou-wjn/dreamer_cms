@@ -316,7 +316,7 @@ public class ArchivesController {
 		params.put("id", id);
 		Map<String,Object> article = archivesService.queryArticleById(params);
 		//对原有标签进行删除
-		if(StringUtil.isNotBlank(article.get("tag"))) {
+		if(article.get("tag") != null) {
 			String tag = article.get("tag").toString();
 			if(StringUtil.isNotBlank(tag)) {
 				String[] tagArr = tag.split(",");
