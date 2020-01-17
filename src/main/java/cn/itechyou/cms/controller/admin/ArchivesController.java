@@ -62,6 +62,11 @@ public class ArchivesController {
 		Map<String,Object> map = new HashMap<>();
 		String cid = "-1";
 		if(params.getEntity() != null) {
+			if(params.getEntity().containsKey("cid")) {
+				if("-1".equals(params.getEntity().get("cid").toString())) {
+					params.getEntity().remove("cid");
+				}
+			}
 			cid = params.getEntity().containsKey("cid") ? params.getEntity().get("cid").toString() : "-1";
 		}
 		PageInfo<Map<String,Object>> archives = archivesService.queryListByPage(params);
