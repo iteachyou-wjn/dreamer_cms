@@ -5,6 +5,7 @@ server:
 
 web:
   resource-path: D:/dreamer-cms/
+  #resource-path: /opt/resources/cms.itechyou.cn/
 
 spring:    
   mvc:
@@ -15,10 +16,10 @@ spring:
     static-locations: classpath:/META-INF/resources/,classpath:/static,classpath:/resources/,file:${web.resource-path}
   datasource: 
       name: test
-      #url: jdbc:mysql://39.106.101.180:3306/dreamer-cms?useSSL=false&useUnicode=true&characterEncoding=utf-8
-      #username: wangyawei
-      #password: WangYaWei123!@#
-      url: jdbc:mysql://127.0.0.1:3306/dreamer-blog?serverTimezone=GMT&useSSL=false&useUnicode=true&characterEncoding=UTF8
+      #url: jdbc:mysql://127.0.0.1:3389/dreamer-cms?serverTimezone=GMT&useSSL=false&useUnicode=true&characterEncoding=UTF8
+      #username: root
+      #password: root3306!
+      url: jdbc:mysql://127.0.0.1:3306/dreamer-cms?serverTimezone=GMT&useSSL=false&useUnicode=true&characterEncoding=UTF8
       username: root
       password: root
       driver-class-name: com.mysql.cj.jdbc.Driver
@@ -26,6 +27,7 @@ spring:
     host: 127.0.0.1
     port: 6379
     timeout: 2000
+    #password: U^i*M73\!FoL1TgFX
     password: YTU3e^u!gN^6HHPm
     jedis:
       pool:

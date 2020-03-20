@@ -423,4 +423,8 @@
 	) t2 ON INSTR(t1.title,t2.keywords) > 0
 	GROUP BY t1.id
   </select>
+  
+  <select id="queryListByTop" resultMap="BaseResultMap">
+  	SELECT * FROM system_archives ORDER BY create_time DESC LIMIT 0,10
+  </select>
 </mapper>

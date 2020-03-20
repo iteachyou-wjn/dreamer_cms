@@ -69,7 +69,7 @@
 									<span>&nbsp;|&nbsp;</span>
 									<a th:href="@{/admin/pages/toEdit(id=${page.id})}" class="btn btn-xs btn-success">编辑</a>
 									<span>&nbsp;|&nbsp;</span>
-									<a href="javascript:void(0)" data-toggle="modal" class="btn btn-xs btn-danger" th:onclick="'javascript: confrimRemove(\''+${page.id}+'\')'">删除</a>
+									<a href="javascript:void(0)" data-toggle="modal" class="btn btn-xs btn-danger" th:id="${page.id}" th:onclick="javascript: confrimRemove(this.getAttribute('id'))">删除</a>
 								</td>
 							</tr>
 							<tr th:if="${#lists.isEmpty(pages.list)}">

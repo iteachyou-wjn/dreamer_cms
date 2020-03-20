@@ -41,4 +41,6 @@ public interface ArchivesMapper {
 	ArchivesWithRownum queryArticleRowNum(Map<String, Object> params);
 
 	List<ArchivesVo> queryRecommend(Map<String, Object> entity);
+
+	List<Archives> queryListByTop();
 }

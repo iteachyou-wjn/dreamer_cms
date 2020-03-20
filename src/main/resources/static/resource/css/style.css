@@ -22,6 +22,9 @@ a:focus {
 	text-decoration: none;
 	color: #72afd2;
 }
+.fl{float: left;}
+.fr{float: right;}
+.clearFix{clear: both;}
 /* Layouts */
 .wrapper {
 	min-height: 100%;
@@ -2292,74 +2295,6 @@ to {
 	font-size: 13px;
 }
 
-
-
-
-/*.box .chat {
-  padding: 5px 20px 5px 10px;
-}
-.box .chat .item {
-  margin-bottom: 10px;
-}
-.box .chat .item:before,
-.box .chat .item:after {
-  display: table;
-  content: " ";
-}
-.box .chat .item:after {
-  clear: both;
-}
-.box .chat .item > img {
-  width: 40px;
-  height: 40px;
-  border: 2px solid transparent;
-  -webkit-border-radius: 50% !important;
-  -moz-border-radius: 50% !important;
-  border-radius: 50% !important;
-}
-.box .chat .item > img.online {
-  border: 2px solid #00a65a;
-}
-.box .chat .item > img.offline {
-  border: 2px solid #f56954;
-}
-.box .chat .item > .message {
-  margin-left: 55px;
-  margin-top: -40px;
-}
-.box .chat .item > .message > .name {
-  display: block;
-  font-weight: 600;
-}
-.box .chat .item > .attachment {
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  background: #f0f0f0;
-  margin-left: 65px;
-  margin-right: 15px;
-  padding: 10px;
-}
-.box .chat .item > .attachment > h4 {
-  margin: 0 0 5px 0;
-  font-weight: 600;
-  font-size: 14px;
-}
-.box .chat .item > .attachment > p,
-.box .chat .item > .attachment > .filename {
-  font-weight: 600;
-  font-size: 13px;
-  font-style: italic;
-  margin: 0;
-}
-.box .chat .item > .attachment:before,
-.box .chat .item > .attachment:after {
-  display: table;
-  content: " ";
-}
-.box .chat .item > .attachment:after {
-  clear: both;
-}*/
 .box > .overlay,
 .box > .loading-img {
 	position: absolute;
@@ -3650,25 +3585,6 @@ to {
 	margin-top: -6px;
 }
 
-/*.msg-out {
-  position: relative;
-  background: #F1F5FD;
-}
-.msg-out:after {
-  right: 100%;
-  top: 30%;
-  border: solid transparent;
-  content: " ";
-  height: 0;
-  width: 0;
-  position: absolute;
-  pointer-events: none;
-  border-color: rgba(136, 183, 213, 0);
-  border-right-color: #F1F5FD;
-  border-width: 6px;
-  margin-top: -6px;
-}*/
-
 .msg-out {
 	position: relative;
 	background: #F1F5FD;
@@ -4839,3 +4755,5 @@ li.dropdown-header {
 	float: left;
 	line-height: 40px;
 }
+.newest{list-style: none;margin: 0;padding: 0;line-height: 25px;}
+.newest li{border-bottom: #f2f2f2 dashed 1px;}

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.itechyou.cms.dao.DashboardMapper" >
+	<select id="statistics" resultType="java.util.Map">
+		SELECT 
+			(SELECT COUNT(*) artCnt FROM system_archives) AS artCnt,
+			(SELECT COUNT(*) catCnt FROM system_category) AS catCnt,
+			(SELECT COUNT(*) tagCnt FROM system_labels) AS tagCnt,
+			(SELECT COUNT(*) formCnt FROM system_forms) AS formCnt
+	</select>
+	
+	<select id="selectDBVersion" resultType="java.lang.String">
+		SELECT VERSION()
+	</select>
+</mapper>

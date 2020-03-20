@@ -31,47 +31,128 @@
 			<section class="panel">
 				<div class="panel-body">
 					<div class="row" style="margin-bottom:5px;">
-
-
+						<div class="col-md-12">
+						欢迎使用专业的JAVA网站管理系统，轻松建站的首选利器——<b>梦想家CMS内容管理系统</b>
+						</div>
+					</div>
+				</div>
+			</section>
+			<section class="panel">
+				<div class="panel-heading">信息统计</div>
+				<div class="panel-body">
+					<div class="row" style="margin-bottom:5px;">
                         <div class="col-md-3">
                             <div class="sm-st clearfix">
-                                <span class="sm-st-icon st-red"><i class="fa fa-check-square-o"></i></span>
+                                <span class="sm-st-icon st-red"><i class="fa fa-file-text-o"></i></span>
                                 <div class="sm-st-info">
-                                    <span>3200</span>
-                                    Total Tasks
+                                    <span th:text="${statistics.artCnt}"></span>
+                                    文章数量
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="sm-st clearfix">
-                                <span class="sm-st-icon st-violet"><i class="fa fa-envelope-o"></i></span>
+                                <span class="sm-st-icon st-violet"><i class="fa fa-folder-open-o"></i></span>
                                 <div class="sm-st-info">
-                                    <span>2200</span>
-                                    Total Messages
+                                    <span th:text="${statistics.catCnt}"></span>
+                                    栏目数量
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="sm-st clearfix">
-                                <span class="sm-st-icon st-blue"><i class="fa fa-dollar"></i></span>
+                                <span class="sm-st-icon st-blue"><i class="fa fa-tags"></i></span>
                                 <div class="sm-st-info">
-                                    <span>100,320</span>
-                                    Total Profit
+                                    <span th:text="${statistics.tagCnt}"></span>
+                                    标签数量
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="sm-st clearfix">
-                                <span class="sm-st-icon st-green"><i class="fa fa-paperclip"></i></span>
+                                <span class="sm-st-icon st-green"><i class="fa fa-check-square-o"></i></span>
                                 <div class="sm-st-info">
-                                    <span>4567</span>
-                                    Total Documents
+                                    <span th:text="${statistics.formCnt}"></span>
+                                    表单数量
                                 </div>
                             </div>
                         </div>
                     </div>
 				</div>
 			</section>
+			<section class="panel">
+				<div class="panel-heading">
+					版本信息及商业授权
+				</div>
+				<div class="panel-body">
+					<div class="row" style="margin-bottom:5px;">
+						<div class="col-md-12">
+							<div class="fl">
+								<img alt="梦想家CMS内容管理系统" src="/resource/img/dreamercms-logo.png" width="100">
+							</div>
+							<div class="fl" style="margin-left:10px;">
+								<b>当前系统版本为开源版V2.0.1</b>
+								<ul>
+									<li>开发管理后台首页仪表盘页面功能</li>
+									<li>增加使用标签解析引擎，方便使用标签建站</li>
+									<li>优化了后台管理的功能</li>
+									<li>增加了日志记录相关功能,使系统更安全</li>
+									<li>优化了部分标签</li>
+								</ul>
+								<b>根据软件使用协议，未经商业授权的系统请务必保留官方版权。前后台页底必须保留“Powered by I Tech You , 我教你!”文字和链接！</b>
+							</div>
+							<div class="clearFix"></div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<div class="row" style="margin-bottom:5px;">
+				<div class="col-md-4">
+					<section class="panel">
+						<div class="panel-heading">
+							最新文章
+						</div>
+						<div class="panel-body" style="height: 300px;">
+							<ul class="newest">
+								<li th:each="item : ${newest}">
+									<a th:text="${item.title}" th:title="${item.title}" th:href="'/article/' + ${item.id}"></a>
+								</li>
+							</ul>
+						</div>
+					</section>
+				</div>
+				<div class="col-md-4">
+					<section class="panel">
+						<div class="panel-heading">
+							开发团队
+						</div>
+						<div class="panel-body" style="height: 300px;">
+							<p>版权所有：<b><a href="http://www.itechyou.cn" title="I Tech You,我教你！">I Tech You , 我教你!</a></b></p>
+							<p>开发团队成员：<b>王俊南</b></p>
+							<p>官方网址：<b><a href="http://www.itechyou.cn" title="I Tech You,我教你！">http://www.itechyou.cn</a></b></p>
+							<p>官方演示网址：<b><a href="http://cms.itechyou.cn" title="梦想家CMS内容管理系统">http://cms.itechyou.cn</a></b></p>
+							<p>官方QQ群：<b>①597652651</b>、<b>②623605199</b></p>
+						</div>
+					</section>
+				</div>
+				<div class="col-md-4">
+					<section class="panel">
+						<div class="panel-heading">
+							服务器信息
+						</div>
+						<div class="panel-body" style="height: 300px;">
+							<p>JVM名称：<b th:text="${serverInfo.jvmName}"></b></p>
+							<p>JAVA版本：<b th:text="${serverInfo.jreVersion}"></b></p>
+							<p>JAVA安装路径：<b th:text="${serverInfo.javaPath}"></b></p>
+							<p>JVM总内存：<b th:text="${serverInfo.jvmTotalMemory}"></b></p>
+							<p>JVM总内存：<b th:text="${serverInfo.jvmFreeMemory}"></b></p>
+							<p>操作系统名称：<b th:text="${serverInfo.optName}"></b></p>
+							<p>操作系统架构：<b th:text="${serverInfo.optFrameWork}"></b></p>
+							<p>数据库版本：<b th:text="${serverInfo.dbVersion}"></b></p>
+						</div>
+					</section>
+				</div>
+			</div>
 		</div>
 	</div>
 	<script src="/resource/js/jquery.min.js" type="text/javascript"></script>

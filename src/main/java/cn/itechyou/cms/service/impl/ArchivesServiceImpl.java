@@ -151,5 +151,10 @@ public class ArchivesServiceImpl implements ArchivesService {
 	public ArchivesWithRownum queryArticleRowNum(Map<String, Object> params) {
 		return this.archivesMapper.queryArticleRowNum(params);
 	}
+
+	@Override
+	public List<Archives> queryListByTop() {
+		return archivesMapper.queryListByTop();
+	}
 	
 }
