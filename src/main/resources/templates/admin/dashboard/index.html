@@ -115,7 +115,7 @@
 						<div class="panel-body" style="height: 300px;">
 							<ul class="newest">
 								<li th:each="item : ${newest}">
-									<a th:text="${item.title}" th:title="${item.title}" th:href="'/article/' + ${item.id}"></a>
+									<a th:text="${item.title}" target="_blank" th:title="${item.title}" th:href="'/article/' + ${item.id}"></a>
 								</li>
 							</ul>
 						</div>
@@ -127,10 +127,10 @@
 							开发团队
 						</div>
 						<div class="panel-body" style="height: 300px;">
-							<p>版权所有：<b><a href="http://www.itechyou.cn" title="I Tech You,我教你！">I Tech You , 我教你!</a></b></p>
+							<p>版权所有：<b><a href="http://www.itechyou.cn" target="_blank" title="I Tech You,我教你！">I Tech You , 我教你!</a></b></p>
 							<p>开发团队成员：<b>王俊南</b></p>
-							<p>官方网址：<b><a href="http://www.itechyou.cn" title="I Tech You,我教你！">http://www.itechyou.cn</a></b></p>
-							<p>官方演示网址：<b><a href="http://cms.itechyou.cn" title="梦想家CMS内容管理系统">http://cms.itechyou.cn</a></b></p>
+							<p>官方网址：<b><a href="http://www.itechyou.cn" target="_blank" title="I Tech You,我教你！">http://www.itechyou.cn</a></b></p>
+							<p>官方演示网址：<b><a href="http://cms.itechyou.cn" target="_blank" title="梦想家CMS内容管理系统">http://cms.itechyou.cn</a></b></p>
 							<p>官方QQ群：<b>①597652651</b>、<b>②623605199</b></p>
 						</div>
 					</section>
