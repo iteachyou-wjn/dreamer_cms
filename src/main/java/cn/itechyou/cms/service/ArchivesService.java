@@ -40,5 +40,7 @@ public interface ArchivesService {
 	ArchivesWithRownum queryArticleRowNum(Map<String, Object> params);
 
 	List<Archives> queryListByTop();
+	
+	int update(Archives archives);
 
 }

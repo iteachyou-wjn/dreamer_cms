@@ -156,5 +156,10 @@ public class ArchivesServiceImpl implements ArchivesService {
 	public List<Archives> queryListByTop() {
 		return archivesMapper.queryListByTop();
 	}
+
+	@Override
+	public int update(Archives archives) {
+		return archivesMapper.updateByPrimaryKeySelective(archives);
+	}
 	
 }
