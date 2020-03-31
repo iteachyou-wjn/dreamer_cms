@@ -74,11 +74,6 @@ public class ChannelTag extends AbstractChannelTag implements IParse {
 			}
 			SearchEntity params = new SearchEntity();
 			params.setEntity(entity);
-			if(entity.containsKey("start") && entity.containsKey("length")) {
-				params.setPageNum(Integer.parseInt(entity.get("start").toString()));
-				params.setPageSize(Integer.parseInt(entity.get("length").toString()));
-				PageHelper.startPage(params.getPageNum(), params.getPageSize());
-			}
 
 			List<CategoryWithBLOBs> list = null;
 			
@@ -96,10 +91,20 @@ public class ChannelTag extends AbstractChannelTag implements IParse {
 			if("top".equals(code)) {
 				category = new CategoryWithBLOBs();
 				category.setId("-1");
+				if(entity.containsKey("start") && entity.containsKey("length")) {
+					params.setPageNum(Integer.parseInt(entity.get("start").toString()));
+					params.setPageSize(Integer.parseInt(entity.get("length").toString()));
+					PageHelper.startPage(params.getPageNum(), params.getPageSize());
+				}
 				list = categoryService.getTreeList(category.getId());
 			}else {
 				category = categoryService.queryCategoryByCode(entity.get("typeid").toString());
 				if(category != null) {
+					if(entity.containsKey("start") && entity.containsKey("length")) {
+						params.setPageNum(Integer.parseInt(entity.get("start").toString()));
+						params.setPageSize(Integer.parseInt(entity.get("length").toString()));
+						PageHelper.startPage(params.getPageNum(), params.getPageSize());
+					}
 					list = categoryService.getTreeList(category.getId(), isShow);
 				}
 			}
