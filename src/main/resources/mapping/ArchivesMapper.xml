@@ -282,7 +282,7 @@
     </if>
     order by 
     <if test="(sortBy != null and sortBy != '')">
-    	${sortBy} ${sortWay},
+    	a.${sortBy} ${sortWay},
     </if>
     a.update_time desc
   </select>
