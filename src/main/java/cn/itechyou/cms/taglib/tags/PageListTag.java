@@ -19,6 +19,7 @@ import cn.itechyou.cms.taglib.annotation.Attribute;
 import cn.itechyou.cms.taglib.annotation.Tag;
 import cn.itechyou.cms.taglib.utils.RegexUtil;
 import cn.itechyou.cms.utils.StringUtil;
+import cn.itechyou.cms.vo.ArchivesVo;
 
 /**
  * List标签解析器
@@ -51,6 +52,14 @@ public class PageListTag extends AbstractListTag implements IParse {
 		return null;
 	}
 
+	/**
+	 * 列表页面解析
+	 * @param html
+	 * @param typeid
+	 * @param pageNum
+	 * @param pageSize
+	 * @return
+	 */
 	public String parse(String html, String typeid, Integer pageNum, Integer pageSize) {
 		Tag listAnnotation = PageListTag.class.getAnnotation(Tag.class);
 		List<String> listTags = RegexUtil.parseAll(html, listAnnotation.regexp(), 0);
@@ -115,4 +124,47 @@ public class PageListTag extends AbstractListTag implements IParse {
 		return newHtml;
 	}
 
+	/**
+	 * 搜索列表页面解析
+	 * @param html
+	 * @param params
+	 * @return
+	 */
+	public String parse(String html, SearchEntity params) {
+		Tag listAnnotation = PageListTag.class.getAnnotation(Tag.class);
+		List<String> listTags = RegexUtil.parseAll(html, listAnnotation.regexp(), 0);
+		List<String> contents = RegexUtil.parseAll(html, listAnnotation.regexp(), 1);
+		
+		if(listTags == null || listTags.size() <= 0) {
+			return html;
+		}
+		
+		//关键词
+		String keywords = params.getEntity().get("keywords").toString();
+		
+		String newHtml = html;
+		for (int i = 0;i < listTags.size();i++) {
+			String tag = listTags.get(i);
+			String content = contents.get(i);
+			Map<String,Object> entity = params.getEntity();
+			entity.put("sortWay", entity.containsKey("sortWay") ? entity.get("sortWay") : "asc");
+			params.setEntity(entity);
+			//开始分页
+			PageHelper.startPage(params.getPageNum(), params.getPageSize());
+			List<ArchivesVo> list = archivesMapper.queryListByKeywords(keywords);
+			PageInfo<ArchivesVo> pageInfo = new PageInfo<ArchivesVo>(list);
+			
+			StringBuilder sb = new StringBuilder();
+			
+			for (int j = 0; j < list.size(); j++) {
+				ArchivesVo archivesVo = list.get(j);
+				String item = new String(content);
+				item = this.buildHTML(item, archivesVo, (j+1));
+				sb.append(item);
+			}
+			newHtml = newHtml.replace(tag, sb.toString());
+			newHtml = paginationTag.parse(newHtml, params, pageInfo);
+		}
+		return newHtml;
+	}
 }

@@ -1,0 +1,20 @@
+web:
+  resource-path: /opt/resources/cms.itechyou.cn/
+
+spring: 
+  datasource: 
+    name: prd
+    url: jdbc:mysql://127.0.0.1:3389/dreamer-cms?serverTimezone=GMT&useSSL=false&useUnicode=true&characterEncoding=UTF8
+    username: root
+    password: root3306!
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    timeout: 2000
+    password: U^i*M73\!FoL1TgFX
+    jedis:
+      pool:
+        max-idle: 100
+        min-idle: 50
+        max-wait: -1

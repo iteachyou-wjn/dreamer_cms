@@ -90,7 +90,7 @@
 		                            </select>
 								</div>
 								<div class="form-group form-control-small">
-									<label>跳转方式：</label>
+									<label>上级栏目：</label>
 									<select class="form-control m-b-10" name="linkTarget">
 		                                <option value="1" th:selected="${category.linkTarget eq '1'}">当前页（_self）</option>
 		                                <option value="2" th:selected="${category.linkTarget eq '2'}">新标签页（_blank）</option>
@@ -305,8 +305,11 @@
 	    		mdEditor.hide();
 	    		if(ueEditor == null){
 	    			ueEditor = UE.getEditor('ue-editor');
+			    	ueEditor.addListener("ready", function () {
+			            // editor准备好之后才可以使用
+			            ueEditor.setContent(htmlContent);
+			        });
 	    		}
-	    		ueEditor.setShow();
 	    		defaultEditor = "ue"
 	    	}else{
 	    		mdEditor.show();

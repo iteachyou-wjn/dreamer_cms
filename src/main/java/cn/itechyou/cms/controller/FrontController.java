@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Date;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,6 +33,7 @@ import cn.itechyou.cms.entity.System;
 import cn.itechyou.cms.entity.Theme;
 import cn.itechyou.cms.exception.AdminGeneralException;
 import cn.itechyou.cms.exception.CmsException;
+import cn.itechyou.cms.exception.FormParameterException;
 import cn.itechyou.cms.exception.TemplateNotFoundException;
 import cn.itechyou.cms.exception.TemplateReadException;
 import cn.itechyou.cms.service.ArchivesService;
@@ -346,29 +348,68 @@ public class FrontController {
 	}
 	
 	@RequestMapping(value = "/search")
-	public String search(Model model, SearchEntity params) {
+	public void search(Model model, SearchEntity params) throws CmsException {
 		StringBuffer templatePath = new StringBuffer();
 		Theme theme = themeService.getCurrentTheme();
+		String templateDir = fileConfiguration.getResourceDir() + "templates/";
 		if(theme == null) {
 			
 		}
-		model.addAttribute("theme", theme);
+		templatePath.append(theme.getThemePath());
+		templatePath.append("/search.html");
+
+		if(params.getPageNum() == null)
+			params.setPageNum(1);
+		if(params.getPageSize() == null)
+			params.setPageSize(10);
 		
-		PageInfo<ArchivesVo> pageinfo = archivesService.queryListByKeywords(params);
-		model.addAttribute("result", pageinfo);
 		
-		String keywords = params.getEntity().get("keywords").toString();
-		
-		//记录搜索关键词
-		SearchRecord sr = new SearchRecord();
-		sr.setId(UUIDUtils.getPrimaryKey());
-		sr.setKeywords(keywords);
-		sr.setCreateTime(new Date());
-		searchRecordService.add(sr);
-		
-		model.addAttribute("keywords", keywords);
-		templatePath.append("/themes/" + theme.getThemePath() + "/search.html");
-		return templatePath.toString();
+		try {
+			Map<String, Object> entity = params.getEntity();
+			if(entity == null || !entity.containsKey("keywords")) {
+				throw new FormParameterException(
+						ExceptionEnum.FORM_PARAMETER_EXCEPTION.getCode(),
+						ExceptionEnum.FORM_PARAMETER_EXCEPTION.getMessage(),
+						"请仔细检查Form表单参数结构，正确参数格式应该包含entity['keywords']、pageNum、pageSize。");
+			}
+			
+			String keywords = params.getEntity().get("keywords").toString();
+			if(keywords.getBytes("GBK").length < 5) {
+				throw new FormParameterException(
+						ExceptionEnum.FORM_PARAMETER_EXCEPTION.getCode(),
+						ExceptionEnum.FORM_PARAMETER_EXCEPTION.getMessage(),
+						"搜索关键字不能少于5个字符，请重新输入后进行搜索。");
+			}
+			
+			String path = templateDir + templatePath;
+			File template = new File(path);
+			if(!template.exists()) {
+				throw new TemplateNotFoundException(
+						ExceptionEnum.TEMPLATE_NOTFOUND_EXCEPTION.getCode(),
+						ExceptionEnum.TEMPLATE_NOTFOUND_EXCEPTION.getMessage(),
+						"请仔细检查" + template.getAbsolutePath() + "文件，或检查application.yml中的资源目录配置项（web.resource-path）。");
+			}
+			String newHtml = "";
+			String html = FileUtils.readFileToString(template, "UTF-8");
+			newHtml = parseEngine.parse(html);
+			newHtml = parseEngine.parsePageList(newHtml, params);
+			
+			
+			//记录搜索关键词
+			SearchRecord sr = new SearchRecord();
+			sr.setId(UUIDUtils.getPrimaryKey());
+			sr.setKeywords(keywords);
+			sr.setCreateTime(new Date());
+			searchRecordService.add(sr);
+			
+			//输出HTML
+			outHtml(newHtml);
+		} catch (IOException e) {
+			throw new TemplateReadException(
+					ExceptionEnum.TEMPLATE_READ_EXCEPTION.getCode(),
+					ExceptionEnum.TEMPLATE_READ_EXCEPTION.getMessage(),
+					"请仔细检查模版文件，或检查application.yml中的资源目录配置项（web.resource-path）。");
+		}
 	}
 	
 	/**

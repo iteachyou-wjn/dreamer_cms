@@ -3,37 +3,13 @@ server:
   servlet:
     context-path: /
 
-web:
-  resource-path: D:/dreamer-cms/
-  #resource-path: /opt/resources/cms.itechyou.cn/
-
 spring:    
-  mvc:
+  profiles:    active: dev  mvc:
     static-path-pattern: /**
     favicon:
       enabled: false
   resources:
     static-locations: classpath:/META-INF/resources/,classpath:/static,classpath:/resources/,file:${web.resource-path}
-  datasource: 
-      name: test
-      #url: jdbc:mysql://127.0.0.1:3389/dreamer-cms?serverTimezone=GMT&useSSL=false&useUnicode=true&characterEncoding=UTF8
-      #username: root
-      #password: root3306!
-      url: jdbc:mysql://127.0.0.1:3306/dreamer-cms?serverTimezone=GMT&useSSL=false&useUnicode=true&characterEncoding=UTF8
-      username: root
-      password: root
-      driver-class-name: com.mysql.cj.jdbc.Driver
-  redis:
-    host: 127.0.0.1
-    port: 6379
-    timeout: 2000
-    #password: U^i*M73\!FoL1TgFX
-    password: YTU3e^u!gN^6HHPm
-    jedis:
-      pool:
-        max-idle: 100
-        min-idle: 50
-        max-wait: 10000
   thymeleaf:
     cache: false
     suffix: .html

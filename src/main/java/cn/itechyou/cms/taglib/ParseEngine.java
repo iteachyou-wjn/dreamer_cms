@@ -3,6 +3,7 @@ package cn.itechyou.cms.taglib;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import cn.itechyou.cms.common.SearchEntity;
 import cn.itechyou.cms.taglib.tags.ArticleTag;
 import cn.itechyou.cms.taglib.tags.AttachmentTag;
 import cn.itechyou.cms.taglib.tags.CategoryTag;
@@ -109,6 +110,22 @@ public class ParseEngine {
 	public String parseArticle(String html, String id) {
 		String newHtml = new String(html);
 		newHtml = articleTag.parse(newHtml, id);
+		newHtml = labelTag.parse(newHtml);
+		newHtml = attachmentTag.parse(newHtml);
+		return newHtml;
+	}
+	
+	/**
+	 * 列表页面解析
+	 * @param html
+	 * @param typeid
+	 * @param pageNum
+	 * @param pageSize
+	 * @return
+	 */
+	public String parsePageList(String html, SearchEntity params) {
+		String newHtml = new String(html);
+		newHtml = pageListTag.parse(newHtml, params);
 		newHtml = labelTag.parse(newHtml);
 		newHtml = attachmentTag.parse(newHtml);
 		return newHtml;

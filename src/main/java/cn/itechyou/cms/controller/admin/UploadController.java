@@ -113,8 +113,6 @@ public class UploadController extends BaseController{
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json");
 		response.setHeader("Content-Type", "text/html");
-		//String rootPath = request.getSession().getServletContext().getRealPath("/");
-		//String rootPath = ResourceUtils.getURL("classpath:").getPath();
 		String rootPath = fileConfiguration.getResourceDir();
 		String exec = new ActionEnter(request, rootPath).exec();
 		PrintWriter writer = response.getWriter();

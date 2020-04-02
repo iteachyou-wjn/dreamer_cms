@@ -12,6 +12,7 @@ public enum ExceptionEnum {
 	
 	TEMPLATE_NOTFOUND_EXCEPTION("40001","模版文件不存在"),
 	TEMPLATE_READ_EXCEPTION("40002","模版文件读取失败"),
+	FORM_PARAMETER_EXCEPTION("40003","表单参数错误")
 	;
 	private String code;
 	private String message;
