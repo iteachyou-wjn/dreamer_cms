@@ -59,7 +59,6 @@ public class ArchivesController {
 	
 	@RequestMapping("/list")
 	public String toIndex(Model model ,SearchEntity params) {
-		Map<String,Object> map = new HashMap<>();
 		String cid = "-1";
 		if(params.getEntity() != null) {
 			if(params.getEntity().containsKey("cid")) {
@@ -68,6 +67,10 @@ public class ArchivesController {
 				}
 			}
 			cid = params.getEntity().containsKey("cid") ? params.getEntity().get("cid").toString() : "-1";
+		}
+		if(params.getEntity() == null) {
+			Map<String,Object> entity = new HashMap<String,Object>();
+			params.setEntity(entity);
 		}
 		params.getEntity().put("sortBy", "create_time");
 		params.getEntity().put("sortWay", "desc");
