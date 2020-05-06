@@ -8,6 +8,9 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.github.pagehelper.PageHelper;
+
+import cn.itechyou.cms.common.SearchEntity;
 import cn.itechyou.cms.entity.CategoryWithBLOBs;
 import cn.itechyou.cms.service.CategoryService;
 import cn.itechyou.cms.taglib.IParse;
@@ -67,10 +70,16 @@ public class ChannelArtListTag extends AbstractChannelTag implements IParse {
 			
 			CategoryWithBLOBs category = null;
 			List<CategoryWithBLOBs> categorys = new ArrayList<CategoryWithBLOBs>();
-			
+			SearchEntity params = new SearchEntity();
+			params.setEntity(entity);
 			if(!entity.containsKey("typeid")) {
 				category = new CategoryWithBLOBs();
 				category.setId("-1");
+				if(entity.containsKey("length")) {
+					params.setPageNum(0);
+					params.setPageSize(Integer.parseInt(entity.get("length").toString()));
+					PageHelper.startPage(params.getPageNum(), params.getPageSize());
+				}
 				categorys = categoryService.getTreeList(category.getId());
 			}else {
 				String code = entity.get("typeid").toString();
@@ -80,11 +89,19 @@ public class ChannelArtListTag extends AbstractChannelTag implements IParse {
 				if(category == null) {
 					//
 				}
+				if(entity.containsKey("length")) {
+					params.setPageNum(0);
+					params.setPageSize(Integer.parseInt(entity.get("length").toString()));
+					PageHelper.startPage(params.getPageNum(), params.getPageSize());
+				}
 				categorys = categoryService.getTreeList(category.getId());
 			}
 			StringBuilder sb = new StringBuilder();
 			if(categorys == null || categorys.size() <= 0) {
 				String item = new String(content);
+				if(StringUtil.isNotBlank(this.getT())) {
+					channelTag.setT(this.getT());
+				}
 				item = listTag.parse(item, category.getCode());
 				item = channelTag.parse(item, category.getCode());
 				item = this.buildHTML(item, category, 1);
@@ -93,6 +110,9 @@ public class ChannelArtListTag extends AbstractChannelTag implements IParse {
 				for (int j = 0; j < categorys.size(); j++) {
 					CategoryWithBLOBs categoryWithBLOBs = categorys.get(j);
 					String item = new String(content);
+					if(StringUtil.isNotBlank(this.getT())) {
+						channelTag.setT(this.getT());
+					}
 					item = listTag.parse(item, categoryWithBLOBs.getCode());
 					item = channelTag.parse(item, categoryWithBLOBs.getCode());
 					item = this.buildHTML(item,categoryWithBLOBs, (j + 1));
@@ -110,4 +130,5 @@ public class ChannelArtListTag extends AbstractChannelTag implements IParse {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
 }
