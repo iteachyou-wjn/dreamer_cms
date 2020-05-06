@@ -1,3 +1,7 @@
+<p align="center">
+	<a href="https://www.itechyou.cn/"><img src="http://cdn.itechyou.cn/1-1ZQ91JT60-L.png" ></a>
+</p>
+
 # 梦想家CMS内容管理系统开源版J2EE代码
 
 当前版本：2.5.1
@@ -48,26 +52,10 @@ DreamerCMS从2.0.0版本开始采用了解析式引擎与编译式引擎并存�
 # 快速入门
 CMS包括两个部分（代码部分、资源部分）代码不多说。资源就是图片、模版等，该目录在application.yml中web.resource-path配置项目中配置。视频教程：
 ```
-百度网盘下载链接：https://pan.baidu.com/s/1plsfBl_ds_5TkVa-yRkESQ 提取码：2c8i
+百度网盘下载链接：
+https://pan.baidu.com/s/1plsfBl_ds_5TkVa-yRkESQ 提取码：2c8i
 在线观看视频地址：
-一、开发环境搭建及项目导入
-https://www.bilibili.com/video/BV1G7411m72U/
-二、资源目录和代码之间的关系
-https://www.bilibili.com/video/BV1G7411m7qz/
-三、熟悉管理后台及系统设置功能介绍
-https://www.bilibili.com/video/BV1at4y1m785/
-四、变量管理和附件管理
-https://www.bilibili.com/video/BV1Xc41187Ja/
-五、表单管理功能介绍及演示
-https://www.bilibili.com/video/BV15g4y1a73s/
-六、标签管理功能介绍
-https://www.bilibili.com/video/BV1hQ4y1M7WR/
-七、栏目管理功能介绍
-https://www.bilibili.com/video/BV1Fa4y1t7H3/
-八、文章管理功能介绍及演示
-https://www.bilibili.com/video/BV1Pg4y1a7pu/
-九、风格设置功能介绍及演示
-https://www.bilibili.com/video/BV1fA41187w6/
+https://space.bilibili.com/482273402
 ```
 1. 克隆项目到本地工作空间
 2. 导入Eclipse或Sts等开发工具（推荐使用Spring Tools Suite 4）（项目中缺少的google/kaptcha.jar在附件中，大家自行下载）
