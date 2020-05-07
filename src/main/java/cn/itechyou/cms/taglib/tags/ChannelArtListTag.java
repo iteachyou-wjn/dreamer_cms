@@ -99,9 +99,6 @@ public class ChannelArtListTag extends AbstractChannelTag implements IParse {
 			StringBuilder sb = new StringBuilder();
 			if(categorys == null || categorys.size() <= 0) {
 				String item = new String(content);
-				if(StringUtil.isNotBlank(this.getT())) {
-					channelTag.setT(this.getT());
-				}
 				item = listTag.parse(item, category.getCode());
 				item = channelTag.parse(item, category.getCode());
 				item = this.buildHTML(item, category, 1);
@@ -110,9 +107,6 @@ public class ChannelArtListTag extends AbstractChannelTag implements IParse {
 				for (int j = 0; j < categorys.size(); j++) {
 					CategoryWithBLOBs categoryWithBLOBs = categorys.get(j);
 					String item = new String(content);
-					if(StringUtil.isNotBlank(this.getT())) {
-						channelTag.setT(this.getT());
-					}
 					item = listTag.parse(item, categoryWithBLOBs.getCode());
 					item = channelTag.parse(item, categoryWithBLOBs.getCode());
 					item = this.buildHTML(item,categoryWithBLOBs, (j + 1));
