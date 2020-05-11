@@ -24,7 +24,7 @@
     	<h1 class="panel-heading">系统设置</h1>
         <!--breadcrumbs start -->
         <ul class="breadcrumb">
-				<li><a href="/admin/dashboard/index"><i class="fa fa-home"></i> 首页</a></li>
+				<li><a href="/admin/dashboard/toIndex"><i class="fa fa-home"></i> 首页</a></li>
 				<li class="active">系统设置</li>
 			</ul>
         <!--breadcrumbs end -->
@@ -54,6 +54,10 @@
 		            <div class="form-group form-control-medium">
 						<label for="uploaddir">默认上传目录：</label>
 						<input id="uploaddir" name="uploaddir" type="text" class="form-control" th:value="*{uploaddir}">
+		            </div>
+		            <div class="form-group form-control-medium">
+						<label for="staticdir">默认静态化目录：</label>
+						<input id="staticdir" name="staticdir" type="text" class="form-control" th:value="*{staticdir}">
 		            </div>
 		            <div class="form-group">
 						<label for="copyright">站点版权：</label>
