@@ -202,6 +202,8 @@ public class StaticController {
 			templatePath.append(categoryWithBLOBs.getCoverTemp());
 		}else if(categoryWithBLOBs.getCatModel() == 2) {
 			templatePath.append(categoryWithBLOBs.getListTemp());
+		}else if(categoryWithBLOBs.getCatModel() == 3) {
+			return;
 		}
 		String newHtml = "";
 		try {
