@@ -10,11 +10,13 @@
     <result column="icp" property="icp" jdbcType="VARCHAR" />
     <result column="copyright" property="copyright" jdbcType="VARCHAR" />
     <result column="uploaddir" property="uploaddir" jdbcType="VARCHAR" />
+    <result column="staticdir" property="staticdir" jdbcType="VARCHAR" />
+    <result column="browse_type" property="browseType" jdbcType="INTEGER" />
     <result column="appid" property="appid" jdbcType="VARCHAR" />
     <result column="appkey" property="appkey" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, website, title, keywords, describe, icp, copyright, appid, appkey, uploaddir
+    id, website, title, keywords, describe, icp, copyright, appid, appkey, uploaddir, staticdir, browse_type
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -29,11 +31,12 @@
   <insert id="insert" parameterType="cn.itechyou.cms.entity.System" >
     insert into system_setting (id, website, title, 
       keywords, describe, icp, 
-      copyright, appid, appkey, uploaddir
+      copyright, appid, appkey, uploaddir, staticdir, browse_type
       )
     values (#{id,jdbcType=VARCHAR}, #{website,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
       #{keywords,jdbcType=VARCHAR}, #{describe,jdbcType=VARCHAR}, #{icp,jdbcType=VARCHAR}, 
-      #{copyright,jdbcType=VARCHAR}, #{appid,jdbcType=VARCHAR}, #{appkey,jdbcType=VARCHAR}, #{uploaddir,jdbcType=VARCHAR}
+      #{copyright,jdbcType=VARCHAR}, #{appid,jdbcType=VARCHAR}, #{appkey,jdbcType=VARCHAR}, 
+      #{uploaddir,jdbcType=VARCHAR}, #{staticdir,jdbcType=VARCHAR}, #{browseType,jdbcType=INTEGER}
       )
   </insert>
   <insert id="insertSelective" parameterType="cn.itechyou.cms.entity.System" >
@@ -65,6 +68,12 @@
       </if>
       <if test="uploaddir != null" >
         uploaddir,
+      </if>
+      <if test="staticdir != null" >
+        staticdir,
+      </if>
+      <if test="browseType != null" >
+        browse_type,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -98,6 +107,12 @@
       <if test="uploaddir != null" >
         #{uploaddir,jdbcType=VARCHAR},
       </if>
+      <if test="staticdir != null" >
+        #{staticdir,jdbcType=VARCHAR},
+      </if>
+      <if test="browseType != null" >
+        #{browseType,jdbcType=INTEGER},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="cn.itechyou.cms.entity.System" >
@@ -130,6 +145,12 @@
       <if test="uploaddir != null" >
         uploaddir = #{uploaddir,jdbcType=VARCHAR},
       </if>
+      <if test="staticdir != null" >
+        staticdir = #{staticdir,jdbcType=VARCHAR},
+      </if>
+      <if test="browseType != null" >
+        browse_type = #{browseType,jdbcType=INTEGER},
+      </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
@@ -143,7 +164,9 @@
       copyright = #{copyright,jdbcType=VARCHAR},
       appid = #{appid,jdbcType=VARCHAR},
       appkey = #{appkey,jdbcType=VARCHAR},
-      uploaddir = #{uploaddir,jdbcType=VARCHAR}
+      uploaddir = #{uploaddir,jdbcType=VARCHAR},
+      staticdir = #{staticdir,jdbcType=VARCHAR},
+      browse_type = #{browseType,jdbcType=INTEGER}
     where id = #{id,jdbcType=VARCHAR}
   </update>
   

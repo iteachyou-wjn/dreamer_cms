@@ -27,6 +27,13 @@ import cn.itechyou.cms.vo.ArchivesVo;
 	})
 public class PaginationTag implements IParse {
 	
+	/**
+	 * 执行类型：
+	 * P：解析
+	 * S：生成静态化
+	 */
+	private String t;
+	
 	@Autowired
 	private CategoryService categoryService;
 
@@ -62,7 +69,14 @@ public class PaginationTag implements IParse {
 		if(!visitUrl.startsWith("/")) {
 			visitUrl = "/" + visitUrl;
 		}
-		String pageurl = "/list-" + typeCode + visitUrl + "/{pageNum}/{pageSize}"; 
+		
+		String pageurl;
+		if(StringUtil.isBlank(t) || "P".equals(t)) {//解析
+			pageurl = "/list-" + typeCode + visitUrl + "/{pageNum}/{pageSize}"; 
+		}else {
+			pageurl = visitUrl + "/list-{pageNum}.html";
+		}
+		
 		
 		Attribute[] attributes = annotations.attributes();
 		Map<String,Object> entity = new HashMap<String,Object>();
@@ -181,5 +195,13 @@ public class PaginationTag implements IParse {
 		
 		newHtml = newHtml.replace(tag, sb.toString());
 		return newHtml;
+	}
+
+	public String getT() {
+		return t;
+	}
+
+	public void setT(String t) {
+		this.t = t;
 	}
 }

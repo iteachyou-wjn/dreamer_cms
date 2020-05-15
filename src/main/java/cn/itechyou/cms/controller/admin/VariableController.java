@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.github.pagehelper.PageInfo;
 
-import cn.itechyou.cms.common.Constant;
 import cn.itechyou.cms.common.ExceptionEnum;
 import cn.itechyou.cms.common.SearchEntity;
 import cn.itechyou.cms.entity.Variable;
@@ -23,7 +22,7 @@ import cn.itechyou.cms.utils.UUIDUtils;
 /**
  * @Description: 变量管理
  * @ClassName: VariableController
- * @author Administrator
+ * @author Wangjn
  * @date 2019年7月17日 下午1:53:51
  */
 @Controller

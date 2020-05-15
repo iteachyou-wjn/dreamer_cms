@@ -2,7 +2,6 @@ package cn.itechyou.cms.controller.admin;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.github.pagehelper.PageInfo;
 
-import cn.itechyou.cms.common.Constant;
 import cn.itechyou.cms.common.ExceptionEnum;
 import cn.itechyou.cms.common.SearchEntity;
 import cn.itechyou.cms.entity.Archives;
@@ -28,7 +26,6 @@ import cn.itechyou.cms.entity.Form;
 import cn.itechyou.cms.entity.System;
 import cn.itechyou.cms.exception.AdminGeneralException;
 import cn.itechyou.cms.exception.CmsException;
-import cn.itechyou.cms.exception.TemplateReadException;
 import cn.itechyou.cms.exception.TransactionException;
 import cn.itechyou.cms.security.token.TokenManager;
 import cn.itechyou.cms.service.ArchivesService;
@@ -39,8 +36,12 @@ import cn.itechyou.cms.service.LabelService;
 import cn.itechyou.cms.service.SystemService;
 import cn.itechyou.cms.utils.StringUtil;
 import cn.itechyou.cms.utils.UUIDUtils;
-import cn.itechyou.cms.vo.ArchivesVo;
 
+/**
+ * 文章管理
+ * @author Wangjn
+ *
+ */
 @Controller
 @RequestMapping("/admin/archives")
 public class ArchivesController {

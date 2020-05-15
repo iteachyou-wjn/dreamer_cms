@@ -427,4 +427,11 @@
   <select id="queryListByTop" resultMap="BaseResultMap">
   	SELECT * FROM system_archives ORDER BY create_time DESC LIMIT 0,10
   </select>
+  
+  <select id="queryAll" resultMap="BaseResultMap">
+  	SELECT 
+  		<include refid="Base_Column_List"></include>
+  	FROM system_archives
+  	WHERE category_id = #{categoryId,jdbcType=VARCHAR}
+  </select>
 </mapper>

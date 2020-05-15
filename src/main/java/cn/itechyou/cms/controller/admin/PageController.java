@@ -2,7 +2,6 @@ package cn.itechyou.cms.controller.admin;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +20,11 @@ import cn.itechyou.cms.security.token.TokenManager;
 import cn.itechyou.cms.service.PagesService;
 import cn.itechyou.cms.utils.UUIDUtils;
 
+/**
+ * 页面管理
+ * @author Wangjn
+ *
+ */
 @Controller
 @RequestMapping("/admin/pages")
 public class PageController extends BaseController {

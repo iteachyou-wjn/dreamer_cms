@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.github.pagehelper.PageInfo;
 
-import cn.itechyou.cms.common.Constant;
 import cn.itechyou.cms.common.ExceptionEnum;
 import cn.itechyou.cms.common.SearchEntity;
 import cn.itechyou.cms.entity.Field;
@@ -24,6 +23,11 @@ import cn.itechyou.cms.service.FieldService;
 import cn.itechyou.cms.service.FormService;
 import cn.itechyou.cms.utils.UUIDUtils;
 
+/**
+ * 表单管理
+ * @author Wangjn
+ *
+ */
 @Controller
 @RequestMapping("/admin/forms")
 public class FormController {

@@ -8,7 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import cn.itechyou.cms.common.Constant;
 import cn.itechyou.cms.common.ExceptionEnum;
 import cn.itechyou.cms.entity.Field;
 import cn.itechyou.cms.entity.Form;
@@ -21,6 +20,11 @@ import cn.itechyou.cms.service.FormService;
 import cn.itechyou.cms.utils.StringUtil;
 import cn.itechyou.cms.utils.UUIDUtils;
 
+/**
+ * 字段管理
+ * @author Wangjn
+ *
+ */
 @Controller
 @RequestMapping("/admin/field")
 public class FieldController {

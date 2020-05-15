@@ -30,4 +30,6 @@ public interface CategoryMapper {
 	CategoryWithBLOBs queryCategoryByCode(@Param("code") String code);
 
 	List<CategoryWithBLOBs> queryListByParams(Map<String, Object> params);
+
+	List<CategoryWithBLOBs> queryAll();
 }

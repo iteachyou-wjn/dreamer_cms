@@ -22,6 +22,10 @@ public class System implements Serializable{
 
     private String uploaddir;
     
+    private String staticdir;
+    
+    private Integer browseType;
+    
     private String appid;
     
     private String appkey;
@@ -89,6 +93,22 @@ public class System implements Serializable{
     public void setUploaddir(String uploaddir) {
         this.uploaddir = uploaddir == null ? null : uploaddir.trim();
     }
+    
+	public String getStaticdir() {
+		return staticdir;
+	}
+
+	public void setStaticdir(String staticdir) {
+		this.staticdir = staticdir;
+	}
+
+	public Integer getBrowseType() {
+		return browseType;
+	}
+
+	public void setBrowseType(Integer browseType) {
+		this.browseType = browseType;
+	}
 
 	public String getAppid() {
 		return appid;

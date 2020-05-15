@@ -506,4 +506,12 @@
     	limit 0,${length}
     </if>
   </select>
+  
+  <select id="queryAll" resultMap="ResultMapWithBLOBs">
+  	select 
+  	<include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+  	from system_category
+  </select>
 </mapper>

@@ -39,9 +39,11 @@
                     <li class="">
                         <a data-toggle="tab" href="#category"><i class="fa fa-print"></i> <b>生成栏目页</b></a>
                     </li>
+                    <!-- 
                     <li class="">
                         <a data-toggle="tab" href="#article"><i class="fa fa-print"></i> <b>生成内容页</b></a>
                     </li>
+                     -->
                 </ul>
             </header>
 			<div class="panel-body">
@@ -80,6 +82,7 @@
 					        </div>
 						</form>
 				</div>
+				<!-- 
 			    <div id="article" class="tab-pane">
 					<form class="col s12" id="form3" th:action="@{/admin/forms/edit}" onsubmit="return validateForm();" method="post">
 						<input name="id" id="id" type="hidden" />
@@ -88,6 +91,7 @@
 						</div>
 					</form>
 			    </div>
+			     -->
 			    <section class="panel" style="margin-top:20px;">
 					<header class="panel-heading tab-bg-dark-navy-blue">
 						<i class="fa fa-clock-o"></i> 执行状态
@@ -172,9 +176,10 @@ function openSocket() {
         //获得消息事件
         socket.onmessage = function(msg) {
         	var message = JSON.parse(msg.data);
+        	console.log(message.progress);
         	indexBarNum = message.progress;
+        	indexBar = window.setInterval(function(){indexProBar(message.message)},10); 
         	$(".result").html(message.message);
-        	indexBar = window.setInterval("indexProBar()",50); 
         };
         //关闭事件
         socket.onclose = function() {
@@ -194,7 +199,7 @@ function sendMessage() {
         socket.send('{"toUserId":"'+$("#toUserId").val()+'","contentText":"'+$("#contentText").val()+'"}');
     }
 }
-function indexProBar(){ 
+function indexProBar(message){ 
 	var maxWidth = $(".graph").width();
 	var barWidth = $("#bar").width();
 	var curentWidth = barWidth / maxWidth;

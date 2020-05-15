@@ -33,4 +33,6 @@ public interface CategoryService {
 
 	List<CategoryWithBLOBs> queryListByCode(Map<String, Object> entity);
 
+	List<CategoryWithBLOBs> queryAll();
+
 }

@@ -4757,3 +4757,6 @@ li.dropdown-header {
 }
 .newest{list-style: none;margin: 0;padding: 0;line-height: 25px;}
 .newest li{border-bottom: #f2f2f2 dashed 1px;}
+.graph{ width: 450px; border: 1px solid #23b7e5; height: 25px; margin: 30px auto;} 
+#bar{ display: block; background: #23b7e5; float: left; height: 100%; text-align: center; font-family: Verdana; line-height: 25px; color: #FFF; } 
+.result{text-align:center;}

@@ -86,5 +86,4 @@ public class TypeTag extends AbstractChannelTag implements IParse {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
 }

@@ -9,6 +9,11 @@ import cn.itechyou.cms.common.BaseController;
 import cn.itechyou.cms.entity.System;
 import cn.itechyou.cms.service.SystemService;
 
+/**
+ * 系统设置
+ * @author Wangjn
+ *
+ */
 @Controller
 @RequestMapping("/admin/system")
 public class SystemController extends BaseController{

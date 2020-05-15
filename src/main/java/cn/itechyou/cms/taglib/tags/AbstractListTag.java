@@ -1,12 +1,16 @@
 package cn.itechyou.cms.taglib.tags;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import cn.itechyou.cms.entity.Archives;
+import cn.itechyou.cms.entity.CategoryWithBLOBs;
+import cn.itechyou.cms.service.CategoryService;
 import cn.itechyou.cms.service.SystemService;
 import cn.itechyou.cms.taglib.enums.FieldEnum;
+import cn.itechyou.cms.taglib.utils.URLUtils;
 import cn.itechyou.cms.utils.StringUtil;
 import cn.itechyou.cms.vo.ArchivesVo;
 
@@ -16,11 +20,32 @@ import cn.itechyou.cms.vo.ArchivesVo;
  *
  */
 public abstract class AbstractListTag {
+	
+	/**
+	 * 执行类型：
+	 * P：解析
+	 * S：生成静态化
+	 */
+	private String t;
+	
 	@Autowired
 	private SystemService systemService;
+	@Autowired
+	private CategoryService categoryService;
 	
 	public String buildHTML(String item, Map<String, Object> archives, String[] addfields, int i) {
 		cn.itechyou.cms.entity.System system = systemService.getSystem();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		
+		CategoryWithBLOBs categoryWithBLOBs = null;
+		if(StringUtil.isBlank(archives.get("categoryId"))) {
+			categoryWithBLOBs = new CategoryWithBLOBs();
+			categoryWithBLOBs.setCoverTemp("/index_article.html");
+			categoryWithBLOBs.setListTemp("/list_article.html");
+			categoryWithBLOBs.setArticleTemp("/article_article.html");
+		}else {
+			categoryWithBLOBs = categoryService.selectById(archives.get("categoryId").toString());
+		}
 		
 		String imagePath = "";
 		if(archives.containsKey("imagePath")) {
@@ -46,7 +71,16 @@ public abstract class AbstractListTag {
 		item = item.replaceAll(FieldEnum.FIELD_CREATETIME.getRegexp(), StringUtil.isBlank(archives.get("createTime")) ? "" : archives.get("createTime").toString());
 		item = item.replaceAll(FieldEnum.FIELD_UPDATEBY.getRegexp(), StringUtil.isBlank(archives.get("updateBy")) ? "" : archives.get("updateBy").toString());
 		item = item.replaceAll(FieldEnum.FIELD_UPDATETIME.getRegexp(), StringUtil.isBlank(archives.get("updateTime")) ? "" : archives.get("updateTime").toString());
-		item = item.replaceAll(FieldEnum.FIELD_ARCURL.getRegexp(), "/article/"+archives.get("aid").toString());
+		
+		if(StringUtil.isBlank(t) || "P".equals(t)) {//解析
+			item = item.replaceAll(FieldEnum.FIELD_ARCURL.getRegexp(), "/article/"+archives.get("aid").toString());
+		}else {//生成
+			String categoryDir = URLUtils.getCategoryDir(categoryWithBLOBs);
+			Date createTime = (Date)archives.get("createTime");
+			String artDate = sdf.format(createTime);
+			String artUrl = "/" + system.getStaticdir() + categoryDir + "/" + artDate + "/" + archives.get("aid").toString() + ".html";
+			item = item.replaceAll(FieldEnum.FIELD_ARCURL.getRegexp(), artUrl);
+		}
 		//处理附加字段
 		for (int k = 0; k < addfields.length; k++) {
 			String field = addfields[k];
@@ -57,6 +91,17 @@ public abstract class AbstractListTag {
 	
 	public String buildHTML(String item, ArchivesVo archives, int i) {
 		cn.itechyou.cms.entity.System system = systemService.getSystem();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		
+		CategoryWithBLOBs categoryWithBLOBs = null;
+		if(StringUtil.isBlank(archives.getCategoryId())) {
+			categoryWithBLOBs = new CategoryWithBLOBs();
+			categoryWithBLOBs.setCoverTemp("/index_article.html");
+			categoryWithBLOBs.setListTemp("/list_article.html");
+			categoryWithBLOBs.setArticleTemp("/article_article.html");
+		}else {
+			categoryWithBLOBs = categoryService.selectById(archives.getCategoryId());
+		}
 		
 		String imagePath = "";
 		if(StringUtil.isNotBlank(archives.getImagePath())) {
@@ -82,7 +127,24 @@ public abstract class AbstractListTag {
 		item = item.replaceAll(FieldEnum.FIELD_CREATETIME.getRegexp(), StringUtil.isBlank(archives.getCreateTime()) ? "" : archives.getCreateTime().toString());
 		item = item.replaceAll(FieldEnum.FIELD_UPDATEBY.getRegexp(), StringUtil.isBlank(archives.getUpdateBy()) ? "" : archives.getUpdateBy());
 		item = item.replaceAll(FieldEnum.FIELD_UPDATETIME.getRegexp(), StringUtil.isBlank(archives.getUpdateTime()) ? "" : archives.getUpdateTime().toString());
-		item = item.replaceAll(FieldEnum.FIELD_ARCURL.getRegexp(), "/article/"+archives.getId());
+		if(StringUtil.isBlank(t) || "P".equals(t)) {//解析
+			item = item.replaceAll(FieldEnum.FIELD_ARCURL.getRegexp(), "/article/" + archives.getId());
+		}else {//生成
+			String categoryDir = URLUtils.getCategoryDir(categoryWithBLOBs);
+			Date createTime = archives.getCreateTime();
+			String artDate = sdf.format(createTime);
+			String artUrl = "/" + system.getStaticdir() + categoryDir + "/" + artDate + "/" + archives.getId() + ".html";
+			item = item.replaceAll(FieldEnum.FIELD_ARCURL.getRegexp(), artUrl);
+		}
 		return item;
 	}
+
+	public String getT() {
+		return t;
+	}
+
+	public void setT(String t) {
+		this.t = t;
+	}
+	
 }

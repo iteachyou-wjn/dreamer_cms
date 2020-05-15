@@ -119,6 +119,7 @@ public class PageListTag extends AbstractListTag implements IParse {
 				sb.append(item);
 			}
 			newHtml = newHtml.replace(tag, sb.toString());
+			paginationTag.setT(this.getT());
 			newHtml = paginationTag.parse(newHtml, typeid, pageInfo);
 		}
 		return newHtml;

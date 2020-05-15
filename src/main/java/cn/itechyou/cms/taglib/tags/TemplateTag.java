@@ -35,5 +35,5 @@ public class TemplateTag implements IParse {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 }

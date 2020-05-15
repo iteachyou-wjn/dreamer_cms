@@ -1,13 +1,14 @@
 package cn.itechyou.cms.common;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.core.Ordered;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import cn.itechyou.cms.entity.System;
 import cn.itechyou.cms.interceptor.UserAuthorizationInterceptor;
+import cn.itechyou.cms.service.SystemService;
 
 
 /**
@@ -20,14 +21,24 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 	
 	@Autowired
 	private UserAuthorizationInterceptor userAuthorizationInterceptor;
+	@Autowired
+	private SystemService systemService;
 	
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
     	registry.addViewController("/favicon.ico").setViewName("forward:/resource/icon/favicon.ico");
         registry.addViewController("/admin").setViewName("forward:/admin/u/toLogin");
         registry.addViewController("/admin/").setViewName("forward:/admin/u/toLogin");
-        registry.addViewController("/").setViewName("forward:/index");
-        registry.addViewController("").setViewName("forward:/index");
+        
+        System system = systemService.getSystem();
+        String staticdir = system.getStaticdir();
+        if(1 == system.getBrowseType()) {//动态
+        	registry.addViewController("/").setViewName("forward:/index");
+        	registry.addViewController("").setViewName("forward:/index");
+        }else {//静态
+        	registry.addViewController("/").setViewName("redirect:/" + staticdir + "/index.html");
+        	registry.addViewController("").setViewName("redirect:/" + staticdir + "/index.html");
+        }
         registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
         super.addViewControllers(registry);
     }

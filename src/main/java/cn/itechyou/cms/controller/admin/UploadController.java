@@ -25,6 +25,11 @@ import cn.itechyou.cms.utils.DateUtils;
 import cn.itechyou.cms.utils.FileConfiguration;
 import cn.itechyou.cms.utils.UUIDUtils;
 
+/**
+ * 上传控制器
+ * @author Wangjn
+ *
+ */
 @Controller
 @RequestMapping("/upload")
 public class UploadController extends BaseController{

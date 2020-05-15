@@ -13,6 +13,11 @@ import cn.itechyou.cms.entity.Archives;
 import cn.itechyou.cms.service.ArchivesService;
 import cn.itechyou.cms.service.LabelService;
 
+/**
+ * 标签管理
+ * @author Wangjn
+ *
+ */
 @Controller
 @RequestMapping("/admin/label")
 public class LabelController extends BaseController{

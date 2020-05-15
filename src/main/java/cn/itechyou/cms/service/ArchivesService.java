@@ -43,4 +43,6 @@ public interface ArchivesService {
 	
 	int update(Archives archives);
 
+	List<Archives> queryAll(String id);
+
 }

@@ -5,7 +5,6 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Date;
-import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,7 +26,6 @@ import cn.itechyou.cms.security.token.TokenManager;
 import cn.itechyou.cms.service.AttachmentService;
 import cn.itechyou.cms.service.SystemService;
 import cn.itechyou.cms.utils.FileConfiguration;
-import cn.itechyou.cms.utils.StringUtil;
 import cn.itechyou.cms.utils.UUIDUtils;
 
 /**

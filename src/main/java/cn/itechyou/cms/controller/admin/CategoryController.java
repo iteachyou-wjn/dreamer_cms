@@ -28,6 +28,11 @@ import cn.itechyou.cms.service.SystemService;
 import cn.itechyou.cms.utils.StringUtil;
 import cn.itechyou.cms.utils.UUIDUtils;
 
+/**
+ * 栏目管理
+ * @author Wangjn
+ *
+ */
 @Controller
 @RequestMapping("/admin/category")
 public class CategoryController extends BaseController{

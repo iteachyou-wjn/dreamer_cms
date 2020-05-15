@@ -144,5 +144,10 @@ public class CategoryServiceImpl implements CategoryService {
 	public List<CategoryWithBLOBs> queryListByCode(Map<String, Object> entity) {
 		return categoryMapper.queryListByParams(entity);
 	}
+
+	@Override
+	public List<CategoryWithBLOBs> queryAll() {
+		return categoryMapper.queryAll();
+	}
 	
 }

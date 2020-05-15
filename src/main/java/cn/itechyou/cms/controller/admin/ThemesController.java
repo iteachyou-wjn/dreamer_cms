@@ -1,20 +1,16 @@
 package cn.itechyou.cms.controller.admin;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import cn.itechyou.cms.common.BaseController;
@@ -29,6 +25,11 @@ import cn.itechyou.cms.utils.SaxUtils;
 import cn.itechyou.cms.utils.UUIDUtils;
 import cn.itechyou.cms.utils.ZipUtils;
 
+/**
+ * 主题管理
+ * @author Wangjn
+ *
+ */
 @Controller
 @RequestMapping("/admin/theme")
 public class ThemesController extends BaseController {

@@ -43,4 +43,6 @@ public interface ArchivesMapper {
 	List<ArchivesVo> queryRecommend(Map<String, Object> entity);
 
 	List<Archives> queryListByTop();
+
+	List<Archives> queryAll(@Param("categoryId") String id);
 }

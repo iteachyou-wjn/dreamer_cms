@@ -65,6 +65,12 @@
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
 		
+		<!--引入websocket依赖 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
+		
 		<!-- configuration 配置解析相关jar包 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -163,7 +169,6 @@
 		    <artifactId>pinyin4j</artifactId>
 		    <version>2.5.0</version>
 		</dependency>
-		
 	</dependencies>
 
 	<build>

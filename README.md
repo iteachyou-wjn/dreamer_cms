@@ -1,10 +1,10 @@
 <p align="center">
-	<a href="https://www.itechyou.cn/"><img src="http://cdn.itechyou.cn/1-1ZQ91JT60-L.png" ></a>
+	<a href="https://www.itechyou.cn/" target="_blank"><img src="http://cdn.itechyou.cn/1-1ZQ91JT60-L.png" ></a>
 </p>
 
 # 梦想家CMS内容管理系统开源版J2EE代码
 
-当前版本：2.5.1
+当前版本：3.0.1
 
 梦想家CMS官网：http://www.itechyou.cn
 模版标签开发教程请参考：http://doc.itechyou.cn 

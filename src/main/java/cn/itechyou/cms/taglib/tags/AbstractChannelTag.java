@@ -6,6 +6,7 @@ import cn.itechyou.cms.common.Constant;
 import cn.itechyou.cms.entity.CategoryWithBLOBs;
 import cn.itechyou.cms.service.SystemService;
 import cn.itechyou.cms.taglib.enums.FieldEnum;
+import cn.itechyou.cms.taglib.utils.URLUtils;
 import cn.itechyou.cms.utils.PinyinUtils;
 import cn.itechyou.cms.utils.StringUtil;
 
@@ -15,6 +16,13 @@ import cn.itechyou.cms.utils.StringUtil;
  *
  */
 public abstract class AbstractChannelTag {
+	
+	/**
+	 * 执行类型：
+	 * P：解析
+	 * S：生成静态化
+	 */
+	private String t;
 	
 	@Autowired
 	private SystemService systemService;
@@ -54,14 +62,8 @@ public abstract class AbstractChannelTag {
 		item = item.replaceAll(FieldEnum.FIELD_TCREATETIME.getRegexp(), StringUtil.isBlank(category.getCreateTime()) ? "" : category.getCreateTime().toString());
 		item = item.replaceAll(FieldEnum.FIELD_TUPDATEBY.getRegexp(), StringUtil.isBlank(category.getUpdateBy()) ? "" : category.getUpdateBy());
 		item = item.replaceAll(FieldEnum.FIELD_TUPDATETIME.getRegexp(), StringUtil.isBlank(category.getUpdateTime()) ? "" : category.getUpdateTime().toString());
-		if(category.getCatModel() == 1) {
-			item = item.replaceAll(FieldEnum.FIELD_TYPEURL.getRegexp(), "/cover-" + typeCode + visitUrl);
-		}else if(category.getCatModel() == 2) {
-			item = item.replaceAll(FieldEnum.FIELD_TYPEURL.getRegexp(), "/list-" + typeCode + visitUrl + "/1/"
-					+ (StringUtil.isBlank(category.getPageSize()) ? Constant.PAGE_SIZE_VALUE + "" : category.getPageSize().toString()));
-		}else if(category.getCatModel() == 3) {
-			item = item.replaceAll(FieldEnum.FIELD_TYPEURL.getRegexp(), StringUtil.isBlank(category.getLinkUrl()) ? "" : category.getLinkUrl());
-		}
+		String typeUrl = URLUtils.parseURL(system, category, this.t);
+		item = item.replaceAll(FieldEnum.FIELD_TYPEURL.getRegexp(), typeUrl);
 		item = item.replaceAll(FieldEnum.FIELD_EXT01.getRegexp(), StringUtil.isBlank(category.getExt01()) ? "" : category.getExt01());
 		item = item.replaceAll(FieldEnum.FIELD_EXT02.getRegexp(), StringUtil.isBlank(category.getExt02()) ? "" : category.getExt02());
 		item = item.replaceAll(FieldEnum.FIELD_EXT03.getRegexp(), StringUtil.isBlank(category.getExt03()) ? "" : category.getExt03());
@@ -70,4 +72,13 @@ public abstract class AbstractChannelTag {
 		item = item.replaceAll(FieldEnum.FIELD_HASCHILDREN.getRegexp(), (category.getNodes() == null || category.getNodes().size() <= 0) ? "false" : "true");
 		return item;
 	}
+	
+	public String getT() {
+		return t;
+	}
+
+	public void setT(String t) {
+		this.t = t;
+	}
+	
 }
