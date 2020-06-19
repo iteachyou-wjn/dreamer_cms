@@ -16,9 +16,20 @@
 	<div class="login">
 		<h1>Dreamer CMS</h1>
 		<form method="post" id="loginForm">
-			<input type="text" name="username" placeholder="用户名" required="required" />
-			<input type="password" name="password" placeholder="密码" required="required" />
-			<button type="button" class="btn btn-primary btn-block btn-large" onclick="login();">登录</button>
+			<div class="login-form-row">
+				<input type="text" name="username" placeholder="用户名" required="required" />
+			</div>
+			<div class="login-form-row">
+				<input type="password" name="password" placeholder="密码" required="required" />
+			</div>
+			<div class="login-form-row">
+				<div class="login-form-vcode"><img alt="图片验证码" width="100" height="39" src="" id="vcode"></div>
+				<div class="login-form-vcode-input"><input type="text" name="vcode" placeholder="验证码" required="required" /></div>
+				<div class="clear"></div>
+			</div>
+			<div class="login-form-row">
+				<button type="button" class="btn btn-primary btn-block btn-large" onclick="login();">登录</button>
+			</div>
 		</form>
 	</div>
 		<div class="copyright">
@@ -39,14 +50,23 @@
 	    			login();
 	    		}
 	    	});
+	    	
+	    	$("#vcode").attr("src","/admin/u/getVerifyCode?t=" + new Date().getTime());
+	    	
+	    	$("#vcode").click(function(){
+	    		var t = new Date().getTime();
+	    		$(this).attr("src","/admin/u/getVerifyCode?t=" + t);
+	    	});
 		});
 	    function login(){
 			var username = $('input[name="username"]').val();
 			var password = $('input[name="password"]').val();
+			var vcode = $('input[name="vcode"]').val();
 			
 			var data = {
 				username : username,
 				password : password,
+				vcode : vcode,
 				rememberMe : false
 			};
 

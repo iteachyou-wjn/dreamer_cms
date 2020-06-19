@@ -32,6 +32,7 @@ DreamerCMS从2.0.0版本开始采用了解析式引擎与编译式引擎并存�
 * 核心框架：Spring Boot 2
 * 安全框架：Apache Shiro 1.5
 * 视图框架：Spring MVC 4
+* 工具包：Hutool 5.3.7
 * 持久层框架：MyBatis 3
 * 日志管理：Log4j2
 * 模版框架：Thymeleaf
@@ -58,7 +59,7 @@ https://pan.baidu.com/s/1plsfBl_ds_5TkVa-yRkESQ 提取码：2c8i
 https://space.bilibili.com/482273402
 ```
 1. 克隆项目到本地工作空间
-2. 导入Eclipse或Sts等开发工具（推荐使用Spring Tools Suite 4）（项目中缺少的google/kaptcha.jar在附件中，大家自行下载）
+2. 导入Eclipse或Sts等开发工具（推荐使用Spring Tools Suite 4）
 3. 项目需要Redis，请自行修改application.yml中Redis配置
 4. 修改项目资源目录，application.yml文件web.resource-path配置项（如D:/dreamer-cms/）
 5. 将项目src/main/resources/db/dreamer-cms.zip文件解压，保证解压后的目录路径的名称和资源目录一致

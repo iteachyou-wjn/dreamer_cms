@@ -1,7 +1,6 @@
 package cn.itechyou.cms.security.config;
 
 import java.util.LinkedHashMap;
-import java.util.Properties;
 
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.mgt.SecurityManager;
@@ -18,9 +17,6 @@ import org.springframework.beans.factory.config.MethodInvokingFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
-
-import com.google.code.kaptcha.impl.DefaultKaptcha;
-import com.google.code.kaptcha.util.Config;
 
 import cn.itechyou.cms.security.RedisCachingShiroSessionDao;
 import cn.itechyou.cms.security.cache.ShiroRedisCacheManager;
@@ -199,20 +195,4 @@ public class ShiroConfiguration {
     	return new LifecycleBeanPostProcessor();
     }
     
-    /**
-     * Google 开源验证码
-     */
-    @Bean
-    public DefaultKaptcha kaptcha() {
-    	DefaultKaptcha kaptcha = new DefaultKaptcha();
-    	Properties p = new Properties();
-    	p.setProperty("kaptcha.border", "no");
-    	p.setProperty("kaptcha.textproducer.char.length", "4");
-    	p.setProperty("kaptcha.textproducer.font.color", "252,111,180");
-    	p.setProperty("kaptcha.image.width", "200");
-    	p.setProperty("kaptcha.image.height", "60");
-    	Config config = new Config(p);
-    	kaptcha.setConfig(config);
-    	return kaptcha;
-    }
 }

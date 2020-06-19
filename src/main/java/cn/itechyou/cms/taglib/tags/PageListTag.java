@@ -12,6 +12,8 @@ import com.github.pagehelper.PageInfo;
 
 import cn.itechyou.cms.common.SearchEntity;
 import cn.itechyou.cms.dao.ArchivesMapper;
+import cn.itechyou.cms.dao.CategoryMapper;
+import cn.itechyou.cms.entity.CategoryWithBLOBs;
 import cn.itechyou.cms.entity.Form;
 import cn.itechyou.cms.service.FormService;
 import cn.itechyou.cms.taglib.IParse;
@@ -30,6 +32,7 @@ import cn.itechyou.cms.vo.ArchivesVo;
 @Tag(beginTag="{dreamer-cms:pagelist}",endTag="{/dreamer-cms:pagelist}",regexp="\\{dreamer-cms:pagelist[ \\t]*.*\\}([\\s\\S]+?)\\{/dreamer-cms:pagelist\\}", attributes={
 	@Attribute(name = "formkey",regex = "[ \t]+formkey=[\"\'].*?[\"\']"),
 	@Attribute(name = "addfields",regex = "[ \t]+addfields=[\"\'].*?[\"\']"),
+	@Attribute(name = "cascade",regex = "[ \t]+cascade=[\"\'].*?[\"\']"),
 	@Attribute(name = "sortWay",regex = "[ \t]+sortWay=[\"\'].*?[\"\']"),
 	@Attribute(name = "sortBy",regex = "[ \t]+sortBy=[\"\'].*?[\"\']")
 })
@@ -37,6 +40,8 @@ public class PageListTag extends AbstractListTag implements IParse {
 
 	@Autowired
 	private ArchivesMapper archivesMapper;
+	@Autowired
+	private CategoryMapper categoryMapper;
 	@Autowired
 	private FormService formService;
 	@Autowired
@@ -96,6 +101,12 @@ public class PageListTag extends AbstractListTag implements IParse {
 			}
 			entity.put("sortWay", entity.containsKey("sortWay") ? entity.get("sortWay") : "asc");
 			entity.put("cid", typeid);
+			String cascade = entity.containsKey("cascade") ? entity.get("cascade").toString() : "false";
+			if("true".equals(cascade)) {
+				CategoryWithBLOBs categoryWithBLOBs = categoryMapper.queryCategoryByCode(typeid);
+				String catSeq = categoryWithBLOBs.getCatSeq();
+				entity.put("cascade", catSeq);
+			}
 			SearchEntity params = new SearchEntity();
 			params.setEntity(entity);
 			//开始分页

@@ -110,6 +110,7 @@ public class ArchivesController {
 		archives.setTitle(entity.get("title"));
 		archives.setTag(entity.get("tag"));
 		archives.setCategoryId(entity.get("categoryId"));
+		archives.setCategoryIds(entity.get("categoryIds"));
 		archives.setImagePath(entity.get("imagePath"));
 		archives.setWeight(StringUtil.isBlank(entity.get("weight")) ? 0 : Integer.parseInt(entity.get("weight")));
 		archives.setClicks(StringUtil.isBlank(entity.get("clicks")) ? 0 : Integer.parseInt(entity.get("clicks")));

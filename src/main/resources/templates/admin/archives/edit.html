@@ -42,6 +42,7 @@
 						<input name="id" id="id" type="hidden" th:value="*{aid}" />
 						<input name="fid" id="fid" type="hidden" th:value="*{id}" />
 						<input name="categoryId" type="hidden" th:value="*{categoryId}"/>
+						<input name="categoryIds" type="hidden" th:value="*{categoryIds}"/>
 						<input name="imagePath" id="filepath" type="hidden" th:value="*{imagePath}" />
 						<input th:name="${field.fieldName}" th:id="'input-' + ${field.id}" type="hidden" th:each="field : ${fields}" th:if="${field.dataType} == 'html' or ${field.dataType} == 'markdown' or ${field.dataType} == 'file'" />
 						<div class="form-group form-control-medium">

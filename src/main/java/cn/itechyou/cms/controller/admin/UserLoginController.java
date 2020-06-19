@@ -1,13 +1,11 @@
 package cn.itechyou.cms.controller.admin;
 
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -24,8 +22,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.google.code.kaptcha.Producer;
-
+import cn.hutool.captcha.CaptchaUtil;
+import cn.hutool.captcha.CircleCaptcha;
+import cn.hutool.captcha.generator.MathGenerator;
 import cn.itechyou.cms.annotation.Log;
 import cn.itechyou.cms.common.BaseController;
 import cn.itechyou.cms.common.Constant;
@@ -51,22 +50,23 @@ public class UserLoginController extends BaseController {
 
 	@Autowired
 	private UserService userService;
-	
-	@Autowired
-	private Producer producer;
+	private CircleCaptcha captcha = CaptchaUtil.createCircleCaptcha(200, 100, 4, 20);
 
 	// 产生验证码
 	@RequestMapping("/getVerifyCode")
 	public void getKaptcha(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		// 得到文本内容
-		String text = producer.createText();
+		// 自定义验证码内容为四则运算方式
+		captcha.setGenerator(new MathGenerator(1));
+		captcha.createCode();
+		//图形验证码写出，可以写出到文件，也可以写出到流
+		String text = captcha.getCode();
+		//验证图形验证码的有效性，返回boolean值
 		logger.info("生成的验证码为：" + text);
 		session.setAttribute(Constant.KAPTCHA, text);
 		// 形成一张图片
-		BufferedImage image = producer.createImage(text);
 		// 把图片写入到输出流中==》以流的方式响应到客户端
 		OutputStream outputStream = response.getOutputStream();
-		ImageIO.write(image, "jpg", outputStream);
+		captcha.write(outputStream);
 		outputStream.close();
 	}
 
@@ -105,10 +105,19 @@ public class UserLoginController extends BaseController {
 	@Log(module = "登录模块",content = "用户登录操作")
 	@RequestMapping(value = "login", method = RequestMethod.POST)
 	@ResponseBody
-	public void login(@RequestBody UserVO entity,HttpServletRequest request) {
+	public ResponseResult login(@RequestBody UserVO entity,HttpServletRequest request) {
 		ResponseResult result = null;
 		User user = new User();
+		captcha.setGenerator(new MathGenerator());
 		try {
+			if(!captcha.verify(entity.getVcode())) {
+				// 帐号已经禁用
+				result = ResponseResult.Factory.newInstance(Boolean.FALSE,
+						StateCodeEnum.USER_CODE_ERROR.getCode(), null,
+						StateCodeEnum.USER_CODE_ERROR.getDescription());
+				return result;
+			}
+			
 			boolean rememberMe = entity.isRememberMe();
 			ByteSource salt = ByteSource.Util.bytes(entity.getUsername() + entity.getPassword());
 			SimpleHash sh = new SimpleHash("MD5", entity.getPassword(), salt, 1024);
@@ -134,7 +143,7 @@ public class UserLoginController extends BaseController {
 					StateCodeEnum.USER_PASSWORD_ERROR.getCode(), null,
 					StateCodeEnum.USER_PASSWORD_ERROR.getDescription());
 		}
-		this.outJson(result);
+		return result;
 	}
 
 	/**

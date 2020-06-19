@@ -11,6 +11,8 @@ import com.github.pagehelper.PageHelper;
 
 import cn.itechyou.cms.common.SearchEntity;
 import cn.itechyou.cms.dao.ArchivesMapper;
+import cn.itechyou.cms.dao.CategoryMapper;
+import cn.itechyou.cms.entity.CategoryWithBLOBs;
 import cn.itechyou.cms.entity.Form;
 import cn.itechyou.cms.service.FormService;
 import cn.itechyou.cms.service.SystemService;
@@ -33,8 +35,9 @@ import cn.itechyou.cms.utils.StringUtil;
 	@Attribute(name = "flag",regex = "[ \t]+flag=[\"\'].*?[\"\']"),
 	@Attribute(name = "addfields",regex = "[ \t]+addfields=[\"\'].*?[\"\']"),
 	@Attribute(name = "formkey",regex = "[ \t]+formkey=[\"\'].*?[\"\']"),
+	@Attribute(name = "cascade",regex = "[ \t]+cascade=[\"\'].*?[\"\']"),
 	@Attribute(name = "sortWay",regex = "[ \t]+sortWay=[\"\'].*?[\"\']"),
-	@Attribute(name = "sortBy",regex = "[ \t]+sortBy=[\"\'].*?[\"\']")
+	@Attribute(name = "sortBy",regex = "[ \t]+sortBy=[\"\'].*?[\"\']"),
 })
 public class ListTag extends AbstractListTag implements IParse {
 
@@ -42,6 +45,8 @@ public class ListTag extends AbstractListTag implements IParse {
 	private SystemService systemService;
 	@Autowired
 	private ArchivesMapper archivesMapper;
+	@Autowired
+	private CategoryMapper categoryMapper;
 	@Autowired
 	private FormService formService;
 	
@@ -81,8 +86,15 @@ public class ListTag extends AbstractListTag implements IParse {
 					entity.put(key, value);
 				}
 			}
-			entity.put("cid", entity.containsKey("typeid") ? entity.get("typeid").toString() : "");
+			String typeid = entity.containsKey("typeid") ? entity.get("typeid").toString() : "";
+			entity.put("cid", typeid);
 			entity.put("sortWay", entity.containsKey("sortWay") ? entity.get("sortWay") : "asc");
+			String cascade = entity.containsKey("cascade") ? entity.get("cascade").toString() : "false";
+			if("true".equals(cascade)) {
+				CategoryWithBLOBs categoryWithBLOBs = categoryMapper.queryCategoryByCode(typeid);
+				String catSeq = categoryWithBLOBs.getCatSeq();
+				entity.put("cascade", catSeq);
+			}
 			SearchEntity params = new SearchEntity();
 			params.setEntity(entity);
 			if(entity.containsKey("start") && entity.containsKey("length")) {

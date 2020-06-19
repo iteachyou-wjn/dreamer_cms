@@ -3,6 +3,7 @@ package cn.itechyou.cms.entity;
 import java.util.Date;
 
 public class Archives {
+    
     private String id;
 
     private String title;
@@ -16,6 +17,8 @@ public class Archives {
     private String description;
 
     private String categoryId;
+    
+    private String categoryIds;
 
     private Integer comment;
 
@@ -89,6 +92,14 @@ public class Archives {
 
     public void setCategoryId(String categoryId) {
         this.categoryId = categoryId == null ? null : categoryId.trim();
+    }
+    
+    public String getCategoryIds() {
+        return categoryIds;
+    }
+
+    public void setCategoryIds(String categoryIds) {
+        this.categoryIds = categoryIds == null ? null : categoryIds.trim();
     }
 
     public Integer getComment() {

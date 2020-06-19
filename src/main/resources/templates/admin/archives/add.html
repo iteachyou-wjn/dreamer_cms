@@ -38,6 +38,7 @@
 				<div class="panel-body">
 					<form class="col s12" id="form1" enctype="multipart/form-data" th:action="@{/admin/archives/add}" onsubmit="return validateForm();" method="post">
 						<input name="categoryId" type="hidden" th:value="${category.id}"/>
+						<input name="categoryIds" type="hidden" th:value="${category.catSeq}"/>
 						<input th:name="${field.fieldName}" th:id="'input-' + ${field.id}" type="hidden" th:each="field : ${fields}" th:if="${field.dataType} == 'html' or ${field.dataType} == 'markdown' or ${field.dataType} == 'file'" />
 						<input name="imagePath" id="filepath" type="hidden">
 						<div class="form-group form-control-medium">

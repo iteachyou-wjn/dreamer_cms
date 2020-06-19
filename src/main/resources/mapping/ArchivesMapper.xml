@@ -9,6 +9,7 @@
     <result column="tag" jdbcType="VARCHAR" property="tag" />
     <result column="description" jdbcType="VARCHAR" property="description" />
     <result column="category_id" jdbcType="VARCHAR" property="categoryId" />
+    <result column="category_ids" jdbcType="VARCHAR" property="categoryIds" />
     <result column="comment" jdbcType="INTEGER" property="comment" />
     <result column="subscribe" jdbcType="INTEGER" property="subscribe" />
     <result column="clicks" jdbcType="INTEGER" property="clicks" />
@@ -22,13 +23,14 @@
   
   <resultMap id="BaseResultMapWithRownum" type="cn.itechyou.cms.entity.ArchivesWithRownum">
     <id column="id" jdbcType="VARCHAR" property="id" />
-  	<result column="rownum" jdbcType="INTEGER" property="rownum" />
+      <result column="rownum" jdbcType="INTEGER" property="rownum" />
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="properties" jdbcType="VARCHAR" property="properties" />
     <result column="image_path" jdbcType="VARCHAR" property="imagePath" />
     <result column="tag" jdbcType="VARCHAR" property="tag" />
     <result column="description" jdbcType="VARCHAR" property="description" />
     <result column="category_id" jdbcType="VARCHAR" property="categoryId" />
+    <result column="category_ids" jdbcType="VARCHAR" property="categoryIds" />
     <result column="comment" jdbcType="INTEGER" property="comment" />
     <result column="subscribe" jdbcType="INTEGER" property="subscribe" />
     <result column="clicks" jdbcType="INTEGER" property="clicks" />
@@ -41,7 +43,7 @@
   </resultMap>
   
   <sql id="Base_Column_List">
-    id, title, properties, image_path, tag, description, category_id, comment, subscribe, 
+    id, title, properties, image_path, tag, description, category_id, category_ids, comment, subscribe, 
     clicks, weight, status, create_by, create_time, update_by, update_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -56,14 +58,14 @@
   </delete>
   <insert id="insert" parameterType="cn.itechyou.cms.entity.Archives">
     insert into system_archives (id, title, properties, 
-      image_path, tag, description, 
-      category_id, comment, subscribe, 
+      image_path, tag, description, category_id, 
+      category_ids, comment, subscribe, 
       clicks, weight, status, 
       create_by, create_time, update_by, 
       update_time)
     values (#{id,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{properties,jdbcType=VARCHAR}, 
       #{imagePath,jdbcType=VARCHAR}, #{tag,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
-      #{categoryId,jdbcType=VARCHAR}, #{comment,jdbcType=INTEGER}, #{subscribe,jdbcType=INTEGER}, 
+      #{categoryId,jdbcType=VARCHAR}, #{categoryIds,jdbcType=VARCHAR}, #{comment,jdbcType=INTEGER}, #{subscribe,jdbcType=INTEGER}, 
       #{clicks,jdbcType=INTEGER}, #{weight,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
       #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, 
       #{updateTime,jdbcType=TIMESTAMP})
@@ -91,6 +93,9 @@
       </if>
       <if test="categoryId != null">
         category_id,
+      </if>
+      <if test="categoryIds != null">
+        category_ids,
       </if>
       <if test="comment != null">
         comment,
@@ -142,6 +147,9 @@
       <if test="categoryId != null">
         #{categoryId,jdbcType=VARCHAR},
       </if>
+      <if test="categoryIds != null">
+        #{categoryIds,jdbcType=VARCHAR},
+      </if>
       <if test="comment != null">
         #{comment,jdbcType=INTEGER},
       </if>
@@ -192,6 +200,9 @@
       <if test="categoryId != null">
         category_id = #{categoryId,jdbcType=VARCHAR},
       </if>
+      <if test="categoryIds != null">
+        category_ids = #{categoryIds,jdbcType=VARCHAR},
+      </if>
       <if test="comment != null">
         comment = #{comment,jdbcType=INTEGER},
       </if>
@@ -230,6 +241,7 @@
       tag = #{tag,jdbcType=VARCHAR},
       description = #{description,jdbcType=VARCHAR},
       category_id = #{categoryId,jdbcType=VARCHAR},
+      category_ids = #{categoryIds,jdbcType=VARCHAR},
       comment = #{comment,jdbcType=INTEGER},
       subscribe = #{subscribe,jdbcType=INTEGER},
       clicks = #{clicks,jdbcType=INTEGER},
@@ -243,108 +255,113 @@
   </update>
   
   <select id="queryListByPage" parameterType="java.util.HashMap" resultType="java.util.Map">
-  	select 
-  		a.id aid
-  		, a.title
-  		, a.properties
-  		, a.image_path imagePath
-  		, a.tag
-  		, a.description
-  		, a.category_id categoryId
-  		, a.comment
-  		, a.subscribe
-  		, a.clicks
-  		, a.weight
-  		, a.status
-  		, a.create_by createBy
-  		, a.create_time createTime
-  		, a.update_by updateBy
-  		, a.update_time updateTime
-  		, CASE WHEN a.category_id = '-1' THEN '顶级栏目' ELSE c.cnname END AS categoryCnName
-  		, CASE WHEN a.category_id = '-1' THEN 'Top Column' ELSE c.enname END AS categoryEnName
-  		<if test="tableName != null and tableName != ''">
-  		, f.*
-  		</if>
+      select 
+          a.id aid
+          , a.title
+          , a.properties
+          , a.image_path imagePath
+          , a.tag
+          , a.description
+          , a.category_id categoryId
+          , a.category_ids categoryIds
+          , a.comment
+          , a.subscribe
+          , a.clicks
+          , a.weight
+          , a.status
+          , a.create_by createBy
+          , a.create_time createTime
+          , a.update_by updateBy
+          , a.update_time updateTime
+          , CASE WHEN a.category_id = '-1' THEN '顶级栏目' ELSE c.cnname END AS categoryCnName
+          , CASE WHEN a.category_id = '-1' THEN 'Top Column' ELSE c.enname END AS categoryEnName
+          <if test="tableName != null and tableName != ''">
+          , f.*
+          </if>
     from system_archives a
     left join system_category c on a.category_id = c.id
     <if test="tableName != null and tableName != ''">
     LEFT JOIN `${tableName}` f ON a.id = f.aid
     </if>
     where 1 = 1
-    <if test="cid != null and cid != ''">
-    	and c.code = #{cid,jdbcType=VARCHAR}
-    </if>
-    <if test="code != null and code != ''">
-    	and c.cat_seq like concat('%',concat(#{code,jdbcType=VARCHAR},'%'))
-    </if>
+    <choose>
+    	<when test="cascade != null and cascade != ''">
+    		and a.category_ids like concat(#{cascade,jdbcType=VARCHAR},'%')
+    	</when>
+    	<otherwise>
+    		and c.code = #{cid,jdbcType=VARCHAR}
+    	</otherwise>
+    </choose>
     <if test="flag != null and flag != ''">
-    	and a.properties like concat(concat('%',#{flag,jdbcType=VARCHAR}),'%')
+        and a.properties like concat(concat('%',#{flag,jdbcType=VARCHAR}),'%')
     </if>
     order by 
     <if test="(sortBy != null and sortBy != '')">
-    	a.${sortBy} ${sortWay},
+        a.${sortBy} ${sortWay},
     </if>
     a.update_time desc
   </select>
   
   <select id="queryListByTagName" resultMap="BaseResultMap">
-  	select 
-  	<include refid="Base_Column_List" /> 
-  	from system_archives
-  	where tag like concat('%',concat(#{tag,jdbcType=VARCHAR},'%'))
+      select 
+      <include refid="Base_Column_List" /> 
+      from system_archives
+      where tag like concat('%',concat(#{tag,jdbcType=VARCHAR},'%'))
   </select>
   
   <select id="queryListByKeywords" resultType="cn.itechyou.cms.vo.ArchivesVo">
-  	select 
-  		a.id
-  		, a.title
-  		, a.properties
-  		, a.image_path imagePath
-  		, a.tag
-  		, a.description
-  		, a.category_id categoryId
-  		, a.comment
-  		, a.subscribe
-  		, a.clicks
-  		, a.weight
-  		, a.status
-  		, a.create_by createBy
-  		, a.create_time createTime
-  		, a.update_by updateBy
-  		, a.update_time updateTime
-  		, CASE WHEN a.category_id = '-1' THEN '顶级栏目' ELSE c.cnname END AS categoryCnName
-  		, CASE WHEN a.category_id = '-1' THEN 'Top Column' ELSE c.enname END AS categoryEnName
-  	from system_archives a
-  	LEFT JOIN system_category c ON a.category_id = c.id
-  	where title like concat('%',concat(#{keywords,jdbcType=VARCHAR},'%'))
+      select 
+          a.id
+          , a.title
+          , a.properties
+          , a.image_path imagePath
+          , a.tag
+          , a.description
+          , a.category_id categoryId
+          , a.category_ids categoryIds
+          , a.comment
+          , a.subscribe
+          , a.clicks
+          , a.weight
+          , a.status
+          , a.create_by createBy
+          , a.create_time createTime
+          , a.update_by updateBy
+          , a.update_time updateTime
+          , CASE WHEN a.category_id = '-1' THEN '顶级栏目' ELSE c.cnname END AS categoryCnName
+          , CASE WHEN a.category_id = '-1' THEN 'Top Column' ELSE c.enname END AS categoryEnName
+      from system_archives a
+      LEFT JOIN system_category c ON a.category_id = c.id
+      where title like concat('%',concat(#{keywords,jdbcType=VARCHAR},'%'))
   </select>
   
   <select id="queryArticleById" parameterType="java.util.Map" resultType="java.util.Map">
-  	SELECT 
-		a.id aid,
-		a.title title,
-		a.properties properties,
-		a.image_path imagePath,
-		a.tag tag,
-		a.description description,
-		a.category_id categoryId,
-		a.comment `comment`,
-		a.subscribe subscribe,
-		a.clicks clicks,
-		a.weight weight,
-		a.status `status`,
-		a.create_by createBy,
-		a.create_time createTime,
-		a.update_by updateBy,
-		a.update_time updateTime,
-		f.*,
-		c.cnname categoryCnName,
-		c.enname categoryEnName
-	FROM 
-	`system_archives` a
-	LEFT JOIN system_category c ON a.category_id = c.id
-	LEFT JOIN `${tableName}` f ON a.id = f.aid
-	WHERE a.id = #{id,jdbcType=VARCHAR}
+      SELECT 
+        a.id aid,
+        a.title title,
+        a.properties properties,
+        a.image_path imagePath,
+        a.tag tag,
+        a.description description,
+        a.category_id categoryId,
+        a.category_ids categoryIds,
+        a.comment `comment`,
+        a.subscribe subscribe,
+        a.clicks clicks,
+        a.weight weight,
+        a.status `status`,
+        a.create_by createBy,
+        a.create_time createTime,
+        a.update_by updateBy,
+        a.update_time updateTime,
+        f.*,
+        c.cnname categoryCnName,
+        c.enname categoryEnName
+    FROM 
+    `system_archives` a
+    LEFT JOIN system_category c ON a.category_id = c.id
+    LEFT JOIN `${tableName}` f ON a.id = f.aid
+    WHERE a.id = #{id,jdbcType=VARCHAR}
   </select>
   
   <insert id="insertAdditional" parameterType="hashmap">
@@ -360,78 +377,79 @@
   </insert>
   
   <update id="updateAdditional" parameterType="hashmap">
-  	UPDATE `${tableName}` SET
-  	<foreach collection="cols" index="key" item="value" separator="," >
+      UPDATE `${tableName}` SET
+      <foreach collection="cols" index="key" item="value" separator="," >
         `${key}` = #{value}
     </foreach>
     WHERE id = #{id,jdbcType=VARCHAR}
   </update>
   
   <delete id="deleteAdditional" parameterType="hashmap">
-  	DELETE FROM `${tableName}` WHERE id = #{id,jdbcType=VARCHAR}
+      DELETE FROM `${tableName}` WHERE id = #{id,jdbcType=VARCHAR}
   </delete>
   
   <update id="updateTagByPrimaryKey" parameterType="cn.itechyou.cms.entity.Archives">
-  	update system_archives set tag = #{tag,jdbcType=VARCHAR}
-  	where id = #{id,jdbcType=VARCHAR}
+      update system_archives set tag = #{tag,jdbcType=VARCHAR}
+      where id = #{id,jdbcType=VARCHAR}
   </update>
   
   <select id="queryArticleRowNum" parameterType="java.util.Map" resultMap="BaseResultMapWithRownum">
-  	SELECT * FROM (
-		SELECT @rownum:=@rownum+1 AS rownum,t.* FROM (SELECT @rownum:=0) r,system_archives t
-		WHERE 1 = 1
-			<if test="categoryId != null and categoryId != ''">
-			and t.category_id = #{categoryId,jdbcType=VARCHAR}
-			</if>
-	) t1
-	where 1 = 1
-	<if test="arcid != null and arcid != ''">
-		and t1.id = #{arcid,jdbcType=VARCHAR}
-	</if>
-	<if test="privNum != null and privNum != ''">
-		and t1.rownum = #{privNum,jdbcType=VARCHAR}
-	</if>
-	<if test="nextNum != null and nextNum != ''">
-		and t1.rownum = #{nextNum,jdbcType=VARCHAR}
-	</if>
+      SELECT * FROM (
+        SELECT @rownum:=@rownum+1 AS rownum,t.* FROM (SELECT @rownum:=0) r,system_archives t
+        WHERE 1 = 1
+            <if test="categoryId != null and categoryId != ''">
+            and t.category_id = #{categoryId,jdbcType=VARCHAR}
+            </if>
+    ) t1
+    where 1 = 1
+    <if test="arcid != null and arcid != ''">
+        and t1.id = #{arcid,jdbcType=VARCHAR}
+    </if>
+    <if test="privNum != null and privNum != ''">
+        and t1.rownum = #{privNum,jdbcType=VARCHAR}
+    </if>
+    <if test="nextNum != null and nextNum != ''">
+        and t1.rownum = #{nextNum,jdbcType=VARCHAR}
+    </if>
   </select>
   
   <select id="queryRecommend" parameterType="java.util.Map" resultType="cn.itechyou.cms.vo.ArchivesVo">
-  	SELECT 
-  		t1.id
-  		, t1.title
-  		, t1.properties
-  		, t1.image_path imagePath
-  		, t1.tag
-  		, t1.description
-  		, t1.category_id categoryId
-  		, t1.comment
-  		, t1.subscribe
-  		, t1.clicks
-  		, t1.weight
-  		, t1.status
-  		, t1.create_by createBy
-  		, t1.create_time createTime
-  		, t1.update_by updateBy
-  		, t1.update_time updateTime
-  		, CASE WHEN t1.category_id = '-1' THEN '顶级栏目' ELSE c.cnname END AS categoryCnName
-  		, CASE WHEN t1.category_id = '-1' THEN 'Top Column' ELSE c.enname END AS categoryEnName
-	FROM system_archives t1
-	LEFT JOIN system_category c ON t1.category_id = c.id
-	INNER JOIN (
-		SELECT keywords	FROM system_search GROUP BY keywords order by count(keywords) desc limit 0,5
-	) t2 ON INSTR(t1.title,t2.keywords) > 0
-	GROUP BY t1.id
+      SELECT 
+          t1.id
+          , t1.title
+          , t1.properties
+          , t1.image_path imagePath
+          , t1.tag
+          , t1.description
+          , t1.category_id categoryId
+          , t1.category_ids categoryIds
+          , t1.comment
+          , t1.subscribe
+          , t1.clicks
+          , t1.weight
+          , t1.status
+          , t1.create_by createBy
+          , t1.create_time createTime
+          , t1.update_by updateBy
+          , t1.update_time updateTime
+          , CASE WHEN t1.category_id = '-1' THEN '顶级栏目' ELSE c.cnname END AS categoryCnName
+          , CASE WHEN t1.category_id = '-1' THEN 'Top Column' ELSE c.enname END AS categoryEnName
+    FROM system_archives t1
+    LEFT JOIN system_category c ON t1.category_id = c.id
+    INNER JOIN (
+        SELECT keywords    FROM system_search GROUP BY keywords order by count(keywords) desc limit 0,5
+    ) t2 ON INSTR(t1.title,t2.keywords) > 0
+    GROUP BY t1.id
   </select>
   
   <select id="queryListByTop" resultMap="BaseResultMap">
-  	SELECT * FROM system_archives ORDER BY create_time DESC LIMIT 0,10
+      SELECT * FROM system_archives ORDER BY create_time DESC LIMIT 0,10
   </select>
   
   <select id="queryAll" resultMap="BaseResultMap">
-  	SELECT 
-  		<include refid="Base_Column_List"></include>
-  	FROM system_archives
-  	WHERE category_id = #{categoryId,jdbcType=VARCHAR}
+      SELECT 
+          <include refid="Base_Column_List"></include>
+      FROM system_archives
+      WHERE category_id = #{categoryId,jdbcType=VARCHAR}
   </select>
 </mapper>
