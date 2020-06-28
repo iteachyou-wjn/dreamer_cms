@@ -50,13 +50,12 @@ public class UserLoginController extends BaseController {
 
 	@Autowired
 	private UserService userService;
-	private CircleCaptcha captcha = CaptchaUtil.createCircleCaptcha(200, 100, 4, 20);
+	@Autowired
+	private CircleCaptcha captcha;
 
 	// 产生验证码
 	@RequestMapping("/getVerifyCode")
 	public void getKaptcha(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		// 自定义验证码内容为四则运算方式
-		captcha.setGenerator(new MathGenerator(1));
 		captcha.createCode();
 		//图形验证码写出，可以写出到文件，也可以写出到流
 		String text = captcha.getCode();
@@ -108,10 +107,9 @@ public class UserLoginController extends BaseController {
 	public ResponseResult login(@RequestBody UserVO entity,HttpServletRequest request) {
 		ResponseResult result = null;
 		User user = new User();
-		captcha.setGenerator(new MathGenerator());
 		try {
+			// 验证码校验
 			if(!captcha.verify(entity.getVcode())) {
-				// 帐号已经禁用
 				result = ResponseResult.Factory.newInstance(Boolean.FALSE,
 						StateCodeEnum.USER_CODE_ERROR.getCode(), null,
 						StateCodeEnum.USER_CODE_ERROR.getDescription());
