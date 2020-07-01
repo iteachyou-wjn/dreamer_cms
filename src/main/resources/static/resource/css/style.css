@@ -4760,3 +4760,5 @@ li.dropdown-header {
 .graph{ width: 450px; border: 1px solid #23b7e5; height: 25px; margin: 30px auto;} 
 #bar{ display: block; background: #23b7e5; float: left; height: 100%; text-align: center; font-family: Verdana; line-height: 25px; color: #FFF; } 
 .result{text-align:center;}
+
+.dashboard-title{background: #e2e2e2;font-weight: bold;}

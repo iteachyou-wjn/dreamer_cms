@@ -38,7 +38,7 @@
 				</div>
 			</section>
 			<section class="panel">
-				<div class="panel-heading">信息统计</div>
+				<div class="panel-heading dashboard-title">信息统计</div>
 				<div class="panel-body">
 					<div class="row" style="margin-bottom:5px;">
                         <div class="col-md-3">
@@ -81,25 +81,25 @@
 				</div>
 			</section>
 			<section class="panel">
-				<div class="panel-heading">
+				<div class="panel-heading dashboard-title">
 					版本信息及商业授权
 				</div>
 				<div class="panel-body">
 					<div class="row" style="margin-bottom:5px;">
 						<div class="col-md-12">
-							<div class="fl">
+							<div class="fl" style="padding: 30px 30px 30px 0;">
 								<img alt="梦想家CMS内容管理系统" src="/resource/img/dreamercms-logo.png" width="100">
 							</div>
 							<div class="fl" style="margin-left:10px;">
-								<b>当前系统版本为开源版V2.0.1</b>
-								<ul>
-									<li>开发管理后台首页仪表盘页面功能</li>
-									<li>增加使用标签解析引擎，方便使用标签建站</li>
-									<li>优化了后台管理的功能</li>
-									<li>增加了日志记录相关功能,使系统更安全</li>
-									<li>优化了部分标签</li>
+								<b>当前系统版本为开源版V3.0.1</b>
+								<ul style="line-height: 25px;margin-top: 10px;">
+									<li>开发整站页面静态化功能</li>
+									<li>优化ChannelArtList、List、PageList标签</li>
+									<li>开发文章列表级联显示</li>
+									<li>后台登录新增验证码验证,使系统更安全</li>
+									<li>开发搜索功能及搜索结果页面标签解析</li>
 								</ul>
-								<b>根据软件使用协议，未经商业授权的系统请务必保留官方版权。前后台页底必须保留“Powered by I Tech You , 我教你!”文字和链接！</b>
+								<b>根据软件使用协议，未经商业授权的系统请务必保留官方版权。前后台页底必须保留 "Powered by I Tech You , 我教你!" 文字和链接！</b>
 							</div>
 							<div class="clearFix"></div>
 						</div>
@@ -109,9 +109,7 @@
 			<div class="row" style="margin-bottom:5px;">
 				<div class="col-md-4">
 					<section class="panel">
-						<div class="panel-heading">
-							最新文章
-						</div>
+						<div class="panel-heading dashboard-title">最新文章</div>
 						<div class="panel-body" style="height: 300px;">
 							<ul class="newest">
 								<li th:each="item : ${newest}">
@@ -123,23 +121,21 @@
 				</div>
 				<div class="col-md-4">
 					<section class="panel">
-						<div class="panel-heading">
-							开发团队
-						</div>
+						<div class="panel-heading dashboard-title">开发团队</div>
 						<div class="panel-body" style="height: 300px;">
 							<p>版权所有：<b><a href="http://www.itechyou.cn" target="_blank" title="I Tech You,我教你！">I Tech You , 我教你!</a></b></p>
 							<p>开发团队成员：<b>王俊南</b></p>
 							<p>官方网址：<b><a href="http://www.itechyou.cn" target="_blank" title="I Tech You,我教你！">http://www.itechyou.cn</a></b></p>
 							<p>官方演示网址：<b><a href="http://cms.itechyou.cn" target="_blank" title="梦想家CMS内容管理系统">http://cms.itechyou.cn</a></b></p>
+							<p>码云源码网址：<b><a href="https://gitee.com/isoftforce/dreamer_cms" target="_blank" title="梦想家CMS内容管理系统">https://gitee.com/isoftforce/dreamer_cms</a></b></p>
+							<p>Github源码网址：<b><a href="https://github.com/xinhudong/dreamer_cms" target="_blank" title="梦想家CMS内容管理系统">https://github.com/xinhudong/dreamer_cms</a></b></p>
 							<p>官方QQ群：<b>①597652651</b>、<b>②623605199</b></p>
 						</div>
 					</section>
 				</div>
 				<div class="col-md-4">
 					<section class="panel">
-						<div class="panel-heading">
-							服务器信息
-						</div>
+						<div class="panel-heading dashboard-title">服务器信息</div>
 						<div class="panel-body" style="height: 300px;">
 							<p>JVM名称：<b th:text="${serverInfo.jvmName}"></b></p>
 							<p>JAVA版本：<b th:text="${serverInfo.jreVersion}"></b></p>
