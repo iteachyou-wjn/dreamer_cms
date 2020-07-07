@@ -37,8 +37,7 @@
 			<section class="panel">
 				<div class="panel-body">
 					<form class="col s12" id="form1" enctype="multipart/form-data" th:action="@{/admin/archives/add}" onsubmit="return validateForm();" method="post">
-						<input name="categoryId" type="hidden" th:value="${category.id}"/>
-						<input name="categoryIds" type="hidden" th:value="${category.catSeq}"/>
+						<input id="categoryIds" name="categoryIds" type="hidden" th:value="${category.catSeq}"/>
 						<input th:name="${field.fieldName}" th:id="'input-' + ${field.id}" type="hidden" th:each="field : ${fields}" th:if="${field.dataType} == 'html' or ${field.dataType} == 'markdown' or ${field.dataType} == 'file'" />
 						<input name="imagePath" id="filepath" type="hidden">
 						<div class="form-group form-control-medium">
@@ -80,7 +79,10 @@
 						</div>
 						<div class="form-group form-control-medium">
 							<label for="categoryId">所属栏目：</label>
-							<input id="categoryId" type="text" class="form-control" th:value="${category.cnname}" readonly="readonly">
+							<select id="categoryId" name="categoryId" class="form-control" onchange="changeCategoryId(this)">
+								<option th:value="${category.id}" th:text="${category.cnname}"></option>
+								<option th:each="cat : ${categorys}" th:catSeq="${cat.catSeq}" th:value="${cat.id}" th:text="${cat.cnname}"></option>
+							</select>
 						</div>
 						<div class="form-group form-control-medium">
 							<label for="tag">标签：</label>
@@ -266,6 +268,12 @@
                     console.log('onload', this);
                 }
             });
+	    }
+	    
+	    function changeCategoryId(obj){
+	    	var option = $(obj).find('option:selected');
+	    	var catSeq = $(option).attr("catSeq");
+	    	$("#categoryIds").val(catSeq);
 	    }
 	    
 	    function validateForm(){

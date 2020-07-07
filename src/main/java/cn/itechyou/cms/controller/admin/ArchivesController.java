@@ -21,6 +21,7 @@ import cn.itechyou.cms.common.ExceptionEnum;
 import cn.itechyou.cms.common.SearchEntity;
 import cn.itechyou.cms.entity.Archives;
 import cn.itechyou.cms.entity.Category;
+import cn.itechyou.cms.entity.CategoryWithBLOBs;
 import cn.itechyou.cms.entity.Field;
 import cn.itechyou.cms.entity.Form;
 import cn.itechyou.cms.entity.System;
@@ -60,23 +61,21 @@ public class ArchivesController {
 	
 	@RequestMapping("/list")
 	public String toIndex(Model model ,SearchEntity params) {
-		String cid = "-1";
-		if(params.getEntity() != null) {
-			if(params.getEntity().containsKey("cid")) {
-				if("-1".equals(params.getEntity().get("cid").toString())) {
-					params.getEntity().remove("cid");
-				}
-			}
-			cid = params.getEntity().containsKey("cid") ? params.getEntity().get("cid").toString() : "-1";
-		}
 		if(params.getEntity() == null) {
 			Map<String,Object> entity = new HashMap<String,Object>();
 			params.setEntity(entity);
 		}
+		String cid = "-1";
+		if(params.getEntity().containsKey("cid")) {
+			cid = params.getEntity().get("cid").toString();
+			if("-1".equals(params.getEntity().get("cid").toString())) {
+				params.getEntity().remove("cid");
+			}
+		}
 		params.getEntity().put("sortBy", "create_time");
 		params.getEntity().put("sortWay", "desc");
 		PageInfo<Map<String,Object>> archives = archivesService.queryListByPage(params);
-		model.addAttribute("cid", cid == null ? "-1" : cid);
+		model.addAttribute("cid", cid == null ? "" : cid);
 		model.addAttribute("archives", archives);
 		return "admin/archives/list";
 	}
@@ -85,7 +84,7 @@ public class ArchivesController {
 	public String toAdd(Model model, String code) {
 		Category category = null;
 		Form form = new Form();
-		if(code.equals("-1")) {
+		if(StringUtil.isBlank(code) || code.equals("-1")) {
 			category = new Category();
 			category.setCnname("顶级栏目");
 			category.setId("-1");
@@ -94,7 +93,16 @@ public class ArchivesController {
 			category = categoryService.queryCategoryByCode(code);
 			form.setId(category.getFormId());
 		}
+		//查询附加字段
 		List<Field> fields = fieldService.queryFieldByFormId(form.getId());
+		
+		/**
+		 * 组织栏目树
+		 */
+		List<CategoryWithBLOBs> list = categoryService.selectByParentId("-1");
+		List<CategoryWithBLOBs> newTree = buildTree(list, 1);
+		
+		model.addAttribute("categorys", newTree);
 		model.addAttribute("category", category);
 		model.addAttribute("fields", fields);
 		return "admin/archives/add";
@@ -212,6 +220,19 @@ public class ArchivesController {
 		}
 		
 		System system = systemService.getSystem();
+		
+		Category category = new Category();
+		category.setCnname("顶级栏目");
+		category.setId("-1");
+		
+		/**
+		 * 组织栏目树
+		 */
+		List<CategoryWithBLOBs> list = categoryService.selectByParentId("-1");
+		List<CategoryWithBLOBs> newTree = buildTree(list, 1);
+		
+		model.addAttribute("categorys", newTree);
+		model.addAttribute("category", category);
 		model.addAttribute("article", article);
 		model.addAttribute("fields", fields);
 		model.addAttribute("system", system);
@@ -224,6 +245,7 @@ public class ArchivesController {
 		archives.setId(entity.get("id"));
 		archives.setTitle(entity.get("title"));
 		archives.setCategoryId(entity.get("categoryId"));
+		archives.setCategoryIds(entity.get("categoryIds"));
 		archives.setImagePath(entity.get("imagePath"));
 		archives.setWeight(StringUtil.isBlank(entity.get("weight")) ? 0 : Integer.parseInt(entity.get("weight")));
 		archives.setClicks(StringUtil.isBlank(entity.get("clicks")) ? 0 : Integer.parseInt(entity.get("clicks")));
@@ -345,5 +367,27 @@ public class ArchivesController {
 					e.getMessage());
 		}
 		return "redirect:/admin/archives/list?entity%5Bcid%5D=" + categoryCode;
+	}
+	
+	/**
+	 * 构建栏目树
+	 * @param list
+	 * @param i
+	 * @return
+	 */
+	private List<CategoryWithBLOBs> buildTree(List<CategoryWithBLOBs> list, int i) {
+		for (int j = list.size() - 1; j >= 0; j--) {
+			CategoryWithBLOBs categoryWithBLOBs = list.get(j);
+			StringBuilder sb = new StringBuilder();
+			for (int k = 1; k < i; k++) {
+				sb.append("--");
+			}
+			sb.append(categoryWithBLOBs.getCnname());
+			categoryWithBLOBs.setCnname(sb.toString());
+			List<CategoryWithBLOBs> children = categoryService.selectByParentId(categoryWithBLOBs.getId());
+			List<CategoryWithBLOBs> buildTree = buildTree(children, i + 1);
+			list.addAll(j + 1, buildTree);
+		}
+		return list;
 	}
 }

@@ -41,8 +41,7 @@
 					<form class="col s12" id="form1" enctype="multipart/form-data" th:object="${article}" th:action="@{/admin/archives/edit}" onsubmit="return validateForm();" method="post">
 						<input name="id" id="id" type="hidden" th:value="*{aid}" />
 						<input name="fid" id="fid" type="hidden" th:value="*{id}" />
-						<input name="categoryId" type="hidden" th:value="*{categoryId}"/>
-						<input name="categoryIds" type="hidden" th:value="*{categoryIds}"/>
+						<input name="categoryIds" id="categoryIds" type="hidden" th:value="*{categoryIds}"/>
 						<input name="imagePath" id="filepath" type="hidden" th:value="*{imagePath}" />
 						<input th:name="${field.fieldName}" th:id="'input-' + ${field.id}" type="hidden" th:each="field : ${fields}" th:if="${field.dataType} == 'html' or ${field.dataType} == 'markdown' or ${field.dataType} == 'file'" />
 						<div class="form-group form-control-medium">
@@ -86,7 +85,10 @@
 						</div>
 						<div class="form-group form-control-medium">
 							<label for="categoryId">所属栏目：</label>
-							<input id="categoryId" type="text" class="form-control" th:value="*{categoryCnName}" readonly="readonly">
+							<select id="categoryId" name="categoryId" class="form-control" onchange="changeCategoryId(this)">
+								<option th:value="${category.id}" th:text="${category.cnname}" th:selected="${article.categoryId eq category.id}"></option>
+								<option th:each="cat : ${categorys}" th:value="${cat.id}" th:catSeq="${cat.catSeq}" th:text="${cat.cnname}" th:selected="${article.categoryId eq cat.id}"></option>
+							</select>
 						</div>
 						<div class="form-group form-control-medium">
 							<label for="tag">标签：</label>
@@ -279,6 +281,12 @@
                 	this.setMarkdown(content);
                 }
             });
+	    }
+	    
+	    function changeCategoryId(obj){
+	    	var option = $(obj).find('option:selected');
+	    	var catSeq = $(option).attr("catSeq");
+	    	$("#categoryIds").val(catSeq);
 	    }
 	    
 	    function validateForm(){

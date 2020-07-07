@@ -288,9 +288,9 @@
     	<when test="cascade != null and cascade != ''">
     		and a.category_ids like concat(#{cascade,jdbcType=VARCHAR},'%')
     	</when>
-    	<otherwise>
+    	<when test="cid != null and cid != ''">
     		and c.code = #{cid,jdbcType=VARCHAR}
-    	</otherwise>
+    	</when>
     </choose>
     <if test="flag != null and flag != ''">
         and a.properties like concat(concat('%',#{flag,jdbcType=VARCHAR}),'%')

@@ -37,7 +37,7 @@
 			<section class="panel">
 				<div class="panel-body">
 	                 <!-- <span class="pull-right badge badge-info">32</span> -->
-	                 <button class="btn btn-primary btn-addon btn-sm" th:typeid="${cid}" th:onclick="javascript: toAddArticle(this.getAttribute('typeid'))">
+	                 <button class="btn btn-primary btn-addon btn-sm" th:typeid="${#strings.isEmpty(cid) ? '-1' : cid}" th:onclick="javascript: toAddArticle(this.getAttribute('typeid'))">
 	                     <i class="fa fa-plus"></i>发布文章
 	                 </button>
 	            </div>
@@ -143,7 +143,7 @@
 		}
 		
 		function toAddArticle(cid){
-			window.location.href = "/admin/archives/toAdd?code="+cid;	
+			window.location.href = "/admin/archives/toAdd?code=" + cid;
 		}
 		
 		function confrimRemove(id,cid){
