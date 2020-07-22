@@ -14,10 +14,6 @@
     <link href="/resource/css/iCheck/all.css" rel="stylesheet" type="text/css" />
     <!-- Theme style -->
     <link href="/resource/css/style.css" rel="stylesheet" type="text/css" />
-    <link href="/resource/js/bootstrap-fileinput/css/fileinput.css" media="all" rel="stylesheet" type="text/css"/>
-    
-    <link href="/resource/js/bootstrap-fileinput/css/fileinput.css" media="all" rel="stylesheet" type="text/css"/>
-    <link href="/resource/js/bootstrap-fileinput/css/fileinput.css" media="all" rel="stylesheet" type="text/css"/>
     <link href="/resource/js/editor.md-master/css/editormd.css" rel="stylesheet" type="text/css"/>
     <link href="/resource/js/tagit/jquery.tagit.css" rel="stylesheet" type="text/css"/>
     <link href="/resource/js/tagit/tagit.ui-zendesk.css" rel="stylesheet" type="text/css"/>
@@ -64,10 +60,10 @@
 								<div class="form-group">
 									<label for="type">表单性质：</label>
 		                            <label class="checkbox-inline">
-		                                <input type="radio" name="type" id="type-yes" value="1" th:checked="${form.type} == 1">是
+		                                <input type="radio" name="type" id="type-yes" value="1" th:checked="${form.type} == 1">自定义表单
 		                            </label>
 		                            <label class="checkbox-inline">
-		                                <input type="radio" name="type" id="type-no" value="0" th:checked="${form.type} == 0">否
+		                                <input type="radio" name="type" id="type-no" value="0" th:checked="${form.type} == 0">系统表单
 		                            </label>
 								</div>
 								<div class="form-btn-group-left">

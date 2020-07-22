@@ -47,6 +47,8 @@ public class Category {
     private String level;
     
     private Integer sort;
+    
+    private Integer isInput;
 
     private String createBy;
 
@@ -242,6 +244,14 @@ public class Category {
 
 	public void setSort(Integer sort) {
 		this.sort = sort;
+	}
+	
+	public Integer getIsInput() {
+		return isInput;
+	}
+
+	public void setIsInput(Integer isInput) {
+		this.isInput = isInput;
 	}
 
 	public String getCreateBy() {

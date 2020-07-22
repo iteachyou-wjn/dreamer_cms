@@ -84,7 +84,7 @@ public abstract class AbstractListTag {
 		//处理附加字段
 		for (int k = 0; k < addfields.length; k++) {
 			String field = addfields[k];
-			item = item.replaceAll(FieldEnum.FIELD_ADDFIELDS_START.getRegexp() + field + FieldEnum.FIELD_ADDFIELDS_END.getRegexp(), archives.containsKey(field) ? archives.get(field).toString() : "");
+			item = item.replaceAll(FieldEnum.FIELD_ADDFIELDS_START.getRegexp() + field + FieldEnum.FIELD_ADDFIELDS_END.getRegexp(), archives.containsKey(field) ? StringUtil.isBlank(archives.get(field)) ? "" : archives.get(field).toString() : "");
 		}
 		return item;
 	}

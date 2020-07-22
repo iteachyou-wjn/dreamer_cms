@@ -52,6 +52,7 @@
 								<th style="width:35px;">编码</th>
 								<th>栏目名称</th>
 								<th>英文名称</th>
+								<th style="width:120px;">是否允许投稿</th>
 								<th style="width:80px;">显示/隐藏</th>
 								<th style="width:80px;">排序</th>
 								<th style="width:300px;">操作</th>
@@ -66,6 +67,7 @@
 								<td th:text="${category.code}"></td>
 								<td><a th:href="@{/admin/archives/list(entity[cid]=${category.code})}" th:text="${category.cnname}"></a></td>
 								<td th:text="${category.enname}">Mark</td>
+								<td><span th:text="${category.isInput}=='1'?'是':'否'" th:class="${category.isInput}=='1'?'label label-success':'label label-danger'">否</span></td>
 								<td><span th:text="${category.isShow}=='1'?'是':'否'" th:class="${category.isShow}=='1'?'label label-success':'label label-danger'">否</span></td>
 								<td>
 									<input name="orderBy" type="text" th:attr="cid=${category.id}" class="form-control input-sm" th:value="${category.sort}" style="width:50px;height:20px;">
@@ -184,6 +186,7 @@
 		    trstr += '<td>' + element.code + '</td>';
 		    trstr += '<td style="padding-left:' + ((element.level++)*20) + 'px;"><a href="/admin/archives/list?entity%5Bcid%5D='+element.code+'">' + element.cnname + '</a></td>';
 		    trstr += '<td>' + element.enname + '</td>';
+		    trstr += '<td>' + (element.isInput == 1 ? '<span class="label label-success">是</span>' : '<span class="label label-danger">否</span>') + '</td>';
 		    trstr += '<td>' + (element.isShow == 1 ? '<span class="label label-success">是</span>' : '<span class="label label-danger">否</span>') + '</td>';
 		    trstr += '<td>';
 		    trstr += '<input name="orderBy" type="text" cid="'+element.id+'" class="form-control input-sm" value="'+element.sort+'" style="width:50px;height:20px;">';

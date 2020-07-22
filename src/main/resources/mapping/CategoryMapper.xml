@@ -23,6 +23,7 @@
     <result column="is_show" property="isShow" jdbcType="INTEGER" />
     <result column="level" property="level" jdbcType="VARCHAR" />
     <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="is_input" property="isInput" jdbcType="INTEGER" />
     <result column="create_by" property="createBy" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
@@ -40,7 +41,7 @@
   <sql id="Base_Column_List" >
     id, cnname, enname, code, cat_seq, form_id, image_path, description, link_target, 
     page_size, cat_model, visit_url, cover_temp, list_temp, article_temp, link_url, default_editor, 
-    parent_id, is_show, level, sort, create_by, create_time, update_by, update_time, 
+    parent_id, is_show, level, sort, is_input, create_by, create_time, update_by, update_time, 
     ext01, ext02, ext03, ext04, ext05
   </sql>
   <sql id="Blob_Column_List" >
@@ -65,7 +66,7 @@
       page_size, cat_model, visit_url, 
       cover_temp, list_temp, article_temp, 
       link_url, default_editor, parent_id, 
-      is_show, level, sort, 
+      is_show, level, sort, is_input, 
       create_by, create_time, update_by, 
       update_time, ext01, ext02, 
       ext03, ext04, ext05, 
@@ -76,7 +77,7 @@
       #{pageSize,jdbcType=INTEGER}, #{catModel,jdbcType=INTEGER}, #{visitUrl,jdbcType=VARCHAR}, 
       #{coverTemp,jdbcType=VARCHAR}, #{listTemp,jdbcType=VARCHAR}, #{articleTemp,jdbcType=VARCHAR}, 
       #{linkUrl,jdbcType=VARCHAR}, #{defaultEditor,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR}, 
-      #{isShow,jdbcType=INTEGER}, #{level,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER}, 
+      #{isShow,jdbcType=INTEGER}, #{level,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER}, #{isInput,jdbcType=INTEGER}, 
       #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, 
       #{updateTime,jdbcType=TIMESTAMP}, #{ext01,jdbcType=VARCHAR}, #{ext02,jdbcType=VARCHAR}, 
       #{ext03,jdbcType=VARCHAR}, #{ext04,jdbcType=VARCHAR}, #{ext05,jdbcType=VARCHAR}, 
@@ -147,6 +148,9 @@
       </if>
       <if test="sort != null" >
         sort,
+      </if>
+      <if test="isInput != null" >
+        is_input,
       </if>
       <if test="createBy != null" >
         create_by,
@@ -246,6 +250,9 @@
       <if test="sort != null" >
         #{sort,jdbcType=INTEGER},
       </if>
+      <if test="isInput != null" >
+        #{isInput,jdbcType=INTEGER},
+      </if>
       <if test="createBy != null" >
         #{createBy,jdbcType=VARCHAR},
       </if>
@@ -344,6 +351,9 @@
       <if test="sort != null" >
         sort = #{sort,jdbcType=INTEGER},
       </if>
+      <if test="isInput != null" >
+        is_input = #{isInput,jdbcType=INTEGER},
+      </if>
       <if test="createBy != null" >
         create_by = #{createBy,jdbcType=VARCHAR},
       </if>
@@ -402,6 +412,7 @@
       is_show = #{isShow,jdbcType=INTEGER},
       level = #{level,jdbcType=VARCHAR},
       sort = #{sort,jdbcType=INTEGER},
+      is_input = #{isInput,jdbcType=INTEGER},
       create_by = #{createBy,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_by = #{updateBy,jdbcType=VARCHAR},
@@ -437,6 +448,7 @@
       is_show = #{isShow,jdbcType=INTEGER},
       level = #{level,jdbcType=VARCHAR},
       sort = #{sort,jdbcType=INTEGER},
+      is_input = #{isInput,jdbcType=INTEGER},
       create_by = #{createBy,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_by = #{updateBy,jdbcType=VARCHAR},
