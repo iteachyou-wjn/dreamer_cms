@@ -76,11 +76,11 @@
 			    </div>
 			    <div class="panel-footer bg-white text-right">
                      <ul class="pagination">
-                         <li><a th:href="@{/admin/category/list(pageNum=${forms.navigateFirstPage},pageSize=${forms.pageSize})}" title="首页" th:class="${forms.isFirstPage} ? 'paginationNotAllowed' : ''">«</a></li>
-                         <li><a th:href="@{/admin/category/list(pageNum=${forms.prePage},pageSize=${forms.pageSize})}" title="上一页" th:if="${forms.hasPreviousPage}">‹</a></li>
-                         <li th:each="pageinfo : ${forms.navigatepageNums}"><a th:href="@{/admin/category/list(pageNum=${pageinfo},pageSize=${forms.pageSize})}" th:class="${pageinfo == forms.pageNum} ? 'paginationActive' : ''" th:text="${pageinfo}"></a></li>
-                         <li><a th:href="@{/admin/category/list(pageNum=${forms.nextPage},pageSize=${forms.pageSize})}" title="下一页" th:if="${forms.hasNextPage}">›</a></li>
-                         <li><a th:href="@{/admin/category/list(pageNum=${forms.navigateLastPage},pageSize=${forms.pageSize})}" title="未页" th:class="${forms.isLastPage} ? 'paginationNotAllowed' : ''">»</a></li>
+                         <li><a th:href="@{/admin/forms/list(pageNum=${forms.navigateFirstPage},pageSize=${forms.pageSize})}" title="首页" th:class="${forms.isFirstPage} ? 'paginationNotAllowed' : ''">«</a></li>
+                         <li><a th:href="@{/admin/forms/list(pageNum=${forms.prePage},pageSize=${forms.pageSize})}" title="上一页" th:if="${forms.hasPreviousPage}">‹</a></li>
+                         <li th:each="pageinfo : ${forms.navigatepageNums}"><a th:href="@{/admin/forms/list(pageNum=${pageinfo},pageSize=${forms.pageSize})}" th:class="${pageinfo == forms.pageNum} ? 'paginationActive' : ''" th:text="${pageinfo}"></a></li>
+                         <li><a th:href="@{/admin/forms/list(pageNum=${forms.nextPage},pageSize=${forms.pageSize})}" title="下一页" th:if="${forms.hasNextPage}">›</a></li>
+                         <li><a th:href="@{/admin/forms/list(pageNum=${forms.navigateLastPage},pageSize=${forms.pageSize})}" title="未页" th:class="${forms.isLastPage} ? 'paginationNotAllowed' : ''">»</a></li>
                      </ul>
                  </div>
 			</section>
