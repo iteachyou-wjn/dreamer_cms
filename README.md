@@ -68,6 +68,26 @@ https://space.bilibili.com/482273402
 8. 管理后台用户名：wangjn；密码：123456
 9. 模版标签开发教程请参考：http://doc.itechyou.cn 
 
+# 捐赠详情
+
+| 用户  | 金额  |                时间 |
+| ----- | :---: | ------------------: |
+| 个.秋 | 10.00 | 2020-01-09 11:52:16 |
+| 孤狼  | 10.00 | 2020-09-30 09:16:23 |
+| 胜宇  | 18.00 | 2020-11-23 12:34:18 |
+
+#### （感谢各位大佬的支持，以上排名不分先后！）同时也感谢各位开发者为社区作出的贡献。同时也希望更多的用户来捐赠本项目，您的支持，是我一直坚持下去的动力，另外为大家提供使用文档（http://doc.itechyou.cn）、教程（https://www.itechyou.cn）的网站也需要运营维护，个人精力、经费都有限，希望大家多多理解！！！
+
+<center>
+    <div style="width:50%;float:left;text-align:right;">
+        <img src="http://cdn.itechyou.cn/20201201174329.png" />
+    </div>
+    <div style="width:50%;float:right;text-align:left;">
+        <img src="http://cdn.itechyou.cn/20201201174339.jpg" />
+    </div>
+    <div style="clear:both;"></div>
+</center>
+
 
 # 系统美图
 ![后台登录](http://cdn.itechyou.cn/20190821102434.png)
@@ -93,3 +113,8 @@ https://space.bilibili.com/482273402
 ![列表页面](http://cdn.itechyou.cn/20190820092157.png)
 
 ![文章页面](http://cdn.itechyou.cn/20190820092158.png)
+
+
+
+
+
