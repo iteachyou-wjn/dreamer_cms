@@ -74,9 +74,9 @@ https://space.bilibili.com/482273402
 
 <table width="100%" cellspacing="0" cellpadding="0" border="0">
 	<tr>
-		<th>用户</th>
-		<th>金额</th>
-		<th>时间</th>
+		<th width="30%">用户</th>
+		<th width="30%">金额</th>
+		<th width="40%">时间</th>
 	</tr>
 	<tr>
 		<td>个.秋</td>
