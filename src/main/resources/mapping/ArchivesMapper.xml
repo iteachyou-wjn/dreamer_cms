@@ -23,7 +23,7 @@
   
   <resultMap id="BaseResultMapWithRownum" type="cn.itechyou.cms.entity.ArchivesWithRownum">
     <id column="id" jdbcType="VARCHAR" property="id" />
-      <result column="rownum" jdbcType="INTEGER" property="rownum" />
+    <result column="rownum" jdbcType="INTEGER" property="rownum" />
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="properties" jdbcType="VARCHAR" property="properties" />
     <result column="image_path" jdbcType="VARCHAR" property="imagePath" />
@@ -394,12 +394,12 @@
   </update>
   
   <select id="queryArticleRowNum" parameterType="java.util.Map" resultMap="BaseResultMapWithRownum">
-      SELECT * FROM (
+    SELECT * FROM (
         SELECT @rownum:=@rownum+1 AS rownum,t.* FROM (SELECT @rownum:=0) r,system_archives t
         WHERE 1 = 1
-            <if test="categoryId != null and categoryId != ''">
-            and t.category_id = #{categoryId,jdbcType=VARCHAR}
-            </if>
+	        <if test="categoryId != null and categoryId != ''">
+	        and t.category_id = #{categoryId,jdbcType=VARCHAR}
+	        </if>
     ) t1
     where 1 = 1
     <if test="arcid != null and arcid != ''">

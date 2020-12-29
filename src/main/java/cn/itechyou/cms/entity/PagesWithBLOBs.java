@@ -1,23 +1,15 @@
 package cn.itechyou.cms.entity;
 
+import lombok.Data;
+
+/**
+ * 页面片段扩展
+ * @author 王俊南
+ * Date: 2020-12-29
+ */
+@Data
 public class PagesWithBLOBs extends Pages {
     private String mdContent;
 
     private String htmlContent;
-
-    public String getMdContent() {
-		return mdContent;
-	}
-
-	public void setMdContent(String mdContent) {
-		this.mdContent = mdContent;
-	}
-
-	public String getHtmlContent() {
-        return htmlContent;
-    }
-
-    public void setHtmlContent(String htmlContent) {
-        this.htmlContent = htmlContent == null ? null : htmlContent.trim();
-    }
 }

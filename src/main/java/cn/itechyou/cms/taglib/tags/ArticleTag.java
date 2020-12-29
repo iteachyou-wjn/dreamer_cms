@@ -7,10 +7,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import cn.itechyou.cms.common.Constant;
 import cn.itechyou.cms.entity.Archives;
 import cn.itechyou.cms.entity.Category;
-import cn.itechyou.cms.entity.CategoryWithBLOBs;
 import cn.itechyou.cms.entity.Field;
 import cn.itechyou.cms.entity.Form;
 import cn.itechyou.cms.service.ArchivesService;
@@ -23,7 +21,6 @@ import cn.itechyou.cms.taglib.annotation.Attribute;
 import cn.itechyou.cms.taglib.annotation.Tag;
 import cn.itechyou.cms.taglib.enums.FieldEnum;
 import cn.itechyou.cms.taglib.utils.RegexUtil;
-import cn.itechyou.cms.utils.PinyinUtils;
 import cn.itechyou.cms.utils.StringUtil;
 
 /**
@@ -154,5 +151,5 @@ public class ArticleTag implements IParse {
 		}
 		return newHtml;
 	}
-
+	
 }

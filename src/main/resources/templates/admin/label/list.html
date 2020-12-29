@@ -41,7 +41,7 @@
 				<div class="panel-body">
 					<section class="panel" th:each="value,key : ${labels}">
 						<header class="panel-heading">
-							<h2 th:text="${key.current.key}">A</h2>
+							<p><b th:text="${key.current.key}"></b></p>
 						</header>
 						<div class="panel-body">
 							<h3 th:id="${item.id}" class="label-h3" th:each="item :${key.current.value}">

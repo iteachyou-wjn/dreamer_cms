@@ -4,7 +4,7 @@ web:
 spring: 
   datasource: 
     name: dev
-    url: jdbc:mysql://127.0.0.1:3306/dreamer-cms?serverTimezone=GMT&useSSL=false&useUnicode=true&characterEncoding=UTF8
+    url: jdbc:mysql://127.0.0.1:3306/dreamer-cms?serverTimezone=GMT&useSSL=false&useUnicode=true&characterEncoding=UTF8&zeroDateTimeBehavior=convertToNull
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver

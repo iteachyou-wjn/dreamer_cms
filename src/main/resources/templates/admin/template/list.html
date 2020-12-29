@@ -1,0 +1,104 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dreamer Blog - 后台管理系统</title> 
+    <!-- bootstrap 3.0.2 -->
+    <link href="/resource/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <!-- font Awesome -->
+    <link href="/resource/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <!-- Ionicons -->
+    <link href="/resource/css/ionicons.min.css" rel="stylesheet" type="text/css" />
+    <!-- Morris chart -->
+    <link href="/resource/css/morris/morris.css" rel="stylesheet" type="text/css" />
+    <!-- jvectormap -->
+    <link href="/resource/css/jvectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css" />
+    <!-- iCheck for checkboxes and radio inputs -->
+    <link href="/resource/css/iCheck/all.css" rel="stylesheet" type="text/css" />
+    <!-- Theme style -->
+    <link href="/resource/css/style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+<div class="row">
+    <div class="col-md-12">
+    	<h1 class="panel-heading">模板管理</h1>
+        <!--breadcrumbs start -->
+        <ul class="breadcrumb">
+			<li><a href="/admin/dashboard/toIndex"><i class="fa fa-home"></i> 首页</a></li>
+			<li class="active">模板管理</li>
+		</ul>
+        <!--breadcrumbs end -->
+    </div>
+</div>
+<div class="row">
+	<div class="col-lg-12">
+		<section class="panel">
+		    <div class="panel-body table-responsive">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th style="width:50px;">选择</th>
+							<th>模板文件</th>
+							<th>类型</th>
+							<th>扩展名</th>
+							<th style="width:300px;">操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="file : ${list}">
+							<td><input type="checkbox" class="flat-grey list-child" th:value="${file['fileName']}"/></td>
+							<td th:if="${file['type'] == 'directory'}">
+								<a th:href="@{/admin/templates/toView(path=${file['path']},fileName=${file['fileName']})}" th:text="${file['fileName']}"></a>
+							</td>
+							<td th:text="${file['fileName']}" th:if="${file['type'] == 'file'}"></td>
+							<td th:text="${file['type']}"></td>
+							<td th:text="${file['extName']}"></td>
+							<td>
+								<a th:href="@{/admin/templates/toEdit(path=${file['path']},file=${file['fileName']})}" class="btn btn-xs btn-success">编辑</a>	
+							</td>
+						</tr>
+						<tr th:if="${#lists.isEmpty(list)}">
+							<td colspan="8" align="center">无数据</td>
+						</tr>
+					</tbody>
+				</table>
+		    </div>
+		</section>
+	</div>
+</div>
+<!-- jQuery 2.0.2 -->
+<script src="/resource/js/jquery.min.js" type="text/javascript"></script>
+<!-- jQuery UI 1.10.3 -->
+<script src="/resource/js/jquery-ui-1.10.3.min.js" type="text/javascript"></script>
+<!-- Bootstrap -->
+<script src="/resource/js/bootstrap.min.js" type="text/javascript"></script>
+<!-- iCheck -->
+   <script src="/resource/js/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
+<!-- Director App -->
+<script src="/resource/js/Director/app.js" type="text/javascript"></script>
+<script src="/resource/js/jquery.serializejson.js"></script>
+<script type="text/javascript">
+	window.onload = function(){
+		renderCheckBox();
+	}
+	
+	function renderCheckBox(){
+		$('input').on('ifChecked', function(event) {
+		    $(this).parents('li').addClass("task-done");
+		    console.log('ok');
+		});
+		$('input').on('ifUnchecked', function(event) {
+		    $(this).parents('li').removeClass("task-done");
+		    console.log('not');
+		});
+		
+		$('input[type="checkbox"].flat-grey, input[type="radio"].flat-grey').iCheck({
+		    checkboxClass: 'icheckbox_flat-grey',
+		    radioClass: 'iradio_flat-grey'
+		});
+	}
+</script>	
+</body>
+</html>

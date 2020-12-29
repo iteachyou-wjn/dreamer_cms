@@ -143,7 +143,6 @@ public class Tree<T> {
 
 	@Override
 	public String toString() {
-
 		return JSON.toJSONString(this);
 	}
 

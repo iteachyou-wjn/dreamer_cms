@@ -23,8 +23,6 @@ public class ZipUtils {
 			pathFile.mkdirs();
 		}
 		Theme theme = new Theme();
-		theme.setId(UUIDUtils.getPrimaryKey());
-		
 		// 解决zip文件中有中文目录或者中文文件
 		ZipFile zip = new ZipFile(zipFile, Charset.forName("GBK"));
 		for (Enumeration entries = zip.entries(); entries.hasMoreElements();) {
@@ -57,7 +55,7 @@ public class ZipUtils {
 			in.close();
 			out.close();
 		}
-		System.out.println("******************解压完毕********************");
+		System.out.println("******************解压完毕******************");
 		return theme;
 	}
 }

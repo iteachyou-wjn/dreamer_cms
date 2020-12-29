@@ -321,6 +321,7 @@ public class StaticController {
 				newHtml = parseEngine.parse(html);
 				newHtml = parseEngine.parseCategory(newHtml, categoryWithBLOBs.getCode());
 				newHtml = parseEngine.parseArticle(newHtml, archives.getId());
+				newHtml = parseEngine.generatePrevAndNext(newHtml, archives.getId());
 				File file = new File(fileConfiguration.getResourceDir() + system.getStaticdir() + catDir + "/" + dateDir + "/" + archives.getId() + ".html");
 				FileUtils.write(file, newHtml);
 				message = new Message(StateCodeEnum.HTTP_SUCCESS.getCode(),"生成[" + categoryWithBLOBs.getCnname() + "]栏目第["+(i+1)+"]个文档静态HTML文件成功...",79);

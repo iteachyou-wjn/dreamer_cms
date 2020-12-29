@@ -15,6 +15,7 @@ import cn.itechyou.cms.taglib.tags.IncludeTag;
 import cn.itechyou.cms.taglib.tags.LabelTag;
 import cn.itechyou.cms.taglib.tags.ListTag;
 import cn.itechyou.cms.taglib.tags.PageListTag;
+import cn.itechyou.cms.taglib.tags.PrevNextTag;
 import cn.itechyou.cms.taglib.tags.TemplateTag;
 import cn.itechyou.cms.taglib.tags.TypeTag;
 import cn.itechyou.cms.taglib.tags.VariableTag;
@@ -48,6 +49,8 @@ public class ParseEngine {
 	private PageListTag pageListTag;
 	@Autowired
 	private ArticleTag articleTag;
+	@Autowired
+	private PrevNextTag prevNextTag;
 	@Autowired
 	private AttachmentTag attachmentTag;
 	
@@ -181,4 +184,16 @@ public class ParseEngine {
 		return newHtml;
 	}
 
+	public String parsePrevAndNext(String html, String id) {
+		String newHtml = new String(html);
+		newHtml = prevNextTag.parse(newHtml, id);
+		return newHtml;
+	}
+
+	public String generatePrevAndNext(String html, String id) {
+		String newHtml = new String(html);
+		prevNextTag.setT("S");
+		newHtml = prevNextTag.parse(newHtml, id);
+		return newHtml;
+	}
 }

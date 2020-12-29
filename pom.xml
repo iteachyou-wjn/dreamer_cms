@@ -162,6 +162,13 @@
 			<version>${orgjson.version}</version>
 		</dependency>
 		
+		<!-- Lombok支持 -->
+		<dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+		
 		<!-- 汉字转拼音 -->
 		<dependency>
 		    <groupId>com.belerweb</groupId>
