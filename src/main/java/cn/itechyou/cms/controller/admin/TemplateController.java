@@ -16,7 +16,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import cn.itechyou.cms.common.StateCodeEnum;
 import cn.itechyou.cms.entity.Theme;
+import cn.itechyou.cms.exception.CmsException;
+import cn.itechyou.cms.exception.TemplatePermissionDeniedException;
 import cn.itechyou.cms.service.ThemeService;
 import cn.itechyou.cms.utils.FileConfiguration;
 import cn.itechyou.cms.vo.TemplateVo;
@@ -63,11 +66,24 @@ public class TemplateController {
 	}
 	
 	@GetMapping("toView")
-	public ModelAndView toView(String path,String fileName) throws IOException {
+	public ModelAndView toView(String path,String fileName) throws IOException,CmsException {
 		ModelAndView mv = new ModelAndView();
-		String themePath = path + File.separator + fileName + File.separator;
+		String themeDirPath = path + File.separator + fileName + File.separator;
+		File themeDirPathFile = new File(themeDirPath);
+		
+		/**
+		 * 查询当前模版目录，判断是否为模版目录，如不是，则报错
+		 */
+		Theme currentTheme = themeService.getCurrentTheme();
+		String resourceDir = fileConfiguration.getResourceDir();
+		String themePath = resourceDir + File.separator + "templates" + File.separator + currentTheme.getThemePath() + File.separator;
+		themePath = themePath.replaceAll("\\*", "/");
 		File themeDir = new File(themePath);
-		File[] listFiles = themeDir.listFiles();
+		if(!themeDirPathFile.getAbsolutePath().startsWith(themeDir.getAbsolutePath())) {
+			throw new TemplatePermissionDeniedException(StateCodeEnum.HTTP_FORBIDDEN.getCode(), StateCodeEnum.HTTP_FORBIDDEN.getDescription(), "您没有操作权限！");
+		}
+				
+		File[] listFiles = themeDirPathFile.listFiles();
 		List<Map<String,String>> list = new LinkedList<Map<String,String>>();
 		for (File file : listFiles) {
 			Map<String,String> map = new HashMap<String,String>();
@@ -90,10 +106,22 @@ public class TemplateController {
 	}
 	
 	@GetMapping("toEdit")
-	public ModelAndView toEdit(String path,String file) throws IOException {
+	public ModelAndView toEdit(String path,String file) throws IOException, CmsException {
 		ModelAndView mv = new ModelAndView();
 		String fileName = path + File.separator + file;
-		String content = FileUtils.readFileToString(new File(fileName), "UTF-8");
+		File templateFile = new File(fileName);
+		/**
+		 * 查询当前模版目录，判断是否为模版目录，如不是，则报错
+		 */
+		Theme currentTheme = themeService.getCurrentTheme();
+		String resourceDir = fileConfiguration.getResourceDir();
+		String themePath = resourceDir + File.separator + "templates" + File.separator + currentTheme.getThemePath() + File.separator;
+		themePath = themePath.replaceAll("\\*", "/");
+		File themeDir = new File(themePath);
+		if(!templateFile.getAbsolutePath().startsWith(themeDir.getAbsolutePath())) {
+			throw new TemplatePermissionDeniedException(StateCodeEnum.HTTP_FORBIDDEN.getCode(), StateCodeEnum.HTTP_FORBIDDEN.getDescription(), "您没有操作权限！");
+		}
+		String content = FileUtils.readFileToString(templateFile, "UTF-8");
 		mv.addObject("content", content);
 		mv.addObject("path", path);
 		mv.addObject("file", file);

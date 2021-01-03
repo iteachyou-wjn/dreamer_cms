@@ -56,7 +56,8 @@
 							<td th:text="${file['type']}"></td>
 							<td th:text="${file['extName']}"></td>
 							<td>
-								<a th:href="@{/admin/templates/toEdit(path=${file['path']},file=${file['fileName']})}" class="btn btn-xs btn-success">编辑</a>	
+								<a th:href="@{/admin/templates/toEdit(path=${file['path']},file=${file['fileName']})}" class="btn btn-xs btn-success"  th:if="${file['type'] == 'file'}">编辑</a>	
+								<a th:href="@{/admin/templates/toView(path=${file['path']},fileName=${file['fileName']})}" class="btn btn-xs btn-success"  th:if="${file['type'] == 'directory'}">查看</a>	
 							</td>
 						</tr>
 						<tr th:if="${#lists.isEmpty(list)}">

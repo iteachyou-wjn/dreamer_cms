@@ -2,6 +2,7 @@ package cn.itechyou.cms.common;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 import org.springframework.core.Ordered;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
@@ -55,6 +56,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 	}
 
     @Bean("captcha")
+    @Scope("singleton")
     public CircleCaptcha captcha() {
     	CircleCaptcha captcha = CaptchaUtil.createCircleCaptcha(200, 100, 4, 20);
     	// 自定义验证码内容为四则运算方式
