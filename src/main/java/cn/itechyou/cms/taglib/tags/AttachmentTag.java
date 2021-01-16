@@ -74,7 +74,7 @@ public class AttachmentTag implements IParse {
 			item = item.replaceAll(FieldEnum.FIELD_FILETYPE.getRegexp(), attachment.getFiletype());
 			item = item.replaceAll(FieldEnum.FIELD_FILESIZE.getRegexp(), StringUtil.isBlank(attachment.getFilesize()) ? "" : String.valueOf(attachment.getFilesize()));
 			item = item.replaceAll(FieldEnum.FIELD_CREATEBY.getRegexp(), attachment.getCreateBy());
-			item = item.replaceAll(FieldEnum.FIELD_CREATETIME.getRegexp(), StringUtil.isBlank(attachment.getCreateTime()) ? "" : attachment.getCreateTime().toString());
+			item = FunctionUtil.replaceByFunction(item, FieldEnum.FIELD_CREATETIME.getRegexp(), StringUtil.isBlank(attachment.getCreateTime()) ? "" : attachment.getCreateTime());
 			item = item.replaceAll(FieldEnum.FIELD_DLURL.getRegexp(), "/download/" + attachment.getId());
 			newHtml = newHtml.replace(tag, item);		
 		}

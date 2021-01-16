@@ -9,12 +9,14 @@ import org.springframework.stereotype.Component;
 
 import cn.itechyou.cms.common.Constant;
 import cn.itechyou.cms.entity.Category;
+import cn.itechyou.cms.exception.CmsException;
 import cn.itechyou.cms.service.CategoryService;
 import cn.itechyou.cms.service.SystemService;
 import cn.itechyou.cms.taglib.IParse;
 import cn.itechyou.cms.taglib.annotation.Attribute;
 import cn.itechyou.cms.taglib.annotation.Tag;
 import cn.itechyou.cms.taglib.enums.FieldEnum;
+import cn.itechyou.cms.taglib.utils.FunctionUtil;
 import cn.itechyou.cms.taglib.utils.RegexUtil;
 import cn.itechyou.cms.taglib.utils.URLUtils;
 import cn.itechyou.cms.utils.PinyinUtils;
@@ -28,6 +30,7 @@ import cn.itechyou.cms.utils.StringUtil;
 @Component
 @Tag(beginTag="{dreamer-cms:category /}",endTag="",regexp="(\\{dreamer-cms:category[ \\t]+.*?/\\})|(\\{dreamer-cms:category[ \\t]+.*\\}\\{/dreamer-cms:category\\})", attributes={
 		@Attribute(name = "field",regex = "[ \t]+field=[\"\'].*?[\"\']"),
+		@Attribute(name = "function",regex = "[ \t]+function=\\\"((.*)\\((.*?)\\)?)\\\""),
 	})
 public class CategoryTag implements IParse {
 
@@ -44,7 +47,7 @@ public class CategoryTag implements IParse {
 	}
 	
 	@Override
-	public String parse(String html,String typeid) {
+	public String parse(String html,String typeid) throws CmsException {
 		Tag annotations = CategoryTag.class.getAnnotation(Tag.class);
 		List<String> all = RegexUtil.parseAll(html, annotations.regexp(), 0);
 		if(StringUtil.isBlank(all)) {
@@ -83,12 +86,21 @@ public class CategoryTag implements IParse {
 			
 			if(entity.containsKey("field")) {
 				String name = entity.get("field").toString();
+				String function = StringUtil.isBlank(entity.get("function")) ? "" : entity.get("function").toString();
 				if(FieldEnum.FIELD_TYPEID.getField().equalsIgnoreCase(name)) {
 					newHtml = newHtml.replace(string, temp.getId());
 				}else if (FieldEnum.FIELD_TYPENAMECN.getField().equalsIgnoreCase(name)) {
-					newHtml = newHtml.replace(string, StringUtil.isBlank(temp.getCnname()) ? "" : temp.getCnname());
+					if(StringUtil.isNotBlank(function)) {
+						newHtml = newHtml.replace(string, FunctionUtil.replaceByFunction(function, temp.getCnname()));
+					}else {
+						newHtml = newHtml.replace(string, StringUtil.isBlank(temp.getCnname()) ? "" : temp.getCnname());
+					}
 				}else if (FieldEnum.FIELD_TYPENAMEEN.getField().equalsIgnoreCase(name)) {
-					newHtml = newHtml.replace(string, StringUtil.isBlank(temp.getEnname()) ? "" : temp.getEnname());
+					if(StringUtil.isNotBlank(function)) {
+						newHtml = newHtml.replace(string, FunctionUtil.replaceByFunction(function, temp.getEnname()));
+					}else {
+						newHtml = newHtml.replace(string, StringUtil.isBlank(temp.getEnname()) ? "" : temp.getEnname());
+					}
 				}else if (FieldEnum.FIELD_TYPECODE.getField().equalsIgnoreCase(name)) {
 					newHtml = newHtml.replace(string, typeCode);
 				}else if (FieldEnum.FIELD_TYPESEQ.getField().equalsIgnoreCase(name)) {
@@ -122,11 +134,19 @@ public class CategoryTag implements IParse {
 				}else if (FieldEnum.FIELD_TCREATEBY.getField().equalsIgnoreCase(name)) {
 					newHtml = newHtml.replace(string, StringUtil.isBlank(temp.getCreateBy()) ? "" : temp.getCreateBy());
 				}else if (FieldEnum.FIELD_TCREATETIME.getField().equalsIgnoreCase(name)) {
-					newHtml = newHtml.replace(string, StringUtil.isBlank(temp.getCreateTime()) ? "" : temp.getCreateTime().toString());
+					if(StringUtil.isNotBlank(function)) {
+						newHtml = newHtml.replace(string, FunctionUtil.replaceByFunction(function, temp.getCreateTime()));
+					}else {
+						newHtml = newHtml.replace(string, StringUtil.isBlank(temp.getCreateTime()) ? "" : temp.getCreateTime().toString());
+					}
 				}else if (FieldEnum.FIELD_TUPDATEBY.getField().equalsIgnoreCase(name)) {
 					newHtml = newHtml.replace(string, StringUtil.isBlank(temp.getUpdateBy()) ? "" : temp.getUpdateBy());
 				}else if (FieldEnum.FIELD_TUPDATETIME.getField().equalsIgnoreCase(name)) {
-					newHtml = newHtml.replace(string, StringUtil.isBlank(temp.getUpdateTime()) ? "" : temp.getUpdateTime().toString());
+					if(StringUtil.isNotBlank(function)) {
+						newHtml = newHtml.replace(string, FunctionUtil.replaceByFunction(function, temp.getUpdateTime()));
+					}else {
+						newHtml = newHtml.replace(string, StringUtil.isBlank(temp.getUpdateTime()) ? "" : temp.getUpdateTime().toString());
+					}
 				}else if (FieldEnum.FIELD_TYPEURL.getField().equalsIgnoreCase(name)) {
 					String url = URLUtils.parseURL(system, temp, this.t);
 					newHtml = newHtml.replace(string, url);
