@@ -43,7 +43,7 @@ public class SystemServiceImpl implements SystemService {
 	 */
 	@Override
 	public System getSystem() {
-		System System = systemMapper.selectAll();
+		System System = systemMapper.getCurrentSystem();
 		return System;
 	}
 

@@ -7,32 +7,29 @@ import com.github.pagehelper.PageInfo;
 
 import cn.itechyou.cms.common.SearchEntity;
 import cn.itechyou.cms.entity.Category;
-import cn.itechyou.cms.entity.CategoryWithBLOBs;
 
 public interface CategoryService {
 
-	void save(CategoryWithBLOBs category);
+	void save(Category category);
 
-	PageInfo<CategoryWithBLOBs> queryListByPage(SearchEntity params);
+	PageInfo<Category> queryListByPage(SearchEntity params);
 
-	CategoryWithBLOBs selectById(String id);
+	Category selectById(String id);
 
-	List<CategoryWithBLOBs> selectByParentId(String id);
+	List<Category> selectByParentId(String id);
 
-	int update(CategoryWithBLOBs category);
+	int update(Category category);
 
 	int delete(String id);
 
-	CategoryWithBLOBs queryCategoryByCode(String code);
+	Category queryCategoryByCode(String code);
 
 	void updateSort(List<Category> list);
 
-	List<CategoryWithBLOBs> getTreeList(String parentId);
+	List<Category> getTreeList(Map<String, Object> params);
 	
-	List<CategoryWithBLOBs> getTreeList(String parentId,String isShow);
+	List<Category> queryListByCode(Map<String, Object> entity);
 
-	List<CategoryWithBLOBs> queryListByCode(Map<String, Object> entity);
-
-	List<CategoryWithBLOBs> queryAll();
+	List<Category> queryAll();
 
 }

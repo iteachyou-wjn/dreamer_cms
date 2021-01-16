@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import cn.itechyou.cms.common.SearchEntity;
+import cn.itechyou.cms.exception.CmsException;
 import cn.itechyou.cms.taglib.tags.ArticleTag;
 import cn.itechyou.cms.taglib.tags.AttachmentTag;
 import cn.itechyou.cms.taglib.tags.CategoryTag;
@@ -59,7 +60,7 @@ public class ParseEngine {
 	 * @param html
 	 * @return
 	 */
-	public String parse(String html){
+	public String parse(String html)  throws CmsException{
 		String newHtml = new String(html);
 		newHtml = includeTag.parse(newHtml);
 		newHtml = globalTag.parse(newHtml);
@@ -84,7 +85,7 @@ public class ParseEngine {
 	 * @param newHtml
 	 * @return
 	 */
-	public String parseCategory(String html, String typeid) {
+	public String parseCategory(String html, String typeid) throws CmsException {
 		String newHtml = new String(html);
 		categoryTag.setT("P");
 		newHtml = categoryTag.parse(newHtml, typeid);
@@ -101,7 +102,7 @@ public class ParseEngine {
 	 * @param pageSize
 	 * @return
 	 */
-	public String parsePageList(String html, String typeid, Integer pageNum, Integer pageSize) {
+	public String parsePageList(String html, String typeid, Integer pageNum, Integer pageSize) throws CmsException {
 		String newHtml = new String(html);
 		pageListTag.setT("P");
 		newHtml = pageListTag.parse(newHtml,typeid,pageNum,pageSize);
@@ -116,7 +117,7 @@ public class ParseEngine {
 	 * @param id
 	 * @return
 	 */
-	public String parseArticle(String html, String id) {
+	public String parseArticle(String html, String id) throws CmsException{
 		String newHtml = new String(html);
 		newHtml = articleTag.parse(newHtml, id);
 		newHtml = labelTag.parse(newHtml);
@@ -132,7 +133,7 @@ public class ParseEngine {
 	 * @param pageSize
 	 * @return
 	 */
-	public String parsePageList(String html, SearchEntity params) {
+	public String parsePageList(String html, SearchEntity params) throws CmsException{
 		String newHtml = new String(html);
 		pageListTag.setT("P");
 		newHtml = pageListTag.parse(newHtml, params);
@@ -141,7 +142,7 @@ public class ParseEngine {
 		return newHtml;
 	}
 
-	public String generate(String html) {
+	public String generate(String html) throws CmsException{
 		String newHtml = new String(html);
 		newHtml = includeTag.parse(newHtml);
 		newHtml = globalTag.parse(newHtml);
@@ -166,7 +167,7 @@ public class ParseEngine {
 	 * @param newHtml
 	 * @return
 	 */
-	public String generateCategory(String html, String typeid) {
+	public String generateCategory(String html, String typeid) throws CmsException{
 		String newHtml = new String(html);
 		categoryTag.setT("S");
 		newHtml = categoryTag.parse(newHtml, typeid);
@@ -175,7 +176,7 @@ public class ParseEngine {
 		return newHtml;
 	}
 
-	public String generatePageList(String html, String typeid, int pageNum, int pageSize) {
+	public String generatePageList(String html, String typeid, int pageNum, int pageSize) throws CmsException{
 		String newHtml = new String(html);
 		pageListTag.setT("S");
 		newHtml = pageListTag.parse(newHtml,typeid, pageNum,pageSize);
@@ -184,13 +185,13 @@ public class ParseEngine {
 		return newHtml;
 	}
 
-	public String parsePrevAndNext(String html, String id) {
+	public String parsePrevAndNext(String html, String id) throws CmsException{
 		String newHtml = new String(html);
 		newHtml = prevNextTag.parse(newHtml, id);
 		return newHtml;
 	}
 
-	public String generatePrevAndNext(String html, String id) {
+	public String generatePrevAndNext(String html, String id) throws CmsException{
 		String newHtml = new String(html);
 		prevNextTag.setT("S");
 		newHtml = prevNextTag.parse(newHtml, id);

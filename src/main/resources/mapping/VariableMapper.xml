@@ -2,153 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.itechyou.cms.dao.VariableMapper">
   <resultMap id="BaseResultMap" type="cn.itechyou.cms.entity.Variable">
-    <id column="ID" jdbcType="VARCHAR" property="id" />
-    <result column="ITEM_NAME" jdbcType="VARCHAR" property="itemName" />
-    <result column="INFO" jdbcType="VARCHAR" property="info" />
-    <result column="GROUP_ID" jdbcType="VARCHAR" property="groupId" />
-    <result column="TYPE" jdbcType="VARCHAR" property="type" />
-    <result column="VALUE" jdbcType="VARCHAR" property="value" />
-    <result column="CREATE_BY" jdbcType="VARCHAR" property="createBy" />
-    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="UPDATE_BY" jdbcType="VARCHAR" property="updateBy" />
-    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="item_name" jdbcType="VARCHAR" property="itemName" />
+    <result column="info" jdbcType="VARCHAR" property="info" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="value" jdbcType="VARCHAR" property="value" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    ID, ITEM_NAME, INFO, GROUP_ID, TYPE, VALUE, CREATE_BY, CREATE_TIME, UPDATE_BY, UPDATE_TIME
+    id, item_name, info, type, value, create_by, create_time, update_by, update_time
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from system_variable
-    where ID = #{id,jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from system_variable
-    where ID = #{id,jdbcType=VARCHAR}
-  </delete>
-  <insert id="insert" parameterType="cn.itechyou.cms.entity.Variable">
-    insert into system_variable (ID, ITEM_NAME, INFO, 
-      GROUP_ID, TYPE, VALUE, 
-      CREATE_BY, CREATE_TIME, UPDATE_BY, 
-      UPDATE_TIME)
-    values (#{id,jdbcType=VARCHAR}, #{itemName,jdbcType=VARCHAR}, #{info,jdbcType=VARCHAR}, 
-      #{groupId,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{value,jdbcType=VARCHAR}, 
-      #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, 
-      #{updateTime,jdbcType=TIMESTAMP})
-  </insert>
-  <insert id="insertSelective" parameterType="cn.itechyou.cms.entity.Variable">
-    insert into system_variable
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        ID,
-      </if>
-      <if test="itemName != null">
-        ITEM_NAME,
-      </if>
-      <if test="info != null">
-        INFO,
-      </if>
-      <if test="groupId != null">
-        GROUP_ID,
-      </if>
-      <if test="type != null">
-        TYPE,
-      </if>
-      <if test="value != null">
-        VALUE,
-      </if>
-      <if test="createBy != null">
-        CREATE_BY,
-      </if>
-      <if test="createTime != null">
-        CREATE_TIME,
-      </if>
-      <if test="updateBy != null">
-        UPDATE_BY,
-      </if>
-      <if test="updateTime != null">
-        UPDATE_TIME,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=VARCHAR},
-      </if>
-      <if test="itemName != null">
-        #{itemName,jdbcType=VARCHAR},
-      </if>
-      <if test="info != null">
-        #{info,jdbcType=VARCHAR},
-      </if>
-      <if test="groupId != null">
-        #{groupId,jdbcType=VARCHAR},
-      </if>
-      <if test="type != null">
-        #{type,jdbcType=VARCHAR},
-      </if>
-      <if test="value != null">
-        #{value,jdbcType=VARCHAR},
-      </if>
-      <if test="createBy != null">
-        #{createBy,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateBy != null">
-        #{updateBy,jdbcType=VARCHAR},
-      </if>
-      <if test="updateTime != null">
-        #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.itechyou.cms.entity.Variable">
-    update system_variable
-    <set>
-      <if test="itemName != null">
-        ITEM_NAME = #{itemName,jdbcType=VARCHAR},
-      </if>
-      <if test="info != null">
-        INFO = #{info,jdbcType=VARCHAR},
-      </if>
-      <if test="groupId != null">
-        GROUP_ID = #{groupId,jdbcType=VARCHAR},
-      </if>
-      <if test="type != null">
-        TYPE = #{type,jdbcType=VARCHAR},
-      </if>
-      <if test="value != null">
-        VALUE = #{value,jdbcType=VARCHAR},
-      </if>
-      <if test="createBy != null">
-        CREATE_BY = #{createBy,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null">
-        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateBy != null">
-        UPDATE_BY = #{updateBy,jdbcType=VARCHAR},
-      </if>
-      <if test="updateTime != null">
-        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where ID = #{id,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="cn.itechyou.cms.entity.Variable">
-    update system_variable
-    set ITEM_NAME = #{itemName,jdbcType=VARCHAR},
-      INFO = #{info,jdbcType=VARCHAR},
-      GROUP_ID = #{groupId,jdbcType=VARCHAR},
-      TYPE = #{type,jdbcType=VARCHAR},
-      VALUE = #{value,jdbcType=VARCHAR},
-      CREATE_BY = #{createBy,jdbcType=VARCHAR},
-      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
-      UPDATE_BY = #{updateBy,jdbcType=VARCHAR},
-      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
-    where ID = #{id,jdbcType=VARCHAR}
-  </update>
+  
   <select id="queryListByPage" parameterType="java.util.Map" resultMap="BaseResultMap">
   	select 
   	<include refid="Base_Column_List" />

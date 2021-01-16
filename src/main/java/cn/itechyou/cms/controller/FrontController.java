@@ -24,18 +24,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.github.pagehelper.PageInfo;
-
 import cn.hutool.captcha.CircleCaptcha;
-import cn.itechyou.cms.common.Constant;
 import cn.itechyou.cms.common.ExceptionEnum;
-import cn.itechyou.cms.common.ResponseResult;
 import cn.itechyou.cms.common.SearchEntity;
-import cn.itechyou.cms.common.StateCodeEnum;
 import cn.itechyou.cms.entity.Archives;
 import cn.itechyou.cms.entity.Attachment;
 import cn.itechyou.cms.entity.Category;
-import cn.itechyou.cms.entity.CategoryWithBLOBs;
 import cn.itechyou.cms.entity.Field;
 import cn.itechyou.cms.entity.Form;
 import cn.itechyou.cms.entity.SearchRecord;
@@ -47,13 +41,11 @@ import cn.itechyou.cms.exception.FormParameterException;
 import cn.itechyou.cms.exception.TemplateNotFoundException;
 import cn.itechyou.cms.exception.TemplateReadException;
 import cn.itechyou.cms.exception.TransactionException;
-import cn.itechyou.cms.security.token.TokenManager;
 import cn.itechyou.cms.service.ArchivesService;
 import cn.itechyou.cms.service.AttachmentService;
 import cn.itechyou.cms.service.CategoryService;
 import cn.itechyou.cms.service.FieldService;
 import cn.itechyou.cms.service.FormService;
-import cn.itechyou.cms.service.PagesService;
 import cn.itechyou.cms.service.SearchRecordService;
 import cn.itechyou.cms.service.SystemService;
 import cn.itechyou.cms.service.ThemeService;
@@ -62,7 +54,6 @@ import cn.itechyou.cms.taglib.utils.URLUtils;
 import cn.itechyou.cms.utils.FileConfiguration;
 import cn.itechyou.cms.utils.StringUtil;
 import cn.itechyou.cms.utils.UUIDUtils;
-import cn.itechyou.cms.vo.ArchivesVo;
 
 @Controller
 @RequestMapping("/")
@@ -85,8 +76,6 @@ public class FrontController {
 	private CategoryService categoryService;
 	@Autowired
 	private ThemeService themeService;
-	@Autowired
-	private PagesService pagesService;
 	@Autowired
 	private FormService formService;
 	@Autowired
@@ -152,7 +141,7 @@ public class FrontController {
 		if(!visitUrl.startsWith("/")) {
 			visitUrl = "/" + visitUrl;
 		}
-		CategoryWithBLOBs category = categoryService.queryCategoryByCode(typeid);
+		Category category = categoryService.queryCategoryByCode(typeid);
 		StringBuffer templatePath = new StringBuffer();
 		templatePath.append(theme.getThemePath());
 		
@@ -207,7 +196,7 @@ public class FrontController {
 		if(!visitUrl.startsWith("/")) {
 			visitUrl = "/" + visitUrl;
 		}
-		CategoryWithBLOBs category = categoryService.queryCategoryByCode(typeid);
+		Category category = categoryService.queryCategoryByCode(typeid);
 		StringBuffer templatePath = new StringBuffer();
 		templatePath.append(theme.getThemePath());
 		
@@ -451,7 +440,7 @@ public class FrontController {
 		String typeid = params.get("typeid").toString();
 		String formkey = params.get("formkey").toString();
 		
-		CategoryWithBLOBs categoryWithBLOBs = categoryService.queryCategoryByCode(typeid);
+		Category categoryWithBLOBs = categoryService.queryCategoryByCode(typeid);
 		if(categoryWithBLOBs == null) {
 			throw new FormParameterException(
 					ExceptionEnum.FORM_PARAMETER_EXCEPTION.getCode(),

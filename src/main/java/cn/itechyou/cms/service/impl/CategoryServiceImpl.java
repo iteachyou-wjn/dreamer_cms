@@ -1,6 +1,5 @@
 package cn.itechyou.cms.service.impl;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,10 +10,10 @@ import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
+import cn.hutool.core.map.MapUtil;
 import cn.itechyou.cms.common.SearchEntity;
 import cn.itechyou.cms.dao.CategoryMapper;
 import cn.itechyou.cms.entity.Category;
-import cn.itechyou.cms.entity.CategoryWithBLOBs;
 import cn.itechyou.cms.service.CategoryService;
 import cn.itechyou.cms.utils.LoggerUtils;
 /**
@@ -36,7 +35,7 @@ public class CategoryServiceImpl implements CategoryService {
 	 * 添加
 	 */
 	@Override
-	public void save(CategoryWithBLOBs category) {
+	public void save(Category category) {
 		try {
 			categoryMapper.insertSelective(category);
 		} catch (Exception e) {
@@ -48,7 +47,7 @@ public class CategoryServiceImpl implements CategoryService {
 	 *  列表
 	 */
 	@Override
-	public PageInfo<CategoryWithBLOBs> queryListByPage(SearchEntity params) {
+	public PageInfo<Category> queryListByPage(SearchEntity params) {
 		if(params.getPageNum() == null || params.getPageNum() == 0) {
 			params.setPageNum(1);
 		}
@@ -56,8 +55,8 @@ public class CategoryServiceImpl implements CategoryService {
 			params.setPageSize(10);
 		}
 		PageHelper.startPage(params.getPageNum(), params.getPageSize());
-		List<CategoryWithBLOBs> list = categoryMapper.queryListByPage(params.getEntity());
-		PageInfo<CategoryWithBLOBs> page = new PageInfo<CategoryWithBLOBs>(list);
+		List<Category> list = categoryMapper.queryListByPage(params.getEntity());
+		PageInfo<Category> page = new PageInfo<Category>(list);
 		return page;
 	}
 
@@ -65,7 +64,7 @@ public class CategoryServiceImpl implements CategoryService {
 	 *  编辑回显
 	 */
 	@Override
-	public CategoryWithBLOBs selectById(String id) {
+	public Category selectById(String id) {
 		return categoryMapper.selectByPrimaryKey(id);
 	}
 
@@ -73,7 +72,7 @@ public class CategoryServiceImpl implements CategoryService {
 	 * 查看子栏目
 	 */
 	@Override
-	public List<CategoryWithBLOBs> selectByParentId(String id) {
+	public List<Category> selectByParentId(String id) {
 		return categoryMapper.selectByParentId(id) ;
 	}
 
@@ -81,7 +80,7 @@ public class CategoryServiceImpl implements CategoryService {
 	 * 修改
 	 */
 	@Override
-	public int update(CategoryWithBLOBs category) {
+	public int update(Category category) {
 		return categoryMapper.updateByPrimaryKeySelective(category);
 	}
 
@@ -94,14 +93,14 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
-	public CategoryWithBLOBs queryCategoryByCode(String code) {
+	public Category queryCategoryByCode(String code) {
 		return this.categoryMapper.queryCategoryByCode(code);
 	}
 
 	@Override
 	public void updateSort(List<Category> list) {
 		for(int i = 0;i < list.size();i++) {
-			CategoryWithBLOBs category = new CategoryWithBLOBs();
+			Category category = new Category();
 			category.setId(list.get(i).getId());
 			category.setSort(list.get(i).getSort());
 			this.categoryMapper.updateByPrimaryKeySelective(category);
@@ -109,44 +108,26 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 	
 	@Override
-	public List<CategoryWithBLOBs> getTreeList(String parentId) {
-		Map<String,Object> params = new HashMap<String,Object>();
-		params.put("parentId", parentId);
-		params.put("isShow", "1");
-		List<CategoryWithBLOBs> list = categoryMapper.queryListByParams(params);
+	public List<Category> getTreeList(Map<String,Object> params) {
+		List<Category> list = categoryMapper.queryListByParams(params);
 		if(list != null && list.size()>0) {
 			for(int i= 0;i < list.size();i++) {
-				CategoryWithBLOBs category = list.get(i);
-				category.setNodes(getTreeList(category.getId()));
-			}
-		}
-		return list;
-	}
-	
-	@Override
-	public List<CategoryWithBLOBs> getTreeList(String parentId,String isShow) {
-		Map<String,Object> params = new HashMap<String,Object>();
-		params.put("parentId", parentId);
-		if(null != isShow && !"".equals(isShow.trim()))
-			params.put("isShow", isShow);
-
-		List<CategoryWithBLOBs> list = categoryMapper.queryListByParams(params);
-		if(list != null && list.size()>0) {
-			for(int i= 0;i < list.size();i++) {
-				CategoryWithBLOBs category = list.get(i);
-				category.setNodes(getTreeList(category.getId()));
+				Category category = list.get(i);
+				Map<String,Object> newEntity = MapUtil.builder(params).build();
+				newEntity.put("parentId", category.getId());
+				category.setNodes(getTreeList(newEntity));
 			}
 		}
 		return list;
 	}
 
 	@Override
-	public List<CategoryWithBLOBs> queryListByCode(Map<String, Object> entity) {
+	public List<Category> queryListByCode(Map<String, Object> entity) {
 		return categoryMapper.queryListByParams(entity);
 	}
 
 	@Override
-	public List<CategoryWithBLOBs> queryAll() {
+	public List<Category> queryAll() {
 		return categoryMapper.queryAll();
 	}
 	

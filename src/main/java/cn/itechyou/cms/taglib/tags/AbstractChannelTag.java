@@ -3,9 +3,11 @@ package cn.itechyou.cms.taglib.tags;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import cn.itechyou.cms.common.Constant;
-import cn.itechyou.cms.entity.CategoryWithBLOBs;
+import cn.itechyou.cms.entity.Category;
+import cn.itechyou.cms.exception.CmsException;
 import cn.itechyou.cms.service.SystemService;
 import cn.itechyou.cms.taglib.enums.FieldEnum;
+import cn.itechyou.cms.taglib.utils.FunctionUtil;
 import cn.itechyou.cms.taglib.utils.URLUtils;
 import cn.itechyou.cms.utils.PinyinUtils;
 import cn.itechyou.cms.utils.StringUtil;
@@ -27,7 +29,7 @@ public abstract class AbstractChannelTag {
 	@Autowired
 	private SystemService systemService;
 	
-	public String buildHTML(String item, CategoryWithBLOBs category, int i) {
+	public String buildHTML(String item, Category category, int i) throws CmsException {
 		cn.itechyou.cms.entity.System system = systemService.getSystem();
 		String imagePath = "";
 		if(StringUtil.isNotBlank(category.getImagePath())) {
@@ -41,8 +43,9 @@ public abstract class AbstractChannelTag {
 		}
 		item = item.replaceAll(FieldEnum.FIELD_AUTOINDEX.getRegexp(), String.valueOf(i));
 		item = item.replaceAll(FieldEnum.FIELD_TYPEID.getRegexp(), category.getId());
-		item = item.replaceAll(FieldEnum.FIELD_TYPENAMECN.getRegexp(), StringUtil.isBlank(category.getCnname()) ? "" : category.getCnname());
-		item = item.replaceAll(FieldEnum.FIELD_TYPENAMEEN.getRegexp(), StringUtil.isBlank(category.getEnname()) ? "" : category.getEnname());
+		
+		item = FunctionUtil.replaceByFunction(item, FieldEnum.FIELD_TYPENAMECN.getRegexp(), StringUtil.isBlank(category.getCnname()) ? "" : category.getCnname());
+		item = FunctionUtil.replaceByFunction(item, FieldEnum.FIELD_TYPENAMEEN.getRegexp(), StringUtil.isBlank(category.getEnname()) ? "" : category.getEnname());
 		item = item.replaceAll(FieldEnum.FIELD_TYPECODE.getRegexp(), typeCode);
 		item = item.replaceAll(FieldEnum.FIELD_TYPESEQ.getRegexp(), StringUtil.isBlank(category.getCatSeq()) ? "" : category.getCatSeq());
 		item = item.replaceAll(FieldEnum.FIELD_TYPEIMG.getRegexp(), system.getWebsite() + system.getUploaddir() + "/" + imagePath);
@@ -59,9 +62,9 @@ public abstract class AbstractChannelTag {
 		item = item.replaceAll(FieldEnum.FIELD_LEVEL.getRegexp(), StringUtil.isBlank(category.getLevel()) ? "" : category.getLevel());
 		item = item.replaceAll(FieldEnum.FIELD_SORT.getRegexp(), StringUtil.isBlank(category.getSort()) ? "" : category.getSort().toString());
 		item = item.replaceAll(FieldEnum.FIELD_TCREATEBY.getRegexp(), StringUtil.isBlank(category.getCreateBy()) ? "" : category.getCreateBy());
-		item = item.replaceAll(FieldEnum.FIELD_TCREATETIME.getRegexp(), StringUtil.isBlank(category.getCreateTime()) ? "" : category.getCreateTime().toString());
+		item = FunctionUtil.replaceByFunction(item, FieldEnum.FIELD_TCREATETIME.getRegexp(), StringUtil.isBlank(category.getCreateTime()) ? "" : category.getCreateTime());
 		item = item.replaceAll(FieldEnum.FIELD_TUPDATEBY.getRegexp(), StringUtil.isBlank(category.getUpdateBy()) ? "" : category.getUpdateBy());
-		item = item.replaceAll(FieldEnum.FIELD_TUPDATETIME.getRegexp(), StringUtil.isBlank(category.getUpdateTime()) ? "" : category.getUpdateTime().toString());
+		item = FunctionUtil.replaceByFunction(item, FieldEnum.FIELD_TUPDATETIME.getRegexp(), StringUtil.isBlank(category.getUpdateTime()) ? "" : category.getUpdateTime());
 		String typeUrl = URLUtils.parseURL(system, category, this.t);
 		item = item.replaceAll(FieldEnum.FIELD_TYPEURL.getRegexp(), typeUrl);
 		item = item.replaceAll(FieldEnum.FIELD_EXT01.getRegexp(), StringUtil.isBlank(category.getExt01()) ? "" : category.getExt01());

@@ -1,11 +1,9 @@
 package cn.itechyou.cms.taglib.enums;
 
-import java.util.Date;
-
 public enum FieldEnum {
 	FIELD_TYPEID("typeid","(\\[field:typeid[ \\t]*.*?/\\])"),
-	FIELD_TYPENAMECN("typenamecn","(\\[field:typenamecn[ \\t]*.*?/\\])"),
-	FIELD_TYPENAMEEN("typenameen","(\\[field:typenameen[ \\t]*.*?/\\])"),
+	FIELD_TYPENAMECN("typenamecn","(\\[field:typenamecn[ \\t]*(function=\\\"((.*)\\((.*?)\\)?)\\\"){0,1}[ \\t]*?/\\])"),
+	FIELD_TYPENAMEEN("typenameen","(\\[field:typenameen[ \\t]*(function=\\\"((.*)\\((.*?)\\)?)\\\"){0,1}[ \\t]*?/\\])"),
 	FIELD_TYPECODE("typecode","(\\[field:typecode[ \\t]*.*?/\\])"),
 	FIELD_TYPESEQ("typeseq","(\\[field:typeseq[ \\t]*.*?/\\])"),
 	FIELD_TYPEIMG("typeimg","(\\[field:typeimg[ \\t]*.*?/\\])"),
@@ -22,9 +20,9 @@ public enum FieldEnum {
 	FIELD_LEVEL("level","(\\[field:level[ \\t]*.*?/\\])"),
 	FIELD_SORT("sort","(\\[field:sort[ \\t]*.*?/\\])"),
 	FIELD_TCREATEBY("createby","(\\[field:createby[ \\t]*.*?/\\])"),
-	FIELD_TCREATETIME("createtime","(\\[field:createtime[ \\t]*.*?/\\])"),
+	FIELD_TCREATETIME("createtime","(\\[field:createtime[ \\t]*(function=\\\"((.*)\\((.*?)\\)?)\\\"){0,1}[ \\t]*?/\\])"),
 	FIELD_TUPDATEBY("updateby","(\\[field:updateby[ \\t]*.*?/\\])"),
-	FIELD_TUPDATETIME("updatetime","(\\[field:updatetime[ \\t]*.*?/\\])"),
+	FIELD_TUPDATETIME("updatetime","(\\[field:updatetime[ \\t]*(function=\\\"((.*)\\((.*?)\\)?)\\\"){0,1}[ \\t]*?/\\])"),
 	FIELD_TYPEURL("typeurl","(\\[field:typeurl[ \\t]*.*?/\\])"),
 	FIELD_EXT01("ext01","(\\[field:ext01[ \\t]*.*?/\\])"),
 	FIELD_EXT02("ext02","(\\[field:ext02[ \\t]*.*?/\\])"),
@@ -33,11 +31,8 @@ public enum FieldEnum {
 	FIELD_EXT05("ext05","(\\[field:ext05[ \\t]*.*?/\\])"),
 	FIELD_HASCHILDREN("haschildren","(\\[field:haschildren[ \\t]*.*?/\\])"),
 	
-	CATEGORY_FIELD_START("category_start","(\\[field:"),
-	CATEGORY_FIELD_END("category_end","[ \\t]*.*?/\\])"),
-	
 	FIELD_ID("id","(\\[field:id[ \\t]*.*?/\\])"),
-	FIELD_TITLE("title","(\\[field:title[ \\t]*.*?/\\])"),
+	FIELD_TITLE("title","(\\[field:title[ \\t]*(function=\\\"((.*)\\((.*?)\\)?)\\\"){0,1}[ \\t]*?/\\])"),
 	FIELD_PROPERTIES("properties","(\\[field:properties[ \\t]*.*?/\\])"),
 	FIELD_LITPIC("litpic","(\\[field:litpic[ \\t]*.*?/\\])"),
 	FIELD_TAG("tag","(\\[field:tag[ \\t]*.*?/\\])"),
@@ -49,11 +44,11 @@ public enum FieldEnum {
 	FIELD_WEIGHT("weight","(\\[field:weight[ \\t]*.*?/\\])"),
 	FIELD_STATUS("status","(\\[field:status[ \\t]*.*?/\\])"),
 	FIELD_CREATEBY("createby","(\\[field:createby[ \\t]*.*?/\\])"),
-	FIELD_CREATETIME("createtime","(\\[field:createtime[ \\t]*.*?/\\])"),
+	FIELD_CREATETIME("createtime","(\\[field:createtime[ \\t]*(function=\\\"((.*)\\((.*?)\\)?)\\\"){0,1}[ \\t]*?/\\])"),
 	FIELD_UPDATEBY("updateby","(\\[field:updateby[ \\t]*.*?/\\])"),
-	FIELD_UPDATETIME("updatetime","(\\[field:updatetime[ \\t]*.*?/\\])"),
+	FIELD_UPDATETIME("updatetime","(\\[field:updatetime[ \\t]*(function=\\\"((.*)\\((.*?)\\)?)\\\"){0,1}[ \\t]*?/\\])"),
 	FIELD_ARCURL("arcurl","(\\[field:arcurl[ \\t]*.*?/\\])"),
-	
+
 	FIELD_ADDFIELDS_START("addfields_start","(\\[field:"),
 	FIELD_ADDFIELDS_END("addfields_end","[ \\t]*.*?/\\])"),
 	
@@ -62,10 +57,13 @@ public enum FieldEnum {
 	FIELD_TAGPINYIN("tagpinyin","(\\[field:tagpinyin[ \\t]*.*?/\\])"),
 	FIELD_TAGFIRSTCHAR("tagfirstchar","(\\[field:tagfirstchar[ \\t]*.*?/\\])"),
 	
-	FIELD_FILENAME("filename","(\\[field:filename[ \\t]*.*?/\\])"),
+	FIELD_FILENAME("filename","(\\[field:filename[ \\t]*(function=\\\"((.*)\\((.*?)\\)?)\\\"){0,1}[ \\t]*?/\\])"),
 	FIELD_FILETYPE("filetype","(\\[field:filetype[ \\t]*.*?/\\])"),
 	FIELD_FILESIZE("filesize","(\\[field:filesize[ \\t]*.*?/\\])"), 
 	FIELD_DLURL("dlurl","(\\[field:dlurl[ \\t]*.*?/\\])"),
+	
+	FUNCTION("function", "function=[\\\"|'](.*)\\((.*)\\)[\\\"|']"),
+	FUNCTION_ARTICLE("function","((.*)\\((.*)\\))"),
 	;
 	private String field;
 	private String regexp;

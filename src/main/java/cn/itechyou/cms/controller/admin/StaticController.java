@@ -27,7 +27,7 @@ import cn.itechyou.cms.common.ResponseResult;
 import cn.itechyou.cms.common.SearchEntity;
 import cn.itechyou.cms.common.StateCodeEnum;
 import cn.itechyou.cms.entity.Archives;
-import cn.itechyou.cms.entity.CategoryWithBLOBs;
+import cn.itechyou.cms.entity.Category;
 import cn.itechyou.cms.entity.Message;
 import cn.itechyou.cms.entity.System;
 import cn.itechyou.cms.entity.Theme;
@@ -77,8 +77,8 @@ public class StaticController {
 		ModelAndView mv = new ModelAndView();
 		Theme currentTheme = themeService.getCurrentTheme();
 		mv.addObject("currentTheme", currentTheme);
-		List<CategoryWithBLOBs> list = categoryService.selectByParentId("-1");
-		List<CategoryWithBLOBs> newTree = buildTree(list, 1);
+		List<Category> list = categoryService.selectByParentId("-1");
+		List<Category> newTree = buildTree(list, 1);
 		mv.addObject("categorys", newTree);
 		mv.addObject("system", system);
 		mv.setViewName("admin/static/index");
@@ -154,15 +154,15 @@ public class StaticController {
 		String id = categoryVo.getId();
 		String updateChild = categoryVo.getUpdateChild();//是否生成子栏目
 		if(StringUtil.isBlank(id)) {//生成全部
-			List<CategoryWithBLOBs> all = categoryService.queryAll();
+			List<Category> all = categoryService.queryAll();
 			for (Iterator iterator = all.iterator(); iterator.hasNext();) {
-				CategoryWithBLOBs categoryWithBLOBs = (CategoryWithBLOBs) iterator.next();
+				Category categoryWithBLOBs = (Category) iterator.next();
 				message = new Message(StateCodeEnum.HTTP_SUCCESS.getCode(),"准备生成" + categoryWithBLOBs.getCnname() + "栏目HTML...",10);
 				WebSocketServer.sendInfo(message,clientId);
 				buildCategoryHTML(categoryWithBLOBs, "ALL", clientId);//
 			}
 		}else {//指定栏目生成
-			CategoryWithBLOBs categoryWithBLOBs = categoryService.selectById(id);
+			Category categoryWithBLOBs = categoryService.selectById(id);
 			message = new Message(StateCodeEnum.HTTP_SUCCESS.getCode(),"准备生成" + categoryWithBLOBs.getCnname() + "栏目HTML...",15);
 			WebSocketServer.sendInfo(message,clientId);
 			buildCategoryHTML(categoryWithBLOBs, updateChild, clientId);
@@ -181,13 +181,13 @@ public class StaticController {
 	 * @throws EncodeException
 	 * @throws IOException
 	 */
-	private void buildCategoryHTML(CategoryWithBLOBs categoryWithBLOBs, String updateChild, String clientId)
-			throws TemplateNotFoundException, TemplateReadException, EncodeException, IOException {
+	private void buildCategoryHTML(Category categoryWithBLOBs, String updateChild, String clientId)
+			throws CmsException, EncodeException, IOException {
 		System system = systemService.getSystem();
 		Theme theme = themeService.getCurrentTheme();
 		
 		if("ALL".equals(updateChild) || "1".equals(updateChild)) {
-			List<CategoryWithBLOBs> childrenList = categoryService.selectByParentId(categoryWithBLOBs.getId());
+			List<Category> childrenList = categoryService.selectByParentId(categoryWithBLOBs.getId());
 			if(childrenList != null && childrenList.size() > 0) {
 				for(int i = 0;i < childrenList.size();i++) {
 					buildCategoryHTML(childrenList.get(i), updateChild, clientId);
@@ -279,8 +279,8 @@ public class StaticController {
 	 * @throws EncodeException
 	 * @throws IOException
 	 */
-	private void buildArticleHTML(CategoryWithBLOBs categoryWithBLOBs, String clientId)
-			throws TemplateNotFoundException, TemplateReadException, EncodeException, IOException {
+	private void buildArticleHTML(Category categoryWithBLOBs, String clientId)
+			throws CmsException, EncodeException, IOException {
 		System system = systemService.getSystem();
 		Theme theme = themeService.getCurrentTheme();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
@@ -345,17 +345,17 @@ public class StaticController {
 	 * @param i
 	 * @return
 	 */
-	private List<CategoryWithBLOBs> buildTree(List<CategoryWithBLOBs> list, int i) {
+	private List<Category> buildTree(List<Category> list, int i) {
 		for (int j = list.size() - 1; j >= 0; j--) {
-			CategoryWithBLOBs categoryWithBLOBs = list.get(j);
+			Category categoryWithBLOBs = list.get(j);
 			StringBuilder sb = new StringBuilder();
 			for (int k = 1; k < i; k++) {
 				sb.append("--");
 			}
 			sb.append(categoryWithBLOBs.getCnname());
 			categoryWithBLOBs.setCnname(sb.toString());
-			List<CategoryWithBLOBs> children = categoryService.selectByParentId(categoryWithBLOBs.getId());
-			List<CategoryWithBLOBs> buildTree = buildTree(children, i + 1);
+			List<Category> children = categoryService.selectByParentId(categoryWithBLOBs.getId());
+			List<Category> buildTree = buildTree(children, i + 1);
 			list.addAll(j + 1, buildTree);
 		}
 		return list;

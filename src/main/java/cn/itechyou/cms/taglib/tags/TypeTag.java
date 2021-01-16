@@ -7,16 +7,14 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import cn.itechyou.cms.common.Constant;
-import cn.itechyou.cms.entity.CategoryWithBLOBs;
+import cn.itechyou.cms.entity.Category;
+import cn.itechyou.cms.exception.CmsException;
 import cn.itechyou.cms.service.CategoryService;
 import cn.itechyou.cms.service.ThemeService;
 import cn.itechyou.cms.taglib.IParse;
 import cn.itechyou.cms.taglib.annotation.Attribute;
 import cn.itechyou.cms.taglib.annotation.Tag;
-import cn.itechyou.cms.taglib.enums.FieldEnum;
 import cn.itechyou.cms.taglib.utils.RegexUtil;
-import cn.itechyou.cms.utils.PinyinUtils;
 import cn.itechyou.cms.utils.StringUtil;
 
 /**
@@ -37,7 +35,7 @@ public class TypeTag extends AbstractChannelTag implements IParse {
 	private CategoryService categoryService;
 
 	@Override
-	public String parse(String html) {
+	public String parse(String html) throws CmsException {
 		Tag annotations = TypeTag.class.getAnnotation(Tag.class);
 		Attribute[] attributes = annotations.attributes();
 		List<String> tags = RegexUtil.parseAll(html, annotations.regexp(), 0);
@@ -67,7 +65,7 @@ public class TypeTag extends AbstractChannelTag implements IParse {
 				return newHtml;
 			}
 			
-			CategoryWithBLOBs categoryWithBLOBs = categoryService.queryCategoryByCode(entity.get("typeid").toString());
+			Category categoryWithBLOBs = categoryService.queryCategoryByCode(entity.get("typeid").toString());
 			if(categoryWithBLOBs == null) {
 				//throw new CmsException("aa","");
 			}

@@ -1,7 +1,6 @@
 package cn.itechyou.cms.taglib.tags;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +8,8 @@ import org.springframework.stereotype.Component;
 
 import com.github.pagehelper.PageInfo;
 
-import cn.itechyou.cms.common.Constant;
 import cn.itechyou.cms.common.SearchEntity;
-import cn.itechyou.cms.entity.CategoryWithBLOBs;
+import cn.itechyou.cms.entity.Category;
 import cn.itechyou.cms.service.CategoryService;
 import cn.itechyou.cms.taglib.IParse;
 import cn.itechyou.cms.taglib.annotation.Attribute;
@@ -63,7 +61,7 @@ public class PaginationTag implements IParse {
 		}
 		String newHtml = html;
 		
-		CategoryWithBLOBs category = categoryService.queryCategoryByCode(typeid);
+		Category category = categoryService.queryCategoryByCode(typeid);
 		String typeCode = StringUtil.isBlank(category.getCode()) ? "" : category.getCode();
 		String visitUrl = StringUtil.isBlank(category.getVisitUrl()) ? PinyinUtils.toPinyin(category.getCnname()) : category.getVisitUrl();
 		if(!visitUrl.startsWith("/")) {

@@ -1,5 +1,7 @@
 package cn.itechyou.cms.entity;
 
+import java.io.Serializable;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -10,7 +12,9 @@ import lombok.Data;
  */
 @Data
 @AllArgsConstructor
-public class Message {
+public class Message implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	private String code;
 	private String message;
 	private Integer progress;

@@ -1,5 +1,6 @@
 package cn.itechyou.cms.taglib.tags;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,8 +13,9 @@ import com.github.pagehelper.PageHelper;
 import cn.itechyou.cms.common.SearchEntity;
 import cn.itechyou.cms.dao.ArchivesMapper;
 import cn.itechyou.cms.dao.CategoryMapper;
-import cn.itechyou.cms.entity.CategoryWithBLOBs;
+import cn.itechyou.cms.entity.Category;
 import cn.itechyou.cms.entity.Form;
+import cn.itechyou.cms.exception.CmsException;
 import cn.itechyou.cms.service.FormService;
 import cn.itechyou.cms.service.SystemService;
 import cn.itechyou.cms.taglib.IParse;
@@ -30,8 +32,8 @@ import cn.itechyou.cms.utils.StringUtil;
 @Component
 @Tag(beginTag="{dreamer-cms:list}",endTag="{/dreamer-cms:list}",regexp="\\{dreamer-cms:list[ \\t]*.*\\}([\\s\\S]+?)\\{/dreamer-cms:list\\}", attributes={
 	@Attribute(name = "typeid",regex = "[ \t]+typeid=[\"\'].*?[\"\']"),
-	@Attribute(name = "start",regex = "[ \t]+start=[\"\'].*?[\"\']"),
-	@Attribute(name = "length",regex = "[ \t]+length=[\"\'].*?[\"\']"),
+	@Attribute(name = "pagenum",regex = "[ \t]+pagenum=[\"\'].*?[\"\']"),
+	@Attribute(name = "pagesize",regex = "[ \t]+pagesize=[\"\'].*?[\"\']"),
 	@Attribute(name = "flag",regex = "[ \t]+flag=[\"\'].*?[\"\']"),
 	@Attribute(name = "addfields",regex = "[ \t]+addfields=[\"\'].*?[\"\']"),
 	@Attribute(name = "formkey",regex = "[ \t]+formkey=[\"\'].*?[\"\']"),
@@ -51,7 +53,7 @@ public class ListTag extends AbstractListTag implements IParse {
 	private FormService formService;
 	
 	@Override
-	public String parse(String html) {
+	public String parse(String html) throws CmsException {
 		Tag listAnnotation = ListTag.class.getAnnotation(Tag.class);
 		List<String> listTags = RegexUtil.parseAll(html, listAnnotation.regexp(), 0);
 		List<String> contents = RegexUtil.parseAll(html, listAnnotation.regexp(), 1);
@@ -91,18 +93,23 @@ public class ListTag extends AbstractListTag implements IParse {
 			entity.put("sortWay", entity.containsKey("sortWay") ? entity.get("sortWay") : "asc");
 			String cascade = entity.containsKey("cascade") ? entity.get("cascade").toString() : "false";
 			if("true".equals(cascade)) {
-				CategoryWithBLOBs categoryWithBLOBs = categoryMapper.queryCategoryByCode(typeid);
+				Category categoryWithBLOBs = categoryMapper.queryCategoryByCode(typeid);
 				String catSeq = categoryWithBLOBs.getCatSeq();
 				entity.put("cascade", catSeq);
 			}
 			SearchEntity params = new SearchEntity();
 			params.setEntity(entity);
-			if(entity.containsKey("start") && entity.containsKey("length")) {
-				params.setPageNum(Integer.parseInt(entity.get("start").toString()));
-				params.setPageSize(Integer.parseInt(entity.get("length").toString()));
+
+			//查询结果集
+			List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+			if(entity.containsKey("pagenum") && entity.containsKey("pagesize")) {
+				params.setPageNum(Integer.parseInt(entity.get("pagenum").toString()));
+				params.setPageSize(Integer.parseInt(entity.get("pagesize").toString()));
 				PageHelper.startPage(params.getPageNum(), params.getPageSize());
+				list = archivesMapper.queryListByPage(entity);
+			}else {
+				list = archivesMapper.queryListByPage(entity);
 			}
-			List<Map<String, Object>> list = archivesMapper.queryListByPage(entity);
 			
 			String[] addfields = new String[] {};
 			//获取附加字段
@@ -125,7 +132,7 @@ public class ListTag extends AbstractListTag implements IParse {
 	}
 	
 	@Override
-	public String parse(String html,String typeid) {
+	public String parse(String html,String typeid) throws CmsException {
 		Tag listAnnotation = ListTag.class.getAnnotation(Tag.class);
 		List<String> listTags = RegexUtil.parseAll(html, listAnnotation.regexp(), 0);
 		List<String> contents = RegexUtil.parseAll(html, listAnnotation.regexp(), 1);
@@ -164,12 +171,17 @@ public class ListTag extends AbstractListTag implements IParse {
 			entity.put("cid", typeid);
 			SearchEntity params = new SearchEntity();
 			params.setEntity(entity);
-			if(entity.containsKey("length")) {
-				params.setPageNum(Integer.parseInt(entity.containsKey("start") ? entity.get("start").toString() : "0"));
-				params.setPageSize(Integer.parseInt(entity.get("length").toString()));
+			
+			//查询结果集
+			List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+			if(entity.containsKey("pagenum") && entity.containsKey("pagesize")) {
+				params.setPageNum(Integer.parseInt(entity.get("pagenum").toString()));
+				params.setPageSize(Integer.parseInt(entity.get("pagesize").toString()));
 				PageHelper.startPage(params.getPageNum(), params.getPageSize());
+				list = archivesMapper.queryListByPage(entity);
+			}else {
+				list = archivesMapper.queryListByPage(entity);
 			}
-			List<Map<String, Object>> list = archivesMapper.queryListByPage(entity);
 			
 			StringBuilder sb = new StringBuilder();
 			

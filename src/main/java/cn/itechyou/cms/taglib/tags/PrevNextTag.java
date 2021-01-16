@@ -1,21 +1,18 @@
 package cn.itechyou.cms.taglib.tags;
 
-import java.io.File;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import cn.itechyou.cms.dao.CategoryMapper;
 import cn.itechyou.cms.entity.Archives;
 import cn.itechyou.cms.entity.ArchivesWithRownum;
-import cn.itechyou.cms.entity.CategoryWithBLOBs;
+import cn.itechyou.cms.entity.Category;
 import cn.itechyou.cms.service.ArchivesService;
 import cn.itechyou.cms.service.SystemService;
 import cn.itechyou.cms.taglib.IParse;
@@ -65,7 +62,7 @@ public class PrevNextTag implements IParse {
 		
 		
 		Archives archives = archivesService.selectByPrimaryKey(id);
-		CategoryWithBLOBs categoryWithBLOBs = categoryMapper.selectByPrimaryKey(archives.getCategoryId());
+		Category categoryWithBLOBs = categoryMapper.selectByPrimaryKey(archives.getCategoryId());
 		//上一篇下一篇 
 		Map<String,Object> params = new HashMap<String, Object>(); 
 		params.put("arcid", id); 

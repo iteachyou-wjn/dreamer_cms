@@ -7,19 +7,14 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.github.pagehelper.PageHelper;
-
-import cn.itechyou.cms.common.Constant;
-import cn.itechyou.cms.common.SearchEntity;
-import cn.itechyou.cms.entity.CategoryWithBLOBs;
+import cn.itechyou.cms.entity.Category;
+import cn.itechyou.cms.exception.CmsException;
 import cn.itechyou.cms.service.CategoryService;
 import cn.itechyou.cms.service.SystemService;
 import cn.itechyou.cms.taglib.IParse;
 import cn.itechyou.cms.taglib.annotation.Attribute;
 import cn.itechyou.cms.taglib.annotation.Tag;
-import cn.itechyou.cms.taglib.enums.FieldEnum;
 import cn.itechyou.cms.taglib.utils.RegexUtil;
-import cn.itechyou.cms.utils.PinyinUtils;
 import cn.itechyou.cms.utils.StringUtil;
 
 /**
@@ -44,7 +39,7 @@ public class ChannelTag extends AbstractChannelTag implements IParse {
 	private CategoryService categoryService;
 	
 	@Override
-	public String parse(String html) {
+	public String parse(String html) throws CmsException {
 		Tag channelAnnotation = ChannelTag.class.getAnnotation(Tag.class);
 		List<String> listTags = RegexUtil.parseAll(html, channelAnnotation.regexp(), 0);
 		List<String> contents = RegexUtil.parseAll(html, channelAnnotation.regexp(), 1);
@@ -72,12 +67,10 @@ public class ChannelTag extends AbstractChannelTag implements IParse {
 				value = value.replace("\"", "").replace("\'", "");
 				entity.put(key, value);
 			}
-			SearchEntity params = new SearchEntity();
-			params.setEntity(entity);
 
-			List<CategoryWithBLOBs> list = null;
+			List<Category> list = null;
 			
-			CategoryWithBLOBs category = null;
+			Category category = null;
 			String code = StringUtil.isBlank(entity.get("type")) ? "top" : entity.get("type").toString();
 			
 			String isShow = null;
@@ -88,31 +81,35 @@ public class ChannelTag extends AbstractChannelTag implements IParse {
 					isShow = "1";
 				}
 			}
+			//新的参数实体
+			Map<String,Object> newEntity = new HashMap<String,Object>();
+			newEntity.put("isShow", isShow);
+			
 			if("top".equals(code)) {
-				category = new CategoryWithBLOBs();
+				category = new Category();
 				category.setId("-1");
+				newEntity.put("parentId", category.getId());
 				if(entity.containsKey("start") && entity.containsKey("length")) {
-					params.setPageNum(Integer.parseInt(entity.get("start").toString()));
-					params.setPageSize(Integer.parseInt(entity.get("length").toString()));
-					PageHelper.startPage(params.getPageNum(), params.getPageSize());
+					newEntity.put("start", entity.get("start").toString());
+					newEntity.put("length", entity.get("length").toString());
 				}
-				list = categoryService.getTreeList(category.getId());
+				list = categoryService.getTreeList(newEntity);
 			}else {
 				category = categoryService.queryCategoryByCode(entity.get("typeid").toString());
 				if(category != null) {
+					newEntity.put("parentId", category.getId());
 					if(entity.containsKey("start") && entity.containsKey("length")) {
-						params.setPageNum(Integer.parseInt(entity.get("start").toString()));
-						params.setPageSize(Integer.parseInt(entity.get("length").toString()));
-						PageHelper.startPage(params.getPageNum(), params.getPageSize());
+						newEntity.put("start", entity.get("start").toString());
+						newEntity.put("length", entity.get("length").toString());
 					}
-					list = categoryService.getTreeList(category.getId(), isShow);
+					list = categoryService.getTreeList(newEntity);
 				}
 			}
 			
 			StringBuilder sb = new StringBuilder();
 			if(list != null && list.size() > 0) {
 				for (int j = 0; j < list.size(); j++) {
-					CategoryWithBLOBs temp = list.get(j);
+					Category temp = list.get(j);
 					String item = new String(content);
 					
 					item = buildHTML(item, temp, (j + 1));
@@ -125,7 +122,7 @@ public class ChannelTag extends AbstractChannelTag implements IParse {
 	}
 
 	@Override
-	public String parse(String html,String typeid) {
+	public String parse(String html,String typeid) throws CmsException {
 		Tag channelAnnotation = ChannelTag.class.getAnnotation(Tag.class);
 		List<String> listTags = RegexUtil.parseAll(html, channelAnnotation.regexp(), 0);
 		List<String> contents = RegexUtil.parseAll(html, channelAnnotation.regexp(), 1);
@@ -153,26 +150,30 @@ public class ChannelTag extends AbstractChannelTag implements IParse {
 				value = value.replace("\"", "").replace("\'", "");
 				entity.put(key, value);
 			}
-			SearchEntity params = new SearchEntity();
-			params.setEntity(entity);
+			
+			String isShow = StringUtil.isBlank(entity.get("isall")) ? "1" : entity.get("isall").toString();
+			//新的参数实体
+			Map<String,Object> newEntity = new HashMap<String,Object>();
+			newEntity.put("isShow", isShow);
+			
+			
 			if(entity.containsKey("start") && entity.containsKey("length")) {
-				params.setPageNum(Integer.parseInt(entity.get("start").toString()));
-				params.setPageSize(Integer.parseInt(entity.get("length").toString()));
-				PageHelper.startPage(params.getPageNum(), params.getPageSize());
+				newEntity.put("start", entity.get("start").toString());
+				newEntity.put("length", entity.get("length").toString());
 			}
 
-			List<CategoryWithBLOBs> list = null;
-			CategoryWithBLOBs category = null;
-			String isShow = StringUtil.isBlank(entity.get("isall")) ? "1" : entity.get("isall").toString();
+			List<Category> list = null;
+			Category category = null;
 			
 			category = categoryService.queryCategoryByCode(typeid);
 			if(category != null) {
-				list = categoryService.getTreeList(category.getId(), isShow);
+				newEntity.put("parentId", category.getId());
+				list = categoryService.getTreeList(newEntity);
 			}
 			
 			StringBuilder sb = new StringBuilder();
 			for (int j = 0; j < list.size(); j++) {
-				CategoryWithBLOBs temp = list.get(j);
+				Category temp = list.get(j);
 				String item = new String(content);
 				
 				item = this.buildHTML(item, temp, (j + 1));

@@ -5,20 +5,10 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
+import cn.itechyou.cms.common.BaseMapper;
 import cn.itechyou.cms.entity.Label;
 
-public interface LabelMapper {
-    int deleteByPrimaryKey(String id);
-
-    int insert(Label record);
-
-    int insertSelective(Label record);
-
-    Label selectByPrimaryKey(String id);
-
-    int updateByPrimaryKeySelective(Label record);
-
-    int updateByPrimaryKey(Label record);
+public interface LabelMapper extends BaseMapper<Label> {
 
 	List<Label> selectByLabelName(@Param("tagName") String string);
 

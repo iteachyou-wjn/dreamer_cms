@@ -36,7 +36,6 @@ public class ArchivesServiceImpl implements ArchivesService {
 	 */
 	@Override
 	public int save(Archives archives,String tableName,Map<String,Object> additional) throws TransactionException {
-		
 		int num = 0;
 		try {
 			num = archivesMapper.insertSelective(archives);

@@ -13,8 +13,9 @@ import com.github.pagehelper.PageInfo;
 import cn.itechyou.cms.common.SearchEntity;
 import cn.itechyou.cms.dao.ArchivesMapper;
 import cn.itechyou.cms.dao.CategoryMapper;
-import cn.itechyou.cms.entity.CategoryWithBLOBs;
+import cn.itechyou.cms.entity.Category;
 import cn.itechyou.cms.entity.Form;
+import cn.itechyou.cms.exception.CmsException;
 import cn.itechyou.cms.service.FormService;
 import cn.itechyou.cms.taglib.IParse;
 import cn.itechyou.cms.taglib.annotation.Attribute;
@@ -65,7 +66,7 @@ public class PageListTag extends AbstractListTag implements IParse {
 	 * @param pageSize
 	 * @return
 	 */
-	public String parse(String html, String typeid, Integer pageNum, Integer pageSize) {
+	public String parse(String html, String typeid, Integer pageNum, Integer pageSize) throws CmsException {
 		Tag listAnnotation = PageListTag.class.getAnnotation(Tag.class);
 		List<String> listTags = RegexUtil.parseAll(html, listAnnotation.regexp(), 0);
 		List<String> contents = RegexUtil.parseAll(html, listAnnotation.regexp(), 1);
@@ -103,7 +104,7 @@ public class PageListTag extends AbstractListTag implements IParse {
 			entity.put("cid", typeid);
 			String cascade = entity.containsKey("cascade") ? entity.get("cascade").toString() : "false";
 			if("true".equals(cascade)) {
-				CategoryWithBLOBs categoryWithBLOBs = categoryMapper.queryCategoryByCode(typeid);
+				Category categoryWithBLOBs = categoryMapper.queryCategoryByCode(typeid);
 				String catSeq = categoryWithBLOBs.getCatSeq();
 				entity.put("cascade", catSeq);
 			}
@@ -142,7 +143,7 @@ public class PageListTag extends AbstractListTag implements IParse {
 	 * @param params
 	 * @return
 	 */
-	public String parse(String html, SearchEntity params) {
+	public String parse(String html, SearchEntity params) throws CmsException {
 		Tag listAnnotation = PageListTag.class.getAnnotation(Tag.class);
 		List<String> listTags = RegexUtil.parseAll(html, listAnnotation.regexp(), 0);
 		List<String> contents = RegexUtil.parseAll(html, listAnnotation.regexp(), 1);

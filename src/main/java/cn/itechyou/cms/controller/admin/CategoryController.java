@@ -18,7 +18,6 @@ import cn.itechyou.cms.common.ResponseResult;
 import cn.itechyou.cms.common.SearchEntity;
 import cn.itechyou.cms.common.StateCodeEnum;
 import cn.itechyou.cms.entity.Category;
-import cn.itechyou.cms.entity.CategoryWithBLOBs;
 import cn.itechyou.cms.entity.Form;
 import cn.itechyou.cms.entity.System;
 import cn.itechyou.cms.security.token.TokenManager;
@@ -31,7 +30,6 @@ import cn.itechyou.cms.utils.UUIDUtils;
 /**
  * 栏目管理
  * @author Wangjn
- *
  */
 @Controller
 @RequestMapping("/admin/category")
@@ -48,7 +46,7 @@ public class CategoryController extends BaseController{
 	
 	@RequestMapping("/list")
 	public String list(Model model,SearchEntity params) {
-		PageInfo<CategoryWithBLOBs> page = categoryService.queryListByPage(params);
+		PageInfo<Category> page = categoryService.queryListByPage(params);
 		model.addAttribute("categorys", page);
 		return "admin/category/list";
 	}
@@ -75,7 +73,7 @@ public class CategoryController extends BaseController{
 	
 	@RequestMapping("/toEdit")
 	public String toEdit(Model model,String id) {
-		CategoryWithBLOBs category = categoryService.selectById(id);
+		Category category = categoryService.selectById(id);
 		if(category.getParentId().equals("-1")) {
 			category.setParentName("顶级栏目");
 		}else {
@@ -92,7 +90,7 @@ public class CategoryController extends BaseController{
 	}
 	
 	@RequestMapping("/add")
-	public String add(CategoryWithBLOBs category) {
+	public String add(Category category) {
 		category.setId(UUIDUtils.getPrimaryKey());
 		category.setCode(UUIDUtils.getCharAndNumr(8));
 		category.setLevel(category.getParentId().equals("-1")?"1":category.getLevel());
@@ -121,7 +119,7 @@ public class CategoryController extends BaseController{
 	}
 	
 	@RequestMapping(value ="/edit")
-	public String edit(CategoryWithBLOBs category) {
+	public String edit(Category category) {
 		category.setUpdateBy(TokenManager.getToken().getId());
 		category.setUpdateTime(new Date());
 		//处理模版
@@ -146,7 +144,7 @@ public class CategoryController extends BaseController{
 	
 	@RequestMapping(value = "/loadSon", method = RequestMethod.GET)
 	public void loadSon(String id) {
-		List<CategoryWithBLOBs> list = categoryService.selectByParentId(id);
+		List<Category> list = categoryService.selectByParentId(id);
 		ResponseResult result = ResponseResult.Factory.newInstance(Boolean.TRUE,
 				StateCodeEnum.HTTP_SUCCESS.getCode(), list,
 				StateCodeEnum.HTTP_SUCCESS.getDescription());

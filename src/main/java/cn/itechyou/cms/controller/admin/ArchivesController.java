@@ -183,6 +183,7 @@ public class ArchivesController {
 		try {
 			archivesService.save(archives,tableName,additional);
 		} catch (TransactionException e) {
+			e.printStackTrace();
 			throw new AdminGeneralException(
 					ExceptionEnum.HTTP_INTERNAL_SERVER_ERROR.getCode(),
 					ExceptionEnum.HTTP_INTERNAL_SERVER_ERROR.getMessage(),

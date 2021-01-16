@@ -15,6 +15,8 @@ public enum ExceptionEnum {
 	FORM_PARAMETER_EXCEPTION("40003","表单参数错误"),
 	FILE_NOTFOUND_EXCEPTION("40004", "文件不存在"),
 	FILE_FORMAT_ERROR_EXCEPTION("40005", "文件格式错误"),
+	CAT_NOTFOUND_EXCEPTION("40006", "栏目不存在"),
+	TEMPLATE_PARSE_EXCEPTION("40007", "模版文件解析错误"),
 	;
 	private String code;
 	private String message;

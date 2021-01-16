@@ -8,11 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import cn.itechyou.cms.entity.Attachment;
+import cn.itechyou.cms.exception.CmsException;
 import cn.itechyou.cms.service.AttachmentService;
 import cn.itechyou.cms.taglib.IParse;
 import cn.itechyou.cms.taglib.annotation.Attribute;
 import cn.itechyou.cms.taglib.annotation.Tag;
 import cn.itechyou.cms.taglib.enums.FieldEnum;
+import cn.itechyou.cms.taglib.utils.FunctionUtil;
 import cn.itechyou.cms.taglib.utils.RegexUtil;
 import cn.itechyou.cms.utils.StringUtil;
 
@@ -31,7 +33,7 @@ public class AttachmentTag implements IParse {
 	private AttachmentService attachmentService;
 	
 	@Override
-	public String parse(String html) {
+	public String parse(String html) throws CmsException {
 		Tag annotations = AttachmentTag.class.getAnnotation(Tag.class);
 		List<String> attachmentTags = RegexUtil.parseAll(html, annotations.regexp(), 0);
 		List<String> contents = RegexUtil.parseAll(html, annotations.regexp(), 1);
@@ -68,7 +70,7 @@ public class AttachmentTag implements IParse {
 			
 			String item = new String(content);
 			item = item.replaceAll(FieldEnum.FIELD_ID.getRegexp(), attachment.getId());
-			item = item.replaceAll(FieldEnum.FIELD_FILENAME.getRegexp(), attachment.getFilename());
+			item = FunctionUtil.replaceByFunction(item, FieldEnum.FIELD_FILENAME.getRegexp(), StringUtil.isBlank(attachment.getFilename()) ? "" : attachment.getFilename());
 			item = item.replaceAll(FieldEnum.FIELD_FILETYPE.getRegexp(), attachment.getFiletype());
 			item = item.replaceAll(FieldEnum.FIELD_FILESIZE.getRegexp(), StringUtil.isBlank(attachment.getFilesize()) ? "" : String.valueOf(attachment.getFilesize()));
 			item = item.replaceAll(FieldEnum.FIELD_CREATEBY.getRegexp(), attachment.getCreateBy());

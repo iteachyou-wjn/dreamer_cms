@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import cn.itechyou.cms.common.Constant;
-import cn.itechyou.cms.entity.CategoryWithBLOBs;
+import cn.itechyou.cms.entity.Category;
 import cn.itechyou.cms.service.CategoryService;
 import cn.itechyou.cms.service.SystemService;
 import cn.itechyou.cms.taglib.IParse;
@@ -68,7 +68,7 @@ public class CategoryTag implements IParse {
 				entity.put(key, value);
 			}
 			
-			CategoryWithBLOBs temp = categoryService.queryCategoryByCode(typeid);
+			Category temp = categoryService.queryCategoryByCode(typeid);
 			
 			String imagePath = "";
 			if(StringUtil.isNotBlank(temp.getImagePath())) {
@@ -128,8 +128,8 @@ public class CategoryTag implements IParse {
 				}else if (FieldEnum.FIELD_TUPDATETIME.getField().equalsIgnoreCase(name)) {
 					newHtml = newHtml.replace(string, StringUtil.isBlank(temp.getUpdateTime()) ? "" : temp.getUpdateTime().toString());
 				}else if (FieldEnum.FIELD_TYPEURL.getField().equalsIgnoreCase(name)) {
-					URLUtils.parseURL(system, temp, this.t);
-					newHtml = newHtml.replace(string, StringUtil.isBlank(temp.getLinkUrl()) ? "" : temp.getLinkUrl());
+					String url = URLUtils.parseURL(system, temp, this.t);
+					newHtml = newHtml.replace(string, url);
 				}else if (FieldEnum.FIELD_EXT01.getField().equalsIgnoreCase(name)) {
 					newHtml = newHtml.replace(string, StringUtil.isBlank(temp.getExt01()) ? "" : temp.getExt01());
 				}else if (FieldEnum.FIELD_EXT02.getField().equalsIgnoreCase(name)) {

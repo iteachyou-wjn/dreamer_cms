@@ -5,31 +5,18 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
+import cn.itechyou.cms.common.BaseMapper;
 import cn.itechyou.cms.entity.Category;
-import cn.itechyou.cms.entity.CategoryWithBLOBs;
 
-public interface CategoryMapper {
-    int deleteByPrimaryKey(String id);
+public interface CategoryMapper extends BaseMapper<Category> {
 
-    int insert(CategoryWithBLOBs record);
+    List<Category> queryListByPage(Map<String,Object> params);
 
-    int insertSelective(CategoryWithBLOBs record);
+	List<Category> selectByParentId(@Param("parentId")String parentId);
 
-    CategoryWithBLOBs selectByPrimaryKey(String id);
+	Category queryCategoryByCode(@Param("code") String code);
 
-    int updateByPrimaryKeySelective(CategoryWithBLOBs record);
+	List<Category> queryListByParams(Map<String, Object> params);
 
-    int updateByPrimaryKeyWithBLOBs(CategoryWithBLOBs record);
-
-    int updateByPrimaryKey(Category record);
-
-    List<CategoryWithBLOBs> queryListByPage(Map<String,Object> params);
-
-	List<CategoryWithBLOBs> selectByParentId(@Param("parentId")String parentId);
-
-	CategoryWithBLOBs queryCategoryByCode(@Param("code") String code);
-
-	List<CategoryWithBLOBs> queryListByParams(Map<String, Object> params);
-
-	List<CategoryWithBLOBs> queryAll();
+	List<Category> queryAll();
 }

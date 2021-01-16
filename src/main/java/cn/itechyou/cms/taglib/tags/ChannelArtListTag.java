@@ -8,10 +8,11 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.github.pagehelper.PageHelper;
-
+import cn.itechyou.cms.common.ExceptionEnum;
 import cn.itechyou.cms.common.SearchEntity;
-import cn.itechyou.cms.entity.CategoryWithBLOBs;
+import cn.itechyou.cms.entity.Category;
+import cn.itechyou.cms.exception.CategoryNotFoundException;
+import cn.itechyou.cms.exception.CmsException;
 import cn.itechyou.cms.service.CategoryService;
 import cn.itechyou.cms.taglib.IParse;
 import cn.itechyou.cms.taglib.annotation.Attribute;
@@ -39,7 +40,7 @@ public class ChannelArtListTag extends AbstractChannelTag implements IParse {
 	@Autowired ChannelTag channelTag;
 	
 	@Override
-	public String parse(String html) {
+	public String parse(String html) throws CmsException {
 		Tag annotations = ChannelArtListTag.class.getAnnotation(Tag.class);
 		List<String> listTags = RegexUtil.parseAll(html, annotations.regexp(), 0);
 		List<String> contents = RegexUtil.parseAll(html, annotations.regexp(), 1);
@@ -68,33 +69,40 @@ public class ChannelArtListTag extends AbstractChannelTag implements IParse {
 				entity.put(key, value);
 			}
 			
-			CategoryWithBLOBs category = null;
-			List<CategoryWithBLOBs> categorys = new ArrayList<CategoryWithBLOBs>();
+			Category category = null;
+			List<Category> categorys = new ArrayList<Category>();
 			SearchEntity params = new SearchEntity();
 			params.setEntity(entity);
+			//新的参数实体
+			Map<String,Object> newEntity = new HashMap<String,Object>();
+			newEntity.put("start", 0);
+			newEntity.put("isShow", 1);
+			
 			if(!entity.containsKey("typeid")) {
-				category = new CategoryWithBLOBs();
+				category = new Category();
 				category.setId("-1");
+				newEntity.put("parentId", category.getId());
 				if(entity.containsKey("length")) {
-					params.setPageNum(0);
-					params.setPageSize(Integer.parseInt(entity.get("length").toString()));
-					PageHelper.startPage(params.getPageNum(), params.getPageSize());
+					newEntity.put("length", entity.get("length").toString());
 				}
-				categorys = categoryService.getTreeList(category.getId());
+				categorys = categoryService.getTreeList(newEntity);
 			}else {
 				String code = entity.get("typeid").toString();
 				entity.remove("typeid");
 				
 				category = categoryService.queryCategoryByCode(code);
 				if(category == null) {
-					//
+					throw new CategoryNotFoundException(
+							ExceptionEnum.CAT_NOTFOUND_EXCEPTION.getCode(), 
+							ExceptionEnum.CAT_NOTFOUND_EXCEPTION.getMessage(),
+							"栏目不存在，请检查标签中是否调用了不存在的（typeid）。");
 				}
+				newEntity.put("parentId", category.getId());
 				if(entity.containsKey("length")) {
-					params.setPageNum(0);
-					params.setPageSize(Integer.parseInt(entity.get("length").toString()));
-					PageHelper.startPage(params.getPageNum(), params.getPageSize());
+					newEntity.put("start", 0);
+					newEntity.put("length", entity.get("length").toString());
 				}
-				categorys = categoryService.getTreeList(category.getId());
+				categorys = categoryService.getTreeList(newEntity);
 			}
 			StringBuilder sb = new StringBuilder();
 			if(categorys == null || categorys.size() <= 0) {
@@ -111,7 +119,7 @@ public class ChannelArtListTag extends AbstractChannelTag implements IParse {
 				sb.append(item);
 			}else {
 				for (int j = 0; j < categorys.size(); j++) {
-					CategoryWithBLOBs categoryWithBLOBs = categorys.get(j);
+					Category categoryWithBLOBs = categorys.get(j);
 					String item = new String(content);
 					if(StringUtil.isNotBlank(this.getT())) {
 						channelTag.setT(this.getT());
@@ -125,7 +133,6 @@ public class ChannelArtListTag extends AbstractChannelTag implements IParse {
 					sb.append(item);
 				}
 			}
-			
 			newHtml = newHtml.replace(tag, sb.toString());
 		}
 		return newHtml;

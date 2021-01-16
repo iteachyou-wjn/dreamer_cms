@@ -26,8 +26,9 @@
 		<fastjson.version>1.2.75</fastjson.version>
 		<shiro.version>1.7.0</shiro.version>
 		<kaptcha.version>5.3.7</kaptcha.version>
-		<pagehelper.version>1.2.3</pagehelper.version>
-		<mybatis.version>1.2.0</mybatis.version>
+		<pagehelper.version>1.2.5</pagehelper.version>
+		<mybatis.version>1.3.1</mybatis.version>
+		<tkmapper.version>2.0.3-beta1</tkmapper.version>
 		<commonsio.version>2.4</commonsio.version>
 		<commonscodec.version>1.9</commonscodec.version>
 		<commonsfileupload.version>1.4</commonsfileupload.version>
@@ -135,6 +136,18 @@
 			<groupId>com.github.pagehelper</groupId>
 			<artifactId>pagehelper-spring-boot-starter</artifactId>
 			<version>${pagehelper.version}</version>
+			<exclusions>
+                <exclusion>
+                    <groupId>org.mybatis.spring.boot</groupId>
+                    <artifactId>mybatis-spring-boot-starter</artifactId>
+                </exclusion>
+            </exclusions>
+		</dependency>
+		
+		<dependency>
+		    <groupId>tk.mybatis</groupId>
+		    <artifactId>mapper-spring-boot-starter</artifactId>
+		    <version>${tkmapper.version}</version>
 		</dependency>
 		
  		<!-- 以下为 ueditor 依赖的jar包 -->

@@ -11,6 +11,7 @@ import cn.itechyou.cms.entity.Archives;
 import cn.itechyou.cms.entity.Category;
 import cn.itechyou.cms.entity.Field;
 import cn.itechyou.cms.entity.Form;
+import cn.itechyou.cms.exception.CmsException;
 import cn.itechyou.cms.service.ArchivesService;
 import cn.itechyou.cms.service.CategoryService;
 import cn.itechyou.cms.service.FieldService;
@@ -20,6 +21,7 @@ import cn.itechyou.cms.taglib.IParse;
 import cn.itechyou.cms.taglib.annotation.Attribute;
 import cn.itechyou.cms.taglib.annotation.Tag;
 import cn.itechyou.cms.taglib.enums.FieldEnum;
+import cn.itechyou.cms.taglib.utils.FunctionUtil;
 import cn.itechyou.cms.taglib.utils.RegexUtil;
 import cn.itechyou.cms.utils.StringUtil;
 
@@ -31,6 +33,7 @@ import cn.itechyou.cms.utils.StringUtil;
 @Component
 @Tag(beginTag="{dreamer-cms:article /}",endTag="",regexp="(\\{dreamer-cms:article[ \\t]+.*?/\\})|(\\{dreamer-cms:article[ \\t]+.*\\}\\{/dreamer-cms:article\\})", attributes={
 		@Attribute(name = "field",regex = "[ \t]+field=[\"\'].*?[\"\']"),
+		@Attribute(name = "function",regex = "[ \t]+function=\\\"((.*)\\((.*?)\\)?)\\\""),
 	})
 public class ArticleTag implements IParse {
 
@@ -51,7 +54,7 @@ public class ArticleTag implements IParse {
 	}
 	
 	@Override
-	public String parse(String html,String id) {
+	public String parse(String html,String id) throws CmsException {
 		Tag annotations = ArticleTag.class.getAnnotation(Tag.class);
 		List<String> all = RegexUtil.parseAll(html, annotations.regexp(), 0);
 		if(StringUtil.isBlank(all)) {
@@ -103,10 +106,15 @@ public class ArticleTag implements IParse {
 			}
 			if(entity.containsKey("field")) {
 				String name = entity.get("field").toString();
+				String function = StringUtil.isBlank(entity.get("function")) ? "" : entity.get("function").toString();
 				if(FieldEnum.FIELD_ID.getField().equalsIgnoreCase(name)) {
 					newHtml = newHtml.replace(string, archivesVo.get("aid").toString());
 				}else if (FieldEnum.FIELD_TITLE.getField().equalsIgnoreCase(name)) {
-					newHtml = newHtml.replace(string, StringUtil.isBlank(archivesVo.get("title")) ? "" : archivesVo.get("title").toString());
+					if(StringUtil.isNotBlank(function)) {
+						newHtml = newHtml.replace(string, FunctionUtil.replaceByFunction(function, archivesVo.get("title")));
+					}else {
+						newHtml = newHtml.replace(string, StringUtil.isBlank(archivesVo.get("title")) ? "" : archivesVo.get("title").toString());
+					}
 				}else if (FieldEnum.FIELD_PROPERTIES.getField().equalsIgnoreCase(name)) {
 					newHtml = newHtml.replace(string, StringUtil.isBlank(archivesVo.get("properties")) ? "" : archivesVo.get("properties").toString());
 				}else if (FieldEnum.FIELD_LITPIC.getField().equalsIgnoreCase(name)) {
@@ -134,11 +142,19 @@ public class ArticleTag implements IParse {
 				}else if (FieldEnum.FIELD_CREATEBY.getField().equalsIgnoreCase(name)) {
 					newHtml = newHtml.replace(string, StringUtil.isBlank(archivesVo.get("createBy")) ? "" : archivesVo.get("createBy").toString());
 				}else if (FieldEnum.FIELD_CREATETIME.getField().equalsIgnoreCase(name)) {
-					newHtml = newHtml.replace(string, StringUtil.isBlank(archivesVo.get("createTime")) ? "" : archivesVo.get("createTime").toString());
+					if(StringUtil.isNotBlank(function)) {
+						newHtml = newHtml.replace(string, FunctionUtil.replaceByFunction(function, archivesVo.get("createTime")));
+					}else {
+						newHtml = newHtml.replace(string, StringUtil.isBlank(archivesVo.get("createTime")) ? "" : archivesVo.get("createTime").toString());
+					}
 				}else if (FieldEnum.FIELD_UPDATEBY.getField().equalsIgnoreCase(name)) {
 					newHtml = newHtml.replace(string, StringUtil.isBlank(archivesVo.get("updateBy")) ? "" : archivesVo.get("updateBy").toString());
 				}else if (FieldEnum.FIELD_UPDATETIME.getField().equalsIgnoreCase(name)) {
-					newHtml = newHtml.replace(string, StringUtil.isBlank(archivesVo.get("updateTime")) ? "" : archivesVo.get("updateTime").toString());
+					if(StringUtil.isNotBlank(function)) {
+						newHtml = newHtml.replace(string, FunctionUtil.replaceByFunction(function, archivesVo.get("updateTime")));
+					}else {
+						newHtml = newHtml.replace(string, StringUtil.isBlank(archivesVo.get("updateTime")) ? "" : archivesVo.get("updateTime").toString());
+					}
 				}else if (FieldEnum.FIELD_ARCURL.getField().equalsIgnoreCase(name)) {
 					newHtml = newHtml.replace(string, "/article/"+archivesVo.get("aid").toString());
 				}else {

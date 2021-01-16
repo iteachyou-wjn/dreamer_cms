@@ -5,21 +5,11 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
+import cn.itechyou.cms.common.BaseMapper;
 import cn.itechyou.cms.entity.Field;
 import cn.itechyou.cms.entity.Form;
 
-public interface FormMapper {
-    int deleteByPrimaryKey(String id);
-
-    int insert(Form record);
-
-    int insertSelective(Form record);
-
-    Form selectByPrimaryKey(String id);
-
-    int updateByPrimaryKeySelective(Form record);
-
-    int updateByPrimaryKey(Form record);
+public interface FormMapper extends BaseMapper<Form> {
 
 	List<Form> queryListByPage(Map<String, Object> entity);
 

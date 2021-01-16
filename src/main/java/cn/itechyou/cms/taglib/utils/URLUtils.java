@@ -1,7 +1,7 @@
 package cn.itechyou.cms.taglib.utils;
 
 import cn.itechyou.cms.common.Constant;
-import cn.itechyou.cms.entity.CategoryWithBLOBs;
+import cn.itechyou.cms.entity.Category;
 import cn.itechyou.cms.utils.PinyinUtils;
 import cn.itechyou.cms.utils.StringUtil;
 
@@ -13,7 +13,7 @@ public class URLUtils {
 	 * @param t
 	 * @return
 	 */
-	public static String parseURL(cn.itechyou.cms.entity.System system, CategoryWithBLOBs category, String t) {
+	public static String parseURL(cn.itechyou.cms.entity.System system, Category category, String t) {
 		String url = "";
 		String typeCode = StringUtil.isBlank(category.getCode()) ? "" : category.getCode();
 		String visitUrl = StringUtil.isBlank(category.getVisitUrl()) ? PinyinUtils.toPinyin(category.getCnname()) : category.getVisitUrl();
@@ -41,7 +41,7 @@ public class URLUtils {
 		return url;
 	}
 	
-	public static String parseFileName(CategoryWithBLOBs category, Integer pageNum) {
+	public static String parseFileName(Category category, Integer pageNum) {
 		return "/list-" + pageNum + ".html";
 	}
 
@@ -50,7 +50,7 @@ public class URLUtils {
 	 * @param category
 	 * @return
 	 */
-	public static String getCategoryDir(CategoryWithBLOBs category) {
+	public static String getCategoryDir(Category category) {
 		String visitUrl = StringUtil.isBlank(category.getVisitUrl()) ? PinyinUtils.toPinyin(category.getCnname()) : category.getVisitUrl();
 		if(!visitUrl.startsWith("/")) {
 			visitUrl = "/" + visitUrl;

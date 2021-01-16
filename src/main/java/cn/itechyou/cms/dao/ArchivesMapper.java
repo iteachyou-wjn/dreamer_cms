@@ -5,22 +5,12 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
+import cn.itechyou.cms.common.BaseMapper;
 import cn.itechyou.cms.entity.Archives;
 import cn.itechyou.cms.entity.ArchivesWithRownum;
 import cn.itechyou.cms.vo.ArchivesVo;
 
-public interface ArchivesMapper {
-    int deleteByPrimaryKey(String id);
-
-    int insert(Archives record);
-
-    int insertSelective(Archives record);
-
-    Archives selectByPrimaryKey(String id);
-
-    int updateByPrimaryKeySelective(Archives record);
-
-    int updateByPrimaryKey(Archives record);
+public interface ArchivesMapper extends BaseMapper<Archives> {
     
     List<Map<String,Object>> queryListByPage(Map<String, Object> entity);
     

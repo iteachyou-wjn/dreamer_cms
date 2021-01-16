@@ -2,14 +2,20 @@ package cn.itechyou.cms.taglib.tags;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import cn.itechyou.cms.entity.CategoryWithBLOBs;
+import cn.itechyou.cms.common.ExceptionEnum;
+import cn.itechyou.cms.entity.Category;
+import cn.itechyou.cms.exception.CmsException;
+import cn.itechyou.cms.exception.TemplateParseException;
 import cn.itechyou.cms.service.CategoryService;
 import cn.itechyou.cms.service.SystemService;
 import cn.itechyou.cms.taglib.enums.FieldEnum;
+import cn.itechyou.cms.taglib.utils.FunctionUtil;
+import cn.itechyou.cms.taglib.utils.RegexUtil;
 import cn.itechyou.cms.taglib.utils.URLUtils;
 import cn.itechyou.cms.utils.StringUtil;
 import cn.itechyou.cms.vo.ArchivesVo;
@@ -33,13 +39,13 @@ public abstract class AbstractListTag {
 	@Autowired
 	private CategoryService categoryService;
 	
-	public String buildHTML(String item, Map<String, Object> archives, String[] addfields, int i) {
+	public String buildHTML(String item, Map<String, Object> archives, String[] addfields, int i) throws CmsException {
 		cn.itechyou.cms.entity.System system = systemService.getSystem();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		
-		CategoryWithBLOBs categoryWithBLOBs = null;
+		Category categoryWithBLOBs = null;
 		if(StringUtil.isBlank(archives.get("categoryId"))) {
-			categoryWithBLOBs = new CategoryWithBLOBs();
+			categoryWithBLOBs = new Category();
 			categoryWithBLOBs.setCoverTemp("/index_article.html");
 			categoryWithBLOBs.setListTemp("/list_article.html");
 			categoryWithBLOBs.setArticleTemp("/article_article.html");
@@ -54,7 +60,8 @@ public abstract class AbstractListTag {
 		}
  		item = item.replaceAll(FieldEnum.FIELD_AUTOINDEX.getRegexp(), String.valueOf(i));
 		item = item.replaceAll(FieldEnum.FIELD_ID.getRegexp(), archives.get("aid").toString());
-		item = item.replaceAll(FieldEnum.FIELD_TITLE.getRegexp(), StringUtil.isBlank(archives.get("title")) ? "" : archives.get("title").toString());
+		
+		item = FunctionUtil.replaceByFunction(item, FieldEnum.FIELD_TITLE.getRegexp(), StringUtil.isBlank(archives.get("title")) ? "" : archives.get("title").toString());
 		item = item.replaceAll(FieldEnum.FIELD_PROPERTIES.getRegexp(), StringUtil.isBlank(archives.get("properties")) ? "" : archives.get("properties").toString());
 		item = item.replaceAll(FieldEnum.FIELD_LITPIC.getRegexp(), system.getWebsite() + system.getUploaddir() + "/" + imagePath);
 		item = item.replaceAll(FieldEnum.FIELD_TAG.getRegexp(), StringUtil.isBlank(archives.get("tag")) ? "" : archives.get("tag").toString());
@@ -68,9 +75,9 @@ public abstract class AbstractListTag {
 		item = item.replaceAll(FieldEnum.FIELD_WEIGHT.getRegexp(), StringUtil.isBlank(archives.get("weight")) ? "" : archives.get("weight").toString());
 		item = item.replaceAll(FieldEnum.FIELD_STATUS.getRegexp(), StringUtil.isBlank(archives.get("status")) ? "" : archives.get("status").toString());
 		item = item.replaceAll(FieldEnum.FIELD_CREATEBY.getRegexp(), StringUtil.isBlank(archives.get("createBy")) ? "" : archives.get("createBy").toString());
-		item = item.replaceAll(FieldEnum.FIELD_CREATETIME.getRegexp(), StringUtil.isBlank(archives.get("createTime")) ? "" : archives.get("createTime").toString());
+		item = FunctionUtil.replaceByFunction(item, FieldEnum.FIELD_CREATETIME.getRegexp(), StringUtil.isBlank(archives.get("createTime")) ? "" : archives.get("createTime"));
 		item = item.replaceAll(FieldEnum.FIELD_UPDATEBY.getRegexp(), StringUtil.isBlank(archives.get("updateBy")) ? "" : archives.get("updateBy").toString());
-		item = item.replaceAll(FieldEnum.FIELD_UPDATETIME.getRegexp(), StringUtil.isBlank(archives.get("updateTime")) ? "" : archives.get("updateTime").toString());
+		item = FunctionUtil.replaceByFunction(item, FieldEnum.FIELD_UPDATETIME.getRegexp(), StringUtil.isBlank(archives.get("updateTime")) ? "" : archives.get("updateTime"));
 		
 		if(StringUtil.isBlank(t) || "P".equals(t)) {//解析
 			item = item.replaceAll(FieldEnum.FIELD_ARCURL.getRegexp(), "/article/"+archives.get("aid").toString());
@@ -89,13 +96,13 @@ public abstract class AbstractListTag {
 		return item;
 	}
 	
-	public String buildHTML(String item, ArchivesVo archives, int i) {
+	public String buildHTML(String item, ArchivesVo archives, int i) throws CmsException{
 		cn.itechyou.cms.entity.System system = systemService.getSystem();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		
-		CategoryWithBLOBs categoryWithBLOBs = null;
+		Category categoryWithBLOBs = null;
 		if(StringUtil.isBlank(archives.getCategoryId())) {
-			categoryWithBLOBs = new CategoryWithBLOBs();
+			categoryWithBLOBs = new Category();
 			categoryWithBLOBs.setCoverTemp("/index_article.html");
 			categoryWithBLOBs.setListTemp("/list_article.html");
 			categoryWithBLOBs.setArticleTemp("/article_article.html");
@@ -110,7 +117,7 @@ public abstract class AbstractListTag {
 		}
  		item = item.replaceAll(FieldEnum.FIELD_AUTOINDEX.getRegexp(), String.valueOf(i));
 		item = item.replaceAll(FieldEnum.FIELD_ID.getRegexp(), archives.getId());
-		item = item.replaceAll(FieldEnum.FIELD_TITLE.getRegexp(), StringUtil.isBlank(archives.getTitle()) ? "" : archives.getTitle());
+		item = FunctionUtil.replaceByFunction(item, FieldEnum.FIELD_TITLE.getRegexp(), StringUtil.isBlank(archives.getTitle()) ? "" : archives.getTitle());
 		item = item.replaceAll(FieldEnum.FIELD_PROPERTIES.getRegexp(), StringUtil.isBlank(archives.getProperties()) ? "" : archives.getProperties());
 		item = item.replaceAll(FieldEnum.FIELD_LITPIC.getRegexp(), system.getWebsite() + system.getUploaddir() + "/" + imagePath);
 		item = item.replaceAll(FieldEnum.FIELD_TAG.getRegexp(), StringUtil.isBlank(archives.getTag()) ? "" : archives.getTag());
@@ -124,9 +131,9 @@ public abstract class AbstractListTag {
 		item = item.replaceAll(FieldEnum.FIELD_WEIGHT.getRegexp(), StringUtil.isBlank(archives.getWeight()) ? "" : archives.getWeight() + "");
 		item = item.replaceAll(FieldEnum.FIELD_STATUS.getRegexp(), StringUtil.isBlank(archives.getStatus()) ? "" : archives.getStatus() + "");
 		item = item.replaceAll(FieldEnum.FIELD_CREATEBY.getRegexp(), StringUtil.isBlank(archives.getCreateBy()) ? "" : archives.getCreateBy());
-		item = item.replaceAll(FieldEnum.FIELD_CREATETIME.getRegexp(), StringUtil.isBlank(archives.getCreateTime()) ? "" : archives.getCreateTime().toString());
+		item = FunctionUtil.replaceByFunction(item, FieldEnum.FIELD_CREATETIME.getRegexp(), StringUtil.isBlank(archives.getCreateTime()) ? "" : archives.getCreateTime());
 		item = item.replaceAll(FieldEnum.FIELD_UPDATEBY.getRegexp(), StringUtil.isBlank(archives.getUpdateBy()) ? "" : archives.getUpdateBy());
-		item = item.replaceAll(FieldEnum.FIELD_UPDATETIME.getRegexp(), StringUtil.isBlank(archives.getUpdateTime()) ? "" : archives.getUpdateTime().toString());
+		item = FunctionUtil.replaceByFunction(item, FieldEnum.FIELD_UPDATETIME.getRegexp(), StringUtil.isBlank(archives.getUpdateTime()) ? "" : archives.getUpdateTime());
 		if(StringUtil.isBlank(t) || "P".equals(t)) {//解析
 			item = item.replaceAll(FieldEnum.FIELD_ARCURL.getRegexp(), "/article/" + archives.getId());
 		}else {//生成
@@ -146,5 +153,4 @@ public abstract class AbstractListTag {
 	public void setT(String t) {
 		this.t = t;
 	}
-	
 }

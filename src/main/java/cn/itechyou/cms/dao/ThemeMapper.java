@@ -5,20 +5,10 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
+import cn.itechyou.cms.common.BaseMapper;
 import cn.itechyou.cms.entity.Theme;
 
-public interface ThemeMapper {
-    int deleteByPrimaryKey(String id);
-
-    int insert(Theme record);
-
-    int insertSelective(Theme record);
-
-    Theme selectByPrimaryKey(String id);
-
-    int updateByPrimaryKeySelective(Theme record);
-
-    int updateByPrimaryKey(Theme record);
+public interface ThemeMapper extends BaseMapper<Theme> {
 
 	List<Theme> queryListByPage(Map<String, Object> entity);
 

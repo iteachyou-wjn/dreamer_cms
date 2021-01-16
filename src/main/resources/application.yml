@@ -20,19 +20,27 @@ spring:
       file-size-threshold: 0
       max-file-size: 10MB
       max-request-size: 10MB
+      
 ## 该配置节点为独立的节点，有很多同学容易将这个配置放在spring的节点下，导致配置无法被识别
 mybatis: 
   configuration:    call-setters-on-nulls: true
     map-underscore-to-camel-case: true
+    # log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   mapper-locations: classpath:mapping/*.xml  #注意：一定要对应mapper映射xml文件的所在路径
   type-aliases-package: cn.itechyou.cms.entity  # 注意：对应实体类的路径
 
+mapper:
+  mappers:
+  - cn.itechyou.cms.common.BaseMapper
+  not-empty: false
+  identity: MYSQL
+
 #pagehelper分页插件
-pagehelper: 
-    helperDialect: mysql
-    reasonable: true
-    supportMethodsArguments: true
-    params: count=countSql
+pagehelper:
+  helperDialect: mysql
+  reasonable: false # 如果为true，则分页参数无效的情况下，则查询全部数据
+  supportMethodsArguments: true
+  params: count=countSql
 
 logging: 
   config: classpath:log4j2.yml
