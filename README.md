@@ -4,7 +4,7 @@
 
 # 梦想家CMS内容管理系统开源版J2EE代码
 
-当前版本：3.0.1
+当前版本：3.5.0
 
 梦想家CMS官网：http://www.itechyou.cn
 模版标签开发教程请参考：http://doc.itechyou.cn 
@@ -124,6 +124,11 @@ https://space.bilibili.com/482273402
 		<td>胜宇</td>
 		<td>10.00</td>
 		<td>2021-01-07 08:41:23</td>
+	</tr>
+	<tr>
+		<td>家乐</td>
+		<td>10.00</td>
+		<td>2021-01-14 17:59:41</td>
 	</tr>
 </table>
 
