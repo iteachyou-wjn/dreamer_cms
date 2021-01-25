@@ -27,7 +27,7 @@ public class FunctionUtil {
 	public static String replaceByFunction(String source, String regex, Object data) throws CmsException {
 		String result = "";
 		if(StringUtil.isBlank(data)) {
-			return "";
+			return source.replaceAll(regex, "");
 		}
 		List<String> list = RegexUtil.parseAll(source, regex, 0);
 		if(list != null && list.size() > 0) {

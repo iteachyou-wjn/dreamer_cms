@@ -1,10 +1,7 @@
 package cn.itechyou.cms.security.token;
 
-import java.util.List;
-
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
-import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 
 import cn.itechyou.cms.entity.User;
@@ -24,8 +21,6 @@ public class TokenManager {
 		User user = (User)SecurityUtils.getSubject().getPrincipal();
 		return user;
 	}
-	
-	
 	
 	/**
 	 * 获取当前用户的Session
