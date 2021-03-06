@@ -22,17 +22,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.CircleCaptcha;
-import cn.hutool.captcha.generator.MathGenerator;
 import cn.itechyou.cms.annotation.Log;
 import cn.itechyou.cms.common.BaseController;
 import cn.itechyou.cms.common.Constant;
 import cn.itechyou.cms.common.ResponseResult;
 import cn.itechyou.cms.common.StateCodeEnum;
+import cn.itechyou.cms.entity.Licence;
 import cn.itechyou.cms.entity.User;
 import cn.itechyou.cms.security.token.TokenManager;
-import cn.itechyou.cms.service.UserService;
+import cn.itechyou.cms.service.LicenceService;
 import cn.itechyou.cms.utils.LoggerUtils;
 import cn.itechyou.cms.vo.UserVO;
 
@@ -49,9 +48,10 @@ public class UserLoginController extends BaseController {
 	public static String URL404 = "/404.html";
 
 	@Autowired
-	private UserService userService;
-	@Autowired
 	private CircleCaptcha captcha;
+	@Autowired
+	private LicenceService licenceService;
+	
 
 	// 产生验证码
 	@RequestMapping("/getVerifyCode")
@@ -90,6 +90,8 @@ public class UserLoginController extends BaseController {
 	@RequestMapping("toIndex")
 	public ModelAndView toIndex() {
 		ModelAndView mv = new ModelAndView();
+		Licence licence = licenceService.getLicence();
+		mv.addObject("licence", licence);
 		mv.setViewName("admin/index");
 		return mv;
 	}

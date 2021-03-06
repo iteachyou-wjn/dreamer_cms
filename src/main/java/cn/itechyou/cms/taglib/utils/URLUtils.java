@@ -14,6 +14,10 @@ public class URLUtils {
 	 * @return
 	 */
 	public static String parseURL(cn.itechyou.cms.entity.System system, Category category, String t) {
+		String staticdir = system.getStaticdir();
+		if(staticdir.startsWith("/")) {
+			staticdir = staticdir.substring(1);
+		}
 		String url = "";
 		String typeCode = StringUtil.isBlank(category.getCode()) ? "" : category.getCode();
 		String visitUrl = StringUtil.isBlank(category.getVisitUrl()) ? PinyinUtils.toPinyin(category.getCnname()) : category.getVisitUrl();
@@ -31,9 +35,9 @@ public class URLUtils {
 			}
 		}else {
 			if(category.getCatModel() == 1) {
-				url = "/" + system.getStaticdir() + visitUrl + "/index.html";
+				url = "/" + staticdir + visitUrl + "/index.html";
 			}else if(category.getCatModel() == 2) {
-				url = "/" + system.getStaticdir() + visitUrl + "/list-1.html";
+				url = "/" + staticdir + visitUrl + "/list-1.html";
 			}else if(category.getCatModel() == 3) {
 				url = StringUtil.isBlank(category.getLinkUrl()) ? "" : category.getLinkUrl();
 			}

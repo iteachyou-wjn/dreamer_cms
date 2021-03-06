@@ -35,15 +35,11 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         registry.addViewController("/admin").setViewName("forward:/admin/u/toLogin");
         registry.addViewController("/admin/").setViewName("forward:/admin/u/toLogin");
         
-        System system = systemService.getSystem();
-        String staticdir = system.getStaticdir();
-        if(1 == system.getBrowseType()) {//动态
-        	registry.addViewController("/").setViewName("forward:/index");
-        	registry.addViewController("").setViewName("forward:/index");
-        }else {//静态
-        	registry.addViewController("/").setViewName("redirect:/" + staticdir + "/index.html");
-        	registry.addViewController("").setViewName("redirect:/" + staticdir + "/index.html");
-        }
+        /**
+         * 注册默认首页路径
+         */
+        registry.addViewController("/").setViewName("forward:/index");
+    	registry.addViewController("").setViewName("forward:/index");
         registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
         super.addViewControllers(registry);
     }

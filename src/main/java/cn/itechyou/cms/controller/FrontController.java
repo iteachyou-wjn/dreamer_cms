@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -96,9 +97,29 @@ public class FrontController {
 	/**
 	 * 首页方法
 	 * @throws CmsException
+	 * @throws IOException 
 	 */
 	@RequestMapping("/index")
-	public void index() throws CmsException {
+	public void index() throws CmsException, IOException {
+		System system = systemService.getSystem();
+		String staticdir = system.getStaticdir();
+		if(staticdir.startsWith("/")) {
+			staticdir = staticdir.substring(1);
+		}
+		//如果为静态浏览，则重写向到静态文件
+		if(2 == system.getBrowseType()) {
+			String url = fileConfiguration.getResourceDir() + staticdir + "/index.html";
+			File staticFile = new File(url);
+			if(!staticFile.exists()) {
+				throw new TemplateNotFoundException(
+						ExceptionEnum.HTTP_NOT_FOUND.getCode(),
+						ExceptionEnum.HTTP_NOT_FOUND.getMessage(),
+						"当前浏览方式为静态浏览，您所浏览的静态文件不存在，请先静态化网站后再继续。");
+			}
+			response.sendRedirect("/" + staticdir + "/index.html");
+			return;
+		}
+		
 		Theme theme = themeService.getCurrentTheme();
 		String templatePath = theme.getThemePath() + "/index.html";
 		String templateDir = fileConfiguration.getResourceDir() + "templates/";
@@ -129,10 +150,29 @@ public class FrontController {
 	 * @param typeid 栏目编码
 	 * @param visitUrl 访问URL
 	 * @throws CmsException
+	 * @throws IOException 
 	 */
 	@RequestMapping("cover-{typeid}/{visitUrl}")
 	public void cover(@PathVariable String typeid
-			, @PathVariable String visitUrl) throws CmsException {
+			, @PathVariable String visitUrl) throws CmsException, IOException {
+		System system = systemService.getSystem();
+		//查询栏目
+		Category category = categoryService.queryCategoryByCode(typeid);
+		//如果为静态浏览，则重写向到静态文件
+		if(2 == system.getBrowseType()) {
+			String url = URLUtils.parseURL(system, category, "S");
+			String fileUrl = fileConfiguration.getResourceDir() + url;
+			File staticFile = new File(fileUrl);
+			if(!staticFile.exists()) {
+				throw new TemplateNotFoundException(
+						ExceptionEnum.HTTP_NOT_FOUND.getCode(),
+						ExceptionEnum.HTTP_NOT_FOUND.getMessage(),
+						"当前浏览方式为静态浏览，您所浏览的静态文件不存在，请先静态化网站后再继续。");
+			}
+			response.sendRedirect(url);
+			return;
+		}
+		
 		Theme theme = themeService.getCurrentTheme();
 		String templateDir = fileConfiguration.getResourceDir() + "templates/";
 		if(theme == null) {
@@ -141,7 +181,6 @@ public class FrontController {
 		if(!visitUrl.startsWith("/")) {
 			visitUrl = "/" + visitUrl;
 		}
-		Category category = categoryService.queryCategoryByCode(typeid);
 		StringBuffer templatePath = new StringBuffer();
 		templatePath.append(theme.getThemePath());
 		
@@ -182,12 +221,35 @@ public class FrontController {
 	 * @param pageNum 当前页
 	 * @param pageSize 分页大小
 	 * @throws CmsException
+	 * @throws IOException 
 	 */
 	@RequestMapping("list-{typeid}/{visitUrl}/{pageNum}/{pageSize}")
 	public void list(@PathVariable String typeid
 			, @PathVariable String visitUrl
 			, @PathVariable Integer pageNum
-			, @PathVariable Integer pageSize) throws CmsException {
+			, @PathVariable Integer pageSize) throws CmsException, IOException {
+		System system = systemService.getSystem();
+		String staticdir = system.getStaticdir();
+		if(staticdir.startsWith("/")) {
+			staticdir = staticdir.substring(1);
+		}
+		//查询栏目
+		Category category = categoryService.queryCategoryByCode(typeid);
+		//如果为静态浏览，则重写向到静态文件
+		if(2 == system.getBrowseType()) {
+			String url = staticdir + URLUtils.parseFileName(category, pageNum);
+			String fileUrl = fileConfiguration.getResourceDir() + url;
+			File staticFile = new File(fileUrl);
+			if(!staticFile.exists()) {
+				throw new TemplateNotFoundException(
+						ExceptionEnum.HTTP_NOT_FOUND.getCode(),
+						ExceptionEnum.HTTP_NOT_FOUND.getMessage(),
+						"当前浏览方式为静态浏览，您所浏览的静态文件不存在，请先静态化网站后再继续。");
+			}
+			response.sendRedirect("/" + url);
+			return;
+		}
+		
 		Theme theme = themeService.getCurrentTheme();
 		String templateDir = fileConfiguration.getResourceDir() + "templates/";
 		if(theme == null) {
@@ -196,7 +258,6 @@ public class FrontController {
 		if(!visitUrl.startsWith("/")) {
 			visitUrl = "/" + visitUrl;
 		}
-		Category category = categoryService.queryCategoryByCode(typeid);
 		StringBuffer templatePath = new StringBuffer();
 		templatePath.append(theme.getThemePath());
 		
@@ -234,9 +295,45 @@ public class FrontController {
 	 * 文章详情方法
 	 * @param id 文章ID
 	 * @throws CmsException
+	 * @throws IOException 
 	 */
 	@RequestMapping("/article/{id}")
-	public void article(@PathVariable String id) throws CmsException{
+	public void article(@PathVariable String id) throws CmsException, IOException{
+		System system = systemService.getSystem();
+		String staticdir = system.getStaticdir();
+		if(staticdir.startsWith("/")) {
+			staticdir = staticdir.substring(1);
+		}
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		Archives archives = archivesService.selectByPrimaryKey(id);
+		//如果为静态浏览，则重写向到静态文件
+		if(2 == system.getBrowseType()) {
+			Category temp = null;
+			if(!"-1".equals(archives.getCategoryId())) {
+				temp = categoryService.selectById(archives.getCategoryId());
+			}else {//顶级分类走该模版
+				temp = new Category();
+				temp.setId("-1");
+				temp.setCnname("顶级分类");
+			}
+			String catDir = URLUtils.getCategoryDir(temp);
+			
+			Date createTime = archives.getCreateTime();
+			String dateDir = sdf.format(createTime);
+			String url = URLUtils.parseFileName(null, 1);
+			
+			File staticFile = new File(fileConfiguration.getResourceDir() + staticdir + catDir + "/" + dateDir + "/" + archives.getId() + ".html");
+			if(!staticFile.exists()) {
+				throw new TemplateNotFoundException(
+						ExceptionEnum.HTTP_NOT_FOUND.getCode(),
+						ExceptionEnum.HTTP_NOT_FOUND.getMessage(),
+						"当前浏览方式为静态浏览，您所浏览的静态文件不存在，请先静态化网站后再继续。");
+			}
+			response.sendRedirect("/" + system.getStaticdir() + catDir + "/" + dateDir + "/" + archives.getId() + ".html");
+			return;
+		}
+		
+		
 		StringBuffer templatePath = new StringBuffer();
 		Theme theme = themeService.getCurrentTheme();
 		String templateDir = fileConfiguration.getResourceDir() + "templates/";
@@ -245,7 +342,7 @@ public class FrontController {
 		}
 		templatePath.append(theme.getThemePath());
 
-		Archives archives = archivesService.selectByPrimaryKey(id);
+		
 		String formId = formService.queryDefaultForm().getId();
 		Category category = null;
 		if(!"-1".equals(archives.getCategoryId())) {

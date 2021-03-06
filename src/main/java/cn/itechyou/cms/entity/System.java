@@ -32,7 +32,7 @@ public class System implements Serializable{
 	@Column(name = "keywords")
     private String keywords;
 
-	@Column(name = "describe")
+	@Column(name = "`describe`")
     private String describe;
 
 	@Column(name = "icp")

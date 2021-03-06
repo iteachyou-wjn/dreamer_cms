@@ -6,12 +6,14 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
 import cn.hutool.core.map.MapUtil;
 import cn.itechyou.cms.common.SearchEntity;
+import cn.itechyou.cms.dao.ArchivesMapper;
 import cn.itechyou.cms.dao.CategoryMapper;
 import cn.itechyou.cms.entity.Category;
 import cn.itechyou.cms.service.CategoryService;
@@ -30,6 +32,8 @@ public class CategoryServiceImpl implements CategoryService {
 	private static final Logger logger = LoggerUtils.getLogger(CategoryServiceImpl.class);
 	@Autowired
 	private CategoryMapper categoryMapper;
+	@Autowired
+	private ArchivesMapper archivesMapper;
 	
 	/**
 	 * 添加
@@ -88,8 +92,10 @@ public class CategoryServiceImpl implements CategoryService {
 	 * 删除
 	 */
 	@Override
+	@Transactional
 	public int delete(String id) {
-		return categoryMapper.deleteByPrimaryKey(id);
+		Category category = categoryMapper.selectByPrimaryKey(id);
+		return cascadeDelete(category);
 	}
 
 	@Override
@@ -129,6 +135,24 @@ public class CategoryServiceImpl implements CategoryService {
 	@Override
 	public List<Category> queryAll() {
 		return categoryMapper.queryAll();
+	}
+	
+	/**
+	 * 级联删除栏目
+	 * @param category
+	 * @return
+	 */
+	private int cascadeDelete(Category category) {
+		int counter = 0;
+		if(category == null) {
+			return counter;
+		}
+		List<Category> categorys = categoryMapper.selectByParentId(category.getId());
+		for(Category temp : categorys) {
+			counter += cascadeDelete(temp);
+		}
+		counter += categoryMapper.deleteByPrimaryKey(category.getId());
+		return counter;
 	}
 	
 }

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.itechyou.cms.dao.LicenceMapper">
+  <resultMap id="BaseResultMap" type="cn.itechyou.cms.entity.Licence">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="main_name" jdbcType="VARCHAR" property="mainName" />
+    <result column="credit_code" jdbcType="VARCHAR" property="creditCode" />
+    <result column="licence_num" jdbcType="VARCHAR" property="licenceNum" />
+    <result column="main_domain" jdbcType="VARCHAR" property="mainDomain" />
+    <result column="encrypt_data" jdbcType="VARCHAR" property="encryptData" />
+    <result column="private_key" jdbcType="VARCHAR" property="privateKey" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, `type`, main_name, credit_code, licence_num, main_domain, encrypt_data, private_key, 
+    create_by, create_time, update_by, update_time
+  </sql>
+  
+  <select id="getCurrentLicence" resultMap="BaseResultMap">
+  	select * from system_licence limit 0,1
+  </select>
+</mapper>

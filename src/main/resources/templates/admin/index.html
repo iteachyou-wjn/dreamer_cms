@@ -122,6 +122,14 @@
 		</section>
 		<div class="footer-main">
 			Copyright &copy; Dreamer CMS, Powered by <a href="http://www.itechyou.cn" title="I Tech You,我教你！">I Tech You , 我教你!</a> 2018-2030
+			<span class="fr">授权状态：
+				<a href="/admin/licence/toIndex" target="mainframe" th:if="${licence == null}">未授权</a>
+				<a href="/admin/licence/toIndex" target="mainframe" th:if="${licence.type} eq '1'">个人用户</a>
+				<a href="/admin/licence/toIndex" target="mainframe" th:if="${licence.type} eq '2'">企业用户</a>
+				<a href="/admin/licence/toIndex" target="mainframe" th:if="${licence.type} eq '3'">政府用户</a>
+				<a href="/admin/licence/toIndex" target="mainframe" th:if="${licence.type} eq '4'">其它用户</a>
+			</span>
+			<div class="clearFix"></div>
 		</div>
 	</aside>
 	<!-- 右侧结束 -->

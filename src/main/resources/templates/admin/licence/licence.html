@@ -1,0 +1,115 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dreamer Blog - 后台管理系统</title> 
+    <!-- bootstrap 3.0.2 -->
+    <link href="/resource/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <!-- font Awesome -->
+    <link href="/resource/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <!-- Ionicons -->
+    <link href="/resource/css/ionicons.min.css" rel="stylesheet" type="text/css" />
+    <!-- Theme style -->
+    <link href="/resource/css/style.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="/resource/js/jQueryMessage/css/message.skin.css" />
+</head>
+
+<body>
+<div class="row">
+    <div class="col-md-12">
+    	<h1 class="panel-heading">授权许可</h1>
+        <!--breadcrumbs start -->
+        <ul class="breadcrumb">
+				<li><a href="/admin/dashboard/toIndex"><i class="fa fa-home"></i> 首页</a></li>
+				<li class="active">授权许可</li>
+			</ul>
+        <!--breadcrumbs end -->
+    </div>
+</div>
+<div class="row">
+	<div class="col-lg-12">
+		<section class="panel">
+		    <div class="panel-body">
+		    	<div class="replay_licence" th:if="${licence} != null">
+		    		<button type="button" class="btn btn-info" onclick="replayLicence();">重新授权</button>
+		    	</div>
+		    	<div class="licence-container" th:if="${licence} != null">
+		    		<div class="licence-container-border">
+		    			<div class="licence-container-content">
+		    				<div class="licence-container-content-bg1"></div>
+		    				<h1>官方授权书</h1>
+		    				<h2>AUTHORIZATION CERTIFICATE</h2>
+					    	<div class="form-group">
+					    		兹授权：<b><span th:text="${licence.mainName}"></span></b>（
+					    		<span th:if="${licence.type} eq '1'">个人用户</span>
+					    		<span th:if="${licence.type} eq '2'">企业用户</span>
+					    		<span th:if="${licence.type} eq '3'">政府用户</span>
+					    		<span th:if="${licence.type} eq '4'">其它用户</span>
+					    		&nbsp;&nbsp;<span th:if="${licence.type} ne '1'" th:text="${licence.creditCode}"></span>），允许商业使用梦想家CMS内容管理系统，本授权证明仅用于梦想家CMS内容管理系统使用授权，未经“I Tech You , 我教你!”事先许可不得他用。
+					    	</div>
+					    	<div class="form-group">
+					    		授权编号：
+					    		<span th:text="${licence.licenceNum}"></span>
+					    	</div>
+					    	<div class="form-group">
+					    		授权主域名：
+					    		<span th:text="${licence.mainDomain}"></span>
+					    	</div>
+					    	<div class="form-group">
+					    		授权时间：
+					    		<span th:text="${#dates.format(licence.createTime, 'yyyy-MM-dd')}"></span>
+					    	</div>
+					    	<div class="form-group">
+					    		特此授权
+					    	</div>
+					    	<div class="form-group">
+					    		<div class="fr">
+					    			<div>I Tech You , 我教你!</div>
+					    			<div>授权人：王俊南</div>
+					    		</div>
+					    	</div>
+					    	<div class="licence-container-content-bg2"></div>
+				    	</div>
+			    	</div>
+		    	</div>
+		    	<div id="licenceForm" th:style="${licence} == null ? 'display:block' : 'display:none'">
+			        <form class="col s12" id="form1" method="post" th:action="@{/admin/licence/grant}">
+			            <div class="form-group form-control-medium">
+							<label for="encryptData">加密证书：</label>
+							<textarea style="width: 100%;height: 100px;" name="encryptData" class="form-control"></textarea>
+			            </div>
+			            <div class="form-group form-control-medium">
+							<label for="privateKey">密钥：</label>
+							<textarea style="width: 100%;height: 200px;" name="privateKey" class="form-control"></textarea>
+			            </div>
+			            <div class="form-btn-group-left">
+			            	<button type="submit" class="btn btn-info" id="save">授权</button>
+			            	<button type="button" class="btn" onclick="cancelLicence()">取消</button>
+			            	<span>还没有授权信息，联系官方进行购买！</span>
+			            </div>
+			        </form>
+		        </div>
+		    </div>
+		</section>
+	</div>
+</div>
+<!-- jQuery 2.0.2 -->
+<script src="/resource/js/jquery.min.js" type="text/javascript"></script>
+<script src="/resource/js/jquery.serializejson.js" type="text/javascript"></script>
+<script type="text/javascript" src="/resource/js/jQueryMessage/js/jquery.plugin.message.js"></script>		
+<script type="text/javascript">
+	function replayLicence(){
+		$("#licenceForm").show();
+		$(".licence-container").hide();
+		$(".replay_licence").hide();
+	}
+	
+	function cancelLicence(){
+		$("#licenceForm").hide();
+		$(".licence-container").show();
+		$(".replay_licence").show();
+	}
+</script>
+</body>
+</html>

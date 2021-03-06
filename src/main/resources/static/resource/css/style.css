@@ -4762,3 +4762,13 @@ li.dropdown-header {
 .result{text-align:center;}
 
 .dashboard-title{background: #e2e2e2;font-weight: bold;}
+
+.licence-container{width: 788px;border:#007cc4 solid 1px;margin: 50px auto;padding: 5px;}
+.licence-container-border{border:#007cc4 solid 1px;padding: 12px;}
+.licence-container-content{border:#007cc4 solid 4px;color: #414141;padding: 50px;position: relative;overflow: hidden;}
+.licence-container-content-bg1{background: url(../img/security_bg_2.png) no-repeat;width: 200px;height: 130px;margin: 0 auto;background-size: 100%;position: absolute;top: -30px;left: calc((100% - 200px) / 2);}
+.licence-container-content-bg2{background: url(../img/security_bg_1.png) no-repeat;width: 200px;height: 100px;margin: 0 auto;background-size: 100%;position: absolute;bottom: -30px;left: calc((100% - 200px) / 2);}
+.licence-container-content h1,.licence-container-content h2{text-align: center;}
+.licence-container-content h1{font-size: 35px;}
+.licence-container-content h2{font-size: 12px;}
+.replay_licence{}
