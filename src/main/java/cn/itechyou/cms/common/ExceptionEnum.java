@@ -18,6 +18,7 @@ public enum ExceptionEnum {
 	CAT_NOTFOUND_EXCEPTION("40006", "栏目不存在"),
 	TEMPLATE_PARSE_EXCEPTION("40007", "模版文件解析错误"),
 	LICENCE_PARAMETER_EXCEPTION("40008", "授权失败"),
+	USERNAME_EXIST_EXCEPTION("40009", "用户名已存在"),
 	;
 	private String code;
 	private String message;

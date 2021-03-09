@@ -11,12 +11,10 @@
     <link href="/resource/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <!-- Ionicons -->
     <link href="/resource/css/ionicons.min.css" rel="stylesheet" type="text/css" />
-    <!-- Morris chart -->
-    <link href="/resource/css/morris/morris.css" rel="stylesheet" type="text/css" />
-    <!-- jvectormap -->
-    <link href="/resource/css/jvectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css" />
     <!-- Theme style -->
     <link href="/resource/css/style.css" rel="stylesheet" type="text/css" />
+    <link href="/resource/css/leftMenu/left-side-menu.css" rel="stylesheet" type="text/css" />
+    <link href="/resource/css/leftMenu/iconfont.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body class="skin-black">
@@ -74,44 +72,57 @@
 					</span>
 				</div>
 			</form>
-			<!-- /.search form -->
-			<ul class="sidebar-menu">
-				<li class="active">
-					<a href="/admin/dashboard/toIndex" target="mainframe" class="waves-effect waves-dark"><i class="fa fa-dashboard"></i>仪表盘</a>
-				</li>
-				<li>
-					<a href="/admin/category/list" target="mainframe" class="waves-effect waves-dark"><i class="fa fa-columns"></i>栏目/文章管理</a>
-				</li>
-				<!-- 
-				<li>
-					<a href="/admin/archives/list" target="mainframe" class="waves-effect waves-dark"><i class="fa fa-pencil-square-o"></i>文档管理</a>
-				</li>
-				 -->
-				<li>
-					<a href="/admin/static/toIndex" target="mainframe" class="waves-effect waves-dark"><i class="fa fa-print"></i>网站静态化</a>
-				</li>
-				<li>
-					<a href="/admin/label/toIndex" target="mainframe" class="waves-effect waves-dark"><i class="fa fa-tags"></i>文章标签管理</a>
-				</li>
-				<li>
-					<a href="/admin/forms/list" target="mainframe" class="waves-effect waves-dark"><i class="fa fa-check-square-o"></i>表单模型管理</a>
-				</li>
-				<li>
-					<a href="/admin/attachment/list" target="mainframe" class="waves-effect waves-dark"><i class="fa fa-chain"></i>站点附件管理</a>
-				</li>
-				<li>
-					<a href="/admin/templates/toIndex" target="mainframe" class="waves-effect waves-dark"><i class="fa fa-tags"></i>模板文件管理</a>
-				</li>
-				<li>
-					<a href="/admin/theme/list" target="mainframe" class="waves-effect waves-dark"><i class="fa fa-puzzle-piece"></i>网站风格设置</a>
-				</li>
-				<li>
-					<a href="/admin/variable/list" target="mainframe" class="waves-effect waves-dark"><i class="fa fa-cogs"></i>网站变量管理</a>
-				</li>
-				<li>
-					<a href="/admin/system/toIndex" target="mainframe" class="waves-effect waves-dark"><i class="fa fa-cog"></i>网站系统配置</a>
-				</li>
-			</ul>
+			
+			<!-- 菜单开始 -->
+			<div class="lsm-container">	
+		        <div class="lsm-scroll" >
+		            <div class="lsm-sidebar">
+						<ul class="sidebar-menu">
+							<li class="active">
+								<a href="/admin/dashboard/toIndex" target="mainframe" class="waves-effect waves-dark"><i class="fa fa-dashboard"></i>仪表盘</a>
+							</li>
+							<li>
+								<a href="/admin/category/list" target="mainframe" class="waves-effect waves-dark"><i class="fa fa-columns"></i>栏目/文章管理</a>
+							</li>
+							<!-- 
+							<li>
+								<a href="/admin/archives/list" target="mainframe" class="waves-effect waves-dark"><i class="fa fa-pencil-square-o"></i>文档管理</a>
+							</li>
+							 -->
+							<li>
+								<a href="/admin/static/toIndex" target="mainframe" class="waves-effect waves-dark"><i class="fa fa-rocket"></i>网站静态化</a>
+							</li>
+							<li>
+								<a href="/admin/label/toIndex" target="mainframe" class="waves-effect waves-dark"><i class="fa fa-tags"></i>文章标签管理</a>
+							</li>
+							<li>
+								<a href="/admin/forms/list" target="mainframe" class="waves-effect waves-dark"><i class="fa fa-check-square-o"></i>表单模型管理</a>
+							</li>
+							<li>
+								<a href="/admin/attachment/list" target="mainframe" class="waves-effect waves-dark"><i class="fa fa-chain"></i>站点附件管理</a>
+							</li>
+							<li>
+								<a href="/admin/templates/toIndex" target="mainframe" class="waves-effect waves-dark"><i class="fa fa-tags"></i>模板文件管理</a>
+							</li>
+							<li>
+								<a href="/admin/theme/list" target="mainframe" class="waves-effect waves-dark"><i class="fa fa-puzzle-piece"></i>网站风格设置</a>
+							</li>
+							<li>
+								<a href="/admin/variable/list" target="mainframe" class="waves-effect waves-dark"><i class="fa fa-list-ol"></i>网站变量管理</a>
+							</li>
+							<li class="lsm-sidebar-item">
+			                    <a href="javascript:void(1);"><i class="fa fa-cog"></i><span>系统管理</span><i class="my-icon lsm-sidebar-more"></i></a>
+				                <ul>
+				                	<li><a href="/admin/user/list" target="mainframe" class="waves-effect waves-dark"><span>用户管理</span></a></li>
+				                </ul>
+			                </li>
+							<li>
+								<a href="/admin/system/toIndex" target="mainframe" class="waves-effect waves-dark"><i class="fa fa-wrench"></i>网站系统配置</a>
+							</li>
+						</ul>
+					</div>
+		        </div>
+		    </div>
 		</section>
 		<!-- 菜单结束 -->
 	</aside>
@@ -136,21 +147,20 @@
 </div><!-- 主体结束 -->
 <!-- jQuery 2.0.2 -->
 <script src="/resource/js/jquery.min.js" type="text/javascript"></script>
-<!-- jQuery UI 1.10.3 -->
-<script src="/resource/js/jquery-ui-1.10.3.min.js" type="text/javascript"></script>
 <!-- Bootstrap -->
 <script src="/resource/js/bootstrap.min.js" type="text/javascript"></script>
 <!-- Director App -->
 <script src="/resource/js/Director/app.js" type="text/javascript"></script>
+<script src="/resource/js/left-side-menu.js" type="text/javascript"></script>
 <script type="text/javascript">
 	$(function () {
 		iframeAutoHeight();
 		$(".sidebar-menu li").click(function(){
-		$(".sidebar-menu li").removeClass("active");
-		$(this).addClass("active");
-	});
+			$(".sidebar-menu li").removeClass("active");
+			$(this).addClass("active");
+		});
 
-	var userStr = sessionStorage.getItem("dreamer-cms-user");
+		var userStr = sessionStorage.getItem("dreamer-cms-user");
 		if(userStr == null || userStr == "" || userStr == "undefined"){
 			window.location.href = "/admin/u/toLogin";
 		}else{

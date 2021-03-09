@@ -932,32 +932,11 @@ content: '';
   padding: 0;
 }
 .sidebar .sidebar-menu > li > a {
-  padding: 12px 5px 12px 15px;
   display: block;
 }
 .sidebar .sidebar-menu > li > a > .fa,
 .sidebar .sidebar-menu > li > a > .glyphicon,
 .sidebar .sidebar-menu > li > a > .ion {
-  width: 20px;
-}
-.sidebar .sidebar-menu .treeview-menu {
-  display: none;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-.sidebar .sidebar-menu .treeview-menu > li {
-  margin: 0;
-}
-.sidebar .sidebar-menu .treeview-menu > li > a {
-  padding: 8px 5px 8px 15px;
-  display: block;
-  font-size: 14px;
-  margin: 0px 0px;
-}
-.sidebar .sidebar-menu .treeview-menu > li > a > .fa,
-.sidebar .sidebar-menu .treeview-menu > li > a > .glyphicon,
-.sidebar .sidebar-menu .treeview-menu > li > a > .ion {
   width: 20px;
 }
 .user-panel {
@@ -3230,11 +3209,6 @@ to {
 /* skin-black sidebar */
 .skin-black .sidebar {
 	border-bottom: 1px solid #39435C;
-}
-
-.skin-black .sidebar > .sidebar-menu > li {
-  /*border-top: 1px solid #333;
-  border-bottom: 0px solid #444;*/
 }
 
 .skin-black .sidebar > .sidebar-menu > li:first-of-type {

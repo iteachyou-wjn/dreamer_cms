@@ -38,9 +38,15 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public PageInfo<User> listByPage(SearchEntity page) {
-		PageHelper.startPage(page.getPageNum(), page.getPageSize());
-		List<User> list = userMapper.listByPage(page.getEntity());
+	public PageInfo<User> listByPage(SearchEntity params) {
+		if(params.getPageNum() == null || params.getPageNum() == 0) {
+			params.setPageNum(1);
+		}
+		if(params.getPageSize() == null || params.getPageSize() == 0) {
+			params.setPageSize(10);
+		}
+		PageHelper.startPage(params.getPageNum(), params.getPageSize());
+		List<User> list = userMapper.listByPage(params.getEntity());
 		PageInfo<User> pageList = new PageInfo<>(list);
 		return pageList;
 	}
@@ -50,4 +56,18 @@ public class UserServiceImpl implements UserService {
 		return userMapper.selectByPrimaryKey(id);
 	}
 
+	@Override
+	public int addUser(User user) {
+		return userMapper.insertSelective(user);
+	}
+
+	@Override
+	public int updateUser(User user) {
+		return userMapper.updateByPrimaryKeySelective(user);
+	}
+
+	@Override
+	public int deleteUser(String id) {
+		return userMapper.deleteByPrimaryKey(id);
+	}
 }

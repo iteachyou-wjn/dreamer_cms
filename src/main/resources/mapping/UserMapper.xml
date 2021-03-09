@@ -30,4 +30,14 @@
   	from system_user
   	where username = #{username,jdbcType=VARCHAR}
   </select>
+  
+  <select id="listByPage" parameterType="java.util.Map" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List" />
+  	from system_user
+  	where 1 = 1
+  	<if test="username != null and username != ''">
+  		and username like concat('%',#{username,jdbcType=VARCHAR},'%')
+  	</if>
+  </select>
 </mapper>

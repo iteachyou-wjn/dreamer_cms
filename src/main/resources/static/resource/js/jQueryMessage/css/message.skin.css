@@ -1,4 +1,4 @@
-.message-box{margin:0 auto;position:absolute;z-index: 65535;width:300px;height:40px;top:30px;border-radius:5px;overflow:hidden;}
+.message-box{margin:0 auto;position:fixed;z-index: 65535;width:300px;height:40px;top:30px;border-radius:5px;overflow:hidden;}
 .message-box-close{position: absolute;z-index: 101;top:0;right:5px;cursor: pointer;}
 .message-box-close i{font-style:normal;}
 .message-box-close i::before {content: "\2716";}
