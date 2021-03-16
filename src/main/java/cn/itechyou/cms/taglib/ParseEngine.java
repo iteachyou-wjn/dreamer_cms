@@ -124,6 +124,12 @@ public class ParseEngine {
 		newHtml = attachmentTag.parse(newHtml);
 		return newHtml;
 	}
+
+	public String parsePrevAndNext(String html, String id) throws CmsException{
+		String newHtml = new String(html);
+		newHtml = prevNextTag.parse(newHtml, id);
+		return newHtml;
+	}
 	
 	/**
 	 * 列表页面解析
@@ -182,12 +188,6 @@ public class ParseEngine {
 		newHtml = pageListTag.parse(newHtml,typeid, pageNum,pageSize);
 		newHtml = labelTag.parse(newHtml);
 		newHtml = attachmentTag.parse(newHtml);
-		return newHtml;
-	}
-
-	public String parsePrevAndNext(String html, String id) throws CmsException{
-		String newHtml = new String(html);
-		newHtml = prevNextTag.parse(newHtml, id);
 		return newHtml;
 	}
 

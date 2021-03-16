@@ -101,6 +101,7 @@ public class RoleController {
 		roleService.update(role);
 		return "redirect:/admin/role/list";
 	}
+	
 	/**
 	 * 删除
 	 */

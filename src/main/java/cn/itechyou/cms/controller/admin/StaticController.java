@@ -327,8 +327,8 @@ public class StaticController {
 				Archives archives = allArt.get(i);
 				Date createTime = archives.getCreateTime();
 				String dateDir = sdf.format(createTime);
-				newHtml = parseEngine.parse(html);
-				newHtml = parseEngine.parseCategory(newHtml, categoryWithBLOBs.getCode());
+				newHtml = parseEngine.generate(html);
+				newHtml = parseEngine.generateCategory(newHtml, categoryWithBLOBs.getCode());
 				newHtml = parseEngine.parseArticle(newHtml, archives.getId());
 				newHtml = parseEngine.generatePrevAndNext(newHtml, archives.getId());
 				File file = new File(fileConfiguration.getResourceDir() + system.getStaticdir() + catDir + "/" + dateDir + "/" + archives.getId() + ".html");

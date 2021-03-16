@@ -70,6 +70,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-websocket</artifactId>
         </dependency>
+        
+        <dependency>
+            <groupId>org.apache.karaf.scheduler</groupId>
+            <artifactId>org.apache.karaf.scheduler.core</artifactId>
+            <version>4.2.0</version>
+        </dependency>
 		
 		<!-- configuration 配置解析相关jar包 -->
 		<dependency>

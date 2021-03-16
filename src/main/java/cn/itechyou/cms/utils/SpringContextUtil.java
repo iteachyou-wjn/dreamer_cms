@@ -33,6 +33,10 @@ public class SpringContextUtil implements ApplicationContextAware {
 			throw new RuntimeException("获取的Bean不存在！");
 		}
 	}
+	
+	public static <T> T getBean(Class<T> clz) {
+        return applicationContext.getBean(clz);
+    }
 
 	public static <T> T getBean(String name, Class<T> requiredType)
 			throws BeansException {

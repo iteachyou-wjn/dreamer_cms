@@ -2,12 +2,14 @@ package cn.itechyou.cms;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import tk.mybatis.spring.annotation.MapperScan;
 
-@EnableTransactionManagement //开启注解事务管理,等同于xml配置方式的 <tx:annotation-driven />
 @SpringBootApplication
+@EnableScheduling //开启定时任务
+@EnableTransactionManagement //开启注解事务管理
 @MapperScan("cn.itechyou.cms.dao")
 public class DreamerCMSApplication {
 

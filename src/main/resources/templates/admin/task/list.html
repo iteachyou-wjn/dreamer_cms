@@ -14,16 +14,17 @@
     <link href="/resource/css/iCheck/all.css" rel="stylesheet" type="text/css" />
     <!-- Theme style -->
     <link href="/resource/css/style.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="/resource/js/jQueryMessage/css/message.skin.css" />
 </head>
 
 <body>
 	<div class="row">
 	    <div class="col-md-12">
-	    	<h1 class="panel-heading">用户管理</h1>
+	    	<h1 class="panel-heading">任务管理</h1>
 	        <!--breadcrumbs start -->
 	        <ul class="breadcrumb">
 				<li><a href="/admin/dashboard/toIndex"><i class="fa fa-home"></i> 首页</a></li>
-				<li class="active">用户管理</li>
+				<li class="active">任务管理</li>
 			</ul>
 	        <!--breadcrumbs end -->
 	    </div>
@@ -34,7 +35,7 @@
 				<div class="panel-body">
 	                 <!-- <span class="pull-right badge badge-info">32</span> -->
 	                 <button class="btn btn-primary btn-addon btn-sm" th:onclick="toAdd();">
-	                     <i class="fa fa-plus"></i>添加角色
+	                     <i class="fa fa-plus"></i>添加任务
 	                 </button>
 	            </div>
 			    <div class="panel-body table-responsive">
@@ -42,20 +43,32 @@
 						<thead>
 							<tr>
 								<th style="width:50px;">选择</th>
-								<th>角色名称</th>
-								<th>角色编码</th>
+								<th>任务名称</th>
+								<th>完整类路径</th>
+								<th>Cron表达式</th>
+								<th>状态</th>
 								<th style="width:300px;">操作</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr th:each="item,stat : ${pageInfo.list}">
 								<td><input type="checkbox" class="flat-grey list-child" th:value="${item.id}" /></td>
-								<td th:text="${item.roleName}"></td>
-								<td th:text="${item.roleCode}"></td>
+								<td th:text="${item.taskName}"></td>
+								<td th:text="${item.clazzName}"></td>
+								<td th:text="${item.cronExpression}"></td>
 								<td>
-									<a th:href="@{/admin/role/toGrant(id=${item.id})}" class="btn btn-xs btn-success">分配权限</a>
+									<span th:if="${item.status} == 1">启用</span>
+									<span th:if="${item.status} == 0">禁用</span>
+								</td>
+								<td>
+									<a href="javascript:void(0)" class="btn btn-xs btn-success" th:taskId="${item.id}" th:onclick="run(this.getAttribute('taskId'));">执行</a>
 									<span>&nbsp;|&nbsp;</span>
-									<a th:href="@{/admin/role/toEdit(id=${item.id})}" class="btn btn-xs btn-success">编辑</a>
+									<a th:href="@{/admin/task/changeStatus(id=${item.id},status=(${item.status}) == '1' ? 0 : 1)}" class="btn btn-xs btn-success">
+										<span th:if="${item.status} == '1'">禁用</span>
+										<span th:if="${item.status} == '0'">启用</span>
+									</a>
+									<span>&nbsp;|&nbsp;</span>
+									<a th:href="@{/admin/task/toEdit(id=${item.id})}" class="btn btn-xs btn-success">编辑</a>
 									<span>&nbsp;|&nbsp;</span>
 									<a href="javascript:void(0)" data-toggle="modal" class="btn btn-xs btn-danger" th:userId="${item.id}" th:onclick="confrimRemove(this.getAttribute('userId'));">删除</a>
 								</td>
@@ -68,11 +81,11 @@
 			    </div>
 			    <div class="panel-footer bg-white text-right">
                      <ul class="pagination">
-                         <li><a th:href="@{/admin/role/list(pageNum=${pageInfo.navigateFirstPage},pageSize=${pageInfo.pageSize})}" title="首页" th:class="${pageInfo.isFirstPage} ? 'paginationNotAllowed' : ''">«</a></li>
-                         <li><a th:href="@{/admin/role/list(pageNum=${pageInfo.prePage},pageSize=${pageInfo.pageSize})}" title="上一页" th:if="${pageInfo.hasPreviousPage}">‹</a></li>
-                         <li th:each="pageinfo : ${pageInfo.navigatepageNums}"><a th:href="@{/admin/role/list(pageNum=${pageinfo},pageSize=${pageInfo.pageSize})}" th:class="${pageinfo == pageInfo.pageNum} ? 'paginationActive' : ''" th:text="${pageinfo}"></a></li>
-                         <li><a th:href="@{/admin/role/list(pageNum=${pageInfo.nextPage},pageSize=${pageInfo.pageSize})}" title="下一页" th:if="${pageInfo.hasNextPage}">›</a></li>
-                         <li><a th:href="@{/admin/role/list(pageNum=${pageInfo.navigateLastPage},pageSize=${pageInfo.pageSize})}" title="未页" th:class="${pageInfo.isLastPage} ? 'paginationNotAllowed' : ''">»</a></li>
+                         <li><a th:href="@{/admin/task/list(pageNum=${pageInfo.navigateFirstPage},pageSize=${pageInfo.pageSize})}" title="首页" th:class="${pageInfo.isFirstPage} ? 'paginationNotAllowed' : ''">«</a></li>
+                         <li><a th:href="@{/admin/task/list(pageNum=${pageInfo.prePage},pageSize=${pageInfo.pageSize})}" title="上一页" th:if="${pageInfo.hasPreviousPage}">‹</a></li>
+                         <li th:each="pageinfo : ${pageInfo.navigatepageNums}"><a th:href="@{/admin/task/list(pageNum=${pageinfo},pageSize=${pageInfo.pageSize})}" th:class="${pageinfo == pageInfo.pageNum} ? 'paginationActive' : ''" th:text="${pageinfo}"></a></li>
+                         <li><a th:href="@{/admin/task/list(pageNum=${pageInfo.nextPage},pageSize=${pageInfo.pageSize})}" title="下一页" th:if="${pageInfo.hasNextPage}">›</a></li>
+                         <li><a th:href="@{/admin/task/list(pageNum=${pageInfo.navigateLastPage},pageSize=${pageInfo.pageSize})}" title="未页" th:class="${pageInfo.isLastPage} ? 'paginationNotAllowed' : ''">»</a></li>
                      </ul>
                  </div>
 			</section>
@@ -106,6 +119,7 @@
 	<script src="/resource/js/bootstrap.min.js" type="text/javascript"></script>
 	<!-- iCheck -->
     <script src="/resource/js/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
+	<script type="text/javascript" src="/resource/js/jQueryMessage/js/jquery.plugin.message.js"></script>
 	<script type="text/javascript">
 		window.onload = function(){
 			renderCheckBox();
@@ -128,8 +142,42 @@
 		}
 		
 		function toAdd(){
-			window.location.href = "/admin/role/toAdd";
+			window.location.href = "/admin/task/toAdd";
 		}
+		
+		function run(id) {
+	        $.get("/admin/task/run?id=" + id, function(response){
+	        	if(response.success){
+					$("body").MessageBox({
+						type: 'success',
+						message:response.info,
+						timeout:3000,
+						callbak:null
+					});
+				}else{
+					$("body").MessageBox({
+						type: 'error',
+						message:response.info,
+						timeout:3000,
+						callbak:null
+					});
+				}
+	        });
+	    }
+
+	    function changeStatusTaskCron(aObj) {
+	        let cronKey = aObj.getAttribute("data-cron-key");
+	        let status = aObj.getAttribute("data-cron-status");
+	        if (status == AppConsts.ENABLED) {
+	            status = AppConsts.DISABLED;
+	        } else {
+	            status = AppConsts.ENABLED;
+	        }
+	        let formData = new FormData();
+	        formData.append("cronKey", cronKey);
+	        formData.append("status", status);
+	        post("/scheduled/task/changeStatusTaskCron", "/scheduled/task/taskList", formData);
+	    }
 		
 		function confrimRemove(id){
 			$("#remove-dialog").modal();
@@ -138,7 +186,7 @@
 		
 		function remove(){
 			var currentID = $("#cacheID").val();
-			window.location.href="/admin/role/delete?id="+currentID;
+			window.location.href="/admin/task/delete?id="+currentID;
 			$("#remove-dialog").modal('hide');
 		}
 	</script>

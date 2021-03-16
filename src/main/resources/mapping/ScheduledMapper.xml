@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.itechyou.cms.dao.ScheduledMapper">
+  <resultMap id="BaseResultMap" type="cn.itechyou.cms.entity.Scheduled">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="task_name" jdbcType="VARCHAR" property="taskName" />
+    <result column="clazz_name" jdbcType="VARCHAR" property="clazzName" />
+    <result column="cron_expression" jdbcType="VARCHAR" property="cronExpression" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="cn.itechyou.cms.entity.Scheduled">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="remark" jdbcType="LONGVARCHAR" property="remark" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    id, task_name, clazz_name, cron_expression, `status`, create_by, create_time, update_by, 
+    update_time
+  </sql>
+  <sql id="Blob_Column_List">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    remark
+  </sql>
+  
+  <select id="queryListByPage" parameterType="java.util.Map" resultMap="ResultMapWithBLOBs">
+  	select 
+  		*
+  	from system_scheduled
+  	where 1 = 1
+  	order by create_time desc
+  </select>
+  
+  <select id="selectOneByClassName" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+  	select 
+  		*
+  	from system_scheduled
+  	where clazz_name = #{clazzName,jdbcType=VARCHAR}
+  	limit 0,1
+  </select>
+</mapper>
