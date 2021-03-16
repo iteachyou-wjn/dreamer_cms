@@ -19,7 +19,7 @@ import cn.itechyou.cms.service.LabelService;
  *
  */
 @Controller
-@RequestMapping("/admin/label")
+@RequestMapping("admin/label")
 public class LabelController extends BaseController{
 	
 	@Autowired

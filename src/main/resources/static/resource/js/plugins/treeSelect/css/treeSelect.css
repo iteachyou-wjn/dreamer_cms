@@ -1,0 +1,118 @@
+
+.treeSelect input{
+    color: #3c3f41;
+    width: 100%;
+    border-radius: .4285rem;
+    font-size: .75rem;
+    display: block;
+    background-color: transparent;
+    background-clip: padding-box;
+    border: 1px solid #bbbbbb;
+    box-shadow: none;
+}
+
+.treeSelect input:focus{
+    color: hsla(0, 0%, 40%, 0.8);
+    border-color: rgb(103, 103, 103);
+    outline:0;
+    box-shadow:none
+}
+
+.treeBox{
+    max-height: 357px;
+    overflow-y: auto;
+    min-height: 113px;
+    position: relative;
+}
+
+#_treeDom li{
+    color: #676a6c;
+}
+
+#_treeDom li a{
+    margin: 0;!important;
+}
+
+.st-dropdown-menu{
+    max-height: 373px;
+    min-height: 129px;
+    position: absolute;
+    min-width: 100%;
+    margin-top: 8px;
+
+    border-radius: .1428rem;
+    transition: all .15s linear;
+
+    left: 0;
+    z-index: 1000;
+    display: none;
+    float: left;
+    padding: .5rem 0;
+    font-size: .875rem;
+    color: #525f7f;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 0 solid rgba(34,42,66,.15);
+    box-shadow: 0 50px 100px rgba(50,50,93,.1), 0 15px 35px rgba(50,50,93,.15), 0 5px 15px rgba(0,0,0,.1);
+}
+
+.treeSelect{
+    position: relative;
+}
+
+
+.treeSelect .st-dropdown-menu{
+    transform: translate3d(0,-20px,0)!important;
+    visibility: hidden;
+    display: block;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    top: 100%!important;
+}
+
+.treeSelect.showtree .st-dropdown-menu{
+    opacity: 1;
+    filter: alpha(opacity=100);
+    visibility: visible;
+    transform: translate3d(0,1px,0)!important;
+}
+
+.st-dropdown-menu:before {
+    display: inline-block;
+    position: absolute;
+    width: 0;
+    height: 0;
+    vertical-align: middle;
+    content: "";
+    top: -5px;
+    left: 10px;
+    right: auto;
+    color: #fff;
+    border-bottom: .4em solid;
+    border-right: .4em solid transparent;
+    border-left: .4em solid transparent;
+}
+
+*, :after, :before {
+    box-sizing: border-box;
+}
+
+.treeBox::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+}
+.treeBox::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: #848484;
+}
+.treeBox::-webkit-scrollbar-track {
+     border-radius: 10px;
+    background: #f3f3f3;
+}
+
+.ztree li a.curSelectedNode {
+    color: #1d8cf8;
+    text-decoration: none;
+}

@@ -2,6 +2,7 @@ package cn.itechyou.cms.controller.admin;
 
 import java.util.Date;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,7 +27,7 @@ import cn.itechyou.cms.utils.UUIDUtils;
  * @date 2019年7月17日 下午1:53:51
  */
 @Controller
-@RequestMapping("/admin/variable")
+@RequestMapping("admin/variable")
 public class VariableController {
 	@Autowired
 	private VariableService variableService;
@@ -34,7 +35,8 @@ public class VariableController {
 	/**
 	 * 列表
 	 */
-	@RequestMapping("/list")
+	@RequestMapping({"","/list"})
+	@RequiresPermissions("9dyk01d8")
 	public String list(Model model, SearchEntity params) {
 		PageInfo<Variable> page = variableService.queryListByPage(params);
 		model.addAttribute("variables", page);
@@ -45,6 +47,7 @@ public class VariableController {
 	 * 添加跳转
 	 */
 	@RequestMapping("/toAdd")
+	@RequiresPermissions("q1tr6l39")
 	public String toAdd(Model model) {
 		return "admin/variable/add";
 	}
@@ -54,6 +57,7 @@ public class VariableController {
 	 * @throws CmsException 
 	 */
 	@RequestMapping("/add")
+	@RequiresPermissions("3epp9r3m")
 	public String add(Model model, Variable variable) throws CmsException {
 		variable.setId(UUIDUtils.getPrimaryKey());
 		variable.setCreateBy(TokenManager.getToken().getId());
@@ -73,6 +77,7 @@ public class VariableController {
 	 * 详情
 	 */
 	@RequestMapping(value = "/details", method = RequestMethod.GET)
+	@RequiresPermissions("45o778z0")
 	public String details(Model model, String id) {
 		Variable variable = variableService.queryVariableId(id);
 		model.addAttribute("variable", variable);
@@ -83,6 +88,7 @@ public class VariableController {
 	 * 编辑
 	 */
 	@RequestMapping(value = "/toEdit", method = RequestMethod.GET)
+	@RequiresPermissions("593blqyf")
 	public String toEdit(Model model, String id) {
 		Variable variable = variableService.queryVariableId(id);
 		model.addAttribute("variable", variable);
@@ -93,6 +99,7 @@ public class VariableController {
 	 * 修改
 	 */
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
+	@RequiresPermissions("5c4nj8lt")
 	public String update(Model model, Variable variable) {
 		variableService.updateVariable(variable);
 		return "redirect:/admin/variable/list";
@@ -101,6 +108,7 @@ public class VariableController {
 	 * 删除
 	 */
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	@RequiresPermissions("6t6676m8")
 	public String delete(Model model, String id) {
 		variableService.deleteVariable(id);
 		return "redirect:/admin/variable/list";

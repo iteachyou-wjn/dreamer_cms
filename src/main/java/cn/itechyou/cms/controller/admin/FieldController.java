@@ -2,6 +2,7 @@ package cn.itechyou.cms.controller.admin;
 
 import java.util.Date;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,7 +27,7 @@ import cn.itechyou.cms.utils.UUIDUtils;
  *
  */
 @Controller
-@RequestMapping("/admin/field")
+@RequestMapping("admin/field")
 public class FieldController {
 	
 	@Autowired
@@ -36,12 +37,14 @@ public class FieldController {
 	private FieldService fieldService;
 	
 	@RequestMapping("/toAdd")
+	@RequiresPermissions("02srqt14")
 	public String toAdd(Model model, String formId) {
 		model.addAttribute("formId", formId);
 		return "admin/field/add";
 	}
 	
 	@RequestMapping("/add")
+	@RequiresPermissions("8435902p")
 	public String add(Model model,Field field) throws CmsException {
 		field.setId(UUIDUtils.getPrimaryKey());
 		field.setCreateBy(TokenManager.getToken().getId());
@@ -61,6 +64,7 @@ public class FieldController {
 	}
 	
 	@RequestMapping(value = "/toEdit", method = RequestMethod.GET)
+	@RequiresPermissions("n6mszszy")
 	public String toEdit(Model model, String id) {
 		Field field = fieldService.queryFieldById(id);
 		Form form = formService.queryFormById(field.getFormId());
@@ -72,6 +76,7 @@ public class FieldController {
 	}
 	
 	@RequestMapping("/edit")
+	@RequiresPermissions("2f830o48")
 	public String edit(Model model,Field newField) throws CmsException {
 		Form form = formService.queryFormById(newField.getFormId());
 		
@@ -93,6 +98,7 @@ public class FieldController {
 	}
 	
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	@RequiresPermissions("602lmb6w")
 	public String delete(Model model, String id) throws CmsException {
 		Field field = fieldService.queryFieldById(id);
 		Form form = formService.queryFormById(field.getFormId());

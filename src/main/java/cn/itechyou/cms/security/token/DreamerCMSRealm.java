@@ -1,6 +1,8 @@
 package cn.itechyou.cms.security.token;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -17,8 +19,11 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.apache.shiro.util.ByteSource;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import cn.itechyou.cms.common.Constant;
 import cn.itechyou.cms.entity.User;
+import cn.itechyou.cms.service.RoleService;
 import cn.itechyou.cms.service.UserService;
 
 /**
@@ -29,7 +34,9 @@ import cn.itechyou.cms.service.UserService;
 public class DreamerCMSRealm extends AuthorizingRealm {
 
 	@Resource
-	UserService userService;
+	private UserService userService;
+	@Autowired
+	private RoleService roleService;
 
 	public DreamerCMSRealm() {
 		super();
@@ -44,10 +51,10 @@ public class DreamerCMSRealm extends AuthorizingRealm {
 		User user = userService.getByUserName(token.getUsername());
 		if (null == user) {
 			throw new AccountException("帐号或密码不正确！");
-			/**
-			 * 如果用户的status为禁用。那么就抛出<code>DisabledAccountException</code>
-			 */
 		} else if ("0".equals(user.getStatus())) {
+			/**
+			 * 如果用户的status为禁用。那么就抛出DisabledAccountException
+			 */
 			throw new DisabledAccountException("帐号已经禁止登录！");
 		} else {
 			String password = user.getPassword();
@@ -67,6 +74,29 @@ public class DreamerCMSRealm extends AuthorizingRealm {
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 		String userId = TokenManager.getUserId();
 		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+		/**
+		 * 根据用户ID查询角色
+		 */
+		List<String> roles = roleService.queryRoleCodesByUserId(userId);
+		
+		List<String> permissions = new ArrayList<String>();
+		if(roles.contains(Constant.ADMIN_ROLE)) {
+			/**
+			 * 如果为超级管理员，则查询全部权限
+			 */
+			permissions = roleService.queryAllPermissionCodes();
+		}else {
+			/**
+			 * 根据用户ID查询权限
+			 */
+			permissions = roleService.queryPermissionCodesByUserId(userId);
+		}
+		if(roles != null && roles.size() > 0) {
+			info.addRoles(roles);
+		}
+		if(permissions != null && permissions.size() > 0) {
+			info.addStringPermissions(permissions);
+		}
 		return info;
 	}
 

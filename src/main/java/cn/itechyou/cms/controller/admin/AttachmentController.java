@@ -9,6 +9,7 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,7 +35,7 @@ import cn.itechyou.cms.utils.UUIDUtils;
  * @version 2.0.0
  */
 @Controller
-@RequestMapping("/admin/attachment")
+@RequestMapping("admin/attachment")
 public class AttachmentController extends BaseController {
 	
 	@Autowired
@@ -46,7 +47,8 @@ public class AttachmentController extends BaseController {
 	@Autowired
 	private SystemService systemService;
 	
-	@RequestMapping("/list")
+	@RequestMapping({"","/list"})
+	@RequiresPermissions("5z1mj7i6")
 	public String toIndex(Model model ,SearchEntity params) {
 		PageInfo<Attachment> page = attachmentService.queryListByPage(params);
 		model.addAttribute("attachments", page);
@@ -54,6 +56,7 @@ public class AttachmentController extends BaseController {
 	}
 	
 	@RequestMapping("/add")
+	@RequiresPermissions("ors4k771")
 	public String add(Attachment attachment) throws AdminGeneralException {
 		try {
 			attachment.setId(UUIDUtils.getPrimaryKey());
@@ -73,6 +76,7 @@ public class AttachmentController extends BaseController {
 	}
 	
 	@RequestMapping("/delete")
+	@RequiresPermissions("7b3w257s")
 	public String delete(String id) throws AdminGeneralException {
 		try {
 			System system = systemService.getSystem();
@@ -111,7 +115,6 @@ public class AttachmentController extends BaseController {
 	        while ((length = inputStream.read(b)) > 0) {
 	            os.write(b, 0, length);
 	        }
-
 	        // 这里主要关闭。
 	        os.close();
 	        inputStream.close();

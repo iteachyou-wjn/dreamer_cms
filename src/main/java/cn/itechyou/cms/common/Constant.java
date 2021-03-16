@@ -26,4 +26,6 @@ public class Constant {
 	public static final String KAPTCHA = "KAPTCHA";
 	
 	public static final String ERROR = "error/exception";
+	
+	public static final String ADMIN_ROLE = "00000000";
 }

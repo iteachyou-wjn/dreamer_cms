@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,7 +39,7 @@ import cn.itechyou.cms.utils.ZipUtils;
  *
  */
 @Controller
-@RequestMapping("/admin/theme")
+@RequestMapping("admin/theme")
 public class ThemesController extends BaseController {
 	private static final int buffer = 2048; 
 	@Autowired
@@ -48,7 +49,8 @@ public class ThemesController extends BaseController {
 	@Autowired
 	private SystemService systemService;
 	
-	@RequestMapping("/list")
+	@RequestMapping({"","/list"})
+	@RequiresPermissions("t5atzaz6")
 	public String list(Model model, SearchEntity params) {
 		Map<String,Object> map = new HashMap<>();
 		List<Theme> themes = themeService.queryListByPage(params);
@@ -57,6 +59,7 @@ public class ThemesController extends BaseController {
 	}
 	
 	@RequestMapping("/add")
+	@RequiresPermissions("j8rj0lp8")
 	public String add(String themePath) throws IOException, CmsException {
 		Theme theme;
 		String rootPath = fileConfiguration.getResourceDir();
@@ -135,6 +138,7 @@ public class ThemesController extends BaseController {
 	}
 	
 	@RequestMapping("/updateStatus")
+	@RequiresPermissions("g1u4y47a")
 	public String updateStatus(String id, int status) {
 		Theme theme = new Theme();
 		theme.setId(id);
@@ -152,6 +156,7 @@ public class ThemesController extends BaseController {
 	}
 	
 	@RequestMapping("/delete")
+	@RequiresPermissions("4ng92074")
 	public String delete(String id) {
 		int rows = themeService.delete(id);
 		return "redirect:/admin/theme/list";

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,9 +30,12 @@ import cn.itechyou.cms.common.Constant;
 import cn.itechyou.cms.common.ResponseResult;
 import cn.itechyou.cms.common.StateCodeEnum;
 import cn.itechyou.cms.entity.Licence;
+import cn.itechyou.cms.entity.Menu;
 import cn.itechyou.cms.entity.User;
 import cn.itechyou.cms.security.token.TokenManager;
 import cn.itechyou.cms.service.LicenceService;
+import cn.itechyou.cms.service.MenuService;
+import cn.itechyou.cms.service.RoleService;
 import cn.itechyou.cms.utils.LoggerUtils;
 import cn.itechyou.cms.vo.UserVO;
 
@@ -51,6 +55,8 @@ public class UserLoginController extends BaseController {
 	private CircleCaptcha captcha;
 	@Autowired
 	private LicenceService licenceService;
+	@Autowired
+	private MenuService menuService;
 	
 
 	// 产生验证码
@@ -90,7 +96,13 @@ public class UserLoginController extends BaseController {
 	@RequestMapping("toIndex")
 	public ModelAndView toIndex() {
 		ModelAndView mv = new ModelAndView();
+		String userId = TokenManager.getUserId();
 		Licence licence = licenceService.getLicence();
+		/**
+		 * 查询当前用户所拥有的菜单权限
+		 */
+		List<Menu> menus = menuService.queryListByUserId(userId);
+		mv.addObject("menus", menus);
 		mv.addObject("licence", licence);
 		mv.setViewName("admin/index");
 		return mv;

@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -43,7 +44,7 @@ import cn.itechyou.cms.utils.UUIDUtils;
  *
  */
 @Controller
-@RequestMapping("/admin/archives")
+@RequestMapping("admin/archives")
 public class ArchivesController {
 	@Autowired
 	private CategoryService categoryService;
@@ -59,6 +60,7 @@ public class ArchivesController {
 	private SystemService systemService;
 	
 	@RequestMapping("/list")
+	@RequiresPermissions("e6r77x94")
 	public String toIndex(Model model ,SearchEntity params) {
 		if(params.getEntity() == null) {
 			Map<String,Object> entity = new HashMap<String,Object>();
@@ -80,6 +82,7 @@ public class ArchivesController {
 	}
 	
 	@RequestMapping("/toAdd")
+	@RequiresPermissions("a7f3sqap")
 	public String toAdd(Model model, String code) {
 		Category category = null;
 		Form form = new Form();
@@ -99,6 +102,7 @@ public class ArchivesController {
 	}
 	
 	@RequestMapping("/add")
+	@RequiresPermissions("0d2132i8")
 	public String add(Model model,HttpServletRequest request,@RequestParam Map<String,String> entity) throws CmsException {
 		Archives archives = new Archives();
 		archives.setId(UUIDUtils.getPrimaryKey());
@@ -194,6 +198,7 @@ public class ArchivesController {
 	
 	
 	@RequestMapping(value = "/toEdit", method = RequestMethod.GET)
+	@RequiresPermissions("lk7s7t2n")
 	public String toEdit(Model model, String id,String cid) {
 		String formId = formService.queryDefaultForm().getId();
 		if(!"-1".equals(cid)) {
@@ -218,6 +223,7 @@ public class ArchivesController {
 	}
 	
 	@RequestMapping(value ="/edit")
+	@RequiresPermissions("th018nx3")
 	public String edit(Model model,HttpServletRequest request,@RequestParam Map<String,String> entity) throws CmsException {
 		Archives archives = new Archives();
 		archives.setId(entity.get("id"));
@@ -313,6 +319,7 @@ public class ArchivesController {
 	}
 	
 	@RequestMapping(value ="/delete")
+	@RequiresPermissions("n4lyn017")
 	public String delete(Model model, String id,String cid) throws CmsException {
 		Map<String,Object> params = new HashMap<String,Object>();
 		String categoryCode = "";

@@ -2,13 +2,13 @@ package cn.itechyou.cms.controller.admin;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,7 +32,8 @@ public class TemplateController {
 	@Autowired
 	private ThemeService themeService;
 	
-	@RequestMapping("toIndex")
+	@RequestMapping({"","toIndex"})
+	@RequiresPermissions("psqg04kn")
 	public ModelAndView toIndex() {
 		ModelAndView mv = new ModelAndView();
 		Theme currentTheme = themeService.getCurrentTheme();
@@ -66,6 +67,7 @@ public class TemplateController {
 	}
 	
 	@GetMapping("toView")
+	@RequiresPermissions("5dg093r8")
 	public ModelAndView toView(String path,String fileName) throws IOException,CmsException {
 		ModelAndView mv = new ModelAndView();
 		String themeDirPath = path + File.separator + fileName + File.separator;
@@ -106,6 +108,7 @@ public class TemplateController {
 	}
 	
 	@GetMapping("toEdit")
+	@RequiresPermissions("3oc5ri29")
 	public ModelAndView toEdit(String path,String file) throws IOException, CmsException {
 		ModelAndView mv = new ModelAndView();
 		String fileName = path + File.separator + file;
@@ -130,6 +133,7 @@ public class TemplateController {
 	}
 	
 	@PostMapping("save")
+	@RequiresPermissions("5n6ta53y")
 	public String save(TemplateVo template) throws IOException {
 		String filePath = template.getPath() + File.separator + template.getFile();
 		filePath = filePath.replaceAll("\\*", "/");

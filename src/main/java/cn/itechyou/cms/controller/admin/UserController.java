@@ -1,17 +1,22 @@
 package cn.itechyou.cms.controller.admin;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.util.ByteSource;
 import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -21,10 +26,13 @@ import cn.itechyou.cms.common.ExceptionEnum;
 import cn.itechyou.cms.common.ResponseResult;
 import cn.itechyou.cms.common.SearchEntity;
 import cn.itechyou.cms.common.StateCodeEnum;
+import cn.itechyou.cms.entity.Role;
 import cn.itechyou.cms.entity.User;
+import cn.itechyou.cms.entity.UserRole;
 import cn.itechyou.cms.exception.AdminGeneralException;
 import cn.itechyou.cms.exception.CmsException;
 import cn.itechyou.cms.security.token.TokenManager;
+import cn.itechyou.cms.service.RoleService;
 import cn.itechyou.cms.service.UserService;
 import cn.itechyou.cms.utils.LoggerUtils;
 import cn.itechyou.cms.utils.StringUtil;
@@ -38,14 +46,17 @@ import cn.itechyou.cms.vo.UserPasswordVO;
  *
  */
 @Controller
-@RequestMapping("/admin/user")
+@RequestMapping("admin/user")
 public class UserController {
 	private Logger logger = LoggerUtils.getPlatformLogger();
 	
 	@Resource
 	private UserService userService;
+	@Autowired
+	private RoleService roleService;
 	
-	@RequestMapping("list")
+	@RequestMapping({"","list"})
+	@RequiresPermissions("498jkr41")
 	public ModelAndView list(Model model, SearchEntity searchEntity) {
 		ModelAndView mv = new ModelAndView();
 		PageInfo<User> pageInfo = userService.listByPage(searchEntity);
@@ -55,6 +66,7 @@ public class UserController {
 	}
 	
 	@RequestMapping("toAdd")
+	@RequiresPermissions("db9xb4dy")
 	public ModelAndView toAdd() {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("admin/user/add");
@@ -68,6 +80,7 @@ public class UserController {
 	 * @throws CmsException
 	 */
 	@RequestMapping("add")
+	@RequiresPermissions("00esg6hw")
 	public String add(User user) throws CmsException {
 		User temp = userService.getByUserName(user.getUsername());
 		if(temp != null) {
@@ -95,6 +108,7 @@ public class UserController {
 	}
 	
 	@RequestMapping("toEdit")
+	@RequiresPermissions("f9wezq49")
 	public ModelAndView toEdit(String id) {
 		ModelAndView mv = new ModelAndView();
 		User user = userService.getByID(id);
@@ -110,6 +124,7 @@ public class UserController {
 	 * @throws CmsException
 	 */
 	@RequestMapping("update")
+	@RequiresPermissions("q85s17tm")
 	public String update(User user) throws CmsException {
 		user.setUpdateBy(TokenManager.getToken().getId());
 		user.setUpdateTime(new Date());
@@ -128,9 +143,57 @@ public class UserController {
 	 * 删除
 	 */
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	@RequiresPermissions("p39sena0")
 	public String delete(Model model, String id) {
 		userService.deleteUser(id);
 		return "redirect:/admin/user/list";
+	}
+	
+	/**
+	 * 跳转分配角色页面
+	 */
+	@RequestMapping(value = "/toGrant", method = RequestMethod.GET)
+	@RequiresPermissions("2tvig6l7")
+	public ModelAndView toGrant(Model model, String userId) {
+		ModelAndView mv = new ModelAndView();
+		User user = userService.getByID(userId);
+		List<Role> roles = roleService.queryAll();
+		
+		//查询当前用户拥有的角色
+		List<UserRole> userRoles = userService.queryRolesByUserId(userId);
+		
+		for(int i = 0;i < roles.size();i++) {
+			for(int j = 0;j < userRoles.size();j++) {
+				if(roles.get(i).getId().equals(userRoles.get(j).getRoleId())) {
+					roles.get(i).setChecked(true);
+				}
+			}
+		}
+		model.addAttribute("user", user);
+		model.addAttribute("roles", roles);
+		mv.setViewName("admin/user/grant");
+		return mv;
+	}
+	
+	/**
+	 * 分配角色
+	 * @throws CmsException 
+	 */
+	@RequestMapping(value = "/grant", method = RequestMethod.POST)
+	@RequiresPermissions("2o2sny2j")
+	public String grant(Model model, String userId, @RequestParam(value = "roles", required = false) List<String> roles) throws CmsException {
+		try {
+			if(roles == null) {
+				roles = new ArrayList<String>();
+			}
+			int i = userService.grant(userId, roles);
+		} catch (Exception e) {
+			throw new AdminGeneralException(
+					ExceptionEnum.HTTP_INTERNAL_SERVER_ERROR.getCode(),
+					ExceptionEnum.HTTP_INTERNAL_SERVER_ERROR.getMessage(),
+					e.getMessage());
+		}
+		return "redirect:/admin/user/toGrant?userId=" + userId;
 	}
 	
 	@RequestMapping("toUpdatePwd")

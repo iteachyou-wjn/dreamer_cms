@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.itechyou.cms.dao.RolePermissionMapper">
+  <resultMap id="BaseResultMap" type="cn.itechyou.cms.entity.RolePermission">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="role_id" jdbcType="VARCHAR" property="roleId" />
+    <result column="permission_id" jdbcType="VARCHAR" property="permissionId" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    id, role_id, permission_id, `type`
+  </sql>
+  
+  <!-- 批量插入生成的兑换码 -->
+  <insert id ="insertBatchList" parameterType="java.util.List" >
+    insert into system_role_permission
+    (id, role_id, permission_id, type)
+    values
+    <foreach collection ="list" item="item" index= "index" separator =",">
+      (
+      #{item.id},
+      #{item.roleId},
+      #{item.permissionId},
+      #{item.type}
+      )
+    </foreach>
+  </insert>
+</mapper>

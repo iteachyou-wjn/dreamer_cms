@@ -3,6 +3,7 @@ package cn.itechyou.cms.controller.admin;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,7 +33,7 @@ import cn.itechyou.cms.utils.UUIDUtils;
  * @author Wangjn
  */
 @Controller
-@RequestMapping("/admin/category")
+@RequestMapping("admin/category")
 public class CategoryController extends BaseController{
 	
 	@Autowired
@@ -44,7 +45,8 @@ public class CategoryController extends BaseController{
 	@Autowired
 	private SystemService systemService;
 	
-	@RequestMapping("/list")
+	@RequestMapping({"","/list"})
+	@RequiresPermissions("up0t1rv4")
 	public String list(Model model,SearchEntity params) {
 		PageInfo<Category> page = categoryService.queryListByPage(params);
 		model.addAttribute("categorys", page);
@@ -52,6 +54,7 @@ public class CategoryController extends BaseController{
 	}
 	
 	@RequestMapping("/toAdd")
+	@RequiresPermissions("o6499pg5")
 	public String toAdd(Model model,String id) {
 		Category category = null;
 		if(id.equals("-1")) {
@@ -72,6 +75,7 @@ public class CategoryController extends BaseController{
 	}
 	
 	@RequestMapping("/toEdit")
+	@RequiresPermissions("0157q6w4")
 	public String toEdit(Model model,String id) {
 		Category category = categoryService.selectById(id);
 		if(category.getParentId().equals("-1")) {
@@ -90,6 +94,7 @@ public class CategoryController extends BaseController{
 	}
 	
 	@RequestMapping("/add")
+	@RequiresPermissions("pdr1y803")
 	public String add(Category category) {
 		category.setId(UUIDUtils.getPrimaryKey());
 		category.setCode(UUIDUtils.getCharAndNumr(8));
@@ -119,6 +124,7 @@ public class CategoryController extends BaseController{
 	}
 	
 	@RequestMapping(value ="/edit")
+	@RequiresPermissions("bira5jia")
 	public String edit(Category category) {
 		category.setUpdateBy(TokenManager.getToken().getId());
 		category.setUpdateTime(new Date());
@@ -137,12 +143,14 @@ public class CategoryController extends BaseController{
 	}
 	
 	@RequestMapping(value ="/delete")
+	@RequiresPermissions("56p8k0im")
 	public String delete(String id) {
 		int num = categoryService.delete(id);
 		return "redirect:/admin/category/list";
 	}
 	
 	@RequestMapping(value = "/loadSon", method = RequestMethod.GET)
+	@RequiresPermissions("tvu49h42")
 	public void loadSon(String id) {
 		List<Category> list = categoryService.selectByParentId(id);
 		ResponseResult result = ResponseResult.Factory.newInstance(Boolean.TRUE,
@@ -152,6 +160,7 @@ public class CategoryController extends BaseController{
 	}
 	
 	@RequestMapping(value = "/updateSort")
+	@RequiresPermissions("3ywkqhmv")
 	@ResponseBody
 	public void updateSort(@RequestBody List<Category> list) {
 		categoryService.updateSort(list);

@@ -10,10 +10,6 @@
     <link href="/resource/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <!-- Ionicons -->
     <link href="/resource/css/ionicons.min.css" rel="stylesheet" type="text/css" />
-    <!-- Morris chart -->
-    <link href="/resource/css/morris/morris.css" rel="stylesheet" type="text/css" />
-    <!-- jvectormap -->
-    <link href="/resource/css/jvectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css" />
     <!-- iCheck for checkboxes and radio inputs -->
     <link href="/resource/css/iCheck/all.css" rel="stylesheet" type="text/css" />
     <!-- Theme style -->
@@ -36,7 +32,6 @@
 		<div class="col-lg-12">
 			<section class="panel">
 				<div class="panel-body">
-	                 <!-- <span class="pull-right badge badge-info">32</span> -->
 	                 <button class="btn btn-primary btn-addon btn-sm" th:onclick="toAdd();">
 	                     <i class="fa fa-plus"></i>添加用户
 	                 </button>
@@ -64,6 +59,8 @@
 									<span th:if="${item.status} == 0">无效</span>
 								</td>
 								<td>
+									<a th:href="@{/admin/user/toGrant(userId=${item.id})}" class="btn btn-xs btn-success">分配权限</a>
+									<span>&nbsp;|&nbsp;</span>
 									<a th:href="@{/admin/user/toUpdatePwd(userId=${item.id})}" class="btn btn-xs btn-success">修改密码</a>
 									<span>&nbsp;|&nbsp;</span>
 									<a th:href="@{/admin/user/toEdit(id=${item.id})}" class="btn btn-xs btn-success">编辑</a>

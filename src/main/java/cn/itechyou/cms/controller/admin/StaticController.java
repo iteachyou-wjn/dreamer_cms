@@ -12,6 +12,7 @@ import java.util.Map;
 import javax.websocket.EncodeException;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -51,7 +52,7 @@ import cn.itechyou.cms.websocket.WebSocketServer;
  *
  */
 @Controller
-@RequestMapping("/admin/static")
+@RequestMapping("admin/static")
 public class StaticController {
 	
 	@Autowired
@@ -71,7 +72,8 @@ public class StaticController {
 	 * 跳转页面
 	 * @return
 	 */
-	@RequestMapping("toIndex")
+	@RequestMapping({"","toIndex"})
+	@RequiresPermissions("49sbzt90")
 	public ModelAndView toIndex() {
 		System system = systemService.getSystem();
 		ModelAndView mv = new ModelAndView();
@@ -94,6 +96,7 @@ public class StaticController {
 	 * @throws EncodeException
 	 */
 	@RequestMapping("generateIndex/{clientId}")
+	@RequiresPermissions("g2pse5y0")
 	@ResponseBody
 	public ResponseResult generateIndex(@PathVariable String clientId) throws CmsException, IOException, EncodeException {
 		Message message = new Message(StateCodeEnum.HTTP_SUCCESS.getCode(),"准备生成首页HTML...",3);
@@ -147,6 +150,7 @@ public class StaticController {
 	 * @throws EncodeException
 	 */
 	@RequestMapping("generateCategory/{clientId}")
+	@RequiresPermissions("ji766569")
 	@ResponseBody
 	public ResponseResult generateCategory(@PathVariable String clientId, @RequestBody CategoryVo categoryVo) throws CmsException, IOException, EncodeException {
 		Message message = new Message(StateCodeEnum.HTTP_SUCCESS.getCode(),"准备生成栏目HTML...",3);
@@ -226,6 +230,8 @@ public class StaticController {
 			newHtml = parseEngine.generate(html);
 			newHtml = parseEngine.generateCategory(newHtml, categoryWithBLOBs.getCode());
 			
+			String newCreateHtml = new String(newHtml);
+			
 			message = new Message(StateCodeEnum.HTTP_SUCCESS.getCode(),"解析完成，准备生成静态HTML文件...",70);
 			/**
 			 * 如果为列表栏目，则循环生成分页页面
@@ -242,6 +248,7 @@ public class StaticController {
 				int pageNum = pageInfo.getPageNum();
 				int pageSize = pageInfo.getPageSize();
 				while (pageNum <= total) {
+					newHtml = new String(newCreateHtml);
 					message = new Message(StateCodeEnum.HTTP_SUCCESS.getCode(),"开始生成[" + categoryWithBLOBs.getCnname() + "]栏目，第["+pageNum+"]页静态HTML文件...",75);
 					WebSocketServer.sendInfo(message,clientId);
 					newHtml = parseEngine.generatePageList(newHtml, categoryWithBLOBs.getCode(), pageNum, pageSize);
@@ -249,7 +256,9 @@ public class StaticController {
 					String fileName = URLUtils.parseFileName(categoryWithBLOBs, pageNum);
 					File file = new File(fileConfiguration.getResourceDir() + system.getStaticdir() + catDir + fileName);
 					FileUtils.write(file, newHtml);
-					buildArticleHTML(categoryWithBLOBs,clientId);
+					if(pageNum == 1) {
+						buildArticleHTML(categoryWithBLOBs,clientId);
+					}
 					pageNum++;
 				}
 			}else {//封面

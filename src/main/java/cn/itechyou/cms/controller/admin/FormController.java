@@ -3,6 +3,7 @@ package cn.itechyou.cms.controller.admin;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,7 +30,7 @@ import cn.itechyou.cms.utils.UUIDUtils;
  *
  */
 @Controller
-@RequestMapping("/admin/forms")
+@RequestMapping("admin/forms")
 public class FormController {
 	
 	@Autowired
@@ -38,7 +39,8 @@ public class FormController {
 	@Autowired
 	private FieldService fieldService;
 	
-	@RequestMapping("/list")
+	@RequestMapping({"","/list"})
+	@RequiresPermissions("7pswu738")
 	public String toIndex(Model model ,SearchEntity params) {
 		PageInfo<Form> forms = formService.queryListByPage(params);
 		model.addAttribute("forms", forms);
@@ -46,11 +48,13 @@ public class FormController {
 	}
 	
 	@RequestMapping("/toAdd")
+	@RequiresPermissions("w0kbe38p")
 	public String toAdd() {
 		return "admin/forms/add";
 	}
 	
 	@RequestMapping("/add")
+	@RequiresPermissions("fn9o6433")
 	public String add(Model model,Form form) throws CmsException {
 		form.setId(UUIDUtils.getPrimaryKey());
 		form.setCreateBy(TokenManager.getToken().getId());
@@ -69,6 +73,7 @@ public class FormController {
 	}
 	
 	@RequestMapping(value = "/toEdit", method = RequestMethod.GET)
+	@RequiresPermissions("u51mogha")
 	public String toEdit(Model model, String id) {
 		Form form = formService.queryFormById(id);
 		List<Field> fields = fieldService.queryFieldByFormId(id);
@@ -80,6 +85,7 @@ public class FormController {
 	}
 	
 	@RequestMapping("/edit")
+	@RequiresPermissions("19wh2wrf")
 	public String edit(Model model,Form newForm) throws CmsException {
 		Form oldForm = formService.queryFormById(newForm.getId());
 		
@@ -98,6 +104,7 @@ public class FormController {
 	}
 	
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	@RequiresPermissions("3kc86164")
 	public String delete(Model model, String id) throws CmsException {
 		Form form = formService.queryFormById(id);
 		if(form.getType() == 0) {

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.itechyou.cms.dao.PermissionMapper">
+  <resultMap id="BaseResultMap" type="cn.itechyou.cms.entity.Permission">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="permission_name" jdbcType="VARCHAR" property="permissionName" />
+    <result column="permission_code" jdbcType="VARCHAR" property="permissionCode" />
+    <result column="menu_id" jdbcType="VARCHAR" property="menuId" />
+    <result column="permission_url" jdbcType="VARCHAR" property="permissionUrl" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="cn.itechyou.cms.entity.Permission">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="remark" jdbcType="LONGVARCHAR" property="remark" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    id, permission_name, permission_code, menu_id, permission_url, create_by, create_time, 
+    update_by, update_time
+  </sql>
+  <sql id="Blob_Column_List">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    remark
+  </sql>
+  
+  <select id="queryListByPage" parameterType="java.util.Map" resultType="cn.itechyou.cms.entity.Permission">
+  	SELECT
+		p.*,
+		m.menu_name AS menuName
+	FROM system_permission p
+	LEFT JOIN system_menu m ON m.id = p.menu_id
+	where 1 = 1
+	<if test="permissionName != null and permissionName != ''">
+		and permission_name like concat('%',#{permissionName,jdbcType=VARCHAR},'%')
+	</if>
+	<if test="permissionCode != null and permissionCode != ''">
+		and permission_code = #{permissionCode,jdbcType=VARCHAR}
+	</if>
+	order by create_time desc
+  </select>
+  
+</mapper>

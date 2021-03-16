@@ -1,5 +1,6 @@
 package cn.itechyou.cms.controller.admin;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,17 +16,17 @@ import cn.itechyou.cms.service.SystemService;
  *
  */
 @Controller
-@RequestMapping("/admin/system")
+@RequestMapping("admin/system")
 public class SystemController extends BaseController{
 
 	@Autowired
 	private SystemService systemService;
 	/**
 	 * 首页跳转
-	 * 
 	 * @return
 	 */
-	@RequestMapping("toIndex")
+	@RequestMapping({"","toIndex"})
+	@RequiresPermissions("8q1735f2")
 	public String toIndex(Model model) {
 		System system = systemService.getSystem();
 		model.addAttribute("system", system);
@@ -34,10 +35,10 @@ public class SystemController extends BaseController{
 	
 	/**
 	 * 更新
-	 * 
 	 * @return
 	 */
 	@RequestMapping("update")
+	@RequiresPermissions("66e0j92s")
 	public String update(System system) {
 		int num = systemService.update(system);
 		return "redirect:/admin/system/toIndex";

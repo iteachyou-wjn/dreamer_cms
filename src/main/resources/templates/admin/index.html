@@ -81,44 +81,13 @@
 							<li class="active">
 								<a href="/admin/dashboard/toIndex" target="mainframe" class="waves-effect waves-dark"><i class="fa fa-dashboard"></i>仪表盘</a>
 							</li>
-							<li>
-								<a href="/admin/category/list" target="mainframe" class="waves-effect waves-dark"><i class="fa fa-columns"></i>栏目/文章管理</a>
-							</li>
-							<!-- 
-							<li>
-								<a href="/admin/archives/list" target="mainframe" class="waves-effect waves-dark"><i class="fa fa-pencil-square-o"></i>文档管理</a>
-							</li>
-							 -->
-							<li>
-								<a href="/admin/static/toIndex" target="mainframe" class="waves-effect waves-dark"><i class="fa fa-rocket"></i>网站静态化</a>
-							</li>
-							<li>
-								<a href="/admin/label/toIndex" target="mainframe" class="waves-effect waves-dark"><i class="fa fa-tags"></i>文章标签管理</a>
-							</li>
-							<li>
-								<a href="/admin/forms/list" target="mainframe" class="waves-effect waves-dark"><i class="fa fa-check-square-o"></i>表单模型管理</a>
-							</li>
-							<li>
-								<a href="/admin/attachment/list" target="mainframe" class="waves-effect waves-dark"><i class="fa fa-chain"></i>站点附件管理</a>
-							</li>
-							<li>
-								<a href="/admin/templates/toIndex" target="mainframe" class="waves-effect waves-dark"><i class="fa fa-tags"></i>模板文件管理</a>
-							</li>
-							<li>
-								<a href="/admin/theme/list" target="mainframe" class="waves-effect waves-dark"><i class="fa fa-puzzle-piece"></i>网站风格设置</a>
-							</li>
-							<li>
-								<a href="/admin/variable/list" target="mainframe" class="waves-effect waves-dark"><i class="fa fa-list-ol"></i>网站变量管理</a>
-							</li>
-							<li class="lsm-sidebar-item">
-			                    <a href="javascript:void(1);"><i class="fa fa-cog"></i><span>系统管理</span><i class="my-icon lsm-sidebar-more"></i></a>
-				                <ul>
-				                	<li><a href="/admin/user/list" target="mainframe" class="waves-effect waves-dark"><span>用户管理</span></a></li>
+							<li class="lsm-sidebar-item" th:each="item : ${menus}">
+			                    <a href="javascript:void(1);" th:if="not ${#lists.isEmpty(item.children)}"><i th:class="${item.menuIcon}"></i><span th:text="${item.menuName}"></span><i class="my-icon lsm-sidebar-more"></i></a>
+			                    <a th:href="@{${item.menuUrl}}" target="mainframe" class="waves-effect waves-dark" th:if="${#lists.isEmpty(item.children)}"><i th:class="${item.menuIcon}"></i><span th:text="${item.menuName}"></span></a>
+				                <ul th:if="not ${#lists.isEmpty(item.children)}">
+				                	<li th:each="child : ${item.children}"><a th:href="@{${child.menuUrl}}" target="mainframe" class="waves-effect waves-dark"><span th:text="${child.menuName}"></span></a></li>
 				                </ul>
 			                </li>
-							<li>
-								<a href="/admin/system/toIndex" target="mainframe" class="waves-effect waves-dark"><i class="fa fa-wrench"></i>网站系统配置</a>
-							</li>
 						</ul>
 					</div>
 		        </div>
