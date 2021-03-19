@@ -27,7 +27,7 @@ public class LabelController extends BaseController{
 	@Autowired
 	private ArchivesService archivesService;
 	
-	@RequestMapping("/toIndex")
+	@RequestMapping({"","/toIndex"})
 	public String toIndex(Model model) {
 		String[] classs = {"label-default","label-primary","label-success","label-info","label-inverse","label-warning","label-danger"};
 		Map<String,List<Map<String,String>>> map = labelService.queryLabel();
