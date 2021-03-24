@@ -4,7 +4,7 @@
 
 # 梦想家CMS内容管理系统开源版J2EE代码
 
-当前版本：3.5.0
+当前版本：3.5.1
 
 梦想家CMS官网：http://www.itechyou.cn
 模版标签开发教程请参考：http://doc.itechyou.cn 
@@ -12,6 +12,7 @@
 QQ群交流：
 - ①597652651
 - ②623605199
+- ③573574854
 
 DreamerCMS（梦想家CMS内容管理系统）公开解决了快速搭建展示型网站（如：企业官网、技术博客、信息门户等）的框架体系，是电子政务、电信综合门户、企业信息门户、知识管理平台、电子商务平台的基础性软件系统。可以帮助政府、企业或组织灵活、准确、高效、智能地管理信息内容，实现信息的采集、加工、审核、发布、存储、检索、统计、分析、 反馈等整个信息生命周期的管理。采用时下最流行的Springboot+thymeleaf框架搭建，具有灵活小巧，配置简单，标签化模版，快速开发等特点。主要解决公司搭建网站成本高、投入大、周期长等问题，也可作为初创公司很好的基础技术框架。使用过程中不需要专业的后端技术开发技能，只要使用系统提供的模版标签，即可轻轻松松建设网站。
 
@@ -48,15 +49,21 @@ DreamerCMS从2.0.0版本开始采用了解析式引擎与编译式引擎并存�
 建议开发者使用以下环境，这样避免版本带来的问题
 * IDE：Spring Tool Suite 4（STS）
 * DB：Mysql 5.7
-* JDK：jdk8
-* Redis：3.2+
+* JDK：Jdk8
+* Redis：3.2+，Windows配置安装Redis教程，请参考：https://itechyou.cn/article/4b0a638f65fa4fb1b9644cf461dba602
 * LomBok 项目需要使用Lombok支持，Lombok安装教程，请参考https://itechyou.cn/article/55ec2939c29147eca5bebabf19621655
 
 # 快速入门
 CMS包括两个部分（代码部分、资源部分）代码不多说。资源就是图片、模版等，该目录在application.yml中web.resource-path配置项目中配置。视频教程：
 ```
+Dreamer CMS后台使用教程：
+https://itechyou.cn/list-6s3bg7tf/dreamercms/1/10
+Dreamer CMS模版开发教程：
+https://itechyou.cn/list-l54xs53b/tempdev/1/10
+
 百度网盘下载链接：
 https://pan.baidu.com/s/1plsfBl_ds_5TkVa-yRkESQ 提取码：2c8i
+
 在线观看视频地址：
 https://space.bilibili.com/482273402
 ```
@@ -64,11 +71,12 @@ https://space.bilibili.com/482273402
 2. 导入Eclipse或Sts等开发工具（推荐使用Spring Tools Suite 4），项目需要使用Lombok支持，Lombok安装教程，请参考https://itechyou.cn/article/55ec2939c29147eca5bebabf19621655
 3. 项目需要Redis，请自行修改application.yml中Redis配置
 4. 修改项目资源目录，application.yml文件web.resource-path配置项（如D:/dreamer-cms/）
-5. 将项目src/main/resources/db/dreamer-cms.zip文件解压，保证解压后的目录路径的名称和资源目录一致
-6. 运行项目DreamerCMSApplication.java
-7. 网站首页：http://localhost:8888 项目管理后台：http://localhost:8888/admin
-8. 管理后台用户名：wangjn；密码：123456
-9. 模版标签开发教程请参考：http://doc.itechyou.cn 
+5. 导入数据库src/main/resources/db/db.sql，要求Mysql5.7版本，并修改application-(dev|prd).yml中数据配置
+6. 将项目src/main/resources/db/dreamer-cms.zip文件解压，保证解压后的目录路径的名称和资源目录一致
+7. 运行项目DreamerCMSApplication.java
+8. 网站首页：http://localhost:8888 项目管理后台：http://localhost:8888/admin
+9. 管理后台用户名：wangjn；密码：123456
+10. 模版标签开发教程请参考：http://doc.itechyou.cn 
 
 # 捐赠详情 
 
@@ -124,11 +132,6 @@ https://space.bilibili.com/482273402
 		<td>胜宇</td>
 		<td>10.00</td>
 		<td>2021-01-07 08:41:23</td>
-	</tr>
-	<tr>
-		<td>家乐</td>
-		<td>10.00</td>
-		<td>2021-01-14 17:59:41</td>
 	</tr>
 </table>
 
