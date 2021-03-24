@@ -247,7 +247,7 @@ public class StaticController {
 				int total = pageInfo.getPages();
 				int pageNum = pageInfo.getPageNum();
 				int pageSize = pageInfo.getPageSize();
-				while (pageNum <= total) {
+				if(total <= 0) {//如果列表无数据，则生成空页面
 					newHtml = new String(newCreateHtml);
 					message = new Message(StateCodeEnum.HTTP_SUCCESS.getCode(),"开始生成[" + categoryWithBLOBs.getCnname() + "]栏目，第["+pageNum+"]页静态HTML文件...",75);
 					WebSocketServer.sendInfo(message,clientId);
@@ -256,10 +256,21 @@ public class StaticController {
 					String fileName = URLUtils.parseFileName(categoryWithBLOBs, pageNum);
 					File file = new File(fileConfiguration.getResourceDir() + system.getStaticdir() + catDir + fileName);
 					FileUtils.write(file, newHtml);
-					if(pageNum == 1) {
-						buildArticleHTML(categoryWithBLOBs,clientId);
+				}else {//如果列表有数据，则生成全部页面
+					while (pageNum <= total) {
+						newHtml = new String(newCreateHtml);
+						message = new Message(StateCodeEnum.HTTP_SUCCESS.getCode(),"开始生成[" + categoryWithBLOBs.getCnname() + "]栏目，第["+pageNum+"]页静态HTML文件...",75);
+						WebSocketServer.sendInfo(message,clientId);
+						newHtml = parseEngine.generatePageList(newHtml, categoryWithBLOBs.getCode(), pageNum, pageSize);
+						String catDir = URLUtils.getCategoryDir(categoryWithBLOBs);
+						String fileName = URLUtils.parseFileName(categoryWithBLOBs, pageNum);
+						File file = new File(fileConfiguration.getResourceDir() + system.getStaticdir() + catDir + fileName);
+						FileUtils.write(file, newHtml);
+						if(pageNum == 1) {
+							buildArticleHTML(categoryWithBLOBs,clientId);
+						}
+						pageNum++;
 					}
-					pageNum++;
 				}
 			}else {//封面
 				WebSocketServer.sendInfo(message,clientId);

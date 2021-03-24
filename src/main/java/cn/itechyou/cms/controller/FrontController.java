@@ -449,7 +449,6 @@ public class FrontController {
 		if(params.getPageSize() == null)
 			params.setPageSize(10);
 		
-		
 		try {
 			Map<String, Object> entity = params.getEntity();
 			if(entity == null || !entity.containsKey("keywords")) {

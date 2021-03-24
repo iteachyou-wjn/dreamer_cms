@@ -59,6 +59,8 @@
 								<td>
 									<a th:href="@{/admin/attachment/download(id=${attachment.id})}" target="_blank" class="btn btn-xs btn-success">下载预览</a>
 									<span>&nbsp;|&nbsp;</span>
+									<a href="javascript:void(0)" th:aid="${attachment.id}" class="btn btn-xs btn-success copyDownloadUrlBtn" th:onclick="javascript:copyDownloadUrl(this.getAttribute('aid'))">复制下载链接</a>
+									<span>&nbsp;|&nbsp;</span>
 									<a href="javascript:void(0)" data-toggle="modal" class="btn btn-xs btn-danger" th:aid="${attachment.id}" th:onclick="javascript:confrimRemove(this.getAttribute('aid'))">删除</a>
 								</td>
 							</tr>
@@ -139,7 +141,9 @@
     <script src="/resource/js/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
 	<script type="text/javascript" src="/resource/js/webuploader-0.1.5/webuploader.js"></script>
 	<script type="text/javascript" src="/resource/js/jQueryMessage/js/jquery.plugin.message.js"></script>
-	<script type="text/javascript">
+	<script src="/resource/js/clipboard.min.js" type="text/javascript"></script>
+	<script type="text/javascript" th:inline="javascript">
+		var system = [[${system}]];
 		function initUploader(picker,inputEl){
 	    	var uploader = WebUploader.create({
 	    		auto: true,
@@ -225,6 +229,32 @@
 			var currentID = $("#cacheID").val();
 			window.location.href="/admin/attachment/delete?id="+currentID;
 			$("#remove-dialog").modal('hide');
+		}
+		
+		function copyDownloadUrl(id){
+			var content = system.website + "/admin/attachment/download?id=" + id;
+			var clipboard = new Clipboard('.copyDownloadUrlBtn',{
+				text: function() {
+					return content;
+				}
+			});
+			clipboard.on('success', function(e) {
+				$("body").MessageBox({
+					type: 'success',
+					message: '复制成功！',
+					timeout:3000,
+					callbak:null
+				});
+			});
+		
+			clipboard.on('error', function(e) {
+				$("body").MessageBox({
+					type: 'error',
+					message: '复制失败！',
+					timeout:3000,
+					callbak:null
+				});
+			});
 		}
 	</script>
 </body>

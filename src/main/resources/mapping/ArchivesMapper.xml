@@ -149,10 +149,13 @@
         a.update_time updateTime,
         f.*,
         c.cnname categoryCnName,
-        c.enname categoryEnName
+        c.enname categoryEnName,
+        u.username as createUserName,
+        u.realname as createRealName
     FROM 
     `system_archives` a
     LEFT JOIN system_category c ON a.category_id = c.id
+    LEFT JOIN system_user u ON a.create_by = u.id
     LEFT JOIN `${tableName}` f ON a.id = f.aid
     WHERE a.id = #{id,jdbcType=VARCHAR}
   </select>

@@ -95,7 +95,9 @@ public class PaginationTag implements IParse {
 		sb.append("<ul class='dreamer-ul'>");
 		//
 		String firstUrl = pageurl.replace("{pageNum}", String.valueOf(pageInfo.getNavigateFirstPage())).replace("{pageSize}", String.valueOf(pageInfo.getPageSize()));
-		sb.append("<li><a href='"+firstUrl+"'>首页</a></li>");
+		if(pageInfo.getTotal() != 0) {
+			sb.append("<li><a href='"+firstUrl+"'>首页</a></li>");
+		}
 		if(pageInfo.getPrePage() != 0) {
 			String preUrl = pageurl.replace("{pageNum}", String.valueOf(pageInfo.getPrePage())).replace("{pageSize}", String.valueOf(pageInfo.getPageSize()));
 			sb.append("<li><a href='"+preUrl+"'>上一页</a></li>");
@@ -116,7 +118,9 @@ public class PaginationTag implements IParse {
 			sb.append("<li><a href='"+nextUrl+"'>下一页</a></li>");
 		}
 		String lastUrl = pageurl.replace("{pageNum}", String.valueOf(pageInfo.getNavigateLastPage())).replace("{pageSize}", String.valueOf(pageInfo.getPageSize()));
-		sb.append("<li><a href='"+lastUrl+"'>尾页</a></li>");
+		if(pageInfo.getTotal() != 0) {
+			sb.append("<li><a href='"+lastUrl+"'>尾页</a></li>");
+		}
 		sb.append("</ul>");
 		sb.append("</div>");
 		

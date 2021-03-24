@@ -141,6 +141,10 @@ public class ArticleTag implements IParse {
 					newHtml = newHtml.replace(string, StringUtil.isBlank(archivesVo.get("status")) ? "" : archivesVo.get("status").toString());
 				}else if (FieldEnum.FIELD_CREATEBY.getField().equalsIgnoreCase(name)) {
 					newHtml = newHtml.replace(string, StringUtil.isBlank(archivesVo.get("createBy")) ? "" : archivesVo.get("createBy").toString());
+				}else if (FieldEnum.FIELD_CREATEUSERNAME.getField().equalsIgnoreCase(name)) {
+					newHtml = newHtml.replace(string, StringUtil.isBlank(archivesVo.get("createUserName")) ? "" : archivesVo.get("createUserName").toString());
+				}else if (FieldEnum.FIELD_CREATEREALNAME.getField().equalsIgnoreCase(name)) {
+					newHtml = newHtml.replace(string, StringUtil.isBlank(archivesVo.get("createRealName")) ? "" : archivesVo.get("createRealName").toString());
 				}else if (FieldEnum.FIELD_CREATETIME.getField().equalsIgnoreCase(name)) {
 					if(StringUtil.isNotBlank(function)) {
 						newHtml = newHtml.replace(string, FunctionUtil.replaceByFunction(function, archivesVo.get("createTime")));

@@ -31,58 +31,64 @@ public class FunctionUtil {
 		}
 		List<String> list = RegexUtil.parseAll(source, regex, 0);
 		if(list != null && list.size() > 0) {
-			String function = RegexUtil.parseFirst(list.get(0), FieldEnum.FUNCTION.getRegexp(), 1);
-			String params = RegexUtil.parseFirst(list.get(0), FieldEnum.FUNCTION.getRegexp(), 2);
-			if(function == null || params == null) {
-				return source.replaceAll(regex, data.toString());
-			}
-			
-			String[] paramsArr = params.split(",");
-			if("substring".equalsIgnoreCase(function)) {//是否为截取函数
-				String stringVal = data.toString();
-				if(paramsArr.length != 3) {
-					throw new TemplateParseException(
-							ExceptionEnum.TEMPLATE_PARSE_EXCEPTION.getCode(), 
-							ExceptionEnum.TEMPLATE_PARSE_EXCEPTION.getMessage(), 
-							"模版文件解析错误，请检查标签内的function参数是否正确。");
+			for(int i = 0;i < list.size();i++) {
+				String function = RegexUtil.parseFirst(list.get(i), FieldEnum.FUNCTION.getRegexp(), 1);
+				String params = RegexUtil.parseFirst(list.get(i), FieldEnum.FUNCTION.getRegexp(), 2);
+				if(function == null || params == null) {
+					source = source.replaceFirst(regex, data.toString());
+					continue;
 				}
-				int start = Integer.parseInt(paramsArr[0]);
-				int length = Integer.parseInt(paramsArr[1]);
-				String addStr = paramsArr[2];
-				if((addStr.startsWith("\"") || addStr.startsWith("\'")) && addStr.endsWith("\"") || addStr.endsWith("\'")){
-					addStr = addStr.substring(1, addStr.length() - 1);
-				}
-				if(start >= length) {
-					throw new TemplateParseException(
-							ExceptionEnum.TEMPLATE_PARSE_EXCEPTION.getCode(), 
-							ExceptionEnum.TEMPLATE_PARSE_EXCEPTION.getMessage(), 
-							"模版文件解析错误，请检查标签内的function参数是否正确。");
-				}
-				if(stringVal.length() > length) {
-					result = stringVal.substring(start, length);
-					return result;
-				}
-				result = stringVal + addStr;
-			}else if("format".equalsIgnoreCase(function)) {//是否为格式化函数，目前只支持Date类型数据
-				if(data instanceof Date) {
-					Date date = (Date) data;
-					String formatPattern = paramsArr[0];
-					if((formatPattern.startsWith("\"") || formatPattern.startsWith("\'")) && formatPattern.endsWith("\"") || formatPattern.endsWith("\'")){
-						formatPattern = formatPattern.substring(1, formatPattern.length() - 1);
+				
+				String[] paramsArr = params.split(",");
+				if("substring".equalsIgnoreCase(function)) {//是否为截取函数
+					String stringVal = data.toString();
+					if(paramsArr.length != 3) {
+						throw new TemplateParseException(
+								ExceptionEnum.TEMPLATE_PARSE_EXCEPTION.getCode(), 
+								ExceptionEnum.TEMPLATE_PARSE_EXCEPTION.getMessage(), 
+								"模版文件解析错误，请检查标签内的function参数是否正确。");
 					}
-					SimpleDateFormat sdf = new SimpleDateFormat(formatPattern);
-					result = sdf.format(date);
-				}else {
-					throw new TemplateParseException(
-							ExceptionEnum.TEMPLATE_PARSE_EXCEPTION.getCode(), 
-							ExceptionEnum.TEMPLATE_PARSE_EXCEPTION.getMessage(), 
-							"模版文件解析错误，format函数目前只支持日期类型数据进行格式化。");
+					int start = Integer.parseInt(paramsArr[0]);
+					int length = Integer.parseInt(paramsArr[1]);
+					String addStr = paramsArr[2];
+					if((addStr.startsWith("\"") || addStr.startsWith("\'")) && addStr.endsWith("\"") || addStr.endsWith("\'")){
+						addStr = addStr.substring(1, addStr.length() - 1);
+					}
+					if(start >= length) {
+						throw new TemplateParseException(
+								ExceptionEnum.TEMPLATE_PARSE_EXCEPTION.getCode(), 
+								ExceptionEnum.TEMPLATE_PARSE_EXCEPTION.getMessage(), 
+								"模版文件解析错误，请检查标签内的function参数是否正确。");
+					}
+					if(stringVal.length() > length) {
+						result = stringVal.substring(start, length);
+					}else {
+						result = stringVal;
+					}
+					result += addStr;
+					source = source.replaceFirst(regex, result);
+				}else if("format".equalsIgnoreCase(function)) {//是否为格式化函数，目前只支持Date类型数据
+					if(data instanceof Date) {
+						Date date = (Date) data;
+						String formatPattern = paramsArr[0];
+						if((formatPattern.startsWith("\"") || formatPattern.startsWith("\'")) && formatPattern.endsWith("\"") || formatPattern.endsWith("\'")){
+							formatPattern = formatPattern.substring(1, formatPattern.length() - 1);
+						}
+						SimpleDateFormat sdf = new SimpleDateFormat(formatPattern);
+						result = sdf.format(date);
+						source = source.replaceFirst(regex, result);
+					}else {
+						throw new TemplateParseException(
+								ExceptionEnum.TEMPLATE_PARSE_EXCEPTION.getCode(), 
+								ExceptionEnum.TEMPLATE_PARSE_EXCEPTION.getMessage(), 
+								"模版文件解析错误，format函数目前只支持日期类型数据进行格式化。");
+					}
 				}
 			}
 		}else {
 			return source.replaceAll(regex, data.toString());
 		}
-		return source.replaceAll(regex, result);
+		return source;
 	}
 	
 	/**

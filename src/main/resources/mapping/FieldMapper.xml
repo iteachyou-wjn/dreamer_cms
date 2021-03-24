@@ -31,5 +31,6 @@
     <include refid="Base_Column_List" />
     from system_fields
     where form_id = #{formId,jdbcType=VARCHAR}
+    order by create_time asc
   </select>
 </mapper>

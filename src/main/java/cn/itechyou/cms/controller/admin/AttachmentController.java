@@ -50,8 +50,10 @@ public class AttachmentController extends BaseController {
 	@RequestMapping({"","/list"})
 	@RequiresPermissions("5z1mj7i6")
 	public String toIndex(Model model ,SearchEntity params) {
+		System system = systemService.getSystem();
 		PageInfo<Attachment> page = attachmentService.queryListByPage(params);
 		model.addAttribute("attachments", page);
+		model.addAttribute("system", system);
 		return "admin/attachment/list";
 	}
 	

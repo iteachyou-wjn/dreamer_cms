@@ -123,6 +123,8 @@ public class CategoryTag implements IParse {
 					newHtml = newHtml.replace(string, StringUtil.isBlank(temp.getMdContent()) ? "" : temp.getMdContent());
 				}else if (FieldEnum.FIELD_UEHTML.getField().equalsIgnoreCase(name)) {
 					newHtml = newHtml.replace(string, StringUtil.isBlank(temp.getHtmlContent()) ? "" : temp.getHtmlContent());
+				}else if (FieldEnum.FIELD_PARENTID.getField().equalsIgnoreCase(name)) {
+					newHtml = newHtml.replace(string, StringUtil.isBlank(temp.getParentId()) ? "" : temp.getParentId());
 				}else if (FieldEnum.FIELD_PARENTNAME.getField().equalsIgnoreCase(name)) {
 					newHtml = newHtml.replace(string, StringUtil.isBlank(temp.getParentName()) ? "" : temp.getParentName());
 				}else if (FieldEnum.FIELD_ISSHOW.getField().equalsIgnoreCase(name)) {

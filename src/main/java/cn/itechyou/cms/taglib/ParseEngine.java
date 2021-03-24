@@ -17,6 +17,7 @@ import cn.itechyou.cms.taglib.tags.LabelTag;
 import cn.itechyou.cms.taglib.tags.ListTag;
 import cn.itechyou.cms.taglib.tags.PageListTag;
 import cn.itechyou.cms.taglib.tags.PrevNextTag;
+import cn.itechyou.cms.taglib.tags.SqlTag;
 import cn.itechyou.cms.taglib.tags.TemplateTag;
 import cn.itechyou.cms.taglib.tags.TypeTag;
 import cn.itechyou.cms.taglib.tags.VariableTag;
@@ -54,6 +55,8 @@ public class ParseEngine {
 	private PrevNextTag prevNextTag;
 	@Autowired
 	private AttachmentTag attachmentTag;
+	@Autowired
+	private SqlTag sqlTag;
 	
 	/**
 	 * HTML解析入口
@@ -77,6 +80,7 @@ public class ParseEngine {
 		newHtml = labelTag.parse(newHtml);
 		newHtml = attachmentTag.parse(newHtml);
 		newHtml = ifTag.parse(newHtml);
+		newHtml = sqlTag.parse(newHtml);
 		return newHtml;
 	}
 	
@@ -91,6 +95,7 @@ public class ParseEngine {
 		newHtml = categoryTag.parse(newHtml, typeid);
 		newHtml = labelTag.parse(newHtml);
 		newHtml = attachmentTag.parse(newHtml);
+		newHtml = sqlTag.parse(newHtml);
 		return newHtml;
 	}
 	
@@ -108,6 +113,7 @@ public class ParseEngine {
 		newHtml = pageListTag.parse(newHtml,typeid,pageNum,pageSize);
 		newHtml = labelTag.parse(newHtml);
 		newHtml = attachmentTag.parse(newHtml);
+		newHtml = sqlTag.parse(newHtml);
 		return newHtml;
 	}
 	
@@ -122,6 +128,7 @@ public class ParseEngine {
 		newHtml = articleTag.parse(newHtml, id);
 		newHtml = labelTag.parse(newHtml);
 		newHtml = attachmentTag.parse(newHtml);
+		newHtml = sqlTag.parse(newHtml);
 		return newHtml;
 	}
 
@@ -145,6 +152,7 @@ public class ParseEngine {
 		newHtml = pageListTag.parse(newHtml, params);
 		newHtml = labelTag.parse(newHtml);
 		newHtml = attachmentTag.parse(newHtml);
+		newHtml = sqlTag.parse(newHtml);
 		return newHtml;
 	}
 
@@ -165,6 +173,7 @@ public class ParseEngine {
 		newHtml = labelTag.parse(newHtml);
 		newHtml = attachmentTag.parse(newHtml);
 		newHtml = ifTag.parse(newHtml);
+		newHtml = sqlTag.parse(newHtml);
 		return newHtml;
 	}
 	
@@ -179,6 +188,7 @@ public class ParseEngine {
 		newHtml = categoryTag.parse(newHtml, typeid);
 		newHtml = labelTag.parse(newHtml);
 		newHtml = attachmentTag.parse(newHtml);
+		newHtml = sqlTag.parse(newHtml);
 		return newHtml;
 	}
 
@@ -188,6 +198,7 @@ public class ParseEngine {
 		newHtml = pageListTag.parse(newHtml,typeid, pageNum,pageSize);
 		newHtml = labelTag.parse(newHtml);
 		newHtml = attachmentTag.parse(newHtml);
+		newHtml = sqlTag.parse(newHtml);
 		return newHtml;
 	}
 

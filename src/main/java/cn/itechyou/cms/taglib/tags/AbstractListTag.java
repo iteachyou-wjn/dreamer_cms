@@ -2,20 +2,16 @@ package cn.itechyou.cms.taglib.tags;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import cn.itechyou.cms.common.ExceptionEnum;
 import cn.itechyou.cms.entity.Category;
 import cn.itechyou.cms.exception.CmsException;
-import cn.itechyou.cms.exception.TemplateParseException;
 import cn.itechyou.cms.service.CategoryService;
 import cn.itechyou.cms.service.SystemService;
 import cn.itechyou.cms.taglib.enums.FieldEnum;
 import cn.itechyou.cms.taglib.utils.FunctionUtil;
-import cn.itechyou.cms.taglib.utils.RegexUtil;
 import cn.itechyou.cms.taglib.utils.URLUtils;
 import cn.itechyou.cms.utils.StringUtil;
 import cn.itechyou.cms.vo.ArchivesVo;
@@ -63,9 +59,12 @@ public abstract class AbstractListTag {
 		
 		item = FunctionUtil.replaceByFunction(item, FieldEnum.FIELD_TITLE.getRegexp(), StringUtil.isBlank(archives.get("title")) ? "" : archives.get("title").toString());
 		item = item.replaceAll(FieldEnum.FIELD_PROPERTIES.getRegexp(), StringUtil.isBlank(archives.get("properties")) ? "" : archives.get("properties").toString());
-		item = item.replaceAll(FieldEnum.FIELD_LITPIC.getRegexp(), system.getWebsite() + system.getUploaddir() + "/" + imagePath);
+		item = item.replaceAll(FieldEnum.FIELD_LITPIC.getRegexp(), StringUtil.isBlank(imagePath) ? "" : system.getWebsite() + system.getUploaddir() + "/" + imagePath);
+		//是否有缩略图
+		item = item.replaceAll(FieldEnum.FIELD_HASTHUMBNAIL.getRegexp(), StringUtil.isBlank(imagePath) ? "no-thumbnail" : "yes-thumbnail");
+		
 		item = item.replaceAll(FieldEnum.FIELD_TAG.getRegexp(), StringUtil.isBlank(archives.get("tag")) ? "" : archives.get("tag").toString());
-		item = item.replaceAll(FieldEnum.FIELD_REMARK.getRegexp(), StringUtil.isBlank(archives.get("description")) ? "" : archives.get("description").toString());
+		item = FunctionUtil.replaceByFunction(item, FieldEnum.FIELD_REMARK.getRegexp(), StringUtil.isBlank(archives.get("description")) ? "" : archives.get("description").toString());
 		item = item.replaceAll(FieldEnum.FIELD_CATEGORYID.getRegexp(), StringUtil.isBlank(archives.get("categoryId")) ? "-1" : archives.get("categoryId").toString());
 		item = item.replaceAll(FieldEnum.FIELD_TYPENAMECN.getRegexp(), StringUtil.isBlank(archives.get("categoryCnName")) ? "" : archives.get("categoryCnName").toString());
 		item = item.replaceAll(FieldEnum.FIELD_TYPENAMEEN.getRegexp(), StringUtil.isBlank(archives.get("categoryEnName")) ? "-1" : archives.get("categoryEnName").toString());
@@ -119,9 +118,11 @@ public abstract class AbstractListTag {
 		item = item.replaceAll(FieldEnum.FIELD_ID.getRegexp(), archives.getId());
 		item = FunctionUtil.replaceByFunction(item, FieldEnum.FIELD_TITLE.getRegexp(), StringUtil.isBlank(archives.getTitle()) ? "" : archives.getTitle());
 		item = item.replaceAll(FieldEnum.FIELD_PROPERTIES.getRegexp(), StringUtil.isBlank(archives.getProperties()) ? "" : archives.getProperties());
-		item = item.replaceAll(FieldEnum.FIELD_LITPIC.getRegexp(), system.getWebsite() + system.getUploaddir() + "/" + imagePath);
+		item = item.replaceAll(FieldEnum.FIELD_LITPIC.getRegexp(), StringUtil.isBlank(imagePath) ? "" : system.getWebsite() + system.getUploaddir() + "/" + imagePath);
+		//是否有缩略图
+		item = item.replaceAll(FieldEnum.FIELD_HASTHUMBNAIL.getRegexp(), StringUtil.isBlank(imagePath) ? "no-thumbnail" : "yes-thumbnail");
 		item = item.replaceAll(FieldEnum.FIELD_TAG.getRegexp(), StringUtil.isBlank(archives.getTag()) ? "" : archives.getTag());
-		item = item.replaceAll(FieldEnum.FIELD_REMARK.getRegexp(), StringUtil.isBlank(archives.getDescription()) ? "" : archives.getDescription());
+		item = FunctionUtil.replaceByFunction(item, FieldEnum.FIELD_REMARK.getRegexp(), StringUtil.isBlank(archives.getDescription()) ? "" : archives.getDescription());
 		item = item.replaceAll(FieldEnum.FIELD_CATEGORYID.getRegexp(), StringUtil.isBlank(archives.getCategoryId()) ? "-1" : archives.getCategoryId());
 		item = item.replaceAll(FieldEnum.FIELD_TYPENAMECN.getRegexp(), StringUtil.isBlank(archives.getCategoryCnName()) ? "" : archives.getCategoryCnName());
 		item = item.replaceAll(FieldEnum.FIELD_TYPENAMEEN.getRegexp(), StringUtil.isBlank(archives.getCategoryEnName()) ? "-1" : archives.getCategoryEnName());

@@ -57,6 +57,7 @@ public abstract class AbstractChannelTag {
 		item = item.replaceAll(FieldEnum.FIELD_EDITOR.getRegexp(), StringUtil.isBlank(category.getDefaultEditor()) ? "" : category.getDefaultEditor());
 		item = item.replaceAll(FieldEnum.FIELD_MARKDOWN.getRegexp(), StringUtil.isBlank(category.getMdContent()) ? "" : category.getMdContent());
 		item = item.replaceAll(FieldEnum.FIELD_UEHTML.getRegexp(), StringUtil.isBlank(category.getHtmlContent()) ? "" : category.getHtmlContent());
+		item = item.replaceAll(FieldEnum.FIELD_PARENTID.getRegexp(), StringUtil.isBlank(category.getParentId()) ? "" : category.getParentId());
 		item = item.replaceAll(FieldEnum.FIELD_PARENTNAME.getRegexp(), StringUtil.isBlank(category.getParentName()) ? "" : category.getParentName());
 		item = item.replaceAll(FieldEnum.FIELD_ISSHOW.getRegexp(), StringUtil.isBlank(category.getIsShow()) ? "" : category.getIsShow().toString());
 		item = item.replaceAll(FieldEnum.FIELD_LEVEL.getRegexp(), StringUtil.isBlank(category.getLevel()) ? "" : category.getLevel());

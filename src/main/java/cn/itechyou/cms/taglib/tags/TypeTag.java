@@ -18,7 +18,7 @@ import cn.itechyou.cms.taglib.utils.RegexUtil;
 import cn.itechyou.cms.utils.StringUtil;
 
 /**
- * Include标签解析
+ * Type标签解析
  * @author Wangjn
  * @version 1.0.0
  */
