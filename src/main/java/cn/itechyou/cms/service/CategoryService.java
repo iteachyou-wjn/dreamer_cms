@@ -7,6 +7,7 @@ import com.github.pagehelper.PageInfo;
 
 import cn.itechyou.cms.common.SearchEntity;
 import cn.itechyou.cms.entity.Category;
+import cn.itechyou.cms.exception.CmsException;
 
 public interface CategoryService {
 
@@ -20,7 +21,7 @@ public interface CategoryService {
 
 	int update(Category category);
 
-	int delete(String id);
+	int delete(String id) throws CmsException;
 
 	Category queryCategoryByCode(String code);
 

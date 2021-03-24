@@ -21,6 +21,7 @@ import cn.itechyou.cms.common.StateCodeEnum;
 import cn.itechyou.cms.entity.Category;
 import cn.itechyou.cms.entity.Form;
 import cn.itechyou.cms.entity.System;
+import cn.itechyou.cms.exception.CmsException;
 import cn.itechyou.cms.security.token.TokenManager;
 import cn.itechyou.cms.service.CategoryService;
 import cn.itechyou.cms.service.FormService;
@@ -144,7 +145,7 @@ public class CategoryController extends BaseController{
 	
 	@RequestMapping(value ="/delete")
 	@RequiresPermissions("56p8k0im")
-	public String delete(String id) {
+	public String delete(String id) throws CmsException {
 		int num = categoryService.delete(id);
 		return "redirect:/admin/category/list";
 	}

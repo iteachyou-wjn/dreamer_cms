@@ -12,10 +12,13 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
 import cn.hutool.core.map.MapUtil;
+import cn.itechyou.cms.common.ExceptionEnum;
 import cn.itechyou.cms.common.SearchEntity;
 import cn.itechyou.cms.dao.ArchivesMapper;
 import cn.itechyou.cms.dao.CategoryMapper;
 import cn.itechyou.cms.entity.Category;
+import cn.itechyou.cms.exception.AdminGeneralException;
+import cn.itechyou.cms.exception.CmsException;
 import cn.itechyou.cms.service.CategoryService;
 import cn.itechyou.cms.utils.LoggerUtils;
 /**
@@ -90,10 +93,18 @@ public class CategoryServiceImpl implements CategoryService {
 
 	/**
 	 * 删除
+	 * @throws CmsException 
 	 */
 	@Override
 	@Transactional
-	public int delete(String id) {
+	public int delete(String id) throws CmsException {
+		List<Category> list = categoryMapper.selectByParentId(id);
+		if(list != null && list.size() > 0) {
+			throw new AdminGeneralException(
+					ExceptionEnum.CATEGORY_REMOVE_EXCEPTION.getCode(), 
+					ExceptionEnum.CATEGORY_REMOVE_EXCEPTION.getMessage(), 
+					"当前栏目存在下级栏目，删除失败");
+		}
 		Category category = categoryMapper.selectByPrimaryKey(id);
 		return cascadeDelete(category);
 	}

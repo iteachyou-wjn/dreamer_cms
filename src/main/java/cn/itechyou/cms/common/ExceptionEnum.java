@@ -20,6 +20,7 @@ public enum ExceptionEnum {
 	LICENCE_PARAMETER_EXCEPTION("40008", "授权失败"),
 	USERNAME_EXIST_EXCEPTION("40009", "用户名已存在"),
 	TASK_CLASSNOTFOUND_EXCEPTION("40010", "定时任务类不存在"),
+	CATEGORY_REMOVE_EXCEPTION("40011", "栏目存在下级栏目，删除失败"),
 	;
 	private String code;
 	private String message;
