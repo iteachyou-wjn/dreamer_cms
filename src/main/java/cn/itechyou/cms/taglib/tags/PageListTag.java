@@ -152,8 +152,16 @@ public class PageListTag extends AbstractListTag implements IParse {
 			return html;
 		}
 		
+		Map<String,Object> searchParams = new HashMap<String,Object>();
 		//关键词
 		String keywords = params.getEntity().get("keywords").toString();
+		searchParams.put("keywords", keywords);
+		//栏目,可指定多个，多个用英文逗号隔开
+		if(params.getEntity().containsKey("typeid") && StringUtil.isNotBlank(params.getEntity().get("typeid"))) {
+			String typeid = params.getEntity().get("typeid").toString();
+			typeid = typeid.replace(",", "','");
+			searchParams.put("typeid", "'" + typeid + "'");
+		}
 		
 		String newHtml = html;
 		for (int i = 0;i < listTags.size();i++) {
@@ -164,7 +172,7 @@ public class PageListTag extends AbstractListTag implements IParse {
 			params.setEntity(entity);
 			//开始分页
 			PageHelper.startPage(params.getPageNum(), params.getPageSize());
-			List<ArchivesVo> list = archivesMapper.queryListByKeywords(keywords);
+			List<ArchivesVo> list = archivesMapper.queryListByKeywords(searchParams);
 			PageInfo<ArchivesVo> pageInfo = new PageInfo<ArchivesVo>(list);
 			
 			StringBuilder sb = new StringBuilder();

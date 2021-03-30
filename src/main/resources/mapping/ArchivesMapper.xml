@@ -102,7 +102,7 @@
       where tag like concat('%',concat(#{tag,jdbcType=VARCHAR},'%'))
   </select>
   
-  <select id="queryListByKeywords" resultType="cn.itechyou.cms.vo.ArchivesVo">
+  <select id="queryListByKeywords" parameterType="java.util.Map" resultType="cn.itechyou.cms.vo.ArchivesVo">
       select 
           a.id
           , a.title
@@ -125,7 +125,13 @@
           , CASE WHEN a.category_id = '-1' THEN 'Top Column' ELSE c.enname END AS categoryEnName
       from system_archives a
       LEFT JOIN system_category c ON a.category_id = c.id
-      where title like concat('%',concat(#{keywords,jdbcType=VARCHAR},'%'))
+      where 1 = 1 
+      <if test="keywords != null and keywords != ''">
+      	and title like concat('%',concat(#{keywords,jdbcType=VARCHAR},'%'))
+      </if>
+      <if test="typeid != null and typeid != ''">
+      	and c.code in (${typeid})
+      </if>
   </select>
   
   <select id="queryArticleById" parameterType="java.util.Map" resultType="java.util.Map">

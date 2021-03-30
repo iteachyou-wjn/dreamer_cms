@@ -68,32 +68,31 @@
 			    </div>
 			    <div class="panel-footer bg-white text-right">
                      <ul class="pagination">
-                         <li><a th:href="@{/admin/category/list(pageNum=${variables.navigateFirstPage},pageSize=${variables.pageSize})}" title="首页" th:class="${variables.isFirstPage} ? 'paginationNotAllowed' : ''">«</a></li>
-                         <li><a th:href="@{/admin/category/list(pageNum=${variables.prePage},pageSize=${variables.pageSize})}" title="上一页" th:if="${variables.hasPreviousPage}">‹</a></li>
-                         <li th:each="pageinfo : ${variables.navigatepageNums}"><a th:href="@{/admin/category/list(pageNum=${pageinfo},pageSize=${variables.pageSize})}" th:class="${pageinfo == variables.pageNum} ? 'paginationActive' : ''" th:text="${pageinfo}"></a></li>
-                         <li><a th:href="@{/admin/category/list(pageNum=${variables.nextPage},pageSize=${variables.pageSize})}" title="下一页" th:if="${variables.hasNextPage}">›</a></li>
-                         <li><a th:href="@{/admin/category/list(pageNum=${variables.navigateLastPage},pageSize=${variables.pageSize})}" title="未页" th:class="${variables.isLastPage} ? 'paginationNotAllowed' : ''">»</a></li>
+                         <li><a th:href="@{/admin/variable/list(pageNum=${variables.navigateFirstPage},pageSize=${variables.pageSize})}" title="首页" th:class="${variables.isFirstPage} ? 'paginationNotAllowed' : ''">«</a></li>
+                         <li><a th:href="@{/admin/variable/list(pageNum=${variables.prePage},pageSize=${variables.pageSize})}" title="上一页" th:if="${variables.hasPreviousPage}">‹</a></li>
+                         <li th:each="pageinfo : ${variables.navigatepageNums}"><a th:href="@{/admin/variable/list(pageNum=${pageinfo},pageSize=${variables.pageSize})}" th:class="${pageinfo == variables.pageNum} ? 'paginationActive' : ''" th:text="${pageinfo}"></a></li>
+                         <li><a th:href="@{/admin/variable/list(pageNum=${variables.nextPage},pageSize=${variables.pageSize})}" title="下一页" th:if="${variables.hasNextPage}">›</a></li>
+                         <li><a th:href="@{/admin/variable/list(pageNum=${variables.navigateLastPage},pageSize=${variables.pageSize})}" title="未页" th:class="${variables.isLastPage} ? 'paginationNotAllowed' : ''">»</a></li>
                      </ul>
                  </div>
 			</section>
 		</div>
 	</div>
 	<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="remove-dialog" class="modal fade">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
-                        <h4 class="modal-title">操作提示？</h4>
-                    </div>
-                    <div class="modal-body">
-						<h4 class="modal-title">您确定要删除该记录吗？</h4>
-						<input type="hidden" id="cacheID" />
-						<!-- <input type="hidden" id="cid" /> -->
-                    </div>
-                    <div class="modal-footer">
-                    	<button type="button" class="btn btn-primary btn-addon btn-sm" onclick="remove();">确定</button>
-                    	<button type="button" class="btn btn-default btn-sm" data-dismiss="modal">取消</button>
-                    </div>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                    <h4 class="modal-title">操作提示？</h4>
+                </div>
+                <div class="modal-body">
+		<h4 class="modal-title">您确定要删除该记录吗？</h4>
+		<input type="hidden" id="cacheID" />
+		<!-- <input type="hidden" id="cid" /> -->
+                </div>
+                <div class="modal-footer">
+                	<button type="button" class="btn btn-primary btn-addon btn-sm" onclick="remove();">确定</button>
+                	<button type="button" class="btn btn-default btn-sm" data-dismiss="modal">取消</button>
                 </div>
             </div>
         </div>

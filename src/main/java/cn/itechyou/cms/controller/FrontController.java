@@ -435,6 +435,7 @@ public class FrontController {
 	 */
 	@RequestMapping(value = "/search")
 	public void search(Model model, SearchEntity params) throws CmsException {
+		System system = systemService.getSystem();
 		StringBuffer templatePath = new StringBuffer();
 		Theme theme = themeService.getCurrentTheme();
 		String templateDir = fileConfiguration.getResourceDir() + "templates/";
@@ -476,9 +477,13 @@ public class FrontController {
 			}
 			String newHtml = "";
 			String html = FileUtils.readFileToString(template, "UTF-8");
-			newHtml = parseEngine.parse(html);
+			//如果为静态浏览，则生成页面
+			if(2 == system.getBrowseType()) {
+				newHtml = parseEngine.generate(html);
+			}else {
+				newHtml = parseEngine.parse(html);
+			}
 			newHtml = parseEngine.parsePageList(newHtml, params);
-			
 			
 			//记录搜索关键词
 			SearchRecord sr = new SearchRecord();

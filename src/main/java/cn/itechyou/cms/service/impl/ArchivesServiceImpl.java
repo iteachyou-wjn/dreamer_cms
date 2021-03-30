@@ -141,7 +141,7 @@ public class ArchivesServiceImpl implements ArchivesService {
 			params.setPageSize(10);
 		}
 		PageHelper.startPage(params.getPageNum(), params.getPageSize());
-		List<ArchivesVo> list = this.archivesMapper.queryListByKeywords(params.getEntity().get("keywords").toString());
+		List<ArchivesVo> list = this.archivesMapper.queryListByKeywords(params.getEntity());
 		PageInfo<ArchivesVo> page = new PageInfo<ArchivesVo>(list);
 		return page;
 	}

@@ -26,7 +26,7 @@ public interface ArchivesMapper extends BaseMapper<Archives> {
 
 	int updateTagByPrimaryKey(Archives article);
 
-	List<ArchivesVo> queryListByKeywords(@Param("keywords") String keywords);
+	List<ArchivesVo> queryListByKeywords(Map<String, Object> entity);
 
 	ArchivesWithRownum queryArticleRowNum(Map<String, Object> params);
 
