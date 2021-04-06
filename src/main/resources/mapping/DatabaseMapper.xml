@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.itechyou.cms.dao.DatabaseMapper">
+  <select id="selectDatabase" resultType="java.lang.String">
+  	select database()
+  </select>
+  
+  <select id="showTables" resultType="java.lang.String">
+    show tables
+  </select>
+  
+  <select id="showTableStruct" parameterType="java.lang.String" resultType="java.util.Map">
+  	SHOW CREATE TABLE `${tableName}`
+  </select>
+  
+  <select id="showTableColumns" resultType="java.util.Map">
+  	SELECT * 
+  	FROM information_schema.COLUMNS 
+  	WHERE 
+  	TABLE_SCHEMA  = #{database,jdbcType=VARCHAR} 
+  	AND TABLE_NAME = #{tableName,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="showAllDatas" resultType="java.util.Map">
+  	select * from `${database}`.`${tableName}`
+  </select>
+</mapper>
