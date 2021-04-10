@@ -59,6 +59,15 @@ public class VariableController {
 	@RequestMapping("/add")
 	@RequiresPermissions("3epp9r3m")
 	public String add(Model model, Variable variable) throws CmsException {
+		
+		Variable temp = variableService.queryVariableByName(variable.getItemName());
+		if(temp != null) {
+			throw new AdminGeneralException(
+					ExceptionEnum.VARIABLE_EXIST_EXCEPTION.getCode(),
+					ExceptionEnum.VARIABLE_EXIST_EXCEPTION.getMessage(),
+					"变量名已经存在，请检查变量名。");
+		}
+		
 		variable.setId(UUIDUtils.getPrimaryKey());
 		variable.setCreateBy(TokenManager.getToken().getId());
 		variable.setCreateTime(new Date());

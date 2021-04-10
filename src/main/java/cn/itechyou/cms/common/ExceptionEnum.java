@@ -21,6 +21,8 @@ public enum ExceptionEnum {
 	USERNAME_EXIST_EXCEPTION("40009", "用户名已存在"),
 	TASK_CLASSNOTFOUND_EXCEPTION("40010", "定时任务类不存在"),
 	CATEGORY_REMOVE_EXCEPTION("40011", "栏目存在下级栏目，删除失败"),
+	VARIABLE_EXIST_EXCEPTION("40012", "变量名称已存在"),
+	XSS_SQL_EXCEPTION("40013", "您的请求中有违反安全规则的元素"),
 	;
 	private String code;
 	private String message;

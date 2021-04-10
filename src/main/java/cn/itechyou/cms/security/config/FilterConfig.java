@@ -9,29 +9,28 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import cn.hutool.core.util.StrUtil;
-import cn.itechyou.cms.security.filter.XssFilter;
+import cn.itechyou.cms.security.filter.XssAndSqlFilter;
 
 /**
  * Filter配置
+ * @author 山河永慕
  */
 @Configuration
 public class FilterConfig {
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     @Bean
-    public FilterRegistrationBean xssFilterRegistration() {
-        FilterRegistrationBean registration = new FilterRegistrationBean();
+    public FilterRegistrationBean<XssAndSqlFilter> xssFilterRegistration() {
+        FilterRegistrationBean<XssAndSqlFilter> registration = new FilterRegistrationBean<XssAndSqlFilter>();
         registration.setDispatcherTypes(DispatcherType.REQUEST);
-        registration.setFilter(new XssFilter());
-        //添加过滤路径
-        registration.addUrlPatterns(StrUtil.split("/*", ","));
-        registration.setName("xssFilter");
+        registration.setFilter(new XssAndSqlFilter());
+        registration.addUrlPatterns("/*");
+        registration.setName("xssAndSqlFilter");
         registration.setOrder(Integer.MAX_VALUE);
-        //设置初始化参数
         Map<String, String> initParameters = new HashMap<String, String>();
-        initParameters.put("excludes", "/admin/*");
-        initParameters.put("enabled", "true");
+        //-excludes用于配置不需要参数过滤的请求url;
+        initParameters.put("excludes", "/resource/*,/admin/archives/*,/admin/category/*,/admin/templates/*");
+        //-isIncludeRichText默认为true，主要用于设置富文本内容是否需要过滤。
+        initParameters.put("isIncludeRichText", "true");
         registration.setInitParameters(initParameters);
         return registration;
     }
