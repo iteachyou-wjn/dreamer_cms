@@ -13,7 +13,7 @@ import cn.itechyou.cms.security.filter.XssAndSqlFilter;
 
 /**
  * Filter配置
- * @author 山河永慕
+ * @author 王俊南
  */
 @Configuration
 public class FilterConfig {
