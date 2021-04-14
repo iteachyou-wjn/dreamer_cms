@@ -67,7 +67,7 @@
   	FROM system_role r
 	WHERE 
 		r.id IN(
-			SELECT ur.role_id FROM system_user_role ur
+			SELECT ur.role_id FROM system_user_role ur WHERE ur.user_id = #{userId,jdbcType=VARCHAR}
 		)
   </select>
   
@@ -88,7 +88,7 @@
 					FROM system_role r
 					WHERE 
 						r.id IN(
-							SELECT role_id FROM system_user_role
+							SELECT role_id FROM system_user_role ur WHERE ur.user_id = #{userId,jdbcType=VARCHAR}
 						)
 				)
 		)
@@ -108,7 +108,7 @@
 					FROM system_role r
 					WHERE 
 						r.id IN(
-							SELECT role_id FROM system_user_role
+							SELECT role_id FROM system_user_role ur WHERE ur.user_id = #{userId,jdbcType=VARCHAR}
 						)
 				)
 		)
