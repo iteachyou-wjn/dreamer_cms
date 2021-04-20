@@ -172,13 +172,16 @@ public class ChannelTag extends AbstractChannelTag implements IParse {
 			}
 			
 			StringBuilder sb = new StringBuilder();
-			for (int j = 0; j < list.size(); j++) {
-				Category temp = list.get(j);
-				String item = new String(content);
-				
-				item = this.buildHTML(item, temp, (j + 1));
-				sb.append(item);
-			}
+            if(list != null){
+                for (int j = 0; j < list.size(); j++) {
+                    Category temp = list.get(j);
+                    String item = new String(content);
+                    
+                    item = this.buildHTML(item, temp, (j + 1));
+                    sb.append(item);
+			    }
+            }
+			
 			newHtml = newHtml.replace(tag, sb.toString());
 		}
 		return newHtml;

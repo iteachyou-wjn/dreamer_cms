@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8" />
@@ -257,9 +257,10 @@
 		        compress: false,
 		        // 内部根据当前运行是创建，可能是input元素，也可能是flash.
 		        pick: '#' + picker,
-		        fileNumLimit: 1,
+		        fileNumLimit: 5,
 		        // 不压缩image, 默认如果是jpeg，文件上传前会压缩一把再上传！
-		        resize: false
+		        resize: false,
+				duplicate:true
 		    });
 	    	uploader.on('fileQueued', function(file) {
 	    		$("#"+el).children().remove();

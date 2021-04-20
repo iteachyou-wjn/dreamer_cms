@@ -51,7 +51,7 @@ public class DreamerCMSRealm extends AuthorizingRealm {
 		User user = userService.getByUserName(token.getUsername());
 		if (null == user) {
 			throw new AccountException("帐号或密码不正确！");
-		} else if ("0".equals(user.getStatus())) {
+		} else if (0 == user.getStatus()) {
 			/**
 			 * 如果用户的status为禁用。那么就抛出DisabledAccountException
 			 */

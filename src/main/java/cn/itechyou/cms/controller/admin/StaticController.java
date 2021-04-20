@@ -126,7 +126,7 @@ public class StaticController {
 			File file = new File(fileConfiguration.getResourceDir() + system.getStaticdir() + "/index.html");
 			message = new Message(StateCodeEnum.HTTP_SUCCESS.getCode(),"解析完成，准备生成静态HTML文件...",90);
 			WebSocketServer.sendInfo(message,clientId);
-			FileUtils.write(file, newHtml);
+			FileUtils.write(file, newHtml, "UTF-8");
 		} catch (IOException e) {
 			message = new Message(StateCodeEnum.HTTP_ERROR.getCode(),"解析首页模版文件失败...",90);
 			WebSocketServer.sendInfo(message,clientId);
@@ -255,7 +255,7 @@ public class StaticController {
 					String catDir = URLUtils.getCategoryDir(categoryWithBLOBs);
 					String fileName = URLUtils.parseFileName(categoryWithBLOBs, pageNum);
 					File file = new File(fileConfiguration.getResourceDir() + system.getStaticdir() + catDir + fileName);
-					FileUtils.write(file, newHtml);
+					FileUtils.write(file, newHtml, "UTF-8");
 				}else {//如果列表有数据，则生成全部页面
 					while (pageNum <= total) {
 						newHtml = new String(newCreateHtml);
@@ -265,7 +265,7 @@ public class StaticController {
 						String catDir = URLUtils.getCategoryDir(categoryWithBLOBs);
 						String fileName = URLUtils.parseFileName(categoryWithBLOBs, pageNum);
 						File file = new File(fileConfiguration.getResourceDir() + system.getStaticdir() + catDir + fileName);
-						FileUtils.write(file, newHtml);
+						FileUtils.write(file, newHtml, "UTF-8");
 						if(pageNum == 1) {
 							buildArticleHTML(categoryWithBLOBs,clientId);
 						}
@@ -276,7 +276,7 @@ public class StaticController {
 				WebSocketServer.sendInfo(message,clientId);
 				String catDir = URLUtils.getCategoryDir(categoryWithBLOBs);
 				File file = new File(fileConfiguration.getResourceDir() + system.getStaticdir() + catDir + "/index.html");
-				FileUtils.write(file, newHtml);
+				FileUtils.write(file, newHtml, "UTF-8");
 			}
 		} catch (IOException e) {
 			Message message = new Message(StateCodeEnum.HTTP_ERROR.getCode(),"解析[" + categoryWithBLOBs.getCnname() + "]模版文件错误...",70);
@@ -343,7 +343,7 @@ public class StaticController {
 				newHtml = parseEngine.parseArticle(newHtml, archives.getId());
 				newHtml = parseEngine.generatePrevAndNext(newHtml, archives.getId());
 				File file = new File(fileConfiguration.getResourceDir() + system.getStaticdir() + catDir + "/" + dateDir + "/" + archives.getId() + ".html");
-				FileUtils.write(file, newHtml);
+				FileUtils.write(file, newHtml, "UTF-8");
 				message = new Message(StateCodeEnum.HTTP_SUCCESS.getCode(),"生成[" + categoryWithBLOBs.getCnname() + "]栏目第["+(i+1)+"]个文档静态HTML文件成功...",79);
 				WebSocketServer.sendInfo(message,clientId);
 			}

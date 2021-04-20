@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8" />
@@ -147,7 +147,18 @@
 		function toAddCategory(){
 			window.location.href = "/admin/category/toAdd?id=-1";	
 		}
-		
+		function removeRows (parentId) {
+            var parentDOM = $("tr[parent='" + parentId + "']");
+            console.log(parentDOM)
+            if (parentDOM && parentDOM.length > 0) {
+                $(parentDOM).each(function () {
+                    var pid = $(this).attr('id');
+                    console.log(pid)
+                    if (pid != null && pid !== '') removeRows(pid);
+                });
+                $(parentDOM).remove();
+            }
+        }
 		function loadSons(cid,obj){
 			var parentDOM = $("tr[parent='" + cid + "']");
 	        $level = parseInt($(obj).attr("level"));
@@ -168,7 +179,7 @@
 				});
 			    $(obj).attr("src","/resource/img/contract.gif");
 			}else{
-				$(parentDOM).remove();
+				removeRows(cid);
 				$(obj).attr("src","/resource/img/explode.gif");
 			}
 			renderCheckBox();
