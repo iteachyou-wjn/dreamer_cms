@@ -22,6 +22,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import cn.itechyou.cms.security.RedisCachingShiroSessionDao;
 import cn.itechyou.cms.security.cache.ShiroRedisCacheManager;
 import cn.itechyou.cms.security.token.DreamerCMSRealm;
+import cn.itechyou.cms.utils.CipherKeyUtils;
 
 @Configuration
 public class ShiroConfiguration {
@@ -84,8 +85,7 @@ public class ShiroConfiguration {
 	@Bean("rememberMeManager")
 	public CookieRememberMeManager rememberMeManager() {
 		CookieRememberMeManager cookieRememberMeManager = new CookieRememberMeManager();
-		byte[] cipherKey = Base64.decode("wGiHplamyXlVB11UXWol8g==");
-		cookieRememberMeManager.setCipherKey(cipherKey);
+		cookieRememberMeManager.setCipherKey(CipherKeyUtils.generateCipherKey());
 		cookieRememberMeManager.setCookie(rememberMeCookie());
 		return cookieRememberMeManager;
 	}

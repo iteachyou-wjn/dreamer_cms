@@ -7,8 +7,10 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import cn.itechyou.cms.common.ExceptionEnum;
 import cn.itechyou.cms.dao.SqlMapper;
 import cn.itechyou.cms.exception.CmsException;
+import cn.itechyou.cms.exception.XssAndSqlException;
 import cn.itechyou.cms.taglib.IParse;
 import cn.itechyou.cms.taglib.annotation.Attribute;
 import cn.itechyou.cms.taglib.annotation.Tag;
@@ -57,6 +59,14 @@ public class SqlTag extends AbstractChannelTag implements IParse {
 			}
 			
 			sql = sql.replaceAll("\\[", "'").replaceAll("\\]", "'");
+			
+			if(!sql.startsWith("select") || !sql.startsWith("SELECT")) {
+				throw new XssAndSqlException(
+						ExceptionEnum.XSS_SQL_EXCEPTION.getCode(), 
+						ExceptionEnum.XSS_SQL_EXCEPTION.getMessage(), 
+						"为了保证系统安全，Sql标签目录只支持查询操作。");
+			}
+			
 			List<Map<String, Object>> list = sqlMapper.execute(sql);
 			if(list == null) {
 				return newHtml;
