@@ -20,11 +20,11 @@
 <body>
 	<div class="row">
 	    <div class="col-md-12">
-	    	<h1 class="panel-heading">文章管理</h1>
+	    	<h1 class="panel-heading">搜索结果</h1>
 	        <!--breadcrumbs start -->
 	        <ul class="breadcrumb">
 				<li><a href="/admin/dashboard/toIndex"><i class="fa fa-home"></i> 首页</a></li>
-				<li class="active">文章管理</li>
+				<li class="active">搜索结果</li>
 			</ul>
 	        <!--breadcrumbs end -->
 	    </div>
@@ -33,10 +33,21 @@
 		<div class="col-lg-12">
 			<section class="panel">
 				<div class="panel-body">
-	                 <!-- <span class="pull-right badge badge-info">32</span> -->
-	                 <button class="btn btn-primary btn-addon btn-sm" th:typeid="${#strings.isEmpty(cid) ? '-1' : cid}" th:onclick="javascript: toAddArticle(this.getAttribute('typeid'))">
-	                     <i class="fa fa-plus"></i>发布文章
-	                 </button>
+	                <form id="form1" th:action="@{/admin/search/doSearch}" method="post">
+	                	<div class="row">
+	                		<div class="col-sm-12 col-md-6 col-lg-4">
+								<div class="form-group">
+									<label for="keywords">搜索关键字：</label>
+									<input id="keywords" name="entity['keywords']" type="text" th:value="${keywords}" class="form-control" placeholder="输入关键字进行搜索" />
+								</div>
+							</div>
+							<div class="col-sm-12 col-md-6 col-lg-4">
+								<div class="form-group">
+									<button id="go" type="submit" class="btn btn-info" style="margin-top: 25px;">保存</button>
+								</div>
+							</div>
+						</div>
+					</form>
 	            </div>
 			    <div class="panel-body table-responsive">
 					<table class="table table-hover">
@@ -49,12 +60,12 @@
 								<th>浏览量</th>
 								<th>权重</th>
 								<th>发布状态</th>
-								<th style="width:300px;">操作</th>
+								<th style="width:150px;">操作</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr th:each="article : ${archives.list}">
-								<td><input type="checkbox" class="flat-grey list-child" th:value="${article.aid}"/></td>
+								<td><input type="checkbox" class="flat-grey list-child" th:value="${article.id}"/></td>
 								<td><a href="#" th:text="${article.title}"></a></td>
 								<td th:text="${article.categoryCnName}"></td>
 								<td th:text="${#dates.format(article.createTime, 'yyyy-MM-dd')}"></td>
@@ -62,13 +73,9 @@
 								<td th:text="${article.weight}"></td>
 								<td><span th:text="${article.status}=='1'?'已发布':'未发布'" th:class="${article.status}=='1'?'label label-success':'label label-danger'">否</span></td>
 								<td>
-									<a target="_blank" th:href="'/article/' + ${article.aid}" class="btn btn-xs btn-warning">预览</a>
+									<a target="_blank" th:href="'/article/' + ${article.id}" class="btn btn-xs btn-warning">预览</a>
 									<span>&nbsp;|&nbsp;</span>
-									<a href="javascript:void(0)" class="btn btn-xs btn-success copyArticleIdBtn" th:aid="${article.aid}" th:onclick="javascript:copyArticleId(this.getAttribute('aid'))">复制文章ID</a>
-									<span>&nbsp;|&nbsp;</span>
-									<a th:href="@{/admin/archives/toEdit(id=${article.aid},cid=${article.categoryId})}" class="btn btn-xs btn-success">编辑</a>
-									<span>&nbsp;|&nbsp;</span>
-									<a href="javascript:void(0)" data-toggle="modal" class="btn btn-xs btn-danger" th:aid="${article.aid}" th:typeid="${article.categoryId}" th:onclick="javascript:confrimRemove(this.getAttribute('aid'),this.getAttribute('typeid'))">删除</a>
+									<a href="javascript:void(0)" class="btn btn-xs btn-success copyArticleIdBtn" th:aid="${article.id}" th:onclick="javascript:copyArticleId(this.getAttribute('aid'))">复制文章ID</a>
 								</td>
 							</tr>
 							<tr th:if="${#lists.isEmpty(archives.list)}">
@@ -79,36 +86,16 @@
 			    </div>
 			    <div class="panel-footer bg-white text-right">
                      <ul class="pagination">
-                         <li><a th:href="@{/admin/archives/list(pageNum=${archives.navigateFirstPage},pageSize=${archives.pageSize},entity[cid]=${cid})}" title="首页" th:class="${archives.isFirstPage} ? 'paginationNotAllowed' : ''">«</a></li>
-                         <li><a th:href="@{/admin/archives/list(pageNum=${archives.prePage},pageSize=${archives.pageSize},entity[cid]=${cid})}" title="上一页" th:if="${archives.hasPreviousPage}">‹</a></li>
-                         <li th:each="pageinfo : ${archives.navigatepageNums}"><a th:href="@{/admin/archives/list(pageNum=${pageinfo},pageSize=${archives.pageSize},entity[cid]=${cid})}" th:class="${pageinfo == archives.pageNum} ? 'paginationActive' : ''" th:text="${pageinfo}"></a></li>
-                         <li><a th:href="@{/admin/archives/list(pageNum=${archives.nextPage},pageSize=${archives.pageSize},entity[cid]=${cid})}" title="下一页" th:if="${archives.hasNextPage}">›</a></li>
-                         <li><a th:href="@{/admin/archives/list(pageNum=${archives.navigateLastPage},pageSize=${archives.pageSize},entity[cid]=${cid})}" title="未页" th:class="${archives.isLastPage} ? 'paginationNotAllowed' : ''">»</a></li>
+                         <li><a th:href="@{/admin/search/doSearch(pageNum=${archives.navigateFirstPage},pageSize=${archives.pageSize},entity[keywords]=${keywords})}" title="首页" th:class="${archives.isFirstPage} ? 'paginationNotAllowed' : ''">«</a></li>
+                         <li><a th:href="@{/admin/search/doSearch(pageNum=${archives.prePage},pageSize=${archives.pageSize},entity[keywords]=${keywords})}" title="上一页" th:if="${archives.hasPreviousPage}">‹</a></li>
+                         <li th:each="pageinfo : ${archives.navigatepageNums}"><a th:href="@{/admin/search/doSearch(pageNum=${pageinfo},pageSize=${archives.pageSize},entity[keywords]=${keywords})}" th:class="${pageinfo == archives.pageNum} ? 'paginationActive' : ''" th:text="${pageinfo}"></a></li>
+                         <li><a th:href="@{/admin/search/doSearch(pageNum=${archives.nextPage},pageSize=${archives.pageSize},entity[keywords]=${keywords})}" title="下一页" th:if="${archives.hasNextPage}">›</a></li>
+                         <li><a th:href="@{/admin/search/doSearch(pageNum=${archives.navigateLastPage},pageSize=${archives.pageSize},entity[keywords]=${keywords})}" title="未页" th:class="${archives.isLastPage} ? 'paginationNotAllowed' : ''">»</a></li>
                      </ul>
                  </div>
 			</section>
 		</div>
 	</div>
-	<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="remove-dialog" class="modal fade">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
-                        <h4 class="modal-title">操作提示？</h4>
-                    </div>
-                    <div class="modal-body">
-						<h4 class="modal-title">您确定要删除该记录吗？</h4>
-						<input type="hidden" id="cacheID" />
-						<input type="hidden" id="cid" />
-                    </div>
-                    <div class="modal-footer">
-                    	<button type="button" class="btn btn-primary btn-addon btn-sm" onclick="remove();">确定</button>
-                    	<button type="button" class="btn btn-default btn-sm" data-dismiss="modal">取消</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 	<!-- jQuery 2.0.2 -->
 	<script src="/resource/js/jquery.min.js" type="text/javascript"></script>
 	<!-- jQuery UI 1.10.3 -->
@@ -138,23 +125,6 @@
 			    checkboxClass: 'icheckbox_flat-grey',
 			    radioClass: 'iradio_flat-grey'
 			});
-		}
-		
-		function toAddArticle(cid){
-			window.location.href = "/admin/archives/toAdd?code=" + cid;
-		}
-		
-		function confrimRemove(id,cid){
-			$("#remove-dialog").modal();
-			$("#cacheID").val(id);
-			$("#cid").val(cid);
-		}
-		
-		function remove(){
-			var currentID = $("#cacheID").val();
-			var cid = $("#cid").val();
-			window.location.href="/admin/archives/delete?id="+currentID + "&cid="+cid;
-			$("#remove-dialog").modal('hide');
 		}
 		
 		function copyArticleId(id){

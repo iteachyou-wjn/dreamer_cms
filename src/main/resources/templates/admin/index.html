@@ -64,9 +64,9 @@
 		<!-- 菜单开始 -->
 		<section class="sidebar">
 			<!-- search form -->
-			<form action="#" method="get" class="sidebar-form">
+			<form action="/admin/search/doSearch" method="post" class="sidebar-form" target="mainframe">
 				<div class="input-group">
-					<input type="text" name="q" class="form-control" placeholder="Search..."/>
+					<input type="text" name="entity['keywords']" class="form-control" placeholder="输入关键字进行搜索"/>
 					<span class="input-group-btn">
 						<button type='submit' name='seach' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
 					</span>
