@@ -14,7 +14,6 @@
     <link href="/resource/css/iCheck/all.css" rel="stylesheet" type="text/css" />
     <!-- Theme style -->
     <link href="/resource/css/style.css" rel="stylesheet" type="text/css" />
-    <link href="/resource/js/editor.md-master/css/editormd.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="/resource/js/webuploader-0.1.5/webuploader.css" />
 </head>
 
@@ -54,7 +53,7 @@
 								<input name="parentId" type="hidden" th:value=${category.id}>
 								<input name="level" type="hidden" th:value=${category.level}>
 								<input name="imagePath" id="filepath" type="hidden">
-								<input name="defaultEditor" type="hidden" id="defaultEditor" value="md" />
+								<input name="defaultEditor" type="hidden" id="defaultEditor" value="ue" />
 								<input name="mdContent" id="mdContent" type="hidden" />
 								<input name="htmlContent" id="htmlContent" type="hidden" />
 								<div class="form-group form-control-medium">
@@ -103,10 +102,7 @@
 									<textarea id="description" name="description" class="form-control"></textarea>
 								</div>
 	                        	<div class="form-group">
-		                        	<label>栏目内容：<a href="javascript:void(0);" class="btn btn-xs btn-success" onclick="changeEdit();">切换为富文本编辑器</a></label>
-									<div class="mdeditor">
-										<div id="md-editormd"></div>
-									</div>
+		                        	<label>栏目内容：</label>
 									<div class="ueeditor">
 										<script id="ue-editor" type="text/plain" style="width:100%;height:320px;"></script>
 									</div>
@@ -194,57 +190,19 @@
 	<script src="/resource/js/jquery.min.js" type="text/javascript"></script>
     <!-- Bootstrap -->
     <script src="/resource/js/bootstrap.min.js" type="text/javascript"></script>
-	<script src="/resource/js/editor.md-master/editormd.min.js"></script>
     <script type="text/javascript" charset="utf-8" src="/resource/js/ueditor-1.4.3.3/ueditor.config.js"></script>
     <script type="text/javascript" charset="utf-8" src="/resource/js/ueditor-1.4.3.3/ueditor.all.min.js"></script>
     <script type="text/javascript" src="/resource/js/webuploader-0.1.5/webuploader.js"></script>
     <script type="text/javascript" src="/resource/js/jQueryMessage/js/jquery.plugin.message.js"></script>
     <script type="text/javascript">
     	var thumbnailWidth = 178,thumbnailHeight = 178;
-    	var defaultEditor = "md";
-	    var mdEditor,ueEditor;
+	    var ueEditor = null;
         
 	    $(document).ready(function () {
-	    	if(mdEditor == null){
-		    	//初始化MD编辑器
-            	initMdEditor("md-editormd");
-	    	}
-	    	if(ueEditor == null){
-		    	//初始化UE编辑器
-		    	ueEditor = UE.getEditor('ue-editor');
-		    	ueEditor.ready(function() {
-		    		ueEditor.setHide();
-		    	});
-	    	}
-	    	
+	    	//初始化UE编辑器
+	    	ueEditor = UE.getEditor('ue-editor');
 	    	initUploader("picker","file-priview","filepath");
 	    });
-	    
-	    function initMdEditor(el){
-	    	//初始化MD编辑器
-	    	mdEditor = editormd(el, {
-                width: "100%",
-                height: 350,
-                path : '/resource/js/editor.md-master/lib/',
-                markdown : null,
-                codeFold : true,
-                saveHTMLToTextarea : true,    // 保存 HTML 到 Textarea
-                searchReplace : true,
-                htmlDecode : "style,script,iframe|on*",            // 开启 HTML 标签解析，为了安全性，默认不开启    
-                emoji : true,
-                taskList : true,
-                tocm : true,         // Using [TOCM]
-                tex : true,                   // 开启科学公式TeX语言支持，默认关闭
-                flowChart : true,             // 开启流程图支持，默认关闭
-                sequenceDiagram : true,       // 开启时序/序列图支持，默认关闭,
-                imageUpload : true,
-                imageFormats : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
-                imageUploadURL : "/upload/uploadMarkDown",
-                onload : function() {
-                    console.log('onload', this);
-                }
-            });
-	    }
 	    
 	    function initUploader(picker,el,inputEl){
 	    	var uploader = WebUploader.create({
@@ -290,28 +248,8 @@
 		    });
 	    }
 	    
-	    function changeEdit(){
-	    	if(defaultEditor == "md"){
-	    		mdEditor.hide();
-	    		ueEditor.setShow();
-	    		defaultEditor = "ue"
-	    	}else{
-	    		mdEditor.show();
-	    		ueEditor.setHide();
-	    		defaultEditor = "md"
-	    	}
-	    	//改变编辑器
-	    	$("#defaultEditor").val(defaultEditor);
-	    }
-	    
 	    function validateForm(){
-	    	if(defaultEditor == "md"){
-	    		$("#mdContent").val(mdEditor.getMarkdown());
-	    		$("#htmlContent").val(mdEditor.getHTML());
-	    	}else{
-	    		$("#htmlContent").val(ueEditor.getContent());
-	    	}
-	    	//console.log($("#content").val());
+	    	$("#htmlContent").val(ueEditor.getContent());
 	    	return true;
 	    }
     </script>
