@@ -19,6 +19,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
 
+import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import cn.itechyou.cms.security.RedisCachingShiroSessionDao;
 import cn.itechyou.cms.security.cache.ShiroRedisCacheManager;
 import cn.itechyou.cms.security.token.DreamerCMSRealm;
@@ -53,6 +54,11 @@ public class ShiroConfiguration {
         shiroFilterFactoryBean.setSuccessUrl("/index");
         return shiroFilterFactoryBean;
     }
+	
+	@Bean
+	public ShiroDialect shiroDialect() {
+	    return new ShiroDialect();
+	}
 	
 	/**
 	 * 会话Cookie模板

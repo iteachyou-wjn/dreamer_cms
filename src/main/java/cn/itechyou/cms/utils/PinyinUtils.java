@@ -4,6 +4,7 @@ import net.sourceforge.pinyin4j.PinyinHelper;
 import net.sourceforge.pinyin4j.format.HanyuPinyinCaseType;
 import net.sourceforge.pinyin4j.format.HanyuPinyinOutputFormat;
 import net.sourceforge.pinyin4j.format.HanyuPinyinToneType;
+import net.sourceforge.pinyin4j.format.HanyuPinyinVCharType;
 
 public class PinyinUtils {
 	/**
@@ -44,6 +45,7 @@ public class PinyinUtils {
 		HanyuPinyinOutputFormat defaultFormat = new HanyuPinyinOutputFormat();
 		defaultFormat.setCaseType(HanyuPinyinCaseType.LOWERCASE);
 		defaultFormat.setToneType(HanyuPinyinToneType.WITHOUT_TONE);
+		defaultFormat.setVCharType(HanyuPinyinVCharType.WITH_V);
 		try {
 			for (int i = 0; i < newChar.length; i++) {
 				if (newChar[i] > 128) {
