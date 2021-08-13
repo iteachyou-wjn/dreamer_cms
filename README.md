@@ -6,8 +6,14 @@
 
 当前版本：3.5.1
 
-梦想家CMS官网：http://www.itechyou.cn
-模版标签开发教程请参考：http://doc.itechyou.cn 
+1. 梦想家CMS官网：http://cms.itechyou.cn
+2. 梦想家CMS管理后台：http://cms.itechyou.cn/admin
+- 演示账号：demo1
+- 演示密码：123456
+- 管理员：wangjn；
+- 管理员密码：123456
+3. I Tech You,我教你! 官网：http://www.itechyou.cn
+4. 模版标签开发教程请参考：http://doc.itechyou.cn 
 
 QQ群交流：
 - ①597652651
