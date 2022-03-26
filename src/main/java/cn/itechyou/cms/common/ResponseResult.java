@@ -3,8 +3,6 @@ package cn.itechyou.cms.common;
 import java.io.Serializable;
 import java.util.List;
 
-import com.github.pagehelper.PageInfo;
-
 /**
  * 数据传输对象DTO，用于将处理后的结果对象封装
  * 

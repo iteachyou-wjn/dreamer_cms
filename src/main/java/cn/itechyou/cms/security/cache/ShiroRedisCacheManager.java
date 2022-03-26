@@ -1,31 +1,23 @@
 package cn.itechyou.cms.security.cache;
 
+import org.apache.shiro.cache.AbstractCacheManager;
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheException;
-import org.apache.shiro.cache.CacheManager;
 import org.springframework.data.redis.core.RedisTemplate;
 
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
+@SuppressWarnings("rawtypes")
+public class ShiroRedisCacheManager extends AbstractCacheManager {
+	
+	private RedisTemplate<byte[],byte[]> redisTemplate;
 
-public class ShiroRedisCacheManager implements CacheManager {
-	
-	private RedisTemplate<String,Object> redisTemplate;
-	
-	private final ConcurrentMap<String, Cache> caches = new ConcurrentHashMap<String, Cache>();
-	
+	public ShiroRedisCacheManager(RedisTemplate redisTemplate){
+        this.redisTemplate = redisTemplate;
+    }
+    
+    //为了个性化配置redis存储时的key，我们选择了加前缀的方式，所以写了一个带名字及redis操作的构造函数的Cache类
 	@Override
-	public Cache<Object, Object> getCache(String name) throws CacheException {
-		Cache<Object,Object> cache = this.caches.get(name);
-		if(cache == null){
-			cache = new ShiroRedisCache<Object, Object>(this.redisTemplate);
-			this.caches.put(name, cache);
-		}
-		return cache;
-	}
-
-	public void setRedisTemplate(RedisTemplate<String, Object> redisTemplate) {
-		this.redisTemplate = redisTemplate;
-	}
+    protected Cache createCache(String name) throws CacheException {
+        return new ShiroRedisCache(redisTemplate, name);
+    }
 	
 }

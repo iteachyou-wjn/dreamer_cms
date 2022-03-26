@@ -59,8 +59,15 @@ public class ArchivesServiceImpl implements ArchivesService {
 		if(params.getPageSize() == null || params.getPageSize() == 0) {
 			params.setPageSize(10);
 		}
+		Map<String, Object> entity = params.getEntity();
+		/**
+		 * 修复后台SQL注入风险
+		 */
+		if(entity.containsKey("tableName")) {
+			entity.remove("tableName");
+		}
 		PageHelper.startPage(params.getPageNum(), params.getPageSize());
-		List<Map<String, Object>> list = archivesMapper.queryListByPage(params.getEntity());
+		List<Map<String, Object>> list = archivesMapper.queryListByPage(entity);
 		PageInfo<Map<String, Object>> page = new PageInfo<Map<String, Object>>(list);
 		return page;
 	}

@@ -508,7 +508,7 @@ CREATE TABLE `system_theme` (
 
 /*Data for the table `system_theme` */
 
-insert  into `system_theme`(`id`,`theme_name`,`theme_author`,`theme_img`,`theme_path`,`status`,`create_by`,`create_time`,`update_by`,`update_time`) values ('525b5919b3c6423f8a2086dcf417392d','长江大学门户首页','杨波','http://localhost:8888/resource/img/cjdx.png','cjdxmh',0,'9f4b807db2e94670bb02cdc212ea7389','2021-02-22 08:58:42',NULL,'2021-02-22 16:58:41'),('782c003ac9024eba94ae3b59dab17b5d','新版主题','王俊南','http://localhost:8888/uploads\\20190815\\18c8a53e1b63493b821c9ab865c4b395.jpg','default',1,'9f4b807db2e94670bb02cdc212ea7389','2018-01-01 00:00:00','9f4b807db2e94670bb02cdc212ea7389','2021-01-03 17:30:06');
+insert  into `system_theme`(`id`,`theme_name`,`theme_author`,`theme_img`,`theme_path`,`status`,`create_by`,`create_time`,`update_by`,`update_time`) values ('782c003ac9024eba94ae3b59dab17b5d','默认主题','王俊南','http://localhost:8888/uploads\\20190815\\18c8a53e1b63493b821c9ab865c4b395.jpg','default',1,'9f4b807db2e94670bb02cdc212ea7389','2018-01-01 00:00:00','9f4b807db2e94670bb02cdc212ea7389','2021-01-03 17:30:06');
 
 /*Table structure for table `system_user` */
 

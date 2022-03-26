@@ -6,7 +6,6 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 
 import cn.itechyou.cms.common.BaseMapper;
-import cn.itechyou.cms.entity.Field;
 import cn.itechyou.cms.entity.Form;
 
 public interface FormMapper extends BaseMapper<Form> {

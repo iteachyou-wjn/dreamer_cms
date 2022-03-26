@@ -5,6 +5,8 @@ import java.io.IOException;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.util.ByteSource;
 
+import cn.itechyou.cms.utils.PinyinUtils;
+
 
 public class Test {
 
@@ -18,5 +20,10 @@ public class Test {
         System.out.printf("密码：%s",sh.toString());
         System.out.println();
         System.out.printf("盐：%s",salt.toString());
+        
+        
+        
+        String pinyin = PinyinUtils.toPinyin("法律法规");
+        System.out.println(pinyin);
 	}
 }

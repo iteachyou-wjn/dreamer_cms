@@ -64,7 +64,7 @@ public class SqlTag extends AbstractChannelTag implements IParse {
 				throw new XssAndSqlException(
 						ExceptionEnum.XSS_SQL_EXCEPTION.getCode(), 
 						ExceptionEnum.XSS_SQL_EXCEPTION.getMessage(), 
-						"为了保证系统安全，Sql标签目录只支持查询操作。");
+						"为了保证系统安全，Sql标签目前只支持查询操作。");
 			}
 			
 			List<Map<String, Object>> list = sqlMapper.execute(sql);

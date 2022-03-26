@@ -8,7 +8,6 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import cn.itechyou.cms.common.SearchEntity;
 import cn.itechyou.cms.dao.LabelMapper;
 import cn.itechyou.cms.entity.Label;
 import cn.itechyou.cms.service.LabelService;

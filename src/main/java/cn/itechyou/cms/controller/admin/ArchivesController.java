@@ -170,16 +170,18 @@ public class ArchivesController {
 		additional.put("aid", archives.getId());
 		for(int i = 0;i < fields.size();i++) {
 			Field field = fields.get(i);
-			additional.put(field.getFieldName(), entity.get(field.getFieldName()));
-			//用MAP接收参数，checkbox需要特殊处理
-			if("checkbox".equals(field.getDataType())) {
-				String[] arr = request.getParameterValues(field.getFieldName());
-				if(arr != null && arr.length > 0) {
-					StringBuffer checkboxVal = new StringBuffer();
-					for (String string : arr) {
-						checkboxVal.append(string + ",");
+			if(StringUtil.isNotBlank(entity.get(field.getFieldName()))){
+				additional.put(field.getFieldName(), entity.get(field.getFieldName()));
+				//用MAP接收参数，checkbox需要特殊处理
+				if("checkbox".equals(field.getDataType())) {
+					String[] arr = request.getParameterValues(field.getFieldName());
+					if(arr != null && arr.length > 0) {
+						StringBuffer checkboxVal = new StringBuffer();
+						for (String string : arr) {
+							checkboxVal.append(string + ",");
+						}
+						additional.put(field.getFieldName(), checkboxVal.substring(0, checkboxVal.length() - 1));
 					}
-					additional.put(field.getFieldName(), checkboxVal.substring(0, checkboxVal.length() - 1));
 				}
 			}
 		}
@@ -292,23 +294,25 @@ public class ArchivesController {
 		Map<String,Object> additional = new LinkedHashMap<String,Object>();
 		for(int i = 0;i < fields.size();i++) {
 			Field field = fields.get(i);
-			additional.put(field.getFieldName(), entity.get(field.getFieldName()));
-			//用MAP接收参数，checkbox需要特殊处理
-			if("checkbox".equals(field.getDataType())) {
-				String[] arr = request.getParameterValues(field.getFieldName());
-				if(arr != null && arr.length > 0) {
-					StringBuffer checkboxVal = new StringBuffer();
-					for (String string : arr) {
-						checkboxVal.append(string + ",");
+			if(StringUtil.isNotBlank(entity.get(field.getFieldName()))){
+				additional.put(field.getFieldName(), entity.get(field.getFieldName()));
+				//用MAP接收参数，checkbox需要特殊处理
+				if("checkbox".equals(field.getDataType())) {
+					String[] arr = request.getParameterValues(field.getFieldName());
+					if(arr != null && arr.length > 0) {
+						StringBuffer checkboxVal = new StringBuffer();
+						for (String string : arr) {
+							checkboxVal.append(string + ",");
+						}
+						additional.put(field.getFieldName(), checkboxVal.substring(0, checkboxVal.length() - 1));
 					}
-					additional.put(field.getFieldName(), checkboxVal.substring(0, checkboxVal.length() - 1));
 				}
 			}
 		}
 		String tableName = "system_" + form.getTableName();
 		
 		try {
-			archivesService.update(archives,tableName,additional,entity.get("fid"));
+			archivesService.update(archives, tableName, additional, entity.get("fid"));
 		} catch (TransactionException e) {
 			throw new AdminGeneralException(
 					ExceptionEnum.HTTP_INTERNAL_SERVER_ERROR.getCode(),

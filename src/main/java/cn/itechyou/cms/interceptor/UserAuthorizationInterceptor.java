@@ -3,18 +3,17 @@ package cn.itechyou.cms.interceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.slf4j.Logger;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import cn.itechyou.cms.security.token.TokenManager;
 import cn.itechyou.cms.entity.User;
-import cn.itechyou.cms.utils.LoggerUtils;
+import cn.itechyou.cms.security.token.TokenManager;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Component
 public class UserAuthorizationInterceptor implements HandlerInterceptor{
-	private static final Logger logger = LoggerUtils.getPlatformLogger();
 	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
@@ -24,7 +23,7 @@ public class UserAuthorizationInterceptor implements HandlerInterceptor{
 			response.sendRedirect("/admin/u/toLogin");
 			return Boolean.FALSE;
 		}
-		logger.info("UserAuthorizationInterceptor：["+token+"]拦截通过...");
+		log.info("UserAuthorizationInterceptor：["+token+"]拦截通过...");
 		return Boolean.TRUE;
 	}
 	

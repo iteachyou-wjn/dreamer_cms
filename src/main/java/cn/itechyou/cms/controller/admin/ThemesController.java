@@ -41,7 +41,8 @@ import cn.itechyou.cms.utils.ZipUtils;
 @Controller
 @RequestMapping("admin/theme")
 public class ThemesController extends BaseController {
-	private static final int buffer = 2048; 
+	private static final long serialVersionUID = 1L;
+	
 	@Autowired
 	private ThemeService themeService;
 	@Autowired
@@ -53,8 +54,10 @@ public class ThemesController extends BaseController {
 	@RequiresPermissions("t5atzaz6")
 	public String list(Model model, SearchEntity params) {
 		Map<String,Object> map = new HashMap<>();
+		System system = systemService.getSystem();
 		List<Theme> themes = themeService.queryListByPage(params);
 		model.addAttribute("themes", themes);
+		model.addAttribute("system", system);
 		return "admin/themes/list";
 	}
 	
@@ -152,6 +155,16 @@ public class ThemesController extends BaseController {
 		}
 		
 		int rows = themeService.update(theme);
+		return "redirect:/admin/theme/list";
+	}
+	
+	@RequestMapping("/update")
+	@RequiresPermissions("g1u4y47a")
+	public String update(Theme theme) {
+		Theme temp = new Theme();
+		temp.setId(theme.getId());
+		temp.setThemeImg(theme.getThemeImg());
+		int rows = themeService.update(temp);
 		return "redirect:/admin/theme/list";
 	}
 	

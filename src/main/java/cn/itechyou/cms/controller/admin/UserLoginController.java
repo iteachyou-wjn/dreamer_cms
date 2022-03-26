@@ -1,9 +1,7 @@
 package cn.itechyou.cms.controller.admin;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,7 +12,6 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.DisabledAccountException;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.util.ByteSource;
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,10 +20,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import cn.hutool.captcha.CircleCaptcha;
+import com.wf.captcha.ArithmeticCaptcha;
+import com.wf.captcha.utils.CaptchaUtil;
+
 import cn.itechyou.cms.annotation.Log;
 import cn.itechyou.cms.common.BaseController;
-import cn.itechyou.cms.common.Constant;
 import cn.itechyou.cms.common.ResponseResult;
 import cn.itechyou.cms.common.StateCodeEnum;
 import cn.itechyou.cms.entity.Licence;
@@ -35,24 +33,17 @@ import cn.itechyou.cms.entity.User;
 import cn.itechyou.cms.security.token.TokenManager;
 import cn.itechyou.cms.service.LicenceService;
 import cn.itechyou.cms.service.MenuService;
-import cn.itechyou.cms.service.RoleService;
-import cn.itechyou.cms.utils.LoggerUtils;
 import cn.itechyou.cms.vo.UserVO;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 用户登录相关，不需要做登录限制
  * 
  */
+@Slf4j
 @Controller
 @RequestMapping("/admin/u")
 public class UserLoginController extends BaseController {
-
-	private static final Logger logger = LoggerUtils.getLogger(UserLoginController.class);
-	protected Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
-	public static String URL404 = "/404.html";
-
-	@Autowired
-	private CircleCaptcha captcha;
 	@Autowired
 	private LicenceService licenceService;
 	@Autowired
@@ -62,17 +53,10 @@ public class UserLoginController extends BaseController {
 	// 产生验证码
 	@RequestMapping("/getVerifyCode")
 	public void getKaptcha(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		captcha.createCode();
-		//图形验证码写出，可以写出到文件，也可以写出到流
-		String text = captcha.getCode();
-		//验证图形验证码的有效性，返回boolean值
-		logger.info("生成的验证码为：" + text);
-		session.setAttribute(Constant.KAPTCHA, text);
-		// 形成一张图片
-		// 把图片写入到输出流中==》以流的方式响应到客户端
-		OutputStream outputStream = response.getOutputStream();
-		captcha.write(outputStream);
-		outputStream.close();
+		ArithmeticCaptcha captcha = new ArithmeticCaptcha(130, 48);
+        captcha.getArithmeticString();  // 获取运算的公式：3+2=?
+        captcha.text();  // 获取运算的结果：5
+		CaptchaUtil.out(captcha, request, response);
 	}
 
 	/**
@@ -123,7 +107,7 @@ public class UserLoginController extends BaseController {
 		User user = new User();
 		try {
 			// 验证码校验
-			if(!captcha.verify(entity.getVcode())) {
+			if(!CaptchaUtil.ver(entity.getVcode(), request)) {
 				result = ResponseResult.Factory.newInstance(Boolean.FALSE,
 						StateCodeEnum.USER_CODE_ERROR.getCode(), null,
 						StateCodeEnum.USER_CODE_ERROR.getDescription());
@@ -168,7 +152,7 @@ public class UserLoginController extends BaseController {
 		try {
 			TokenManager.logout();
 		} catch (Exception e) {
-			logger.error("errorMessage:" + e.getMessage());
+			log.error("errorMessage:" + e.getMessage());
 		}
 		return "redirect:/admin/toLogin";
 	}

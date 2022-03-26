@@ -14,12 +14,22 @@
     <link href="/resource/css/iCheck/all.css" rel="stylesheet" type="text/css" />
     <!-- Theme style -->
     <link href="/resource/css/style.css" rel="stylesheet" type="text/css" />
-    <link href="/resource/js/editor.md-master/css/editormd.css" rel="stylesheet" type="text/css"/>
-    <link href="/resource/js/tagit/jquery.tagit.css" rel="stylesheet" type="text/css"/>
-    <link href="/resource/js/tagit/tagit.ui-zendesk.css" rel="stylesheet" type="text/css"/>
-    <link rel="stylesheet" type="text/css" href="/resource/js/webuploader-0.1.5/webuploader.css">
-    <script type="text/javascript" charset="utf-8" src="/resource/js/ueditor-1.4.3.3/ueditor.config.js"></script>
-    <script type="text/javascript" charset="utf-8" src="/resource/js/ueditor-1.4.3.3/ueditor.all.min.js"></script>
+    <link href="/resource/js/editor.md-master/css/editormd.css" rel="stylesheet" type="text/css" />
+    <link href="/resource/js/tagit/jquery.tagit.css" rel="stylesheet" type="text/css" />
+    <link href="/resource/js/tagit/tagit.ui-zendesk.css" rel="stylesheet" type="text/css" />
+    <link href="/resource/js/webuploader-0.1.5/webuploader.css" rel="stylesheet" type="text/css" />
+    <link href="/resource/js/webuploader-0.1.5/css/style.css" rel="stylesheet" type="text/css" />
+    <link href="/resource/js/jQueryMessage/css/message.skin.css" rel="stylesheet" type="text/css" />
+    <link href="/resource/js/my97datepicker/skin/WdatePicker.css" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+    	.btns{display:flex;}
+    	.btns>#ctlBtn{height:32px;margin-left:10px;}
+    	.file-item{display:flex;align-items: center;height: 30px;font-size:12px;justify-content: space-between;}
+    	.file-item .file-name,.file-item .file-state{margin:0;padding:0;}
+    	.file-item .file-name{font-size:12px;overflow: hidden;text-overflow:ellipsis;white-space: nowrap; width: 380px;}
+    	.file-item .state{margin-left:50px;}
+    	.file-item .close{cursor: pointer;}
+    </style>
 </head>
 
 <body>
@@ -44,7 +54,10 @@
 						<input name="categoryId" type="hidden" th:value="*{categoryId}"/>
 						<input name="categoryIds" type="hidden" th:value="*{categoryIds}"/>
 						<input name="imagePath" id="filepath" type="hidden" th:value="*{imagePath}" />
-						<input th:name="${field.fieldName}" th:id="'input-' + ${field.id}" type="hidden" th:each="field : ${fields}" th:if="${field.dataType} == 'html' or ${field.dataType} == 'markdown' or ${field.dataType} == 'file'" />
+						<input th:name="${field.fieldName}" th:id="'input-' + ${field.id}" type="hidden" th:each="field : ${fields}" th:if="${field.dataType} == 'html' or ${field.dataType} == 'markdown'" />
+						<input th:name="${field.fieldName}" th:id="'input-' + ${field.id}" th:value="${article[field.fieldName]}" type="hidden" th:each="field : ${fields}" th:if="${field.dataType} == 'file'" />
+						<input th:name="${field.fieldName}" th:id="'input-' + ${field.id}" th:value="${article[field.fieldName]}" type="hidden" th:each="field : ${fields}" th:if="${field.dataType} == 'image'" />
+						<input th:name="${field.fieldName}" th:id="'input-' + ${field.id}" th:value="${article[field.fieldName]}" type="hidden" th:each="field : ${fields}" th:if="${field.dataType} == 'imageset'" />
 						<div class="form-group form-control-medium">
 							<label for="title">文章标题：</label>
 							<input id="title" name="title" type="text" class="form-control" th:value="*{title}">
@@ -98,7 +111,8 @@
 							<label for="description">内容摘要：</label>
 							<textarea id="description" name="description" class="form-control" th:text="*{description}"></textarea>
 						</div>
-						<div th:each="field : ${fields}" th:class="${field.dataType} == 'varchar' or ${field.dataType} == 'char' or ${field.dataType} == 'file' or ${field.dataType} == 'select' ? 'form-group form-control-medium' : 'form-group'">
+						<div th:each="field : ${fields}" 
+							 th:class="${field.dataType} == 'varchar' or ${field.dataType} == 'char' or ${field.dataType} == 'file' or ${field.dataType} == 'select' or ${field.dataType} == 'datetime' or ${field.dataType} == 'imageset' ? 'form-group form-control-medium' : 'form-group'">
 							<!-- 提示文字 -->
 							<label th:attr="for=${field.id}" th:text="${field.fieldText}+'：'"></label>
 							<!-- 单行文本框（CHAR和VARCHAR） -->
@@ -114,7 +128,7 @@
 							<div th:id="'uploader-'+${field.id}" class="wu-example" th:if="${field.dataType} == 'file'">
 							    <!--用来存放文件信息-->
 							    <div th:id="'file-priview-'+${field.id}" class="file-priview">
-							    	<img th:src="${system.website} + ${system.uploaddir} + '/' + ${article[field.fieldName]}" th:if="${article[field.fieldName]} != null and ${article[field.fieldName]} != ''" />
+							    	<div th:text="${system.uploaddir} + '/' + ${article[field.fieldName]}" th:if="${article[field.fieldName]} != null and ${article[field.fieldName]} != ''"></div>
 							    </div>
 							    <div class="btns">
 							        <div th:id="'picker-'+${field.id}">选择文件...</div>
@@ -142,6 +156,33 @@
                             <select class="form-control m-b-10" th:name="${field.fieldName}" th:if="${field.dataType} == 'select'">
                             	<option th:each="item : ${#strings.arraySplit(field.defaultValue,',')}" th:text="${item}" th:selected="${radio} == ${article[field.fieldName]}"></option>
                             </select>
+                            <!-- 时间（DATETIME） -->
+                            <input th:id="${field.id}" th:name="${field.fieldName}" th:value="${article[field.fieldName]}" type="text" class="form-control" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" th:if="${field.dataType} == 'datetime'" />
+                            <!-- 图片（IMAGE） -->
+							<div th:id="'uploader-'+${field.id}" class="wu-example" th:if="${field.dataType} == 'image'">
+							    <!--用来存放文件信息-->
+							    <div th:id="'file-priview-'+${field.id}" class="file-priview">
+							    	<img th:src="${system.website} + ${system.uploaddir} + '/' + ${article[field.fieldName]}" th:if="${article[field.fieldName]} != null and ${article[field.fieldName]} != ''" />
+							    </div>
+							    <div class="btns">
+							        <div th:id="'picker-'+${field.id}">选择文件...</div>
+							    </div>
+							</div>
+							<!-- 图集（IMAGESET） -->
+							<div th:id="'uploader-'+${field.id}" th:attr="ref=${field.id}" class="wu-example" th:if="${field.dataType} == 'imageset'">
+							    <!--用来存放文件信息-->
+							    <div id="imagesetlist" class="uploader-list">
+							    	<div th:id="${state.index}" class="file-item" th:each="file,state : ${#strings.listSplit(article[field.fieldName],',')}">
+					        	        <h4 class="file-name" th:attr="filepath=${file},field-id=${field.id}" th:text="${file}"></h4>
+					        	        <p class="file-state">已经上传...</p>
+					        	        <i class="close fa fa-times-circle" th:onclick="removeFile('[[${state.index}]]');"></i>
+					        	    </div>
+							    </div>
+							    <div class="btns">
+							        <div th:id="'picker-'+${field.id}">选择文件...</div>
+							        <button type="button" onclick="uploadFile();" id="ctlBtn" class="btn btn-default">开始上传</button>
+							    </div>
+							</div>
 						</div>
 						<div class="form-group">
 							<div class="col-lg-3">
@@ -175,24 +216,102 @@
 	</div>
 	<script src="/resource/js/jquery.min.js" type="text/javascript"></script>
     <script src="/resource/js/editor.md-master/editormd.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/resource/js/ueditor-1.4.3.3/ueditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/resource/js/ueditor-1.4.3.3/ueditor.all.min.js"></script>
     <script src="/resource/js/tagit/jquery-ui.min.js"></script>
     <script src="/resource/js/tagit/tag-it.js"></script>
     <script type="text/javascript" src="/resource/js/webuploader-0.1.5/webuploader.js"></script>
     <script type="text/javascript" src="/resource/js/jQueryMessage/js/jquery.plugin.message.js"></script>
-    
+    <script type="text/javascript" src="/resource/js/my97datepicker/WdatePicker.js"></script>
     <script type="text/javascript" th:inline="javascript">
     	var fields = [[${fields}]];
     	var article = [[${article}]];
     	var thumbnailWidth = 178,thumbnailHeight = 178;
+    	var imagesetUploader = null;
     	$(document).ready(function () {
-    		initUploader("picker","file-priview","filepath");
+    		initUploader(
+	    			"picker",
+	    			"file-priview",
+	    			"filepath", 
+	    			{
+				        title: 'Images',
+				        extensions: 'gif,jpg,jpeg,bmp,png',
+				        mimeTypes: 'image/*'
+				    },
+				    "IMAGES");
         	for(var i = 0;i < fields.length;i++){
         		var field = fields[i];
     	    	if(field.dataType == 'markdown'){
     	    		initMdEditor(field.id, "md-editormd-" + field.id, article[field.fieldName]);
     	    	}else if(field.dataType == 'file'){
-    	    		initUploader("picker-" + field.id, "file-priview-" + field.id, "input-" + field.id);
-    	    	}
+		    		initUploader(
+		    				"picker-" + field.id, 
+		    				"file-priview-" + field.id, 
+		    				"input-" + field.id, 
+		    				{},
+		    				"FILES");
+		    	}else if(field.dataType == 'image'){
+		    		initUploader(
+		    				"picker-" + field.id, 
+		    				"file-priview-" + field.id, 
+		    				"input-" + field.id, 
+		    				{
+						        title: 'Images',
+						        extensions: 'gif,jpg,jpeg,bmp,png',
+						        mimeTypes: 'image/*'
+						    },
+		    				"IMAGES");
+		    	}else if(field.dataType == "imageset"){
+		    		imagesetUploader = WebUploader.create({
+				        // swf文件路径
+				        swf: '/resource/js/webuploader-0.1.5/Uploader.swf',
+				        // 文件接收服务端。
+				        server: '/upload/uploadFile',
+				        // 选择文件的按钮。可选。
+				        compress: false,
+				        // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+				        pick: '#picker-' + field.id,
+				        fileNumLimit: 10,
+				        // 不压缩image, 默认如果是jpeg，文件上传前会压缩一把再上传！
+				        resize: false,
+						duplicate:true,
+						// 只允许选择图片文件。
+					    accept: {
+					        title: 'Images',
+					        extensions: 'gif,jpg,jpeg,bmp,png',
+					        mimeTypes: 'image/*'
+					    }
+		    	    });
+		        	// 当有文件被添加进队列的时候
+		        	imagesetUploader.on('fileQueued', function( file ) {
+		        	    $("#imagesetlist").append( '<div id="' + file.id + '" class="file-item">' +
+		        	        '<h4 class="file-name" filepath="" field-id="' + field.id + '">' + file.name + '</h4>' +
+		        	        '<p class="file-state">等待上传...</p>' +
+		        	        '<i class="close fa fa-times-circle" onclick="removeFile(\''+file.id+'\')"></i>' +
+		        	    '</div>');
+		        	});
+		        	imagesetUploader.on('uploadSuccess', function(file, response) {
+		    	        $("#" + file.id + "> .file-state").text("上传成功...");
+		    	        $("#" + file.id + "> .file-name").attr("filepath", response.data.filepath).attr("field-id", field.id);
+		    	        var crtVal = $("#input-" + field.id).val();
+		    			if(crtVal != null && crtVal != "" && crtVal != "undefined") crtVal += ",";
+		    			$("#input-" + field.id).val(crtVal + response.data.filepath);
+		    	        $("body").MessageBox({
+		    				type: 'success',
+		    				message: '上传成功！',
+		    				timeout: 3000,
+		    				callbak: null
+		    			});
+		    	    });
+		        	imagesetUploader.on('uploadError', function( file ) {
+		    	    	$("body").MessageBox({
+		    				type: 'error',
+		    				message: '上传失败！',
+		    				timeout:3000,
+		    				callbak:null
+		    			});
+		    	    });
+		    	}
     	    }
 			
         	$("input[id^='ue-editor-value-']").each(function(e){
@@ -206,15 +325,14 @@
 				});
         	});
 	    	
-	    	var sampleTags = ['c++', 'java', 'php', 'coldfusion', 'javascript', 'asp', 'ruby', 'python', 'c', 'scala', 'groovy', 'haskell', 'perl', 'erlang', 'apl', 'cobol', 'go', 'lua'];
 	    	$('#myULTags').tagit({
-	    		availableTags: sampleTags,
+	    		availableTags: [],
                 itemName: 'item',
                 fieldName: 'tag'
             });
 	    });
 	    
-    	function initUploader(picker, el, inputEl){
+    	function initUploader(picker, el, inputEl, accepts, isShowThumb){
 	    	var uploader = WebUploader.create({
 	    		auto: true,
 		        // swf文件路径
@@ -228,24 +346,45 @@
 		        fileNumLimit: 5,
 		        // 不压缩image, 默认如果是jpeg，文件上传前会压缩一把再上传！
 		        resize: false,
-				duplicate:true
+				duplicate:true,
+				// 只允许选择图片文件。
+			    accept: accepts
 		    });
 	    	uploader.on('fileQueued', function(file) {
 	    		$("#"+el).children().remove();
-	    		$img = $("<img />");
-	    		uploader.makeThumb( file, function(error, src) {
-	    	        if ( error ) {
-	    	            $img.replaceWith('<span>不能预览</span>');
-	    	            return;
-	    	        }
-	    	        $img.attr( 'src', src );
-	    	    }, thumbnailWidth, thumbnailHeight );
-	    	    $("#"+el).append($img);
+	    		if(isShowThumb == "IMAGES"){
+	    			$img = $("<img />");
+		    		uploader.makeThumb( file, function(error, src) {
+		    	        if (error) {
+		    	            $img.replaceWith('<span>不能预览</span>');
+		    	            return;
+		    	        }
+		    	        $img.attr( 'src', src );
+		    	    }, thumbnailWidth, thumbnailHeight );
+	    	    	$("#"+el).append($img);
+	    		}else{
+	    			$div = $("<div />");
+	    			$div.text(file.name);
+	    	    	$("#"+el).append($div);
+	    		}
 	    	});
 		    uploader.on('uploadSuccess', function(file, response) {
-		    	$("#"+el).children().remove();
-		        $("#"+el).append($("<img src='"+response.data.url+"'/>"));
-		        $("#"+inputEl).val(response.data.filepath);
+		    	$("body").MessageBox({
+					type: 'success',
+					message: '上传成功！',
+					timeout: 3000,
+					callbak: function(){
+						$("#"+el).children().remove();
+				    	if(isShowThumb == "IMAGES"){
+				        	$("#"+el).append($("<img src='"+response.data.url+"'/>"));
+				    	}else{
+			    			$div = $("<div />");
+			    			$div.text(response.data.originalFilename);
+			    	    	$("#"+el).append($div);
+			    		}
+				        $("#"+inputEl).val(response.data.filepath);
+					}
+				});
 		    });
 		    uploader.on('uploadError', function( file ) {
 		    	$("body").MessageBox({
@@ -257,6 +396,45 @@
 		    });
 	    }
 	    
+    	//上传文件
+		function uploadFile(){
+		    var fileNumbers = imagesetUploader.getFiles().length;
+		    if (fileNumbers > 0) {
+		    	imagesetUploader.upload();
+		    } else {
+		    	$("body").MessageBox({
+					type: 'error',
+					message: '请选择文件！',
+					timeout: 3000,
+					callbak:null
+				});
+		    }
+		}
+
+		//删除文件上传队列
+		function removeFile(id){
+			var fileList = imagesetUploader.getFiles();
+			console.log(fileList);
+			for(var i = 0;i < fileList.length;i++){
+				if(fileList[i].id == id){
+					imagesetUploader.removeFile(id, true);
+				}
+			}
+			var fieldId = $("#" + id + "> .file-name").attr("field-id");
+			var filepath = $("#" + id + "> .file-name").attr("filepath");
+			var crtValue = $("#input-" + fieldId).val();
+			if(filepath && crtValue){
+				var files = crtValue.split(",");
+				for(var i = 0;i < files.length;i++){
+					if(files[i] == filepath){
+						files.splice(i, 1);
+					}
+				}
+				$("#input-" + fieldId).val(files.toString());
+			}
+			$("#" + id).remove();
+		}
+    	
 	    function initMdEditor(id, el, content){
 	    	//初始化MD编辑器
 	    	window[id] = editormd(el, {

@@ -3,7 +3,6 @@ package cn.itechyou.cms.service.impl;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +19,6 @@ import cn.itechyou.cms.entity.Category;
 import cn.itechyou.cms.exception.AdminGeneralException;
 import cn.itechyou.cms.exception.CmsException;
 import cn.itechyou.cms.service.CategoryService;
-import cn.itechyou.cms.utils.LoggerUtils;
 /**
  *      栏目管理业务类
  * @author LIGW
@@ -28,11 +26,6 @@ import cn.itechyou.cms.utils.LoggerUtils;
  */
 @Service
 public class CategoryServiceImpl implements CategoryService {
-
-	/**
-	 *     日志输出
-	 */
-	private static final Logger logger = LoggerUtils.getLogger(CategoryServiceImpl.class);
 	@Autowired
 	private CategoryMapper categoryMapper;
 	@Autowired

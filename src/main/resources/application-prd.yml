@@ -4,7 +4,7 @@ web:
 spring: 
   datasource: 
     name: prd
-    url: jdbc:mysql://127.0.0.1:3389/dreamer-cms?serverTimezone=GMT&useSSL=false&useUnicode=true&characterEncoding=UTF8
+    url: jdbc:mysql://127.0.0.1:3389/dreamer-cms?serverTimezone=GMT%2B8&useSSL=false&useUnicode=true&characterEncoding=UTF8&zeroDateTimeBehavior=convertToNull
     username: root
     password: root3306!
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -18,3 +18,9 @@ spring:
         max-idle: 100
         min-idle: 50
         max-wait: -1
+
+# 日志配置
+logging:
+  path: /opt/resources/cms.itechyou.cn/logs/
+  level:
+    root: info           

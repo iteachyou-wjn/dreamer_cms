@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -25,7 +26,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import cn.hutool.captcha.CircleCaptcha;
+import com.wf.captcha.ArithmeticCaptcha;
+import com.wf.captcha.utils.CaptchaUtil;
+
 import cn.itechyou.cms.common.ExceptionEnum;
 import cn.itechyou.cms.common.SearchEntity;
 import cn.itechyou.cms.entity.Archives;
@@ -57,9 +60,9 @@ import cn.itechyou.cms.utils.StringUtil;
 import cn.itechyou.cms.utils.UUIDUtils;
 
 @Controller
+@Scope("prototype")
 @RequestMapping("/")
 public class FrontController {
-	
 	protected HttpServletRequest request;  
     protected HttpServletResponse response;  
     protected HttpSession session;
@@ -91,8 +94,6 @@ public class FrontController {
 	private AttachmentService attachmentService;
 	@Autowired
 	private ParseEngine parseEngine;
-	@Autowired
-	private CircleCaptcha captcha;
 	
 	/**
 	 * 首页方法
@@ -518,7 +519,7 @@ public class FrontController {
 					ExceptionEnum.FORM_PARAMETER_EXCEPTION.getMessage(),
 					"缺少验证码参数，请添加该参数后重试。");
 		}
-		if(!captcha.verify(params.get("captcha").toString())) {
+		if(!CaptchaUtil.ver(params.get("captcha").toString(), request)) {
 			throw new FormParameterException(
 					ExceptionEnum.FORM_PARAMETER_EXCEPTION.getCode(),
 					ExceptionEnum.FORM_PARAMETER_EXCEPTION.getMessage(),
@@ -618,11 +619,10 @@ public class FrontController {
 	// 产生验证码
 	@RequestMapping("/getKaptcha")
 	public void getKaptcha(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		captcha.createCode();
-		// 把图片写入到输出流中==》以流的方式响应到客户端
-		OutputStream outputStream = response.getOutputStream();
-		captcha.write(outputStream);
-		outputStream.close();
+		ArithmeticCaptcha captcha = new ArithmeticCaptcha(130, 48);
+        captcha.getArithmeticString();  // 获取运算的公式：3+2=?
+        captcha.text();  // 获取运算的结果：5
+		CaptchaUtil.out(captcha, request, response);
 	}
 	
 	/**

@@ -4,7 +4,7 @@ web:
 spring: 
   datasource: 
     name: dev
-    url: jdbc:mysql://127.0.0.1:3306/dreamer-cms?serverTimezone=GMT&useSSL=false&useUnicode=true&characterEncoding=UTF8&zeroDateTimeBehavior=convertToNull
+    url: jdbc:mysql://127.0.0.1:3306/dreamer-cms?serverTimezone=GMT%2B8&useSSL=false&useUnicode=true&characterEncoding=UTF8&zeroDateTimeBehavior=convertToNull
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -12,9 +12,15 @@ spring:
     host: 127.0.0.1
     port: 6379
     timeout: 2000
-    password: YTU3e^u!gN^6HHPm
+    password: 123456
     jedis:
       pool:
         max-idle: 100
         min-idle: 50
         max-wait: -1
+
+# 日志配置
+logging:
+  path: D:/dreamer-cms/logs/
+  level:
+    root: info              

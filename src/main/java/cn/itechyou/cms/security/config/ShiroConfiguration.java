@@ -2,9 +2,9 @@ package cn.itechyou.cms.security.config;
 
 import java.util.LinkedHashMap;
 
-import org.apache.shiro.codec.Base64;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.session.mgt.ExecutorServiceSessionValidationScheduler;
+import org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO;
 import org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
@@ -13,23 +13,18 @@ import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.MethodInvokingFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
 
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
-import cn.itechyou.cms.security.RedisCachingShiroSessionDao;
 import cn.itechyou.cms.security.cache.ShiroRedisCacheManager;
 import cn.itechyou.cms.security.token.DreamerCMSRealm;
 import cn.itechyou.cms.utils.CipherKeyUtils;
 
 @Configuration
 public class ShiroConfiguration {
-	
-	@Autowired
-	private RedisTemplate redisTemplate;
 	
 	/**
 	 * 自定义角色过滤器 支持多个角色可以访问同一个资源 eg:/home.jsp = authc,roleOR[admin,user]
@@ -102,18 +97,6 @@ public class ShiroConfiguration {
 	}
 	
 	/**
-	 * 自定义Shiro Session Dao
-	 * @return
-	 */
-	@Bean("customShiroSessionDAO")
-	public RedisCachingShiroSessionDao customShiroSessionDAO() {
-		RedisCachingShiroSessionDao customShiroSessionDAO = new RedisCachingShiroSessionDao();
-		//会话Session ID生成器
-		customShiroSessionDAO.setSessionIdGenerator(sessionIdGenerator());
-		return customShiroSessionDAO;
-	}
-	
-	/**
 	 * 会话验证调度器
 	 * @return
 	 */
@@ -130,12 +113,12 @@ public class ShiroConfiguration {
 	 * @return
 	 */
 	@Bean("securityManager")
-	public DefaultWebSecurityManager defaultWebSecurityManager() {
+	public DefaultWebSecurityManager defaultWebSecurityManager(RedisTemplate<Object, Object> template) {
 		DefaultWebSecurityManager defaultWebSecurityManager = new DefaultWebSecurityManager(); 
 		defaultWebSecurityManager.setRealm(dreamerCMSRealm());
 		defaultWebSecurityManager.setSessionManager(defaultWebSessionManager());
 		defaultWebSecurityManager.setRememberMeManager(rememberMeManager());
-		defaultWebSecurityManager.setCacheManager(customShiroCacheManager());
+		defaultWebSecurityManager.setCacheManager(customShiroCacheManager(template));
 		return defaultWebSecurityManager;
 	}
 
@@ -144,22 +127,20 @@ public class ShiroConfiguration {
 	 * @return
 	 */
 	@Bean
-	public ShiroRedisCacheManager customShiroCacheManager() {
-		ShiroRedisCacheManager srcm = new ShiroRedisCacheManager();
-		srcm.setRedisTemplate(redisTemplate);
+	public ShiroRedisCacheManager customShiroCacheManager(RedisTemplate<Object, Object> redisTemplate) {
+		ShiroRedisCacheManager srcm = new ShiroRedisCacheManager(redisTemplate);
 		return srcm;
 	}
-	
 	
 	/**
 	 * 静态注入，相当于调用SecurityUtils.setSecurityManager(securityManager)
 	 * @return
 	 */
 	@Bean
-	public MethodInvokingFactoryBean setDefaultWebSecurityManager() {
+	public MethodInvokingFactoryBean setDefaultWebSecurityManager(RedisTemplate<Object, Object> template) {
 		MethodInvokingFactoryBean methodInvokingFactoryBean = new MethodInvokingFactoryBean();
 		methodInvokingFactoryBean.setStaticMethod("org.apache.shiro.SecurityUtils.setSecurityManager");
-		methodInvokingFactoryBean.setArguments(defaultWebSecurityManager());
+		methodInvokingFactoryBean.setArguments(defaultWebSecurityManager(template));
 		return methodInvokingFactoryBean;
 	}
 	
@@ -172,7 +153,7 @@ public class ShiroConfiguration {
 		DefaultWebSessionManager defaultWebSessionManager = new DefaultWebSessionManager();
 		defaultWebSessionManager.setSessionValidationInterval(1800000);
 		defaultWebSessionManager.setGlobalSessionTimeout(1800000);
-		defaultWebSessionManager.setSessionDAO(customShiroSessionDAO());
+		defaultWebSessionManager.setSessionDAO(new EnterpriseCacheSessionDAO());
 		//是否开启 检测，默认开启
 		defaultWebSessionManager.setSessionValidationSchedulerEnabled(true);
 		//是否删除无效的，默认也是开启

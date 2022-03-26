@@ -1,17 +1,11 @@
 package cn.itechyou.cms.common;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Scope;
 import org.springframework.core.Ordered;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-import cn.hutool.captcha.CaptchaUtil;
-import cn.hutool.captcha.CircleCaptcha;
-import cn.hutool.captcha.generator.MathGenerator;
-import cn.itechyou.cms.entity.System;
 import cn.itechyou.cms.interceptor.UserAuthorizationInterceptor;
 import cn.itechyou.cms.service.SystemService;
 
@@ -23,7 +17,6 @@ import cn.itechyou.cms.service.SystemService;
  */
 @Configuration
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
-	
 	@Autowired
 	private UserAuthorizationInterceptor userAuthorizationInterceptor;
 	@Autowired
@@ -50,13 +43,4 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 						.addPathPatterns("/admin/**")
 						.excludePathPatterns("/admin/u/**");
 	}
-
-    @Bean("captcha")
-    @Scope("singleton")
-    public CircleCaptcha captcha() {
-    	CircleCaptcha captcha = CaptchaUtil.createCircleCaptcha(200, 100, 4, 20);
-    	// 自定义验证码内容为四则运算方式
-    	captcha.setGenerator(new MathGenerator(1));
-    	return captcha;
-    }
 }

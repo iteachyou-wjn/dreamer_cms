@@ -2,18 +2,18 @@ package cn.itechyou.cms.utils;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * http访问方法实现
  * @author 王俊南 
  * @date: 2018-11-22
  */
+@Slf4j
 public class HttpRequestUtils {
-	private static Logger logger = LoggerFactory.getLogger(HttpRequestUtils.class); // 日志记录
 
 	public static HttpServletRequest getRequest(){
 		ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();

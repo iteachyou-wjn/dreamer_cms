@@ -81,7 +81,7 @@ public class TemplateController {
 		String themePath = resourceDir + File.separator + "templates" + File.separator + currentTheme.getThemePath() + File.separator;
 		themePath = themePath.replaceAll("\\*", "/");
 		File themeDir = new File(themePath);
-		if(!themeDirPathFile.getAbsolutePath().startsWith(themeDir.getAbsolutePath())) {
+		if(!themeDirPathFile.getCanonicalPath().startsWith(themeDir.getCanonicalPath())) {
 			throw new TemplatePermissionDeniedException(StateCodeEnum.HTTP_FORBIDDEN.getCode(), StateCodeEnum.HTTP_FORBIDDEN.getDescription(), "您没有操作权限！");
 		}
 				
@@ -121,7 +121,7 @@ public class TemplateController {
 		String themePath = resourceDir + File.separator + "templates" + File.separator + currentTheme.getThemePath() + File.separator;
 		themePath = themePath.replaceAll("\\*", "/");
 		File themeDir = new File(themePath);
-		if(!templateFile.getAbsolutePath().startsWith(themeDir.getAbsolutePath())) {
+		if(!templateFile.getCanonicalPath().startsWith(themeDir.getCanonicalPath())) {
 			throw new TemplatePermissionDeniedException(StateCodeEnum.HTTP_FORBIDDEN.getCode(), StateCodeEnum.HTTP_FORBIDDEN.getDescription(), "您没有操作权限！");
 		}
 		String content = FileUtils.readFileToString(templateFile, "UTF-8");

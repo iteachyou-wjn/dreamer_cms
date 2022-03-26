@@ -42,7 +42,4 @@ pagehelper:
   supportMethodsArguments: true
   params: count=countSql
 
-logging: 
-  config: classpath:log4j2.yml
-
 
