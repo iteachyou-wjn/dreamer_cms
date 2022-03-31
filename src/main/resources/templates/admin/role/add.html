@@ -12,55 +12,51 @@
 </head>
 
 <body>
-	<div class="row">
-	    <div class="col-md-12">
-	    	<h1 class="panel-heading">添加角色</h1>
-	        <!--breadcrumbs start -->
-	        <ul class="breadcrumb">
-				<li><a href="/admin/dashboard/toIndex"><i class="fa fa-home"></i> 首页</a></li>
-				<li class="active">添加角色</li>
-			</ul>
-	        <!--breadcrumbs end -->
-	    </div>
+<div class="row">
+    <div class="col-md-12">
+    	<h1 class="panel-heading">添加角色</h1>
+        <!--breadcrumbs start -->
+        <ul class="breadcrumb">
+			<li><a href="/admin/dashboard/toIndex"><i class="fa fa-home"></i> 首页</a></li>
+			<li class="active">添加角色</li>
+		</ul>
+        <!--breadcrumbs end -->
+    </div>
+</div>
+<section class="panel">
+	<div class="panel-body">
+		<form class="col s12" id="form1" th:action="@{/admin/role/add}" onsubmit="return validateForm();" method="post">
+			<div class="form-group form-control-medium">
+				<label for="roleName">角色名称：</label>
+				<input id="roleName" name="roleName" type="text" class="form-control"/>
+			</div>
+			<div class="form-group form-control-medium">
+				<label for="roleCode">角色编码（编码为空系统则自动生成）：</label>
+				<input id="roleCode" name="roleCode" type="text" class="form-control"/>
+			</div>
+			<div class="form-btn-group-left">
+            	<button type="submit" class="btn btn-info">保存</button>
+            </div>
+		</form>
 	</div>
-	<div class="row">
-		<div class="col-lg-12">
-			<section class="panel">
-				<div class="panel-body">
-					<form class="col s12" id="form1" th:action="@{/admin/role/add}" onsubmit="return validateForm();" method="post">
-						<div class="form-group form-control-medium">
-							<label for="roleName">角色名称：</label>
-							<input id="roleName" name="roleName" type="text" class="form-control"/>
-						</div>
-						<div class="form-group form-control-medium">
-							<label for="roleCode">角色编码（编码为空系统则自动生成）：</label>
-							<input id="roleCode" name="roleCode" type="text" class="form-control"/>
-						</div>
-						<div class="form-btn-group-left">
-			            	<button type="submit" class="btn btn-info">保存</button>
-			            </div>
-					</form>
-				</div>
-			</section>
-		</div>
-	</div>
-	<script src="/resource/js/jquery.min.js" type="text/javascript"></script>
-    <script type="text/javascript" src="/resource/js/jQueryMessage/js/jquery.plugin.message.js"></script>
-    <script type="text/javascript">
-	   	/* 保存方法 */
-	    function validateForm(){
-	    	var roleName = $("#roleName").val();
-	    	if(roleName == null || roleName==''){
-	    		$("body").MessageBox({
-					type: 'error',
-					message:'角色名称不能为空',
-					timeout:3000,
-					callbak:null
-				});
-	    		return false;
-	    	}
-	    	return true;
-	    }
-    </script>
+</section>
+<script src="/resource/js/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="/resource/js/jQueryMessage/js/jquery.plugin.message.js"></script>
+<script type="text/javascript">
+   	/* 保存方法 */
+    function validateForm(){
+    	var roleName = $("#roleName").val();
+    	if(roleName == null || roleName==''){
+    		$("body").MessageBox({
+				type: 'error',
+				message:'角色名称不能为空',
+				timeout:3000,
+				callbak:null
+			});
+    		return false;
+    	}
+    	return true;
+    }
+</script>
 </body>
 </html>

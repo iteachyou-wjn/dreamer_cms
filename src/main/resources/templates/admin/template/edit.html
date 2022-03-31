@@ -31,29 +31,25 @@
         <!--breadcrumbs end -->
     </div>
 </div>
-<div class="row">
-	<div class="col-lg-12">
-		<section class="panel">
-			<header class="panel-heading" style="text-transform:none;">
-				<p style="margin:0;">模板目录：<b th:text="${path}"></b>&nbsp;&nbsp;模板文件：<b th:text="${file}"></b></p>
-			</header>
-			<div class="panel-body">
-				<form class="col s12" id="form1" th:action="@{/admin/templates/save}" method="post" onsubmit="validateForm();">
-					<input type="hidden" name="path" th:value="${path}" />
-					<input type="hidden" name="file" th:value="${file}" />
-					<input type="hidden" id="content" name="content" th:value="${content}" />
-					<!--代码输入框（注意请务必设置高度，否则无法显示）-->
-	                <pre id="codeEditor" class="ace_editor" style="min-height:600px">
-	                	<textarea name="content" class="ace_text-input"></textarea>
-	                </pre>
-	                <div class="form-btn-group-left">
-		            	<button type="submit" class="btn btn-info">保存</button>
-		            </div>
-				</form>
-			</div>
-		</section>
+<section class="panel">
+	<header class="panel-heading" style="text-transform:none;">
+		<p style="margin:0;">模板目录：<b th:text="${path}"></b>&nbsp;&nbsp;模板文件：<b th:text="${file}"></b></p>
+	</header>
+	<div class="panel-body">
+		<form class="col s12" id="form1" th:action="@{/admin/templates/save}" method="post" onsubmit="validateForm();">
+			<input type="hidden" name="path" th:value="${path}" />
+			<input type="hidden" name="file" th:value="${file}" />
+			<input type="hidden" id="content" name="content" th:value="${content}" />
+			<!--代码输入框（注意请务必设置高度，否则无法显示）-->
+            <pre id="codeEditor" class="ace_editor" style="min-height:600px">
+            	<textarea name="content" class="ace_text-input"></textarea>
+            </pre>
+            <div class="form-btn-group-left">
+            	<button type="submit" class="btn btn-info">保存</button>
+            </div>
+		</form>
 	</div>
-</div>
+</section>
 <script src="/resource/js/jquery.min.js" type="text/javascript"></script>
 <script src="/resource/js/aceeditor/ace.js" type="text/javascript" charset="utf-8"></script>
 <script src="/resource/js/aceeditor/ext-language_tools.js" type="text/javascript" charset="utf-8"></script>

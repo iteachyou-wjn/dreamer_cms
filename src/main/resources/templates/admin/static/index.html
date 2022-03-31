@@ -28,190 +28,172 @@
         <!--breadcrumbs end -->
     </div>
 </div>
-<div class="row">
-	<div class="col-lg-12">
-		<section class="panel">
-			<header class="panel-heading tab-bg-dark-navy-blue">
-                <ul class="nav nav-tabs">
-                    <li class="active">
-                        <a data-toggle="tab" href="#home"><i class="fa fa-print"></i> <b>生成首页</b></a>
-                    </li>
-                    <li class="">
-                        <a data-toggle="tab" href="#category"><i class="fa fa-print"></i> <b>生成栏目页</b></a>
-                    </li>
-                    <!-- 
-                    <li class="">
-                        <a data-toggle="tab" href="#article"><i class="fa fa-print"></i> <b>生成内容页</b></a>
-                    </li>
-                     -->
-                </ul>
-            </header>
-			<div class="panel-body">
-				<div class="tab-content">
-				    <div id="home" class="tab-pane active">
-				        <form class="col s12" id="form1" th:object="${currentTheme}" th:action="@{/admin/static/generateIndex}" onsubmit="return validateForm();" method="post">
-							<div class="form-group-center form-control-medium">
-								<label for="homeTemplateFile">首页模版文件：</label>
-								<input type="text" id="homeTemplateFile" class="form-control" th:value="'/templates/' + *{themePath} + '/index.html'" readonly="readonly">
-							</div>
-							<div class="form-btn-group-center">
-								<button type="button" class="btn btn-info" onclick="generate('1');">一键生成首页</button>
-							</div>
-						</form>
+<section class="panel">
+	<header class="panel-heading tab-bg-dark-navy-blue">
+        <ul class="nav nav-tabs">
+            <li class="active">
+                <a data-toggle="tab" href="#home"><i class="fa fa-print"></i> <b>生成首页</b></a>
+            </li>
+            <li class="">
+                <a data-toggle="tab" href="#category"><i class="fa fa-print"></i> <b>生成栏目页</b></a>
+            </li>
+        </ul>
+    </header>
+	<div class="panel-body">
+		<div class="tab-content">
+		    <div id="home" class="tab-pane active">
+		        <form class="col s12" id="form1" th:object="${currentTheme}" th:action="@{/admin/static/generateIndex}" onsubmit="return validateForm();" method="post">
+					<div class="form-group-center form-control-medium">
+						<label for="homeTemplateFile">首页模版文件：</label>
+						<input type="text" id="homeTemplateFile" class="form-control" th:value="'/templates/' + *{themePath} + '/index.html'" readonly="readonly">
 					</div>
-					<div id="category" class="tab-pane">
-						<form class="col s12" id="form2" th:action="@{/admin/static/generateCategory}" onsubmit="return validateForm();" method="post">
-							<div class="form-group-center form-control-medium">
-								<label for="homeTemplateFile">指定栏目生成：</label>
-								<select class="form-control m-b-10" name="id">
-									<option value="">生成全部栏目...</option>
-	                                <option th:each="item : ${categorys}" th:text="${item.cnname}" th:value="${item.id}"></option>
-	                            </select>
-							</div>
-							<div class="form-group-center form-control-medium">
-								<label for="updateChild">是否更新子栏目：</label>
-	                            <label class="checkbox-inline">
-	                                <input type="radio" name="updateChild" id="subscribe-yes" value="1" checked="">是
-	                            </label>
-	                            <label class="checkbox-inline">
-	                                <input type="radio" name="updateChild" id="subscribe-no" value="0">否
-	                            </label>
-							</div>
-							<div class="form-btn-group-center">
-					          	<button type="button" class="btn btn-info" onclick="generate('2');">开始生成HTML</button>
-					        </div>
-						</form>
-				</div>
-				<!-- 
-			    <div id="article" class="tab-pane">
-					<form class="col s12" id="form3" th:action="@{/admin/forms/edit}" onsubmit="return validateForm();" method="post">
-						<input name="id" id="id" type="hidden" />
-						<div class="form-btn-group-left">
-							<button type="submit" class="btn btn-info">保存</button>
-						</div>
-					</form>
-			    </div>
-			     -->
-			    <section class="panel" style="margin-top:20px;">
-					<header class="panel-heading tab-bg-dark-navy-blue">
-						<i class="fa fa-clock-o"></i> 执行状态
-					</header>
-					<div class="panel-body">
-						<div class="graph">
-							<strong id="bar" style="width:0%;"></strong>
-						</div>
-						<div class="result"></div>
+					<div class="form-btn-group-center">
+						<button type="button" class="btn btn-info" onclick="generate('1');">一键生成首页</button>
 					</div>
-				</section>
+				</form>
 			</div>
-		</section>
+			<div id="category" class="tab-pane">
+				<form class="col s12" id="form2" th:action="@{/admin/static/generateCategory}" onsubmit="return validateForm();" method="post">
+					<div class="form-group-center form-control-medium">
+						<label for="homeTemplateFile">指定栏目生成：</label>
+						<select class="form-control m-b-10" name="id">
+							<option value="">生成全部栏目...</option>
+                            <option th:each="item : ${categorys}" th:text="${item.cnname}" th:value="${item.id}"></option>
+                        </select>
+					</div>
+					<div class="form-group-center form-control-medium">
+						<label for="updateChild">是否更新子栏目：</label>
+                        <label class="checkbox-inline">
+                            <input type="radio" name="updateChild" id="subscribe-yes" value="1" checked="">是
+                        </label>
+                        <label class="checkbox-inline">
+                            <input type="radio" name="updateChild" id="subscribe-no" value="0">否
+                        </label>
+					</div>
+					<div class="form-btn-group-center">
+			          	<button type="button" class="btn btn-info" onclick="generate('2');">开始生成HTML</button>
+			        </div>
+				</form>
+			</div>
+		    <section class="panel" style="margin-top:20px;">
+				<header class="panel-heading tab-bg-dark-navy-blue">
+					<i class="fa fa-clock-o"></i> 执行状态
+				</header>
+				<div class="panel-body">
+					<div class="graph">
+						<strong id="bar" style="width:0%;"></strong>
+					</div>
+					<div class="result"></div>
+				</div>
+			</section>
+		</div>
 	</div>
-</div>
+</section>
 <script src="/resource/js/jquery.min.js" type="text/javascript"></script>
 <!-- Bootstrap -->
 <script src="/resource/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="/resource/js/jquery.serializejson.js" type="text/javascript"></script>
 <script th:inline="javascript">
-var socket;
-var baseUrl = [[${system.website}]];
-var indexBar,indexBarNum = 0;
-//UUID
-var s = [];
-var hexDigits = "0123456789abcdef";
-for (var i = 0; i < 36; i++) {
-    s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
-}
-s[14] = "4";  // bits 12-15 of the time_hi_and_version field to 0010
-s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1);  // bits 6-7 of the clock_seq_hi_and_reserved to 01
-s[8] = s[13] = s[18] = s[23] = "-";
-var clientId = s.join("");
+	var socket;
+	var baseUrl = [[${system.website}]];
+	var indexBar,indexBarNum = 0;
+	//UUID
+	var s = [];
+	var hexDigits = "0123456789abcdef";
+	for (var i = 0; i < 36; i++) {
+	    s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
+	}
+	s[14] = "4";  // bits 12-15 of the time_hi_and_version field to 0010
+	s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1);  // bits 6-7 of the clock_seq_hi_and_reserved to 01
+	s[8] = s[13] = s[18] = s[23] = "-";
+	var clientId = s.join("");
 
-window.onload = function(){
-	openSocket();
-}
-function generate(type){
-	indexBarNum = 0;
-	if(type == "1"){
-		$.ajax({
-			url : "/admin/static/generateIndex/" + clientId,
-			contentType : 'application/json',
-			data : null,
-			type : "POST",
-			dataType : "JSON",
-			success : function(result) {
-				console.log(result);
-			}
-		});
-	}else if(type == "2"){
-		var obj = $('#form2').serializeJSON();
-		console.log(obj);
-		$.ajax({
-			url : "/admin/static/generateCategory/" + clientId,
-			contentType : 'application/json',
-			data : JSON.stringify(obj),
-			type : "POST",
-			dataType : "JSON",
-			success : function(result) {
-				console.log(result);
-			}
-		});
+	window.onload = function(){
+		openSocket();
 	}
-}
-function openSocket() {
-    if(typeof(WebSocket) == "undefined") {
-        console.log("您的浏览器不支持WebSocket");
-    }else{
-        console.log("您的浏览器支持WebSocket");
-        var socketUrl = baseUrl + "admin/ws/" + clientId;
-        socketUrl=socketUrl.replace("https","ws").replace("http","ws");
-        if(socket!=null){
-            socket.close();
-            socket=null;
-        }
-        socket = new WebSocket(socketUrl);
-        //打开事件
-        socket.onopen = function() {
-            console.log("websocket已打开");
-        };
-        //获得消息事件
-        socket.onmessage = function(msg) {
-        	var message = JSON.parse(msg.data);
-        	console.log(message.progress);
-        	indexBarNum = message.progress;
-        	indexBar = window.setInterval(function(){indexProBar(message.message)},10); 
-        	$(".result").html(message.message);
-        };
-        //关闭事件
-        socket.onclose = function() {
-            console.log("websocket已关闭");
-        };
-        //发生了错误事件
-        socket.onerror = function() {
-            console.log("websocket发生了错误");
-        }
-    }
-}
-function sendMessage() {
-    if(typeof(WebSocket) == "undefined") {
-        console.log("您的浏览器不支持WebSocket");
-    }else {
-        console.log("您的浏览器支持WebSocket");
-        socket.send('{"toUserId":"'+$("#toUserId").val()+'","contentText":"'+$("#contentText").val()+'"}');
-    }
-}
-function indexProBar(message){ 
-	var maxWidth = $(".graph").width();
-	var barWidth = $("#bar").width();
-	var curentWidth = barWidth / maxWidth;
-	var curentBar = Math.ceil(curentWidth * 100);
-	var bar = $("#bar");
-	$(bar).css("width",(barWidth + 1) + "px"); 
-	$(bar).html(curentBar + "%"); 
-	if(curentBar >= indexBarNum){ 
-		$(bar).css("width", indexBarNum + "%"); 
-		window.clearInterval(indexBar); 
+	function generate(type){
+		indexBarNum = 0;
+		if(type == "1"){
+			$.ajax({
+				url : "/admin/static/generateIndex/" + clientId,
+				contentType : 'application/json',
+				data : null,
+				type : "POST",
+				dataType : "JSON",
+				success : function(result) {
+					console.log(result);
+				}
+			});
+		}else if(type == "2"){
+			var obj = $('#form2').serializeJSON();
+			console.log(obj);
+			$.ajax({
+				url : "/admin/static/generateCategory/" + clientId,
+				contentType : 'application/json',
+				data : JSON.stringify(obj),
+				type : "POST",
+				dataType : "JSON",
+				success : function(result) {
+					console.log(result);
+				}
+			});
+		}
 	}
-} 
+	function openSocket() {
+	    if(typeof(WebSocket) == "undefined") {
+	        console.log("您的浏览器不支持WebSocket");
+	    }else{
+	        console.log("您的浏览器支持WebSocket");
+	        var socketUrl = baseUrl + "admin/ws/" + clientId;
+	        socketUrl=socketUrl.replace("https","ws").replace("http","ws");
+	        if(socket!=null){
+	            socket.close();
+	            socket=null;
+	        }
+	        socket = new WebSocket(socketUrl);
+	        //打开事件
+	        socket.onopen = function() {
+	            console.log("websocket已打开");
+	        };
+	        //获得消息事件
+	        socket.onmessage = function(msg) {
+	        	var message = JSON.parse(msg.data);
+	        	console.log(message.progress);
+	        	indexBarNum = message.progress;
+	        	indexBar = window.setInterval(function(){indexProBar(message.message)},10); 
+	        	$(".result").html(message.message);
+	        };
+	        //关闭事件
+	        socket.onclose = function() {
+	            console.log("websocket已关闭");
+	        };
+	        //发生了错误事件
+	        socket.onerror = function() {
+	            console.log("websocket发生了错误");
+	        }
+	    }
+	}
+	function sendMessage() {
+	    if(typeof(WebSocket) == "undefined") {
+	        console.log("您的浏览器不支持WebSocket");
+	    }else {
+	        console.log("您的浏览器支持WebSocket");
+	        socket.send('{"toUserId":"'+$("#toUserId").val()+'","contentText":"'+$("#contentText").val()+'"}');
+	    }
+	}
+	function indexProBar(message){ 
+		var maxWidth = $(".graph").width();
+		var barWidth = $("#bar").width();
+		var curentWidth = barWidth / maxWidth;
+		var curentBar = Math.ceil(curentWidth * 100);
+		var bar = $("#bar");
+		$(bar).css("width",(barWidth + 1) + "px"); 
+		$(bar).html(curentBar + "%"); 
+		if(curentBar >= indexBarNum){ 
+			$(bar).css("width", indexBarNum + "%"); 
+			window.clearInterval(indexBar); 
+		}
+	} 
 </script>
 </body>
 </html>

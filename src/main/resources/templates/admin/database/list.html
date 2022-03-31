@@ -18,176 +18,170 @@
 </head>
 
 <body>
-	<div class="row">
-	    <div class="col-md-12">
-	    	<h1 class="panel-heading">备份/还原</h1>
-	        <!--breadcrumbs start -->
-	        <ul class="breadcrumb">
-				<li><a href="/admin/dashboard/toIndex"><i class="fa fa-home"></i> 首页</a></li>
-				<li class="active">备份/还原</li>
-				<li style="float: right;"><a href="/admin/database/toRestore">数据还原</a></li>
-			</ul>
-			<div class="clearFix"></div>
-	        <!--breadcrumbs end -->
-	    </div>
-	</div>
-	<div class="row">
-		<div class="col-lg-12">
-			<section class="panel">
-			    <div class="panel-body table-responsive">
-					<table class="table table-hover">
-						<thead>
-							<tr>
-								<th style="width:50px;">
-									<input type="checkbox" class="flat-grey list-child" />
-								</th>
-								<th>表名称</th>
-								<th style="width:300px;">操作</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr th:each="item,stat : ${tables}">
-								<td><input type="checkbox" class="flat-grey list-child" th:value="${item}" /></td>
-								<td th:text="${item}"></td>
-								<td>
-									<a href="javascript:void(0)" data-toggle="modal" class="btn btn-xs btn-success" th:tableName="${item}" th:onclick="backup(this.getAttribute('tableName'));">备份</a>
-									<span>&nbsp;|&nbsp;</span>
-									<a href="javascript:void(0)" data-toggle="modal" class="btn btn-xs btn-success" th:tableName="${item}" th:onclick="struct(this.getAttribute('tableName'));">结构</a>
-								</td>
-							</tr>
-							<tr th:if="${#lists.isEmpty(tables)}">
-								<td colspan="4" align="center">无数据</td>
-							</tr>
-						</tbody>
-					</table>
-			    </div>
-			</section>
-		</div>
-	</div>
-	<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="struct-dialog" class="modal fade">
-        <div class="modal-dialog" style="width: 800px;">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
-                    <h4 class="modal-title">表结构</h4>
-                </div>
-                <div class="modal-body">
-					<pre id="codeEditor" class="ace_editor" style="min-height:400px">
-	                	<textarea name="content" class="ace_text-input"></textarea>
-	                </pre>
-                </div>
-                <div class="modal-footer">
-                	<button type="button" class="btn btn-default btn-sm" data-dismiss="modal">确定</button>
-                </div>
+<div class="row">
+    <div class="col-md-12">
+    	<h1 class="panel-heading">备份/还原</h1>
+        <!--breadcrumbs start -->
+        <ul class="breadcrumb">
+			<li><a href="/admin/dashboard/toIndex"><i class="fa fa-home"></i> 首页</a></li>
+			<li class="active">备份/还原</li>
+			<li style="float: right;"><a href="/admin/database/toRestore">数据还原</a></li>
+		</ul>
+		<div class="clearFix"></div>
+        <!--breadcrumbs end -->
+    </div>
+</div>
+<section class="panel">
+    <div class="panel-body table-responsive">
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th style="width:50px;">
+						<input type="checkbox" class="flat-grey list-child" />
+					</th>
+					<th>表名称</th>
+					<th style="width:300px;">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="item,stat : ${tables}">
+					<td><input type="checkbox" class="flat-grey list-child" th:value="${item}" /></td>
+					<td th:text="${item}"></td>
+					<td>
+						<a href="javascript:void(0)" data-toggle="modal" class="btn btn-xs btn-success" th:tableName="${item}" th:onclick="backup(this.getAttribute('tableName'));">备份</a>
+						<span>&nbsp;|&nbsp;</span>
+						<a href="javascript:void(0)" data-toggle="modal" class="btn btn-xs btn-success" th:tableName="${item}" th:onclick="struct(this.getAttribute('tableName'));">结构</a>
+					</td>
+				</tr>
+				<tr th:if="${#lists.isEmpty(tables)}">
+					<td colspan="4" align="center">无数据</td>
+				</tr>
+			</tbody>
+		</table>
+    </div>
+</section>
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="struct-dialog" class="modal fade">
+    <div class="modal-dialog" style="width: 800px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                <h4 class="modal-title">表结构</h4>
+            </div>
+            <div class="modal-body">
+				<pre id="codeEditor" class="ace_editor" style="min-height:400px">
+                	<textarea name="content" class="ace_text-input"></textarea>
+                </pre>
+            </div>
+            <div class="modal-footer">
+            	<button type="button" class="btn btn-default btn-sm" data-dismiss="modal">确定</button>
             </div>
         </div>
     </div>
-	<!-- jQuery 2.0.2 -->
-	<script src="/resource/js/jquery.min.js" type="text/javascript"></script>
-	<!-- jQuery UI 1.10.3 -->
-	<script src="/resource/js/jquery-ui-1.10.3.min.js" type="text/javascript"></script>
-	<!-- Bootstrap -->
-	<script src="/resource/js/bootstrap.min.js" type="text/javascript"></script>
-	<!-- iCheck -->
-    <script src="/resource/js/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
-    <script src="/resource/js/aceeditor/ace.js" type="text/javascript" charset="utf-8"></script>
-	<script src="/resource/js/aceeditor/ext-language_tools.js" type="text/javascript" charset="utf-8"></script>
-    <script type="text/javascript" src="/resource/js/jQueryMessage/js/jquery.plugin.message.js"></script>
-	<script type="text/javascript">
-		var editor = null;
-		window.onload = function(){
-			renderCheckBox();
-			
-			//初始化对象
-	    	editor = ace.edit("codeEditor");
-	    	//设置风格和语言（更多风格和语言，请到github上相应目录查看）
-	    	theme = "monokai";
-	    	language = "sql";
-	    	editor.setTheme("ace/theme/" + theme);
-	    	editor.session.setMode("ace/mode/" + language);
-	    	//字体大小
-	    	editor.setFontSize(16);
-	    	//设置只读（true时只读，用于展示代码）
-	    	editor.setReadOnly(false);
-	    	//自动换行,设置为off关闭
-	    	editor.setOption("wrap", "free");
-	    	//启用提示菜单
-	    	ace.require("ace/ext/language_tools");
-	    	editor.setOptions({
-	    		enableBasicAutocompletion: true,
-	    		enableSnippets: true,
-	    		enableLiveAutocompletion: true
-	    	});
-		}
+</div>
+<!-- jQuery 2.0.2 -->
+<script src="/resource/js/jquery.min.js" type="text/javascript"></script>
+<!-- Bootstrap -->
+<script src="/resource/js/bootstrap.min.js" type="text/javascript"></script>
+<!-- iCheck -->
+<script src="/resource/js/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
+<script src="/resource/js/aceeditor/ace.js" type="text/javascript" charset="utf-8"></script>
+<script src="/resource/js/aceeditor/ext-language_tools.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" src="/resource/js/jQueryMessage/js/jquery.plugin.message.js"></script>
+<script type="text/javascript">
+	var editor = null;
+	window.onload = function(){
+		renderCheckBox();
 		
-		function renderCheckBox(){
-			$('input').on('ifChecked', function(event) {
-			    $(this).parents('li').addClass("task-done");
-			    console.log('ok');
-			});
-			$('input').on('ifUnchecked', function(event) {
-			    $(this).parents('li').removeClass("task-done");
-			    console.log('not');
-			});
-			
-			$('input[type="checkbox"].flat-grey, input[type="radio"].flat-grey').iCheck({
-			    checkboxClass: 'icheckbox_flat-grey',
-			    radioClass: 'iradio_flat-grey'
-			});
-		}
+		//初始化对象
+    	editor = ace.edit("codeEditor");
+    	//设置风格和语言（更多风格和语言，请到github上相应目录查看）
+    	theme = "monokai";
+    	language = "sql";
+    	editor.setTheme("ace/theme/" + theme);
+    	editor.session.setMode("ace/mode/" + language);
+    	//字体大小
+    	editor.setFontSize(16);
+    	//设置只读（true时只读，用于展示代码）
+    	editor.setReadOnly(false);
+    	//自动换行,设置为off关闭
+    	editor.setOption("wrap", "free");
+    	//启用提示菜单
+    	ace.require("ace/ext/language_tools");
+    	editor.setOptions({
+    		enableBasicAutocompletion: true,
+    		enableSnippets: true,
+    		enableLiveAutocompletion: true
+    	});
+	}
+	
+	function renderCheckBox(){
+		$('input').on('ifChecked', function(event) {
+		    $(this).parents('li').addClass("task-done");
+		    console.log('ok');
+		});
+		$('input').on('ifUnchecked', function(event) {
+		    $(this).parents('li').removeClass("task-done");
+		    console.log('not');
+		});
 		
-		//备份
-		function backup(tableName){
-			$.ajax({
-				url : "/admin/database/backup",
-				contentType : 'application/json',
-				data : {tableName: tableName},
-				type : "GET",
-				dataType : "JSON",
-				success : function(result) {
-					if(result.success){
-						$("body").MessageBox({
-							type: 'success',
-							message:result.info,
-							timeout:3000,
-							callbak:null
-						});
-					}else{
-						$("body").MessageBox({
-							type: 'error',
-							message:result.info,
-							timeout:3000,
-							callbak:null
-						});
-					}
+		$('input[type="checkbox"].flat-grey, input[type="radio"].flat-grey').iCheck({
+		    checkboxClass: 'icheckbox_flat-grey',
+		    radioClass: 'iradio_flat-grey'
+		});
+	}
+	
+	//备份
+	function backup(tableName){
+		$.ajax({
+			url : "/admin/database/backup",
+			contentType : 'application/json',
+			data : {tableName: tableName},
+			type : "GET",
+			dataType : "JSON",
+			success : function(result) {
+				if(result.success){
+					$("body").MessageBox({
+						type: 'success',
+						message:result.info,
+						timeout:3000,
+						callbak:null
+					});
+				}else{
+					$("body").MessageBox({
+						type: 'error',
+						message:result.info,
+						timeout:3000,
+						callbak:null
+					});
 				}
-			});
-		}
-		
-		//查询表结构
-		function struct(tableName){
-			$.ajax({
-				url : "/admin/database/showStruct",
-				contentType : 'application/json',
-				data : {tableName: tableName},
-				type : "GET",
-				dataType : "JSON",
-				success : function(result) {
-					console.log(result);
-					if(result.success){
-						editor.setValue(result.data);
-						$("#struct-dialog").modal("show");
-					}else{
-						$("body").MessageBox({
-							type: 'error',
-							message:result.info,
-							timeout:3000,
-							callbak:null
-						});
-					}
+			}
+		});
+	}
+	
+	//查询表结构
+	function struct(tableName){
+		$.ajax({
+			url : "/admin/database/showStruct",
+			contentType : 'application/json',
+			data : {tableName: tableName},
+			type : "GET",
+			dataType : "JSON",
+			success : function(result) {
+				console.log(result);
+				if(result.success){
+					editor.setValue(result.data);
+					$("#struct-dialog").modal("show");
+				}else{
+					$("body").MessageBox({
+						type: 'error',
+						message:result.info,
+						timeout:3000,
+						callbak:null
+					});
 				}
-			});
-		}
-	</script>
+			}
+		});
+	}
+</script>
 </body>
 </html>

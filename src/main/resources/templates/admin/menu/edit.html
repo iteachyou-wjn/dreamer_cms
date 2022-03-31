@@ -14,90 +14,86 @@
 </head>
 
 <body>
-	<div class="row">
-	    <div class="col-md-12">
-	    	<h1 class="panel-heading">编辑菜单</h1>
-	        <!--breadcrumbs start -->
-	        <ul class="breadcrumb">
-				<li><a href="/admin/dashboard/toIndex"><i class="fa fa-home"></i> 首页</a></li>
-				<li class="active">编辑菜单</li>
-			</ul>
-	        <!--breadcrumbs end -->
-	    </div>
+<div class="row">
+    <div class="col-md-12">
+    	<h1 class="panel-heading">编辑菜单</h1>
+        <!--breadcrumbs start -->
+        <ul class="breadcrumb">
+			<li><a href="/admin/dashboard/toIndex"><i class="fa fa-home"></i> 首页</a></li>
+			<li class="active">编辑菜单</li>
+		</ul>
+        <!--breadcrumbs end -->
+    </div>
+</div>
+<section class="panel">
+	<div class="panel-body">
+		<form class="col s12" id="form1" th:action="@{/admin/menu/update}" onsubmit="return validateForm();" method="post">
+			<input type="hidden" th:value="${menu.id}" id="id" name="id"/>
+			<div class="form-group form-control-medium">
+				<label for="menuName">角色名称：</label>
+				<input id="menuName" name="menuName" type="text" th:value="${menu.menuName}" class="form-control" />
+			</div>
+			<div class="form-group form-control-medium">
+				<label for="menuCode">角色编码：</label>
+				<input id="menuCode" name="menuCode" type="text" th:value="${menu.menuCode}" readonly="readonly" class="form-control"/>
+			</div>
+			<div class="form-group form-control-medium">
+				<label for="menuUrl">菜单路径：</label>
+				<input id="menuUrl" name="menuUrl" type="text" th:value="${menu.menuUrl}" class="form-control"/>
+			</div>
+			<div class="form-group form-control-medium">
+				<label for="parentId">上级菜单：</label>
+				<div style="width: 100%;" class="treeSelect form-group form-control-medium"></div>
+			</div>
+			<div class="form-group form-control-medium">
+				<label for="menuIcon">菜单图标：</label>
+				<input id="menuIcon" name="menuIcon" type="text" th:value="${menu.menuIcon}" class="form-control"/>
+			</div>
+			<div class="form-group form-control-small">
+				<label for="sort">排序：</label>
+				<input id="sort" name="sort" type="text" th:value="${menu.sort}" class="form-control"/>
+			</div>
+			<div class="form-group form-control-medium">
+				<label for="remark">备注：</label>
+				<textarea rows="5" name="remark" class="form-control" th:text="${menu.remark}"></textarea>
+			</div>
+			<div class="form-btn-group-left">
+            	<button type="submit" class="btn btn-info">保存</button>
+            </div>
+		</form>
 	</div>
-	<div class="row">
-		<div class="col-lg-12">
-			<section class="panel">
-				<div class="panel-body">
-					<form class="col s12" id="form1" th:action="@{/admin/menu/update}" onsubmit="return validateForm();" method="post">
-						<input type="hidden" th:value="${menu.id}" id="id" name="id"/>
-						<div class="form-group form-control-medium">
-							<label for="menuName">角色名称：</label>
-							<input id="menuName" name="menuName" type="text" th:value="${menu.menuName}" class="form-control" />
-						</div>
-						<div class="form-group form-control-medium">
-							<label for="menuCode">角色编码：</label>
-							<input id="menuCode" name="menuCode" type="text" th:value="${menu.menuCode}" readonly="readonly" class="form-control"/>
-						</div>
-						<div class="form-group form-control-medium">
-							<label for="menuUrl">菜单路径：</label>
-							<input id="menuUrl" name="menuUrl" type="text" th:value="${menu.menuUrl}" class="form-control"/>
-						</div>
-						<div class="form-group form-control-medium">
-							<label for="parentId">上级菜单：</label>
-							<div style="width: 100%;" class="treeSelect form-group form-control-medium"></div>
-						</div>
-						<div class="form-group form-control-medium">
-							<label for="menuIcon">菜单图标：</label>
-							<input id="menuIcon" name="menuIcon" type="text" th:value="${menu.menuIcon}" class="form-control"/>
-						</div>
-						<div class="form-group form-control-small">
-							<label for="sort">排序：</label>
-							<input id="sort" name="sort" type="text" th:value="${menu.sort}" class="form-control"/>
-						</div>
-						<div class="form-group form-control-medium">
-							<label for="remark">备注：</label>
-							<textarea rows="5" name="remark" class="form-control" th:text="${menu.remark}"></textarea>
-						</div>
-						<div class="form-btn-group-left">
-			            	<button type="submit" class="btn btn-info">保存</button>
-			            </div>
-					</form>
-				</div>
-			</section>
-		</div>
-	</div>
-	<script src="/resource/js/jquery.min.js" type="text/javascript"></script>
-	<script src="/resource/js/plugins/treeSelect/jquery.ztree.all.min.js"></script>
-	<script src="/resource/js/plugins/treeSelect/treeSelect.js"></script>
-    <script type="text/javascript" src="/resource/js/jQueryMessage/js/jquery.plugin.message.js"></script>
-    <script type="text/javascript" th:inline="javascript">
-    	var currentMenu = [[${menu}]];
-    	
-    	var allList = [[${parentList}]];
-        $(function () {
-    		$(".treeSelect").treeSelect({
-    	    	data: allList,
-    	        inputId: "parentId",
-    	        name: "parentId",
-    	        defaultKey: currentMenu.parentMenuName,
-    	        defaultValue: currentMenu.parentId
-    	    })
-    	});
-	   	/* 保存方法 */
-	    function validateForm(){
-	    	var menuName = $("#menuName").val();
-	    	if(menuName == null || menuName==''){
-	    		$("body").MessageBox({
-					type: 'error',
-					message:'菜单名称不能为空！',
-					timeout:3000,
-					callbak:null
-				});
-	    		return false;
-	    	}
-	    	return true;
-	    }
-    </script>
+</section>
+<script src="/resource/js/jquery.min.js" type="text/javascript"></script>
+<script src="/resource/js/plugins/treeSelect/jquery.ztree.all.min.js"></script>
+<script src="/resource/js/plugins/treeSelect/treeSelect.js"></script>
+<script type="text/javascript" src="/resource/js/jQueryMessage/js/jquery.plugin.message.js"></script>
+<script type="text/javascript" th:inline="javascript">
+	var currentMenu = [[${menu}]];
+	
+	var allList = [[${parentList}]];
+    $(function () {
+		$(".treeSelect").treeSelect({
+	    	data: allList,
+	        inputId: "parentId",
+	        name: "parentId",
+	        defaultKey: currentMenu.parentMenuName,
+	        defaultValue: currentMenu.parentId
+	    })
+	});
+   	/* 保存方法 */
+    function validateForm(){
+    	var menuName = $("#menuName").val();
+    	if(menuName == null || menuName==''){
+    		$("body").MessageBox({
+				type: 'error',
+				message:'菜单名称不能为空！',
+				timeout:3000,
+				callbak:null
+			});
+    		return false;
+    	}
+    	return true;
+    }
+</script>
 </body>
 </html>

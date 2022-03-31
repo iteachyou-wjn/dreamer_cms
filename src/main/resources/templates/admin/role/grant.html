@@ -30,23 +30,19 @@
         <!--breadcrumbs end -->
     </div>
 </div>
-<div class="row">
-	<div class="col-lg-12">
-		<section class="panel">
-			<div class="panel-heading">
-		        <h3 class="panel-title">
-		            <b>当前角色：<span th:text="${role.roleName}"></span></b>
-		        </h3>
-		    </div>
-		    <div class="panel-body">
-				<ul id="tree" class="ztree"></ul>		        	
-	            <div class="form-btn-group-left">
-	            	<button type="button" onclick="grant();" class="btn btn-info" id="save">分配权限</button>
-	            </div>
-		    </div>
-		</section>
-	</div>
-</div>
+<section class="panel">
+	<div class="panel-heading">
+        <h3 class="panel-title">
+            <b>当前角色：<span th:text="${role.roleName}"></span></b>
+        </h3>
+    </div>
+    <div class="panel-body">
+		<ul id="tree" class="ztree"></ul>		        	
+        <div class="form-btn-group-left">
+        	<button type="button" onclick="grant();" class="btn btn-info" id="save">分配权限</button>
+        </div>
+    </div>
+</section>
 <!-- jQuery 2.0.2 -->
 <script src="/resource/js/jquery.min.js" type="text/javascript"></script>
 <!-- iCheck -->
@@ -55,77 +51,77 @@
 <script src="/resource/js/plugins/ztree-v3/jquery.ztree.excheck.min.js"></script>
 <script type="text/javascript" src="/resource/js/jQueryMessage/js/jquery.plugin.message.js"></script>
 <script type="text/javascript" th:inline="javascript">
-var data = [[${permissions}]];
-var currentRoleId = [[${role.id}]];
-var zTree = null;
-window.onload = function(){
-	var setting = {
-		check: {
-			enable: true
-		},
-        data: {
-        	key: {
-        		checked: "checked",
-        		name: "permissionName"
-        	},
-            simpleData: {
-                enable: true,
-                idKey: "id",
-                pIdKey: "parentId",
-                rootPId: "-1"
-            }
-        }
-    };
-    zTree = $.fn.zTree.init($("#tree"), setting, data);
-    zTree.expandAll(true);
-}
-
-/**
- * 授权
- */
-function grant(){
-	var checkedNodes = zTree.getCheckedNodes();
-	var rolePermissions = new Array();
-	for(var i = 0;i < checkedNodes.length;i++){
-		var type = 1;
-		if(checkedNodes[i].type == "menu"){
-			type = 1;
-		}else{
-			type = 2;
-		}
-		rolePermissions.push({roleId: currentRoleId, permissionId: checkedNodes[i].id, type: type});
+	var data = [[${permissions}]];
+	var currentRoleId = [[${role.id}]];
+	var zTree = null;
+	window.onload = function(){
+		var setting = {
+			check: {
+				enable: true
+			},
+	        data: {
+	        	key: {
+	        		checked: "checked",
+	        		name: "permissionName"
+	        	},
+	            simpleData: {
+	                enable: true,
+	                idKey: "id",
+	                pIdKey: "parentId",
+	                rootPId: "-1"
+	            }
+	        }
+	    };
+	    zTree = $.fn.zTree.init($("#tree"), setting, data);
+	    zTree.expandAll(true);
 	}
-	
-	$.ajax({
-		url : "/admin/role/grant/" + currentRoleId,
-		contentType : 'application/json',
-		data : JSON.stringify(rolePermissions),
-		type : "POST",
-		dataType : "JSON",
-		success : function(result) {
-			if(result.success){
-				$("body").MessageBox({
-					type: 'success',
-					message:result.info,
-					timeout:3000,
-					callbak:null
-				});
-				setTimeout(function() {
-					//登录返回
-					window.location.href = "/admin/role/toGrant?id=" + currentRoleId;
-				}, 500);
+
+	/**
+	 * 授权
+	 */
+	function grant(){
+		var checkedNodes = zTree.getCheckedNodes();
+		var rolePermissions = new Array();
+		for(var i = 0;i < checkedNodes.length;i++){
+			var type = 1;
+			if(checkedNodes[i].type == "menu"){
+				type = 1;
 			}else{
-				$("body").MessageBox({
-					type: 'error',
-					message:result.info,
-					timeout:3000,
-					callbak:null
-				});
+				type = 2;
 			}
+			rolePermissions.push({roleId: currentRoleId, permissionId: checkedNodes[i].id, type: type});
 		}
-	});
-	return false;
-}
+		
+		$.ajax({
+			url : "/admin/role/grant/" + currentRoleId,
+			contentType : 'application/json',
+			data : JSON.stringify(rolePermissions),
+			type : "POST",
+			dataType : "JSON",
+			success : function(result) {
+				if(result.success){
+					$("body").MessageBox({
+						type: 'success',
+						message:result.info,
+						timeout:3000,
+						callbak:null
+					});
+					setTimeout(function() {
+						//登录返回
+						window.location.href = "/admin/role/toGrant?id=" + currentRoleId;
+					}, 500);
+				}else{
+					$("body").MessageBox({
+						type: 'error',
+						message:result.info,
+						timeout:3000,
+						callbak:null
+					});
+				}
+			}
+		});
+		return false;
+	}
 </script>
 </body>
 </html>

@@ -26,72 +26,67 @@
         <!--breadcrumbs end -->
     </div>
 </div>
-<div class="row">
-	<div class="col-lg-12">
-		<section class="panel">
-		    <div class="panel-body">
-		        <form class="col s12" id="form1" th:action="@{/admin/system/update}" th:object="${system}">
-		        	<input name="id" type="hidden" th:value="*{id}">
-		            <div class="form-group form-control-medium">
-		                <label for="website">网站地址：</label>
-		            	<div class="input-group m-b-10">
-	                        <span class="input-group-addon">http://</span>
-			                <input id="website" name="website" type="text" class="form-control" th:value="*{website}">
-	                    </div>
-		            </div>
-		            <div class="form-group form-control-medium">
-						<label for="title">站点标题：</label>
-		                <input id="title" name="title" type="text" class="form-control" th:value="*{title}">
-		            </div>
-		            <div class="form-group">
-						<label for="keywords">站点关键字：</label>
-		                <input id="keywords" name="keywords" type="text" class="form-control" th:value="*{keywords}">
-		            </div>
-		            <div class="form-group">
-						<label for="describe">站点描述：</label>
-						<textarea id="describe" name="describe" class="form-control" th:text="*{describe}"></textarea>
-		            </div>
-		            <div class="form-group form-control-medium">
-						<label for="uploaddir">默认上传目录：</label>
-						<input id="uploaddir" name="uploaddir" type="text" class="form-control" th:value="*{uploaddir}">
-		            </div>
-		            <div class="form-group form-control-medium">
-						<label for="browseType">站点浏览方式：</label>
-						<label class="checkbox-inline">
-                            <input type="radio" name="browseType" id="browseType-yes" value="1" th:checked="*{browseType} == 1">动态浏览
-                        </label>
-                        <label class="checkbox-inline">
-                            <input type="radio" name="browseType" id="browseType-no" value="2" th:checked="*{browseType} == 2">静态浏览
-                        </label>
-		            </div>
-		            <div class="form-group form-control-medium">
-						<label for="staticdir">默认静态化目录：</label>
-						<input id="staticdir" name="staticdir" type="text" class="form-control" th:value="*{staticdir}">
-		            </div>
-		            <div class="form-group form-control-medium">
-						<label for="icp">备案号：</label>
-						<input id="icp" name="icp" type="text" class="form-control" th:value="*{icp}">
-		            </div>
-		            <div class="form-group">
-						<label for="copyright">站点版权：</label>
-						<input id="copyright" name="copyright" type="text" class="form-control" th:value="*{copyright}">
-		            </div>
-		            <div class="form-group">
-						<label for="appid">畅言AppID：<span style="font-weight:normal;">如还没有畅言，请点击<a href="http://changyan.kuaizhan.com/" target="_blank">畅言官网</a>进行注册。</span></label>
-						<input id="appid" name="appid" type="text" class="form-control" th:value="*{appid}">
-		            </div>
-		            <div class="form-group">
-						<label for="appkey">畅言AppKey：</label>
-		                <input id="appkey" name="appkey" type="text" class="form-control" th:value="*{appkey}">
-		            </div>
-		            <div class="form-btn-group-left">
-		            	<button type="submit" class="btn btn-info">保存设置</button>
-		            </div>
-		        </form>
-		
-		    </div>
-		</section>
-	</div>
-</div>
+<section class="panel">
+    <div class="panel-body">
+        <form class="col s12" id="form1" th:action="@{/admin/system/update}" th:object="${system}">
+        	<input name="id" type="hidden" th:value="*{id}">
+            <div class="form-group form-control-medium">
+                <label for="website">网站地址：</label>
+            	<div class="input-group m-b-10">
+                    <span class="input-group-addon">http://</span>
+	                <input id="website" name="website" type="text" class="form-control" th:value="*{website}">
+                </div>
+            </div>
+            <div class="form-group form-control-medium">
+				<label for="title">站点标题：</label>
+                <input id="title" name="title" type="text" class="form-control" th:value="*{title}">
+            </div>
+            <div class="form-group">
+				<label for="keywords">站点关键字：</label>
+                <input id="keywords" name="keywords" type="text" class="form-control" th:value="*{keywords}">
+            </div>
+            <div class="form-group">
+				<label for="describe">站点描述：</label>
+				<textarea id="describe" name="describe" class="form-control" th:text="*{describe}"></textarea>
+            </div>
+            <div class="form-group form-control-medium">
+				<label for="uploaddir">默认上传目录：</label>
+				<input id="uploaddir" name="uploaddir" type="text" class="form-control" th:value="*{uploaddir}">
+            </div>
+            <div class="form-group form-control-medium">
+				<label for="browseType">站点浏览方式：</label>
+				<label class="checkbox-inline">
+                    <input type="radio" name="browseType" id="browseType-yes" value="1" th:checked="*{browseType} == 1">动态浏览
+                </label>
+                <label class="checkbox-inline">
+                    <input type="radio" name="browseType" id="browseType-no" value="2" th:checked="*{browseType} == 2">静态浏览
+                </label>
+            </div>
+            <div class="form-group form-control-medium">
+				<label for="staticdir">默认静态化目录：</label>
+				<input id="staticdir" name="staticdir" type="text" class="form-control" th:value="*{staticdir}">
+            </div>
+            <div class="form-group form-control-medium">
+				<label for="icp">备案号：</label>
+				<input id="icp" name="icp" type="text" class="form-control" th:value="*{icp}">
+            </div>
+            <div class="form-group">
+				<label for="copyright">站点版权：</label>
+				<input id="copyright" name="copyright" type="text" class="form-control" th:value="*{copyright}">
+            </div>
+            <div class="form-group">
+				<label for="appid">畅言AppID：<span style="font-weight:normal;">如还没有畅言，请点击<a href="http://changyan.kuaizhan.com/" target="_blank">畅言官网</a>进行注册。</span></label>
+				<input id="appid" name="appid" type="text" class="form-control" th:value="*{appid}">
+            </div>
+            <div class="form-group">
+				<label for="appkey">畅言AppKey：</label>
+                <input id="appkey" name="appkey" type="text" class="form-control" th:value="*{appkey}">
+            </div>
+            <div class="form-btn-group-left">
+            	<button type="submit" class="btn btn-info">保存设置</button>
+            </div>
+        </form>
+    </div>
+</section>
 </body>
 </html>

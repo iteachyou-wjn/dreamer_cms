@@ -32,420 +32,416 @@
 </head>
 
 <body>
-	<div class="row">
-	    <div class="col-md-12">
-	    	<h1 class="panel-heading">发布文章</h1>
-	        <!--breadcrumbs start -->
-	        <ul class="breadcrumb">
-				<li><a href="/admin/dashboard/toIndex"><i class="fa fa-home"></i> 首页</a></li>
-				<li class="active">发布文章</li>
-			</ul>
-	        <!--breadcrumbs end -->
-	    </div>
-	</div>
-	<div class="row">
-		<div class="col-lg-12">
-			<section class="panel">
-				<div class="panel-body">
-					<form class="col s12" id="form1" enctype="multipart/form-data" th:action="@{/admin/archives/add}" onsubmit="return validateForm();" method="post">
-						<input name="categoryId" type="hidden" th:value="${category.id}"/>
-						<input name="categoryIds" type="hidden" th:value="${category.catSeq}"/>
-						<input th:name="${field.fieldName}" th:id="'input-' + ${field.id}" type="hidden" th:each="field : ${fields}" th:if="${field.dataType} == 'html' or ${field.dataType} == 'markdown' or ${field.dataType} == 'file' or ${field.dataType} == 'image' or ${field.dataType} == 'imageset'" />
-						<input name="imagePath" id="filepath" type="hidden">
-						<div class="form-group form-control-medium">
-							<label for="title">文章标题：</label>
-							<input id="title" name="title" type="text" class="form-control">
-						</div>
-						<div class="form-group form-control-small">
-                            <label for="weight">权重：</label>
-                            <input id="weight" name="weight" type="text" class="form-control">
-						</div>
-						<div class="form-group form-control-small">
-                            <label for="clicks">点击：</label>
-                            <input id="clicks" name="clicks" type="text" class="form-control">
-						</div>
-						<div class="form-group form-control-medium">
-							<label for="properties">自定义属性：</label>
-                            <label class="checkbox-inline">
-                                <input type="checkbox" name="properties" id="h" value="h">头条[h]
-                            </label>
-                            <label class="checkbox-inline">
-                                <input type="checkbox" name="properties" id="b" value="b">加粗[b]
-                            </label>
-                            <label class="checkbox-inline">
-                                <input type="checkbox" name="properties" id="f" value="f">幻灯[f]
-                            </label>
-                            <label class="checkbox-inline">
-                                <input type="checkbox" name="properties" id="p" value="p">图片[p]
-                            </label>
-						</div>
-						<div class="form-group form-control-medium">
-							<label for="imagePath">缩略图：</label>
-							<div id="uploader" class="wu-example">
-							    <!--用来存放文件信息-->
-							    <div id="file-priview" class="file-priview"></div>
-							    <div class="btns">
-							        <div id="picker">选择文件...</div>
-							    </div>
-							</div>
-						</div>
-						<div class="form-group form-control-medium">
-							<label for="categoryId">所属栏目：</label>
-							<input id="categoryId" type="text" class="form-control" th:value="${category.cnname}" readonly="readonly">
-						</div>
-						<div class="form-group form-control-medium">
-							<label for="tag">标签：</label>
-							<ul id="myULTags"></ul>
-						</div>
-						<div class="form-group">
-							<label for="description">内容摘要：</label>
-							<textarea id="description" name="description" class="form-control"></textarea>
-						</div>
-						
-						<div th:each="field : ${fields}" 
-							 th:class="${field.dataType} == 'varchar' or ${field.dataType} == 'char' or ${field.dataType} == 'file' or ${field.dataType} == 'select' or ${field.dataType} == 'datetime' or ${field.dataType} == 'imageset' ? 'form-group form-control-medium' : 'form-group'">
-							<!-- 提示文字 -->
-							<label for="description" th:attr="for=${field.id}" th:text="${field.fieldText}+'：'"></label>
-							<!-- 单行文本框（CHAR和VARCHAR） -->
-							<input th:id="${field.id}" th:name="${field.fieldName}" type="text" class="form-control" th:if="${field.dataType} == 'varchar' or ${field.dataType} == 'char'" />
-							<!-- 多行文本框（TEXTAREA） -->
-							<textarea th:id="${field.id}" th:name="${field.fieldName}" class="form-control" th:if="${field.dataType} == 'textarea'"></textarea>
-							<!-- MARKDOWN -->
-							<div class="mdeditor" th:id="'md-editormd-'+${field.id}" th:if="${field.dataType} == 'markdown'"></div>
-							<!-- UEDITOR -->
-							<script th:id="'ue-editor-'+${field.id}" type="text/plain" style="width:100%;height:320px;" th:if="${field.dataType} == 'html'"></script>
-							<!-- 文件上传（FILE） -->
-							<div th:id="'uploader-'+${field.id}" class="wu-example" th:if="${field.dataType} == 'file'">
-							    <!--用来存放文件信息-->
-							    <div th:id="'file-priview-'+${field.id}" class="file-priview"></div>
-							    <div class="btns">
-							        <div th:id="'picker-'+${field.id}">选择文件...</div>
-							    </div>
-							</div>
-				            <!-- 单选（RADIO） -->
-                            <div class="row" th:if="${field.dataType} == 'radio'">
-	                            <div class="checkbox-item" th:each="radio : ${#strings.arraySplit(field.defaultValue,',')}">
-		                            <label class="checkbox-inline">
-		                                <input type="radio" th:name="${field.fieldName}" th:id="${field.id}+'-'+${radio}" th:value="${radio}" th:text="${radio}">
-		                            </label>
-	                            </div>
-	                            <div class="clearfix"></div>
-                            </div>
-                            <!-- 多选（CHECKBOX） -->
-                            <div class="row" th:if="${field.dataType} == 'checkbox'">
-	                            <div class="checkbox-item" th:each="checkbox : ${#strings.arraySplit(field.defaultValue,',')}">
-		                            <label class="checkbox-inline">
-		                                <input type="checkbox" th:name="${field.fieldName}" th:id="${field.id}+'-'+${checkbox}" th:value="${checkbox}" th:text="${checkbox}">
-		                            </label>
-	                            </div>
-	                            <div class="clearfix"></div>
-                            </div>
-                            <!-- 下拉框（SELECTED） -->
-                            <select class="form-control m-b-10" th:name="${field.fieldName}" th:if="${field.dataType} == 'select'">
-                            	<option th:each="item : ${#strings.arraySplit(field.defaultValue,',')}" th:text="${item}"></option>
-                            </select>
-                            <!-- 时间（DATETIME） -->
-                            <input th:id="${field.id}" th:name="${field.fieldName}" type="text" class="form-control" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" th:if="${field.dataType} == 'datetime'" />
-                            <!-- 图片（IMAGE） -->
-							<div th:id="'uploader-'+${field.id}" class="wu-example" th:if="${field.dataType} == 'image'">
-							    <!--用来存放文件信息-->
-							    <div th:id="'file-priview-'+${field.id}" class="file-priview"></div>
-							    <div class="btns">
-							        <div th:id="'picker-'+${field.id}">选择文件...</div>
-							    </div>
-							</div>
-							<!-- 图集（IMAGESET） -->
-							<div th:id="'uploader-'+${field.id}" th:attr="ref=${field.id}" class="wu-example" th:if="${field.dataType} == 'imageset'">
-							    <!--用来存放文件信息-->
-							    <div id="imagesetlist" class="uploader-list"></div>
-							    <div class="btns">
-							        <div th:id="'picker-'+${field.id}">选择文件...</div>
-							        <button type="button" onclick="uploadFile();" id="ctlBtn" class="btn btn-default">开始上传</button>
-							    </div>
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="col-lg-6">
-								<label for="comment">允许评论：</label>
-	                            <label class="checkbox-inline">
-	                                <input type="radio" name="comment" id="comment-yes" value="1" checked="">是
-	                            </label>
-	                            <label class="checkbox-inline">
-	                                <input type="radio" name="comment" id="comment-no" value="0">否
-	                            </label>
-                            </div>
-                            <div class="col-lg-6">
-	                            <label for="subscribe">允许订阅：</label>
-	                            <label class="checkbox-inline">
-	                                <input type="radio" name="subscribe" id="subscribe-yes" value="1" checked="">是
-	                            </label>
-	                            <label class="checkbox-inline">
-	                                <input type="radio" name="subscribe" id="subscribe-no" value="0">否
-	                            </label>
-                            </div>
-                            <div class="col-lg-6"></div>
-                            <div style="clear:both;"></div>
-						</div>
-						<div class="form-btn-group-left">
-			            	<button type="submit" class="btn btn-info">保存</button>
-			            </div>
-					</form>
+<div class="row">
+    <div class="col-md-12">
+    	<h1 class="panel-heading">发布文章</h1>
+        <!--breadcrumbs start -->
+        <ul class="breadcrumb">
+			<li><a href="/admin/dashboard/toIndex"><i class="fa fa-home"></i> 首页</a></li>
+			<li class="active">发布文章</li>
+		</ul>
+        <!--breadcrumbs end -->
+    </div>
+</div>
+<section class="panel">
+	<div class="panel-body">
+		<form class="col s12" id="form1" enctype="multipart/form-data" th:action="@{/admin/archives/add}" onsubmit="return validateForm();" method="post">
+			<input name="categoryId" type="hidden" th:value="${category.id}"/>
+			<input name="categoryIds" type="hidden" th:value="${category.catSeq}"/>
+			<input th:name="${field.fieldName}" th:id="'input-' + ${field.id}" type="hidden" th:each="field : ${fields}" th:if="${field.dataType} == 'html' or ${field.dataType} == 'markdown' or ${field.dataType} == 'file' or ${field.dataType} == 'image' or ${field.dataType} == 'imageset'" />
+			<input name="imagePath" id="filepath" type="hidden">
+			<div class="form-group form-control-medium">
+				<label for="title">文章标题：</label>
+				<input id="title" name="title" type="text" class="form-control">
+			</div>
+			<div class="form-group form-control-small">
+                <label for="weight">权重：</label>
+                <input id="weight" name="weight" type="text" class="form-control">
+			</div>
+			<div class="form-group form-control-small">
+                <label for="clicks">点击：</label>
+                <input id="clicks" name="clicks" type="text" class="form-control">
+			</div>
+			<div class="form-group form-control-medium">
+				<label for="properties">自定义属性：</label>
+                <label class="checkbox-inline">
+                    <input type="checkbox" name="properties" id="h" value="h">头条[h]
+                </label>
+                <label class="checkbox-inline">
+                    <input type="checkbox" name="properties" id="b" value="b">加粗[b]
+                </label>
+                <label class="checkbox-inline">
+                    <input type="checkbox" name="properties" id="f" value="f">幻灯[f]
+                </label>
+                <label class="checkbox-inline">
+                    <input type="checkbox" name="properties" id="p" value="p">图片[p]
+                </label>
+			</div>
+			<div class="form-group form-control-medium">
+				<label for="imagePath">缩略图：</label>
+				<div id="uploader" class="wu-example">
+				    <!--用来存放文件信息-->
+				    <div id="file-priview" class="file-priview"></div>
+				    <div class="btns">
+				        <div id="picker">选择文件...</div>
+				    </div>
 				</div>
-			</section>
-		</div>
+			</div>
+			<div class="form-group form-control-medium">
+				<label for="categoryId">所属栏目：</label>
+				<input id="categoryId" type="text" class="form-control" th:value="${category.cnname}" readonly="readonly">
+			</div>
+			<div class="form-group form-control-medium">
+				<label for="tag">标签：</label>
+				<ul id="myULTags"></ul>
+			</div>
+			<div class="form-group">
+				<label for="description">内容摘要：</label>
+				<textarea id="description" name="description" class="form-control"></textarea>
+			</div>
+			
+			<div th:each="field : ${fields}" 
+				 th:class="${field.dataType} == 'varchar' or ${field.dataType} == 'char' or ${field.dataType} == 'file' or ${field.dataType} == 'select' or ${field.dataType} == 'datetime' or ${field.dataType} == 'imageset' ? 'form-group form-control-medium' : 'form-group'">
+				<!-- 提示文字 -->
+				<label for="description" th:attr="for=${field.id}" th:text="${field.fieldText}+'：'"></label>
+				<!-- 单行文本框（CHAR和VARCHAR） -->
+				<input th:id="${field.id}" th:name="${field.fieldName}" type="text" class="form-control" th:if="${field.dataType} == 'varchar' or ${field.dataType} == 'char'" />
+				<!-- 多行文本框（TEXTAREA） -->
+				<textarea th:id="${field.id}" th:name="${field.fieldName}" class="form-control" th:if="${field.dataType} == 'textarea'"></textarea>
+				<!-- MARKDOWN -->
+				<div class="mdeditor" th:id="'md-editormd-'+${field.id}" th:if="${field.dataType} == 'markdown'"></div>
+				<!-- UEDITOR -->
+				<script th:id="'ue-editor-'+${field.id}" type="text/plain" style="width:100%;height:320px;" th:if="${field.dataType} == 'html'"></script>
+				<!-- 文件上传（FILE） -->
+				<div th:id="'uploader-'+${field.id}" class="wu-example" th:if="${field.dataType} == 'file'">
+				    <!--用来存放文件信息-->
+				    <div th:id="'file-priview-'+${field.id}" class="file-priview"></div>
+				    <div class="btns">
+				        <div th:id="'picker-'+${field.id}">选择文件...</div>
+				    </div>
+				</div>
+	            <!-- 单选（RADIO） -->
+                <div class="row" th:if="${field.dataType} == 'radio'">
+                    <div class="checkbox-item" th:each="radio : ${#strings.arraySplit(field.defaultValue,',')}">
+                        <label class="checkbox-inline">
+                            <input type="radio" th:name="${field.fieldName}" th:id="${field.id}+'-'+${radio}" th:value="${radio}" th:text="${radio}">
+                        </label>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <!-- 多选（CHECKBOX） -->
+                <div class="row" th:if="${field.dataType} == 'checkbox'">
+                    <div class="checkbox-item" th:each="checkbox : ${#strings.arraySplit(field.defaultValue,',')}">
+                        <label class="checkbox-inline">
+                            <input type="checkbox" th:name="${field.fieldName}" th:id="${field.id}+'-'+${checkbox}" th:value="${checkbox}" th:text="${checkbox}">
+                        </label>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <!-- 下拉框（SELECTED） -->
+                <select class="form-control m-b-10" th:name="${field.fieldName}" th:if="${field.dataType} == 'select'">
+                	<option th:each="item : ${#strings.arraySplit(field.defaultValue,',')}" th:text="${item}"></option>
+                </select>
+                <!-- 时间（DATETIME） -->
+                <input th:id="${field.id}" th:name="${field.fieldName}" type="text" class="form-control" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" th:if="${field.dataType} == 'datetime'" />
+                <!-- 图片（IMAGE） -->
+				<div th:id="'uploader-'+${field.id}" class="wu-example" th:if="${field.dataType} == 'image'">
+				    <!--用来存放文件信息-->
+				    <div th:id="'file-priview-'+${field.id}" class="file-priview"></div>
+				    <div class="btns">
+				        <div th:id="'picker-'+${field.id}">选择文件...</div>
+				    </div>
+				</div>
+				<!-- 图集（IMAGESET） -->
+				<div th:id="'uploader-'+${field.id}" th:attr="ref=${field.id}" class="wu-example" th:if="${field.dataType} == 'imageset'">
+				    <!--用来存放文件信息-->
+				    <div id="imagesetlist" class="uploader-list"></div>
+				    <div class="btns">
+				        <div th:id="'picker-'+${field.id}">选择文件...</div>
+				        <button type="button" onclick="uploadFile();" id="ctlBtn" class="btn btn-default">开始上传</button>
+				    </div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-lg-6">
+					<label for="comment">允许评论：</label>
+                    <label class="checkbox-inline">
+                        <input type="radio" name="comment" id="comment-yes" value="1" checked="">是
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="radio" name="comment" id="comment-no" value="0">否
+                    </label>
+                </div>
+                <div class="col-lg-6">
+                    <label for="subscribe">允许订阅：</label>
+                    <label class="checkbox-inline">
+                        <input type="radio" name="subscribe" id="subscribe-yes" value="1" checked="">是
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="radio" name="subscribe" id="subscribe-no" value="0">否
+                    </label>
+                </div>
+                <div class="col-lg-6"></div>
+                <div style="clear:both;"></div>
+			</div>
+			<div class="form-btn-group-left">
+            	<button type="submit" class="btn btn-info">保存</button>
+            </div>
+		</form>
 	</div>
-	<script src="/resource/js/jquery.min.js" type="text/javascript"></script>
-    <script src="/resource/js/editor.md-master/editormd.min.js"></script>
-    <script type="text/javascript" charset="utf-8" src="/resource/js/ueditor-1.4.3.3/ueditor.config.js"></script>
-    <script type="text/javascript" charset="utf-8" src="/resource/js/ueditor-1.4.3.3/ueditor.all.min.js"></script>
-    <script src="/resource/js/tagit/jquery-ui.min.js"></script>
-    <script src="/resource/js/tagit/tag-it.js"></script>
-    <script type="text/javascript" src="/resource/js/webuploader-0.1.5/webuploader.js"></script>
-    <script type="text/javascript" src="/resource/js/jQueryMessage/js/jquery.plugin.message.js"></script>
-    <script type="text/javascript" src="/resource/js/my97datepicker/WdatePicker.js"></script>
-    <script type="text/javascript" th:inline="javascript">
-	    var fields = [[${fields}]];
-        var thumbnailWidth = 178,thumbnailHeight = 178;
-	    var imagesetUploader = null;
-        
-	    $(document).ready(function () {
-	    	initUploader(
-	    			"picker",
-	    			"file-priview",
-	    			"filepath", 
-	    			{
-				        title: 'Images',
-				        extensions: 'gif,jpg,jpeg,bmp,png',
-				        mimeTypes: 'image/*'
-				    },
-				    "IMAGES");
-	    	for(var i = 0;i < fields.length;i++){
-	    		var field = fields[i];
-		    	if(field.dataType == 'markdown'){
-		    		initMdEditor(field.id, "md-editormd-" + field.id);
-		    	}else if(field.dataType == 'html'){//初始化UE编辑器
-		    		window[field.id] = UE.getEditor('ue-editor-' + field.id);
-		    	}else if(field.dataType == 'file'){
-		    		initUploader(
-		    				"picker-" + field.id, 
-		    				"file-priview-" + field.id, 
-		    				"input-" + field.id, 
-		    				{},
-		    				"FILES");
-		    	}else if(field.dataType == 'image'){
-		    		initUploader(
-		    				"picker-" + field.id, 
-		    				"file-priview-" + field.id, 
-		    				"input-" + field.id, 
-		    				{
-						        title: 'Images',
-						        extensions: 'gif,jpg,jpeg,bmp,png',
-						        mimeTypes: 'image/*'
-						    },
-		    				"IMAGES");
-		    	}else if(field.dataType == "imageset"){
-		    		imagesetUploader = WebUploader.create({
-				        // swf文件路径
-				        swf: '/resource/js/webuploader-0.1.5/Uploader.swf',
-				        // 文件接收服务端。
-				        server: '/upload/uploadFile',
-				        // 选择文件的按钮。可选。
-				        compress: false,
-				        // 内部根据当前运行是创建，可能是input元素，也可能是flash.
-				        pick: '#picker-' + field.id,
-				        fileNumLimit: 10,
-				        // 不压缩image, 默认如果是jpeg，文件上传前会压缩一把再上传！
-				        resize: false,
-						duplicate:true,
-						// 只允许选择图片文件。
-					    accept: {
+</section>
+<script src="/resource/js/jquery.min.js" type="text/javascript"></script>
+<script src="/resource/js/editor.md-master/editormd.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="/resource/js/ueditor-1.4.3.3/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="/resource/js/ueditor-1.4.3.3/ueditor.all.min.js"></script>
+<script src="/resource/js/tagit/jquery-ui.min.js"></script>
+<script src="/resource/js/tagit/tag-it.js"></script>
+<script type="text/javascript" src="/resource/js/webuploader-0.1.5/webuploader.js"></script>
+<script type="text/javascript" src="/resource/js/jQueryMessage/js/jquery.plugin.message.js"></script>
+<script type="text/javascript" src="/resource/js/my97datepicker/WdatePicker.js"></script>
+<script type="text/javascript" th:inline="javascript">
+    var fields = [[${fields}]];
+    var thumbnailWidth = 178,thumbnailHeight = 178;
+    var imagesetUploader = null;
+    
+    $(document).ready(function () {
+    	initUploader(
+    			"picker",
+    			"file-priview",
+    			"filepath", 
+    			{
+			        title: 'Images',
+			        extensions: 'gif,jpg,jpeg,bmp,png',
+			        mimeTypes: 'image/*'
+			    },
+			    "IMAGES");
+    	for(var i = 0;i < fields.length;i++){
+    		var field = fields[i];
+	    	if(field.dataType == 'markdown'){
+	    		initMdEditor(field.id, "md-editormd-" + field.id);
+	    	}else if(field.dataType == 'html'){//初始化UE编辑器
+	    		window[field.id] = UE.getEditor('ue-editor-' + field.id);
+	    	}else if(field.dataType == 'file'){
+	    		initUploader(
+	    				"picker-" + field.id, 
+	    				"file-priview-" + field.id, 
+	    				"input-" + field.id, 
+	    				{},
+	    				"FILES");
+	    	}else if(field.dataType == 'image'){
+	    		initUploader(
+	    				"picker-" + field.id, 
+	    				"file-priview-" + field.id, 
+	    				"input-" + field.id, 
+	    				{
 					        title: 'Images',
 					        extensions: 'gif,jpg,jpeg,bmp,png',
 					        mimeTypes: 'image/*'
-					    }
-		    	    });
-		        	// 当有文件被添加进队列的时候
-		        	imagesetUploader.on('fileQueued', function( file ) {
-		        	    $("#imagesetlist").append( '<div id="' + file.id + '" class="file-item">' +
-		        	        '<h4 class="file-name" filepath="" field-id="' + field.id + '">' + file.name + '</h4>' +
-		        	        '<p class="file-state">等待上传...</p>' +
-		        	        '<i class="close fa fa-times-circle" onclick="removeFile(\''+file.id+'\')"></i>' +
-		        	    '</div>');
-		        	});
-		        	imagesetUploader.on('uploadSuccess', function(file, response) {
-		    	        $("#" + file.id + "> .file-state").text("上传成功...");
-		    	        $("#" + file.id + "> .file-name").attr("filepath", response.data.filepath).attr("field-id", field.id);
-		    	        var crtVal = $("#input-" + field.id).val();
-		    			if(crtVal != null && crtVal != "" && crtVal != "undefined") crtVal += ",";
-		    			$("#input-" + field.id).val(crtVal + response.data.filepath);
-		    	        $("body").MessageBox({
-		    				type: 'success',
-		    				message: '上传成功！',
-		    				timeout: 3000,
-		    				callbak: null
-		    			});
-		    	    });
-		        	imagesetUploader.on('uploadError', function( file ) {
-		    	    	$("body").MessageBox({
-		    				type: 'error',
-		    				message: '上传失败！',
-		    				timeout:3000,
-		    				callbak:null
-		    			});
-		    	    });
-		    	}
-		    }
-	    	
-	    	$('#myULTags').tagit({
-	    		availableTags: [],
-                itemName: 'item',
-                fieldName: 'tag'
-            });
-	    });
-	    
-	    //初始化上传组件
-	    function initUploader(picker, el, inputEl, accepts, isShowThumb){
-	    	var uploader = WebUploader.create({
-	    		auto: true,
-		        // swf文件路径
-		        swf: '/resource/js/webuploader-0.1.5/Uploader.swf',
-		        // 文件接收服务端。
-		        server: '/upload/uploadFile',
-		        // 选择文件的按钮。可选。
-		        compress: false,
-		        // 内部根据当前运行是创建，可能是input元素，也可能是flash.
-		        pick: '#' + picker,
-		        fileNumLimit: 1,
-		        // 不压缩image, 默认如果是jpeg，文件上传前会压缩一把再上传！
-		        resize: false,
-				duplicate:true,
-				// 只允许选择图片文件。
-			    accept: accepts
-		    });
-	    	uploader.on('fileQueued', function(file) {
-	    		$("#"+el).children().remove();
-	    		if(isShowThumb == "IMAGES"){
-	    			$img = $("<img />");
-		    		uploader.makeThumb( file, function(error, src) {
-		    	        if (error) {
-		    	            $img.replaceWith('<span>不能预览</span>');
-		    	            return;
-		    	        }
-		    	        $img.attr( 'src', src );
-		    	    }, thumbnailWidth, thumbnailHeight );
-	    	    	$("#"+el).append($img);
-	    		}else{
-	    			$div = $("<div />");
-	    			$div.text(file.name);
-	    	    	$("#"+el).append($div);
-	    		}
-	    	});
-		    uploader.on('uploadSuccess', function(file, response) {
-		    	$("#"+el).children().remove();
-		    	if(isShowThumb == "IMAGES"){
-		        	$("#"+el).append($("<img src='"+response.data.url+"'/>"));
-		    	}else{
-	    			$div = $("<div />");
-	    			$div.text(response.data.originalFilename);
-	    	    	$("#"+el).append($div);
-	    		}
-		        $("#"+inputEl).val(response.data.filepath);
-		        $("body").MessageBox({
-					type: 'success',
-					message: '上传成功！',
-					timeout: 3000,
-					callbak: null
-				});
-		    });
-		    uploader.on('uploadError', function( file ) {
-		    	$("body").MessageBox({
-					type: 'error',
-					message: '上传失败！',
-					timeout:3000,
-					callbak:null
-				});
-		    });
-	    }
-	    
-	  //上传文件
-		function uploadFile(){
-		    var fileNumbers = imagesetUploader.getFiles().length;
-		    if (fileNumbers > 0) {
-		    	imagesetUploader.upload();
-		    } else {
-		    	$("body").MessageBox({
-					type: 'error',
-					message: '请选择文件！',
-					timeout: 3000,
-					callbak:null
-				});
-		    }
-		}
-
-		//删除文件上传队列
-		function removeFile(id){
-			imagesetUploader.removeFile(id, true);
-			var fieldId = $("#" + id + "> .file-name").attr("field-id");
-			var filepath = $("#" + id + "> .file-name").attr("filepath");
-			var crtValue = $("#input-" + fieldId).val();
-			if(filepath && crtValue){
-				var files = crtValue.split(",");
-				for(var i = 0;i < files.length;i++){
-					if(files[i] == filepath){
-						files.splice(i, 1);
-					}
-				}
-				$("#input-" + fieldId).val(files.toString());
-			}
-			$("#" + id).remove();
-		}
-	    
-	    function initMdEditor(id,el){
-	    	//初始化MD编辑器
-	    	window[id] = editormd(el, {
-                width: "100%",
-                height: 350,
-                path : '/resource/js/editor.md-master/lib/',
-                markdown : null,
-                codeFold : true,
-                saveHTMLToTextarea : true,    // 保存 HTML 到 Textarea
-                searchReplace : true,
-                htmlDecode : "style,script,iframe|on*",            // 开启 HTML 标签解析，为了安全性，默认不开启    
-                emoji : true,
-                taskList : true,
-                tocm            : true,         // Using [TOCM]
-                tex : true,                   // 开启科学公式TeX语言支持，默认关闭
-                flowChart : true,             // 开启流程图支持，默认关闭
-                sequenceDiagram : true,       // 开启时序/序列图支持，默认关闭,
-                imageUpload : true,
-                imageFormats : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
-                imageUploadURL : "/upload/uploadMarkDown",
-                onload : function() {
-                }
-            });
-	    }
-	    
-	    function validateForm(){
-	    	var title = $("#title").val();
-	    	if(title == null || title == ""){
-	    		$("body").MessageBox({
-					type: 'error',
-					message: '标题不能为空！',
-					timeout:3000,
-					callbak:null
-				});
-	    		return false;
+					    },
+	    				"IMAGES");
+	    	}else if(field.dataType == "imageset"){
+	    		imagesetUploader = WebUploader.create({
+			        // swf文件路径
+			        swf: '/resource/js/webuploader-0.1.5/Uploader.swf',
+			        // 文件接收服务端。
+			        server: '/upload/uploadFile',
+			        // 选择文件的按钮。可选。
+			        compress: false,
+			        // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+			        pick: '#picker-' + field.id,
+			        fileNumLimit: 10,
+			        // 不压缩image, 默认如果是jpeg，文件上传前会压缩一把再上传！
+			        resize: false,
+					duplicate:true,
+					// 只允许选择图片文件。
+				    accept: {
+				        title: 'Images',
+				        extensions: 'gif,jpg,jpeg,bmp,png',
+				        mimeTypes: 'image/*'
+				    }
+	    	    });
+	        	// 当有文件被添加进队列的时候
+	        	imagesetUploader.on('fileQueued', function( file ) {
+	        	    $("#imagesetlist").append( '<div id="' + file.id + '" class="file-item">' +
+	        	        '<h4 class="file-name" filepath="" field-id="' + field.id + '">' + file.name + '</h4>' +
+	        	        '<p class="file-state">等待上传...</p>' +
+	        	        '<i class="close fa fa-times-circle" onclick="removeFile(\''+file.id+'\')"></i>' +
+	        	    '</div>');
+	        	});
+	        	imagesetUploader.on('uploadSuccess', function(file, response) {
+	    	        $("#" + file.id + "> .file-state").text("上传成功...");
+	    	        $("#" + file.id + "> .file-name").attr("filepath", response.data.filepath).attr("field-id", field.id);
+	    	        var crtVal = $("#input-" + field.id).val();
+	    			if(crtVal != null && crtVal != "" && crtVal != "undefined") crtVal += ",";
+	    			$("#input-" + field.id).val(crtVal + response.data.filepath);
+	    	        $("body").MessageBox({
+	    				type: 'success',
+	    				message: '上传成功！',
+	    				timeout: 3000,
+	    				callbak: null
+	    			});
+	    	    });
+	        	imagesetUploader.on('uploadError', function( file ) {
+	    	    	$("body").MessageBox({
+	    				type: 'error',
+	    				message: '上传失败！',
+	    				timeout:3000,
+	    				callbak:null
+	    			});
+	    	    });
 	    	}
-	    	for(var i = 0;i < fields.length;i++){
-	    		var field = fields[i];
-		    	if(field.dataType == 'markdown'){
-		    		$("#input-"+ field.id).val(window[field.id].getMarkdown());
-		    	}else if(field.dataType == 'html'){//初始化UE编辑器
-		    		$("#input-"+ field.id).val(window[field.id].getContent());
-		    	}
-		    }
-	    	return true;
 	    }
-    </script>
+    	
+    	$('#myULTags').tagit({
+    		availableTags: [],
+            itemName: 'item',
+            fieldName: 'tag'
+        });
+    });
+    
+    //初始化上传组件
+    function initUploader(picker, el, inputEl, accepts, isShowThumb){
+    	var uploader = WebUploader.create({
+    		auto: true,
+	        // swf文件路径
+	        swf: '/resource/js/webuploader-0.1.5/Uploader.swf',
+	        // 文件接收服务端。
+	        server: '/upload/uploadFile',
+	        // 选择文件的按钮。可选。
+	        compress: false,
+	        // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+	        pick: '#' + picker,
+	        fileNumLimit: 1,
+	        // 不压缩image, 默认如果是jpeg，文件上传前会压缩一把再上传！
+	        resize: false,
+			duplicate:true,
+			// 只允许选择图片文件。
+		    accept: accepts
+	    });
+    	uploader.on('fileQueued', function(file) {
+    		$("#"+el).children().remove();
+    		if(isShowThumb == "IMAGES"){
+    			$img = $("<img />");
+	    		uploader.makeThumb( file, function(error, src) {
+	    	        if (error) {
+	    	            $img.replaceWith('<span>不能预览</span>');
+	    	            return;
+	    	        }
+	    	        $img.attr( 'src', src );
+	    	    }, thumbnailWidth, thumbnailHeight );
+    	    	$("#"+el).append($img);
+    		}else{
+    			$div = $("<div />");
+    			$div.text(file.name);
+    	    	$("#"+el).append($div);
+    		}
+    	});
+	    uploader.on('uploadSuccess', function(file, response) {
+	    	$("#"+el).children().remove();
+	    	if(isShowThumb == "IMAGES"){
+	        	$("#"+el).append($("<img src='"+response.data.url+"'/>"));
+	    	}else{
+    			$div = $("<div />");
+    			$div.text(response.data.originalFilename);
+    	    	$("#"+el).append($div);
+    		}
+	        $("#"+inputEl).val(response.data.filepath);
+	        $("body").MessageBox({
+				type: 'success',
+				message: '上传成功！',
+				timeout: 3000,
+				callbak: null
+			});
+	    });
+	    uploader.on('uploadError', function( file ) {
+	    	$("body").MessageBox({
+				type: 'error',
+				message: '上传失败！',
+				timeout:3000,
+				callbak:null
+			});
+	    });
+    }
+    
+  //上传文件
+	function uploadFile(){
+	    var fileNumbers = imagesetUploader.getFiles().length;
+	    if (fileNumbers > 0) {
+	    	imagesetUploader.upload();
+	    } else {
+	    	$("body").MessageBox({
+				type: 'error',
+				message: '请选择文件！',
+				timeout: 3000,
+				callbak:null
+			});
+	    }
+	}
+
+	//删除文件上传队列
+	function removeFile(id){
+		imagesetUploader.removeFile(id, true);
+		var fieldId = $("#" + id + "> .file-name").attr("field-id");
+		var filepath = $("#" + id + "> .file-name").attr("filepath");
+		var crtValue = $("#input-" + fieldId).val();
+		if(filepath && crtValue){
+			var files = crtValue.split(",");
+			for(var i = 0;i < files.length;i++){
+				if(files[i] == filepath){
+					files.splice(i, 1);
+				}
+			}
+			$("#input-" + fieldId).val(files.toString());
+		}
+		$("#" + id).remove();
+	}
+    
+    function initMdEditor(id,el){
+    	//初始化MD编辑器
+    	window[id] = editormd(el, {
+            width: "100%",
+            height: 350,
+            path : '/resource/js/editor.md-master/lib/',
+            markdown : null,
+            codeFold : true,
+            saveHTMLToTextarea : true,    // 保存 HTML 到 Textarea
+            searchReplace : true,
+            htmlDecode : "style,script,iframe|on*",            // 开启 HTML 标签解析，为了安全性，默认不开启    
+            emoji : true,
+            taskList : true,
+            tocm            : true,         // Using [TOCM]
+            tex : true,                   // 开启科学公式TeX语言支持，默认关闭
+            flowChart : true,             // 开启流程图支持，默认关闭
+            sequenceDiagram : true,       // 开启时序/序列图支持，默认关闭,
+            imageUpload : true,
+            imageFormats : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+            imageUploadURL : "/upload/uploadMarkDown",
+            onload : function() {
+            }
+        });
+    }
+    
+    function validateForm(){
+    	var title = $("#title").val();
+    	if(title == null || title == ""){
+    		$("body").MessageBox({
+				type: 'error',
+				message: '标题不能为空！',
+				timeout:3000,
+				callbak:null
+			});
+    		return false;
+    	}
+    	for(var i = 0;i < fields.length;i++){
+    		var field = fields[i];
+	    	if(field.dataType == 'markdown'){
+	    		$("#input-"+ field.id).val(window[field.id].getMarkdown());
+	    	}else if(field.dataType == 'html'){//初始化UE编辑器
+	    		$("#input-"+ field.id).val(window[field.id].getContent());
+	    	}
+	    }
+    	return true;
+    }
+</script>
 </body>
 </html>

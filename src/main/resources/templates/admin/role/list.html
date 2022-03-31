@@ -18,131 +18,126 @@
 </head>
 
 <body>
-	<div class="row">
-	    <div class="col-md-12">
-	    	<h1 class="panel-heading">角色管理</h1>
-	        <!--breadcrumbs start -->
-	        <ul class="breadcrumb">
-				<li><a href="/admin/dashboard/toIndex"><i class="fa fa-home"></i> 首页</a></li>
-				<li class="active">角色管理</li>
-			</ul>
-	        <!--breadcrumbs end -->
-	    </div>
-	</div>
-	<div class="row">
-		<div class="col-lg-12">
-			<section class="panel">
-				<div class="panel-body">
-	                 <!-- <span class="pull-right badge badge-info">32</span> -->
-	                 <button class="btn btn-primary btn-addon btn-sm" th:onclick="toAdd();">
-	                     <i class="fa fa-plus"></i>添加角色
-	                 </button>
-	            </div>
-			    <div class="panel-body table-responsive">
-					<table class="table table-hover">
-						<thead>
-							<tr>
-								<th style="width:50px;">选择</th>
-								<th>角色名称</th>
-								<th>角色编码</th>
-								<th style="width:300px;">操作</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr th:each="item,stat : ${pageInfo.list}">
-								<td><input type="checkbox" class="flat-grey list-child" th:value="${item.id}" /></td>
-								<td th:text="${item.roleName}"></td>
-								<td th:text="${item.roleCode}"></td>
-								<td>
-									<a th:href="@{/admin/role/toGrant(id=${item.id})}" class="btn btn-xs btn-success">分配权限</a>
-									<span>&nbsp;|&nbsp;</span>
-									<a th:href="@{/admin/role/toEdit(id=${item.id})}" class="btn btn-xs btn-success">编辑</a>
-									<span>&nbsp;|&nbsp;</span>
-									<a href="javascript:void(0)" data-toggle="modal" class="btn btn-xs btn-danger" th:userId="${item.id}" th:onclick="confrimRemove(this.getAttribute('userId'));">删除</a>
-								</td>
-							</tr>
-							<tr th:if="${#lists.isEmpty(pageInfo.list)}">
-								<td colspan="4" align="center">无数据</td>
-							</tr>
-						</tbody>
-					</table>
-			    </div>
-			    <div class="panel-footer bg-white text-right">
-                     <ul class="pagination">
-                         <li><a th:href="@{/admin/role/list(pageNum=${pageInfo.navigateFirstPage},pageSize=${pageInfo.pageSize})}" title="首页" th:class="${pageInfo.isFirstPage} ? 'paginationNotAllowed' : ''">«</a></li>
-                         <li><a th:href="@{/admin/role/list(pageNum=${pageInfo.prePage},pageSize=${pageInfo.pageSize})}" title="上一页" th:if="${pageInfo.hasPreviousPage}">‹</a></li>
-                         <li th:each="pageinfo : ${pageInfo.navigatepageNums}"><a th:href="@{/admin/role/list(pageNum=${pageinfo},pageSize=${pageInfo.pageSize})}" th:class="${pageinfo == pageInfo.pageNum} ? 'paginationActive' : ''" th:text="${pageinfo}"></a></li>
-                         <li><a th:href="@{/admin/role/list(pageNum=${pageInfo.nextPage},pageSize=${pageInfo.pageSize})}" title="下一页" th:if="${pageInfo.hasNextPage}">›</a></li>
-                         <li><a th:href="@{/admin/role/list(pageNum=${pageInfo.navigateLastPage},pageSize=${pageInfo.pageSize})}" title="未页" th:class="${pageInfo.isLastPage} ? 'paginationNotAllowed' : ''">»</a></li>
-                     </ul>
-                 </div>
-			</section>
-		</div>
-	</div>
-	<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="remove-dialog" class="modal fade">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
-                        <h4 class="modal-title">操作提示？</h4>
-                    </div>
-                    <div class="modal-body">
-						<h4 class="modal-title">您确定要删除该记录吗？</h4>
-						<input type="hidden" id="cacheID" />
-						<!-- <input type="hidden" id="cid" /> -->
-                    </div>
-                    <div class="modal-footer">
-                    	<button type="button" class="btn btn-primary btn-addon btn-sm" onclick="remove();">确定</button>
-                    	<button type="button" class="btn btn-default btn-sm" data-dismiss="modal">取消</button>
-                    </div>
-                </div>
+<div class="row">
+    <div class="col-md-12">
+    	<h1 class="panel-heading">角色管理</h1>
+        <!--breadcrumbs start -->
+        <ul class="breadcrumb">
+			<li><a href="/admin/dashboard/toIndex"><i class="fa fa-home"></i> 首页</a></li>
+			<li class="active">角色管理</li>
+		</ul>
+        <!--breadcrumbs end -->
+    </div>
+</div>
+<section class="panel">
+	<div class="panel-body">
+         <!-- <span class="pull-right badge badge-info">32</span> -->
+         <button class="btn btn-primary btn-addon btn-sm" th:onclick="toAdd();">
+             <i class="fa fa-plus"></i>添加角色
+         </button>
+    </div>
+    <div class="panel-body table-responsive">
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th style="width:50px;">选择</th>
+					<th>角色名称</th>
+					<th>角色编码</th>
+					<th style="width:300px;">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="item,stat : ${pageInfo.list}">
+					<td><input type="checkbox" class="flat-grey list-child" th:value="${item.id}" /></td>
+					<td th:text="${item.roleName}"></td>
+					<td th:text="${item.roleCode}"></td>
+					<td>
+						<a th:href="@{/admin/role/toGrant(id=${item.id})}" class="btn btn-xs btn-success">分配权限</a>
+						<span>&nbsp;|&nbsp;</span>
+						<a th:href="@{/admin/role/toEdit(id=${item.id})}" class="btn btn-xs btn-success">编辑</a>
+						<span>&nbsp;|&nbsp;</span>
+						<a href="javascript:void(0)" data-toggle="modal" class="btn btn-xs btn-danger" th:userId="${item.id}" th:onclick="confrimRemove(this.getAttribute('userId'));">删除</a>
+					</td>
+				</tr>
+				<tr th:if="${#lists.isEmpty(pageInfo.list)}">
+					<td colspan="4" align="center">无数据</td>
+				</tr>
+			</tbody>
+		</table>
+    </div>
+    <div class="panel-footer bg-white text-right">
+         <ul class="pagination">
+             <li><a th:href="@{/admin/role/list(pageNum=${pageInfo.navigateFirstPage},pageSize=${pageInfo.pageSize})}" title="首页" th:class="${pageInfo.isFirstPage} ? 'paginationNotAllowed' : ''">«</a></li>
+             <li><a th:href="@{/admin/role/list(pageNum=${pageInfo.prePage},pageSize=${pageInfo.pageSize})}" title="上一页" th:if="${pageInfo.hasPreviousPage}">‹</a></li>
+             <li th:each="pageinfo : ${pageInfo.navigatepageNums}"><a th:href="@{/admin/role/list(pageNum=${pageinfo},pageSize=${pageInfo.pageSize})}" th:class="${pageinfo == pageInfo.pageNum} ? 'paginationActive' : ''" th:text="${pageinfo}"></a></li>
+             <li><a th:href="@{/admin/role/list(pageNum=${pageInfo.nextPage},pageSize=${pageInfo.pageSize})}" title="下一页" th:if="${pageInfo.hasNextPage}">›</a></li>
+             <li><a th:href="@{/admin/role/list(pageNum=${pageInfo.navigateLastPage},pageSize=${pageInfo.pageSize})}" title="未页" th:class="${pageInfo.isLastPage} ? 'paginationNotAllowed' : ''">»</a></li>
+         </ul>
+     </div>
+</section>
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="remove-dialog" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                <h4 class="modal-title">操作提示？</h4>
+            </div>
+            <div class="modal-body">
+				<h4 class="modal-title">您确定要删除该记录吗？</h4>
+				<input type="hidden" id="cacheID" />
+				<!-- <input type="hidden" id="cid" /> -->
+            </div>
+            <div class="modal-footer">
+            	<button type="button" class="btn btn-primary btn-addon btn-sm" onclick="remove();">确定</button>
+            	<button type="button" class="btn btn-default btn-sm" data-dismiss="modal">取消</button>
             </div>
         </div>
     </div>
-	<!-- jQuery 2.0.2 -->
-	<script src="/resource/js/jquery.min.js" type="text/javascript"></script>
-	<!-- jQuery UI 1.10.3 -->
-	<script src="/resource/js/jquery-ui-1.10.3.min.js" type="text/javascript"></script>
-	<!-- Bootstrap -->
-	<script src="/resource/js/bootstrap.min.js" type="text/javascript"></script>
-	<!-- iCheck -->
-    <script src="/resource/js/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
-    <script type="text/javascript" src="/resource/js/jQueryMessage/js/jquery.plugin.message.js"></script>
-	<script type="text/javascript">
-		window.onload = function(){
-			renderCheckBox();
-		}
+</div>
+<!-- jQuery 2.0.2 -->
+<script src="/resource/js/jquery.min.js" type="text/javascript"></script>
+<!-- jQuery UI 1.10.3 -->
+<script src="/resource/js/jquery-ui-1.10.3.min.js" type="text/javascript"></script>
+<!-- Bootstrap -->
+<script src="/resource/js/bootstrap.min.js" type="text/javascript"></script>
+<!-- iCheck -->
+<script src="/resource/js/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="/resource/js/jQueryMessage/js/jquery.plugin.message.js"></script>
+<script type="text/javascript">
+	window.onload = function(){
+		renderCheckBox();
+	}
+	
+	function renderCheckBox(){
+		$('input').on('ifChecked', function(event) {
+		    $(this).parents('li').addClass("task-done");
+		    console.log('ok');
+		});
+		$('input').on('ifUnchecked', function(event) {
+		    $(this).parents('li').removeClass("task-done");
+		    console.log('not');
+		});
 		
-		function renderCheckBox(){
-			$('input').on('ifChecked', function(event) {
-			    $(this).parents('li').addClass("task-done");
-			    console.log('ok');
-			});
-			$('input').on('ifUnchecked', function(event) {
-			    $(this).parents('li').removeClass("task-done");
-			    console.log('not');
-			});
-			
-			$('input[type="checkbox"].flat-grey, input[type="radio"].flat-grey').iCheck({
-			    checkboxClass: 'icheckbox_flat-grey',
-			    radioClass: 'iradio_flat-grey'
-			});
-		}
-		
-		function toAdd(){
-			window.location.href = "/admin/role/toAdd";
-		}
-		
-		function confrimRemove(id){
-			$("#remove-dialog").modal();
-			$("#cacheID").val(id);
-		}
-		
-		function remove(){
-			var currentID = $("#cacheID").val();
-			window.location.href="/admin/role/delete?id="+currentID;
-			$("#remove-dialog").modal('hide');
-		}
-	</script>
+		$('input[type="checkbox"].flat-grey, input[type="radio"].flat-grey').iCheck({
+		    checkboxClass: 'icheckbox_flat-grey',
+		    radioClass: 'iradio_flat-grey'
+		});
+	}
+	
+	function toAdd(){
+		window.location.href = "/admin/role/toAdd";
+	}
+	
+	function confrimRemove(id){
+		$("#remove-dialog").modal();
+		$("#cacheID").val(id);
+	}
+	
+	function remove(){
+		var currentID = $("#cacheID").val();
+		window.location.href="/admin/role/delete?id="+currentID;
+		$("#remove-dialog").modal('hide');
+	}
+</script>
 </body>
 </html>

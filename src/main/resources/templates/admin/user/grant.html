@@ -29,51 +29,47 @@
         <!--breadcrumbs end -->
     </div>
 </div>
-<div class="row">
-	<div class="col-lg-12">
-		<section class="panel">
-			<div class="panel-body">
-                 <b>当前用户：<span th:text="${user.username}"></span></b>
+<section class="panel">
+	<div class="panel-body">
+         <b>当前用户：<span th:text="${user.username}"></span></b>
+    </div>
+    <div class="panel-body">
+        <form class="col s12" id="form1" th:action="@{/admin/user/grant}" method="post">
+        	<input type="hidden" th:value="${user.id}" id="userId" name="userId"/>
+        	<div class="form-group" th:each="item : ${roles}">
+				<input th:id="${item.id}" class="flat-grey list-child" name="roles" type="checkbox" th:value="${item.id}" th:checked="${item.checked}"/> <span th:text="${item.roleName}"></span>
             </div>
-		    <div class="panel-body">
-		        <form class="col s12" id="form1" th:action="@{/admin/user/grant}" method="post">
-		        	<input type="hidden" th:value="${user.id}" id="userId" name="userId"/>
-		        	<div class="form-group" th:each="item : ${roles}">
-						<input th:id="${item.id}" class="flat-grey list-child" name="roles" type="checkbox" th:value="${item.id}" th:checked="${item.checked}"/> <span th:text="${item.roleName}"></span>
-		            </div>
-		            <div class="form-btn-group-left">
-		            	<button type="submit" class="btn btn-info" id="save">分配角色</button>
-		            </div>
-		        </form>
-		    </div>
-		</section>
-	</div>
-</div>
+            <div class="form-btn-group-left">
+            	<button type="submit" class="btn btn-info" id="save">分配角色</button>
+            </div>
+        </form>
+    </div>
+</section>
 <!-- jQuery 2.0.2 -->
 <script src="/resource/js/jquery.min.js" type="text/javascript"></script>
 <!-- iCheck -->
 <script src="/resource/js/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
 <script type="text/javascript" src="/resource/js/jQueryMessage/js/jquery.plugin.message.js"></script>
 <script type="text/javascript">
-window.onload = function(){
-	renderCheckBox();
-}
-
-function renderCheckBox(){
-	$('input').on('ifChecked', function(event) {
-	    $(this).parents('li').addClass("task-done");
-	    console.log('ok');
-	});
-	$('input').on('ifUnchecked', function(event) {
-	    $(this).parents('li').removeClass("task-done");
-	    console.log('not');
-	});
+	window.onload = function(){
+		renderCheckBox();
+	}
 	
-	$('input[type="checkbox"].flat-grey, input[type="radio"].flat-grey').iCheck({
-	    checkboxClass: 'icheckbox_flat-grey',
-	    radioClass: 'iradio_flat-grey'
-	});
-}
+	function renderCheckBox(){
+		$('input').on('ifChecked', function(event) {
+		    $(this).parents('li').addClass("task-done");
+		    console.log('ok');
+		});
+		$('input').on('ifUnchecked', function(event) {
+		    $(this).parents('li').removeClass("task-done");
+		    console.log('not');
+		});
+		
+		$('input[type="checkbox"].flat-grey, input[type="radio"].flat-grey').iCheck({
+		    checkboxClass: 'icheckbox_flat-grey',
+		    radioClass: 'iradio_flat-grey'
+		});
+	}
 </script>			
 </body>
 </html>
