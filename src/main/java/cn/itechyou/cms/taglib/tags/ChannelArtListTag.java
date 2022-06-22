@@ -29,6 +29,7 @@ import cn.itechyou.cms.utils.StringUtil;
 @Tag(beginTag="{dreamer-cms:categoryartlist}",endTag="{/dreamer-cms:categoryartlist}",regexp="\\{dreamer-cms:categoryartlist.*\\}([\\s\\S]+?)\\{/dreamer-cms:categoryartlist\\}",attributes={
 	@Attribute(name = "typeid",regex = "[ \t]+typeid=[\"\'].*?[\"\']"),
 	@Attribute(name = "length",regex = "[ \t]+length=[\"\'].*?[\"\']"),
+	@Attribute(name = "showall",regex = "[ \t]+showall=\".*?\"")
 })
 public class ChannelArtListTag extends AbstractChannelTag implements IParse {
 
@@ -77,7 +78,17 @@ public class ChannelArtListTag extends AbstractChannelTag implements IParse {
 			Map<String,Object> newEntity = new HashMap<String,Object>();
 			newEntity.put("start", 0);
 			newEntity.put("isShow", 1);
-			
+
+			String isShow = null;
+			if(!entity.containsKey("showall") || StringUtil.isBlank(entity.get("showall"))) {
+				isShow = "1";
+			}else {
+				if(!"true".equalsIgnoreCase(entity.get("showall").toString())) {
+					isShow = "1";
+				}
+			}
+			newEntity.put("isShow", isShow);
+
 			if(!entity.containsKey("typeid")) {
 				category = new Category();
 				category.setId("-1");

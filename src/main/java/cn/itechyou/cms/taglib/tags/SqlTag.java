@@ -60,7 +60,7 @@ public class SqlTag extends AbstractChannelTag implements IParse {
 			
 			sql = sql.replaceAll("\\[", "'").replaceAll("\\]", "'");
 			
-			if(!sql.startsWith("select") || !sql.startsWith("SELECT")) {
+			if(!sql.startsWith("select") && !sql.startsWith("SELECT")) {
 				throw new XssAndSqlException(
 						ExceptionEnum.XSS_SQL_EXCEPTION.getCode(), 
 						ExceptionEnum.XSS_SQL_EXCEPTION.getMessage(), 
@@ -77,10 +77,10 @@ public class SqlTag extends AbstractChannelTag implements IParse {
 				String item = new String(content);
 				Map<String, Object> map = list.get(idx);
 				
-				int count = RegexUtil.count(item, "\\[field:(.*)/\\]");
+				int count = RegexUtil.count(item, "\\[field:(.*?)/\\]");
 				
 				for(int f = 0;f < count;f++) {
-					String fieldName = RegexUtil.parseFirst(item, "\\[field:(.*)/\\]", 1);
+					String fieldName = RegexUtil.parseFirst(item, "\\[field:(.*?)/\\]", 1);
 					if(map.containsKey(fieldName) && StringUtil.isNotBlank(map.get(fieldName))) {
 						String value = map.get(fieldName).toString();
 						if("litpic".equals(fieldName)) {//针对图片路径做特殊处理
@@ -88,7 +88,7 @@ public class SqlTag extends AbstractChannelTag implements IParse {
 						}else {//其它字段，则\替换为\\
 							value = value.replace("\\","\\\\");
 						}
-						item = item.replaceFirst("\\[field:(.*)/\\]", value);
+						item = item.replaceFirst("\\[field:(.*?)/\\]", value);
 					}
 				}
 				
