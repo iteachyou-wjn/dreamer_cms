@@ -281,7 +281,7 @@ public class FrontController {
 			String newHtml = "";
 			String html = FileUtils.readFileToString(template, "UTF-8");
 			newHtml = parseEngine.parse(html);
-			newHtml = parseEngine.parseCategory(newHtml,typeid);
+			newHtml = parseEngine.parseCategory(newHtml, typeid);
 			newHtml = parseEngine.parsePageList(newHtml, typeid, pageNum, pageSize);
 			outHtml(newHtml);
 		} catch (IOException e) {

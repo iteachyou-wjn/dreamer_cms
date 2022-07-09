@@ -54,7 +54,7 @@ public abstract class AbstractListTag {
 			imagePath = archives.get("imagePath").toString();
 			imagePath = imagePath.replace("\\", "/");
 		}
- 		item = item.replaceAll(FieldEnum.FIELD_AUTOINDEX.getRegexp(), String.valueOf(i));
+ 		item = FunctionUtil.replaceByFunction(item, FieldEnum.FIELD_AUTOINDEX.getRegexp(), i);
 		item = item.replaceAll(FieldEnum.FIELD_ID.getRegexp(), archives.get("aid").toString());
 		
 		item = FunctionUtil.replaceByFunction(item, FieldEnum.FIELD_TITLE.getRegexp(), StringUtil.isBlank(archives.get("title")) ? "" : archives.get("title").toString());

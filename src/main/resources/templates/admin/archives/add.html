@@ -346,6 +346,7 @@
     	    	$("#"+el).append($div);
     		}
 	        $("#"+inputEl).val(response.data.filepath);
+	        uploader.reset();
 	        $("body").MessageBox({
 				type: 'success',
 				message: '上传成功！',
@@ -354,6 +355,7 @@
 			});
 	    });
 	    uploader.on('uploadError', function( file ) {
+			uploader.reset();
 	    	$("body").MessageBox({
 				type: 'error',
 				message: '上传失败！',

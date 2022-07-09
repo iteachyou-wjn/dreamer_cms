@@ -180,15 +180,17 @@
     		
     	});
 	    uploader.on('uploadSuccess', function(file, response) {
+	    	$("#" + inputEl).val(response.data.filepath);
+	    	uploader.reset();
 	    	$("body").MessageBox({
 				type: 'success',
 				message: '上传成功！',
 				timeout:3000,
 				callbak:null
 			});
-	    	$("#" + inputEl).val(response.data.filepath);
 	    });
 	    uploader.on('uploadError', function( file ) {
+			uploader.reset();
 	    	$("body").MessageBox({
 				type: 'error',
 				message: '上传失败！',
@@ -229,15 +231,17 @@
 	    	$("#"+el).append($img);
     	});
 	    uploader.on('uploadSuccess', function(file, response) {
+	    	$("#" + inputEl).val(system.website + system.uploaddir + '/' + response.data.filepath);
+			uploader.reset();
 	    	$("body").MessageBox({
 				type: 'success',
 				message: '上传成功！',
 				timeout:3000,
 				callbak:null
 			});
-	    	$("#" + inputEl).val(system.website + system.uploaddir + '/' + response.data.filepath);
 	    });
 	    uploader.on('uploadError', function( file ) {
+			uploader.reset();
 	    	$("body").MessageBox({
 				type: 'error',
 				message: '上传失败！',

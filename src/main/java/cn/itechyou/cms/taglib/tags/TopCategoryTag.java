@@ -28,11 +28,11 @@ import cn.itechyou.cms.utils.StringUtil;
  * @version 1.0.0
  */
 @Component
-@Tag(beginTag="{dreamer-cms:category /}",endTag="",regexp="(\\{dreamer-cms:category[ \\t]+.*?/\\})|(\\{dreamer-cms:category[ \\t]+.*\\}\\{/dreamer-cms:category\\})", attributes={
+@Tag(beginTag="{dreamer-cms:topcategory /}",endTag="",regexp="(\\{dreamer-cms:topcategory[ \\t]+.*?/\\})|(\\{dreamer-cms:topcategory[ \\t]+.*\\}\\{/dreamer-cms:topcategory\\})", attributes={
 	@Attribute(name = "field",regex = "[ \t]+field=[\"\'].*?[\"\']"),
 	@Attribute(name = "function",regex = "[ \t]+function=\\\"((.*)\\((.*?)\\)?)\\\""),
 })
-public class CategoryTag implements IParse {
+public class TopCategoryTag implements IParse {
 
 	@Autowired
 	private SystemService systemService;
@@ -48,7 +48,7 @@ public class CategoryTag implements IParse {
 	
 	@Override
 	public String parse(String html, String typeid) throws CmsException {
-		Tag annotations = CategoryTag.class.getAnnotation(Tag.class);
+		Tag annotations = TopCategoryTag.class.getAnnotation(Tag.class);
 		List<String> all = RegexUtil.parseAll(html, annotations.regexp(), 0);
 		if(StringUtil.isBlank(all)) {
 			return html;
@@ -71,7 +71,18 @@ public class CategoryTag implements IParse {
 				entity.put(key, value);
 			}
 			
-			Category temp = categoryService.queryCategoryByCode(typeid);
+			Category category = categoryService.queryCategoryByCode(typeid);
+			
+			String catSeq = category.getCatSeq();
+			catSeq = catSeq.substring(1);
+			String[] categoryCodes = catSeq.split("\\.");
+			
+			Category temp = null;
+			if(category.getCode().equals(categoryCodes[0])) {
+				temp = category;
+			}else {
+				temp = categoryService.queryCategoryByCode(categoryCodes[0]);
+			}
 			
 			String imagePath = "";
 			if(StringUtil.isNotBlank(temp.getImagePath())) {
@@ -161,6 +172,10 @@ public class CategoryTag implements IParse {
 				}else if (FieldEnum.FIELD_EXT04.getField().equalsIgnoreCase(name)) {
 					newHtml = newHtml.replace(string, StringUtil.isBlank(temp.getExt04()) ? "" : temp.getExt04());
 				}else if (FieldEnum.FIELD_EXT05.getField().equalsIgnoreCase(name)) {
+					newHtml = newHtml.replace(string, StringUtil.isBlank(temp.getExt05()) ? "" : temp.getExt05());
+				}else if (FieldEnum.FIELD_EXT05.getField().equalsIgnoreCase(name)) {//顶级栏目
+					newHtml = newHtml.replace(string, StringUtil.isBlank(temp.getExt05()) ? "" : temp.getExt05());
+				}else if (FieldEnum.FIELD_EXT05.getField().equalsIgnoreCase(name)) {//顶级栏目
 					newHtml = newHtml.replace(string, StringUtil.isBlank(temp.getExt05()) ? "" : temp.getExt05());
 				}
 			}

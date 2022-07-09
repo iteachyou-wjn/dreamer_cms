@@ -24,8 +24,8 @@ import cn.itechyou.cms.utils.StringUtil;
 
 @Component
 @Tag(beginTag="{dreamer-cms:prevnext /}",endTag="{/dreamer-cms:prevnext}",regexp="(\\{dreamer-cms:prevnext[ \\t]+.*/\\})|(\\{dreamer-cms:prevnext[ \\t]+.*\\}\\{/dreamer-cms:prevnext\\})", attributes={
-		@Attribute(name = "layout",regex = "[ \t]+layout=[\"\'].*?[\"\']"),
-	})
+	@Attribute(name = "layout",regex = "[ \t]+layout=[\"\'].*?[\"\']"),
+})
 public class PrevNextTag implements IParse {
 
 	@Autowired

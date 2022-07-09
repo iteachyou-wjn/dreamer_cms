@@ -15,16 +15,17 @@ import cn.itechyou.cms.taglib.tags.IfTag;
 import cn.itechyou.cms.taglib.tags.IncludeTag;
 import cn.itechyou.cms.taglib.tags.LabelTag;
 import cn.itechyou.cms.taglib.tags.ListTag;
+import cn.itechyou.cms.taglib.tags.LocationTag;
 import cn.itechyou.cms.taglib.tags.PageListTag;
 import cn.itechyou.cms.taglib.tags.PrevNextTag;
 import cn.itechyou.cms.taglib.tags.SqlTag;
 import cn.itechyou.cms.taglib.tags.TemplateTag;
+import cn.itechyou.cms.taglib.tags.TopCategoryTag;
 import cn.itechyou.cms.taglib.tags.TypeTag;
 import cn.itechyou.cms.taglib.tags.VariableTag;
 
 @Component
 public class ParseEngine {
-	
 	@Autowired
 	private IncludeTag includeTag;//Include标签解析器
 	@Autowired
@@ -40,6 +41,8 @@ public class ParseEngine {
 	@Autowired
 	private LabelTag labelTag;
 	@Autowired
+	private LocationTag locationTag;
+	@Autowired
 	private TypeTag typeTag;
 	@Autowired 
 	private IfTag ifTag;
@@ -47,6 +50,8 @@ public class ParseEngine {
 	private VariableTag variableTag;
 	@Autowired
 	private CategoryTag categoryTag;
+	@Autowired
+	private TopCategoryTag topCategoryTag;
 	@Autowired
 	private PageListTag pageListTag;
 	@Autowired
@@ -77,6 +82,7 @@ public class ParseEngine {
 		newHtml = channelTag.parse(newHtml);
 		listTag.setT("P");
 		newHtml = listTag.parse(newHtml);
+		newHtml = locationTag.parse(newHtml);
 		newHtml = labelTag.parse(newHtml);
 		newHtml = attachmentTag.parse(newHtml);
 		newHtml = ifTag.parse(newHtml);
@@ -93,6 +99,12 @@ public class ParseEngine {
 		String newHtml = new String(html);
 		categoryTag.setT("P");
 		newHtml = categoryTag.parse(newHtml, typeid);
+		// 顶级栏目
+		topCategoryTag.setT("P");
+		newHtml = topCategoryTag.parse(newHtml, typeid);
+		// 当前位置
+		locationTag.setT("P");
+		newHtml = locationTag.parse(newHtml, typeid);
 		newHtml = labelTag.parse(newHtml);
 		newHtml = attachmentTag.parse(newHtml);
 		newHtml = sqlTag.parse(newHtml);
@@ -110,7 +122,7 @@ public class ParseEngine {
 	public String parsePageList(String html, String typeid, Integer pageNum, Integer pageSize) throws CmsException {
 		String newHtml = new String(html);
 		pageListTag.setT("P");
-		newHtml = pageListTag.parse(newHtml,typeid,pageNum,pageSize);
+		newHtml = pageListTag.parse(newHtml, typeid, pageNum, pageSize);
 		newHtml = labelTag.parse(newHtml);
 		newHtml = attachmentTag.parse(newHtml);
 		newHtml = sqlTag.parse(newHtml);
@@ -126,6 +138,8 @@ public class ParseEngine {
 	public String parseArticle(String html, String id) throws CmsException{
 		String newHtml = new String(html);
 		newHtml = articleTag.parse(newHtml, id);
+		locationTag.setT("P");
+		newHtml = locationTag.parse(newHtml, id);
 		newHtml = labelTag.parse(newHtml);
 		newHtml = attachmentTag.parse(newHtml);
 		newHtml = sqlTag.parse(newHtml);
@@ -186,6 +200,12 @@ public class ParseEngine {
 		String newHtml = new String(html);
 		categoryTag.setT("S");
 		newHtml = categoryTag.parse(newHtml, typeid);
+		// 顶级栏目
+		topCategoryTag.setT("S");
+		newHtml = topCategoryTag.parse(newHtml, typeid);
+		// 当前位置
+		locationTag.setT("S");
+		newHtml = locationTag.parse(newHtml, typeid);
 		newHtml = labelTag.parse(newHtml);
 		newHtml = attachmentTag.parse(newHtml);
 		newHtml = sqlTag.parse(newHtml);

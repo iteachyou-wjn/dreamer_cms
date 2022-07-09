@@ -113,6 +113,7 @@
 	        }else {
 	            msg = "上传出错！请检查后重新上传！错误代码" + type;
 	        }
+	        uploader.reset();
 			$("body").MessageBox({
 				type: 'error',
 				message: msg,
@@ -134,15 +135,17 @@
 	   	});
 	    uploader.on('uploadSuccess', function(file, response) {
 	    	$("#file-input-"+file.id).val(response.data.filepath);
+	        $("#" + file.id + ">.state").html('上传成功！');
+	    	uploader.reset();
 	        $("body").MessageBox({
 				type: 'success',
 				message: '上传成功！',
 				timeout:3000,
 				callbak:null
 			});
-	        $("#" + file.id + ">.state").html('上传成功！');
 	    });
 	    uploader.on('uploadError', function( file ) {
+			uploader.reset();
 	    	$("body").MessageBox({
 				type: 'error',
 				message: '上传失败！',

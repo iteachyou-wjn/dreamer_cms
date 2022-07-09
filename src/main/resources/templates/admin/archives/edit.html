@@ -365,24 +365,25 @@
     		}
     	});
 	    uploader.on('uploadSuccess', function(file, response) {
-	    	$("body").MessageBox({
+			$("#"+el).children().remove();
+	    	if(isShowThumb == "IMAGES"){
+	        	$("#"+el).append($("<img src='"+response.data.url+"'/>"));
+	    	}else{
+    			$div = $("<div />");
+    			$div.text(response.data.originalFilename);
+    	    	$("#"+el).append($div);
+    		}
+	        $("#"+inputEl).val(response.data.filepath);
+	        uploader.reset();
+	        $("body").MessageBox({
 				type: 'success',
 				message: '上传成功！',
 				timeout: 3000,
-				callbak: function(){
-					$("#"+el).children().remove();
-			    	if(isShowThumb == "IMAGES"){
-			        	$("#"+el).append($("<img src='"+response.data.url+"'/>"));
-			    	}else{
-		    			$div = $("<div />");
-		    			$div.text(response.data.originalFilename);
-		    	    	$("#"+el).append($div);
-		    		}
-			        $("#"+inputEl).val(response.data.filepath);
-				}
+				callbak: null
 			});
 	    });
 	    uploader.on('uploadError', function( file ) {
+			uploader.reset();
 	    	$("body").MessageBox({
 				type: 'error',
 				message: '上传失败！',

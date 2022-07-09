@@ -41,7 +41,7 @@ public abstract class AbstractChannelTag {
 		if(!visitUrl.startsWith("/")) {
 			visitUrl = "/" + visitUrl;
 		}
-		item = item.replaceAll(FieldEnum.FIELD_AUTOINDEX.getRegexp(), String.valueOf(i));
+		item = FunctionUtil.replaceByFunction(item, FieldEnum.FIELD_AUTOINDEX.getRegexp(), i);
 		item = item.replaceAll(FieldEnum.FIELD_TYPEID.getRegexp(), category.getId());
 		
 		item = FunctionUtil.replaceByFunction(item, FieldEnum.FIELD_TYPENAMECN.getRegexp(), StringUtil.isBlank(category.getCnname()) ? "" : category.getCnname());

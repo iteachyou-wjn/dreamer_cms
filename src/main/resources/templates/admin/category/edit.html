@@ -46,7 +46,7 @@
     <div class="panel-body">
         <form class="col s12" id="form" enctype="multipart/form-data" th:action="@{/admin/category/edit}" th:object="${category}" onsubmit="return validateForm();" method="post">
             <div class="tab-content">
-            	<div id="baseinfo" class="tab-pane active"><!-- 基础信息 --->
+            	<div id="baseinfo" class="tab-pane active"><!-- 基础信息 -->
                		<input name="id" id="id" th:value="*{id}" type="hidden">
 					<input name="parentId" type="hidden" th:value="*{parentId}">
 					<input name="level" type="hidden" th:value="*{level}">
@@ -125,7 +125,7 @@
                             <input type="radio" name="isInput" id="isInput-no" value="0" th:checked="*{isInput}==0">否
                         </div>
 					</div>
-            	</div><!-- 基础信息 --->
+            	</div><!-- 基础信息 -->
                 <div id="templates" class="tab-pane">
                 	<div class="form-group form-control-small">
 						<label for="catModel">栏目模型：</label>
@@ -238,12 +238,19 @@
     	    $("#"+el).append($img);
     	});
 	    uploader.on('uploadSuccess', function(file, response) {
-	    	console.log(response);
 	    	$("#"+el).children().remove();
 	        $("#"+el).append($("<img src='"+response.data.url+"'/>"));
 	        $("#"+inputEl).val(response.data.filepath);
+	        uploader.reset();
+	        $("body").MessageBox({
+				type: 'success',
+				message: '上传成功！',
+				timeout: 3000,
+				callbak: null
+			});
 	    });
 	    uploader.on('uploadError', function( file ) {
+			uploader.reset();
 	    	$("body").MessageBox({
 				type: 'error',
 				message: '上传失败！',
@@ -255,7 +262,6 @@
     
     function validateForm(){
     	$("#htmlContent").val(ueEditor.getContent());
-    	//console.log($("#content").val());
     	return true;
     }
 </script>

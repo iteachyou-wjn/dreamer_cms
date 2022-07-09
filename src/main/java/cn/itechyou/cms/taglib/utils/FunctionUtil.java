@@ -83,6 +83,27 @@ public class FunctionUtil {
 								ExceptionEnum.TEMPLATE_PARSE_EXCEPTION.getMessage(), 
 								"模版文件解析错误，format函数目前只支持日期类型数据进行格式化。");
 					}
+				}else if("steps".equalsIgnoreCase(function)) {//是否为格式化函数，目前只支持Date类型数据
+					if(paramsArr.length != 2) {
+						throw new TemplateParseException(
+								ExceptionEnum.TEMPLATE_PARSE_EXCEPTION.getCode(), 
+								ExceptionEnum.TEMPLATE_PARSE_EXCEPTION.getMessage(), 
+								"模版文件解析错误，请检查标签内的function参数是否正确。");
+					}
+					if(data instanceof Integer) {
+						Integer index = (Integer) data;
+						index -= 1;
+						int start = Integer.parseInt(paramsArr[0]);
+						int step = Integer.parseInt(paramsArr[1]);
+						result = (index * step) + start + "";
+						
+						source = source.replaceFirst(regex, result);
+					}else {
+						throw new TemplateParseException(
+								ExceptionEnum.TEMPLATE_PARSE_EXCEPTION.getCode(), 
+								ExceptionEnum.TEMPLATE_PARSE_EXCEPTION.getMessage(), 
+								"模版文件解析错误，format函数目前只支持日期类型数据进行格式化。");
+					}
 				}
 			}
 		}else {
