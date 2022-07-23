@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="cn.itechyou.cms.dao.FieldMapper" >
-  <resultMap id="BaseResultMap" type="cn.itechyou.cms.entity.Field" >
+<mapper namespace="cc.iteachyou.cms.dao.FieldMapper" >
+  <resultMap id="BaseResultMap" type="cc.iteachyou.cms.entity.Field" >
     <id column="id" property="id" jdbcType="VARCHAR" />
     <result column="form_id" property="formId" jdbcType="VARCHAR" />
     <result column="field_text" property="fieldText" jdbcType="VARCHAR" />

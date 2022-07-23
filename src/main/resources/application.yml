@@ -27,11 +27,11 @@ mybatis:
     map-underscore-to-camel-case: true
     # log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   mapper-locations: classpath:mapping/*.xml  #注意：一定要对应mapper映射xml文件的所在路径
-  type-aliases-package: cn.itechyou.cms.entity  # 注意：对应实体类的路径
+  type-aliases-package: cc.iteachyou.cms.entity  # 注意：对应实体类的路径
 
 mapper:
   mappers:
-  - cn.itechyou.cms.common.BaseMapper
+  - cc.iteachyou.cms.common.BaseMapper
   not-empty: false
   identity: MYSQL
 

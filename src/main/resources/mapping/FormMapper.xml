@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="cn.itechyou.cms.dao.FormMapper" >
-  <resultMap id="BaseResultMap" type="cn.itechyou.cms.entity.Form" >
+<mapper namespace="cc.iteachyou.cms.dao.FormMapper" >
+  <resultMap id="BaseResultMap" type="cc.iteachyou.cms.entity.Form" >
     <id column="id" property="id" jdbcType="VARCHAR" />
     <result column="form_name" property="formName" jdbcType="VARCHAR" />
     <result column="table_name" property="tableName" jdbcType="VARCHAR" />
@@ -23,7 +23,7 @@
     ext01, ext02, ext03, ext04, ext05
   </sql>
 
-  <update id="createTable" parameterType="cn.itechyou.cms.entity.Form">
+  <update id="createTable" parameterType="cc.iteachyou.cms.entity.Form">
   	create table `system_${tableName}` (
   	   `id` varchar(32) NOT NULL,
   	   `aid` varchar(32) NOT NULL COMMENT '主表ID',

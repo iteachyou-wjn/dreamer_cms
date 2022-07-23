@@ -3,16 +3,11 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dreamer Blog - 后台管理系统</title> 
-    <!-- bootstrap 3.0.2 -->
+    <title>Dreamer CMS - 后台管理系统</title> 
     <link href="/resource/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <!-- font Awesome -->
     <link href="/resource/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-    <!-- Ionicons -->
     <link href="/resource/css/ionicons.min.css" rel="stylesheet" type="text/css" />
-    <!-- iCheck for checkboxes and radio inputs -->
     <link href="/resource/css/iCheck/all.css" rel="stylesheet" type="text/css" />
-    <!-- Theme style -->
     <link href="/resource/css/style.css" rel="stylesheet" type="text/css" />
 </head>
 
@@ -48,7 +43,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="item,stat : ${pageInfo.list}">
+				<tr th:each="item,stat : ${page.list}">
 					<td><input type="checkbox" class="flat-grey list-child" th:value="${item.id}" /></td>
 					<td th:text="${item.permissionName}"></td>
 					<td th:text="${item.permissionCode}"></td>
@@ -60,7 +55,7 @@
 						<a href="javascript:void(0)" data-toggle="modal" class="btn btn-xs btn-danger" th:userId="${item.id}" th:onclick="confrimRemove(this.getAttribute('userId'));">删除</a>
 					</td>
 				</tr>
-				<tr th:if="${#lists.isEmpty(pageInfo.list)}">
+				<tr th:if="${#lists.isEmpty(page.list)}">
 					<td colspan="5" align="center">无数据</td>
 				</tr>
 			</tbody>
@@ -68,11 +63,11 @@
     </div>
     <div class="panel-footer bg-white text-right">
          <ul class="pagination">
-             <li><a th:href="@{/admin/permission/list(pageNum=${pageInfo.navigateFirstPage},pageSize=${pageInfo.pageSize})}" title="首页" th:class="${pageInfo.isFirstPage} ? 'paginationNotAllowed' : ''">«</a></li>
-             <li><a th:href="@{/admin/permission/list(pageNum=${pageInfo.prePage},pageSize=${pageInfo.pageSize})}" title="上一页" th:if="${pageInfo.hasPreviousPage}">‹</a></li>
-             <li th:each="pageinfo : ${pageInfo.navigatepageNums}"><a th:href="@{/admin/permission/list(pageNum=${pageinfo},pageSize=${pageInfo.pageSize})}" th:class="${pageinfo == pageInfo.pageNum} ? 'paginationActive' : ''" th:text="${pageinfo}"></a></li>
-             <li><a th:href="@{/admin/permission/list(pageNum=${pageInfo.nextPage},pageSize=${pageInfo.pageSize})}" title="下一页" th:if="${pageInfo.hasNextPage}">›</a></li>
-             <li><a th:href="@{/admin/permission/list(pageNum=${pageInfo.navigateLastPage},pageSize=${pageInfo.pageSize})}" title="未页" th:class="${pageInfo.isLastPage} ? 'paginationNotAllowed' : ''">»</a></li>
+             <li><a th:href="@{/admin/permission/list(pageNum=1,pageSize=${page.pageSize})}" title="首页" th:class="${page.isFirstPage} ? 'paginationNotAllowed' : ''">«</a></li>
+             <li><a th:href="@{/admin/permission/list(pageNum=${page.prePage},pageSize=${page.pageSize})}" title="上一页" th:if="${page.hasPreviousPage}">‹</a></li>
+             <li th:each="pageinfo : ${page.navigatepageNums}"><a th:href="@{/admin/permission/list(pageNum=${pageinfo},pageSize=${page.pageSize})}" th:class="${pageinfo == page.pageNum} ? 'paginationActive' : ''" th:text="${pageinfo}"></a></li>
+             <li><a th:href="@{/admin/permission/list(pageNum=${page.nextPage},pageSize=${page.pageSize})}" title="下一页" th:if="${page.hasNextPage}">›</a></li>
+             <li><a th:href="@{/admin/permission/list(pageNum=${page.pages},pageSize=${page.pageSize})}" title="未页" th:class="${page.isLastPage} ? 'paginationNotAllowed' : ''">»</a></li>
          </ul>
      </div>
 </section>

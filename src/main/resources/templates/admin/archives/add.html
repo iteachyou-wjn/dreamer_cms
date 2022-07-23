@@ -3,16 +3,11 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dreamer Blog - 后台管理系统</title> 
-    <!-- bootstrap 3.0.2 -->
+    <title>Dreamer CMS - 后台管理系统</title> 
     <link href="/resource/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <!-- font Awesome -->
     <link href="/resource/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-    <!-- Ionicons -->
     <link href="/resource/css/ionicons.min.css" rel="stylesheet" type="text/css" />
-    <!-- iCheck for checkboxes and radio inputs -->
     <link href="/resource/css/iCheck/all.css" rel="stylesheet" type="text/css" />
-    <!-- Theme style -->
     <link href="/resource/css/style.css" rel="stylesheet" type="text/css" />
     <link href="/resource/js/editor.md-master/css/editormd.css" rel="stylesheet" type="text/css" />
     <link href="/resource/js/tagit/jquery.tagit.css" rel="stylesheet" type="text/css" />
@@ -38,6 +33,7 @@
         <!--breadcrumbs start -->
         <ul class="breadcrumb">
 			<li><a href="/admin/dashboard/toIndex"><i class="fa fa-home"></i> 首页</a></li>
+			<li th:if="${category != null}"><a href="/admin/category" th:title="${category.cnname}" th:text="${category.cnname}"></a></li>
 			<li class="active">发布文章</li>
 		</ul>
         <!--breadcrumbs end -->

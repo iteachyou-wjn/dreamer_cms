@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.itechyou.cms.dao.PermissionMapper">
-  <resultMap id="BaseResultMap" type="cn.itechyou.cms.entity.Permission">
+<mapper namespace="cc.iteachyou.cms.dao.PermissionMapper">
+  <resultMap id="BaseResultMap" type="cc.iteachyou.cms.entity.Permission">
     <!--
       WARNING - @mbg.generated
     -->
@@ -15,7 +15,7 @@
     <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="cn.itechyou.cms.entity.Permission">
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="cc.iteachyou.cms.entity.Permission">
     <!--
       WARNING - @mbg.generated
     -->
@@ -35,7 +35,7 @@
     remark
   </sql>
   
-  <select id="queryListByPage" parameterType="java.util.Map" resultType="cn.itechyou.cms.entity.Permission">
+  <select id="queryListByPage" parameterType="java.util.Map" resultType="cc.iteachyou.cms.entity.Permission">
   	SELECT
 		p.*,
 		m.menu_name AS menuName

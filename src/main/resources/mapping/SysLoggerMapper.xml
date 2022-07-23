@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="cn.itechyou.cms.dao.SysLoggerMapper" >
-  <resultMap id="BaseResultMap" type="cn.itechyou.cms.entity.SysLogger" >
+<mapper namespace="cc.iteachyou.cms.dao.SysLoggerMapper" >
+  <resultMap id="BaseResultMap" type="cc.iteachyou.cms.entity.SysLogger" >
     <id column="id" property="id" jdbcType="VARCHAR" />
     <result column="level" property="level" jdbcType="VARCHAR" />
     <result column="oper_user" property="operUser" jdbcType="VARCHAR" />
@@ -20,7 +20,7 @@
     <result column="extend3" property="extend3" jdbcType="VARCHAR" />
   </resultMap>
   
-  <resultMap id="ResultMapWithBLOBs" type="cn.itechyou.cms.entity.SysLogger" extends="BaseResultMap" >
+  <resultMap id="ResultMapWithBLOBs" type="cc.iteachyou.cms.entity.SysLogger" extends="BaseResultMap" >
     <result column="content" property="content" jdbcType="LONGVARCHAR" />
   </resultMap>
   

@@ -90,7 +90,7 @@ https://space.bilibili.com/482273402
 
 ##### 感谢各位大佬的支持，以下排名不分先后！同时也感谢各位开发者为社区作出的贡献。
 
-<table width="100%" cellspacing="0" cellpadding="0" border="0" style="width:100%">
+<table width="100%" cellspacing="0" cellpadding="0" border="0" style="width:100%;">
 	<tr>
 		<th width="30%">用户</th>
 		<th width="30%">金额</th>
@@ -160,7 +160,6 @@ https://space.bilibili.com/482273402
     </div>
     <div style="clear:both;"></div>
 </center>
-
 
 
 # 系统美图

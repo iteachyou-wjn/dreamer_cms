@@ -1,0 +1,26 @@
+web:
+  resource-path: /opt/resources/cms.iteachyou.io/
+
+spring: 
+  datasource: 
+    name: prd
+    url: jdbc:mysql://{IP}:{PORT}/{DATABASE}?serverTimezone=GMT%2B8&useSSL=false&useUnicode=true&characterEncoding=UTF8&zeroDateTimeBehavior=convertToNull
+    username: {USERNAME}
+    password: {PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  redis:
+    host: {IP}
+    port: {PORT}
+    timeout: 2000
+    password: {PASSWORD}
+    jedis:
+      pool:
+        max-idle: 100
+        min-idle: 50
+        max-wait: -1
+
+# 日志配置
+logging:
+  path: /opt/resources/cms.iteachyou.io/logs/
+  level:
+    root: info           

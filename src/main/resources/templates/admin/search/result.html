@@ -3,16 +3,11 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dreamer Blog - 后台管理系统</title> 
-    <!-- bootstrap 3.0.2 -->
+    <title>Dreamer CMS - 后台管理系统</title> 
     <link href="/resource/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <!-- font Awesome -->
     <link href="/resource/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-    <!-- Ionicons -->
     <link href="/resource/css/ionicons.min.css" rel="stylesheet" type="text/css" />
-    <!-- iCheck for checkboxes and radio inputs -->
     <link href="/resource/css/iCheck/all.css" rel="stylesheet" type="text/css" />
-    <!-- Theme style -->
     <link href="/resource/css/style.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="/resource/js/jQueryMessage/css/message.skin.css" />
 </head>
@@ -62,7 +57,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="article : ${archives.list}">
+				<tr th:each="article : ${page.list}">
 					<td><input type="checkbox" class="flat-grey list-child" th:value="${article.id}"/></td>
 					<td><a href="#" th:text="${article.title}"></a></td>
 					<td th:text="${article.categoryCnName}"></td>
@@ -76,7 +71,7 @@
 						<a href="javascript:void(0)" class="btn btn-xs btn-success copyArticleIdBtn" th:aid="${article.id}" th:onclick="javascript:copyArticleId(this.getAttribute('aid'))">复制文章ID</a>
 					</td>
 				</tr>
-				<tr th:if="${#lists.isEmpty(archives.list)}">
+				<tr th:if="${#lists.isEmpty(page.list)}">
 					<td colspan="8" align="center">无数据</td>
 				</tr>
 			</tbody>
@@ -84,11 +79,11 @@
     </div>
     <div class="panel-footer bg-white text-right">
          <ul class="pagination">
-             <li><a th:href="@{/admin/search/doSearch(pageNum=${archives.navigateFirstPage},pageSize=${archives.pageSize},entity[keywords]=${keywords})}" title="首页" th:class="${archives.isFirstPage} ? 'paginationNotAllowed' : ''">«</a></li>
-             <li><a th:href="@{/admin/search/doSearch(pageNum=${archives.prePage},pageSize=${archives.pageSize},entity[keywords]=${keywords})}" title="上一页" th:if="${archives.hasPreviousPage}">‹</a></li>
-             <li th:each="pageinfo : ${archives.navigatepageNums}"><a th:href="@{/admin/search/doSearch(pageNum=${pageinfo},pageSize=${archives.pageSize},entity[keywords]=${keywords})}" th:class="${pageinfo == archives.pageNum} ? 'paginationActive' : ''" th:text="${pageinfo}"></a></li>
-             <li><a th:href="@{/admin/search/doSearch(pageNum=${archives.nextPage},pageSize=${archives.pageSize},entity[keywords]=${keywords})}" title="下一页" th:if="${archives.hasNextPage}">›</a></li>
-             <li><a th:href="@{/admin/search/doSearch(pageNum=${archives.navigateLastPage},pageSize=${archives.pageSize},entity[keywords]=${keywords})}" title="未页" th:class="${archives.isLastPage} ? 'paginationNotAllowed' : ''">»</a></li>
+             <li><a th:href="@{/admin/search/doSearch(pageNum=1,pageSize=${page.pageSize},entity[keywords]=${keywords})}" title="首页" th:class="${page.isFirstPage} ? 'paginationNotAllowed' : ''">«</a></li>
+             <li><a th:href="@{/admin/search/doSearch(pageNum=${page.prePage},pageSize=${page.pageSize},entity[keywords]=${keywords})}" title="上一页" th:if="${page.hasPreviousPage}">‹</a></li>
+             <li th:each="pageinfo : ${page.navigatepageNums}"><a th:href="@{/admin/search/doSearch(pageNum=${pageinfo},pageSize=${page.pageSize},entity[keywords]=${keywords})}" th:class="${pageinfo == page.pageNum} ? 'paginationActive' : ''" th:text="${pageinfo}"></a></li>
+             <li><a th:href="@{/admin/search/doSearch(pageNum=${page.nextPage},pageSize=${page.pageSize},entity[keywords]=${keywords})}" title="下一页" th:if="${page.hasNextPage}">›</a></li>
+             <li><a th:href="@{/admin/search/doSearch(pageNum=${page.pages},pageSize=${page.pageSize},entity[keywords]=${keywords})}" title="未页" th:class="${page.isLastPage} ? 'paginationNotAllowed' : ''">»</a></li>
          </ul>
      </div>
 </section>

@@ -3,16 +3,11 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dreamer Blog - 后台管理系统</title> 
-    <!-- bootstrap 3.0.2 -->
+    <title>Dreamer CMS - 后台管理系统</title> 
     <link href="/resource/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <!-- font Awesome -->
     <link href="/resource/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-    <!-- Ionicons -->
     <link href="/resource/css/ionicons.min.css" rel="stylesheet" type="text/css" />
-    <!-- iCheck for checkboxes and radio inputs -->
     <link href="/resource/css/iCheck/all.css" rel="stylesheet" type="text/css" />
-    <!-- Theme style -->
     <link href="/resource/css/style.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="/resource/js/jQueryMessage/css/message.skin.css" />
 </head>
@@ -24,6 +19,7 @@
         <!--breadcrumbs start -->
         <ul class="breadcrumb">
 			<li><a href="/admin/dashboard/toIndex"><i class="fa fa-home"></i> 首页</a></li>
+			<li th:if="${category != null}"><a href="/admin/category" th:title="${category.cnname}" th:text="${category.cnname}"></a></li>
 			<li class="active">文章管理</li>
 		</ul>
         <!--breadcrumbs end -->
@@ -31,13 +27,12 @@
 </div>
 <section class="panel">
 	<div class="panel-body">
-         <!-- <span class="pull-right badge badge-info">32</span> -->
          <button class="btn btn-primary btn-addon btn-sm" th:typeid="${#strings.isEmpty(cid) ? '-1' : cid}" th:onclick="javascript: toAddArticle(this.getAttribute('typeid'))">
              <i class="fa fa-plus"></i>发布文章
          </button>
     </div>
     <div class="panel-body table-responsive">
-		<table class="table table-hover">
+		<table class="table table-hover table-border">
 			<thead>
 				<tr>
 					<th style="width:50px;">选择</th>
@@ -51,7 +46,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="article : ${archives.list}">
+				<tr th:each="article : ${page.list}">
 					<td><input type="checkbox" class="flat-grey list-child" th:value="${article.aid}"/></td>
 					<td><a href="#" th:text="${article.title}"></a></td>
 					<td th:text="${article.categoryCnName}"></td>
@@ -69,7 +64,7 @@
 						<a href="javascript:void(0)" data-toggle="modal" class="btn btn-xs btn-danger" th:aid="${article.aid}" th:typeid="${article.categoryId}" th:onclick="javascript:confrimRemove(this.getAttribute('aid'),this.getAttribute('typeid'))">删除</a>
 					</td>
 				</tr>
-				<tr th:if="${#lists.isEmpty(archives.list)}">
+				<tr th:if="${#lists.isEmpty(page.list)}">
 					<td colspan="8" align="center">无数据</td>
 				</tr>
 			</tbody>
@@ -77,11 +72,11 @@
     </div>
     <div class="panel-footer bg-white text-right">
          <ul class="pagination">
-             <li><a th:href="@{/admin/archives/list(pageNum=${archives.navigateFirstPage},pageSize=${archives.pageSize},entity[cid]=${cid})}" title="首页" th:class="${archives.isFirstPage} ? 'paginationNotAllowed' : ''">«</a></li>
-             <li><a th:href="@{/admin/archives/list(pageNum=${archives.prePage},pageSize=${archives.pageSize},entity[cid]=${cid})}" title="上一页" th:if="${archives.hasPreviousPage}">‹</a></li>
-             <li th:each="pageinfo : ${archives.navigatepageNums}"><a th:href="@{/admin/archives/list(pageNum=${pageinfo},pageSize=${archives.pageSize},entity[cid]=${cid})}" th:class="${pageinfo == archives.pageNum} ? 'paginationActive' : ''" th:text="${pageinfo}"></a></li>
-             <li><a th:href="@{/admin/archives/list(pageNum=${archives.nextPage},pageSize=${archives.pageSize},entity[cid]=${cid})}" title="下一页" th:if="${archives.hasNextPage}">›</a></li>
-             <li><a th:href="@{/admin/archives/list(pageNum=${archives.navigateLastPage},pageSize=${archives.pageSize},entity[cid]=${cid})}" title="未页" th:class="${archives.isLastPage} ? 'paginationNotAllowed' : ''">»</a></li>
+             <li><a th:href="@{/admin/archives/list(pageNum=1,pageSize=${page.pageSize},entity[cid]=${cid})}" title="首页" th:class="${page.isFirstPage} ? 'paginationNotAllowed' : ''">«</a></li>
+             <li><a th:href="@{/admin/archives/list(pageNum=${page.prePage},pageSize=${page.pageSize},entity[cid]=${cid})}" title="上一页" th:if="${page.hasPreviousPage}">‹</a></li>
+             <li th:each="pageinfo : ${page.navigatepageNums}"><a th:href="@{/admin/archives/list(pageNum=${pageinfo},pageSize=${page.pageSize},entity[cid]=${cid})}" th:class="${pageinfo == page.pageNum} ? 'paginationActive' : ''" th:text="${pageinfo}"></a></li>
+             <li><a th:href="@{/admin/archives/list(pageNum=${page.nextPage},pageSize=${page.pageSize},entity[cid]=${cid})}" title="下一页" th:if="${page.hasNextPage}">›</a></li>
+             <li><a th:href="@{/admin/archives/list(pageNum=${page.pages},pageSize=${page.pageSize},entity[cid]=${cid})}" title="未页" th:class="${page.isLastPage} ? 'paginationNotAllowed' : ''">»</a></li>
          </ul>
      </div>
 </section>

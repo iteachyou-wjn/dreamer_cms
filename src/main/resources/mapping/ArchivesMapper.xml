@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.itechyou.cms.dao.ArchivesMapper">
-  <resultMap id="BaseResultMap" type="cn.itechyou.cms.entity.Archives">
+<mapper namespace="cc.iteachyou.cms.dao.ArchivesMapper">
+  <resultMap id="BaseResultMap" type="cc.iteachyou.cms.entity.Archives">
     <id column="id" jdbcType="VARCHAR" property="id" />
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="properties" jdbcType="VARCHAR" property="properties" />
@@ -21,7 +21,7 @@
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
   
-  <resultMap id="BaseResultMapWithRownum" type="cn.itechyou.cms.entity.ArchivesWithRownum">
+  <resultMap id="BaseResultMapWithRownum" type="cc.iteachyou.cms.entity.ArchivesWithRownum">
     <id column="id" jdbcType="VARCHAR" property="id" />
     <result column="rownum" jdbcType="INTEGER" property="rownum" />
     <result column="title" jdbcType="VARCHAR" property="title" />
@@ -102,7 +102,7 @@
       where tag like concat('%',concat(#{tag,jdbcType=VARCHAR},'%'))
   </select>
   
-  <select id="queryListByKeywords" parameterType="java.util.Map" resultType="cn.itechyou.cms.vo.ArchivesVo">
+  <select id="queryListByKeywords" parameterType="java.util.Map" resultType="cc.iteachyou.cms.vo.ArchivesVo">
       select 
           a.id
           , a.title
@@ -190,7 +190,7 @@
       DELETE FROM `${tableName}` WHERE id = #{id,jdbcType=VARCHAR}
   </delete>
   
-  <update id="updateTagByPrimaryKey" parameterType="cn.itechyou.cms.entity.Archives">
+  <update id="updateTagByPrimaryKey" parameterType="cc.iteachyou.cms.entity.Archives">
       update system_archives set tag = #{tag,jdbcType=VARCHAR}
       where id = #{id,jdbcType=VARCHAR}
   </update>
@@ -215,7 +215,7 @@
     </if>
   </select>
   
-  <select id="queryRecommend" parameterType="java.util.Map" resultType="cn.itechyou.cms.vo.ArchivesVo">
+  <select id="queryRecommend" parameterType="java.util.Map" resultType="cc.iteachyou.cms.vo.ArchivesVo">
       SELECT 
           t1.id
           , t1.title
