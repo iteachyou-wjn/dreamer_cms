@@ -100,81 +100,81 @@ public class PrevNextTag implements IParse {
 			
 			StringBuilder prevnext = new StringBuilder();
 			if("prev".equalsIgnoreCase(layout)) {
-				prevnext.append("<ul class=\"dreamer-prevnext\">");
+				prevnext.append("<ul class='dreamer-prevnext'>");
 				if(prevArc != null) { 
-					prevnext.append("<li class=\"dreamer-prev\">");
-					prevnext.append("<span class=\"dreamer-prevnext-label\">上一篇：</span>");
+					prevnext.append("<li class='dreamer-prev'>");
+					prevnext.append("<span class='dreamer-prevnext-label'>上一篇：</span>");
 					if(StringUtil.isBlank(t) || "P".equals(t)) {//解析
-						prevnext.append("<a href=\"/article/"+prevArc.getId() + "\">" + prevArc.getTitle() + "</a>");
+						prevnext.append("<a href='/article/"+prevArc.getId() + "' title='" + prevArc.getTitle() + "'>" + prevArc.getTitle() + "</a>");
 					}else {//生成
 						String categoryDir = URLUtils.getCategoryDir(categoryWithBLOBs);
 						Date createTime = prevArc.getCreateTime();
 						String artDate = sdf.format(createTime);
 						String artUrl = "/" + system.getStaticdir() + categoryDir + "/" + artDate + "/" + prevArc.getId() + ".html";
-						prevnext.append("<a href=\"" + artUrl + "\">" + prevArc.getTitle() + "</a>");
+						prevnext.append("<a href='" + artUrl + "' title='" + prevArc.getTitle() + "'>" + prevArc.getTitle() + "</a>");
 					}
 					prevnext.append("</li>");
 				}else {
-					prevnext.append("<li class=\"dreamer-next\">");
-					prevnext.append("<span class=\"dreamer-prevnext-label\">下一篇：没有了</span>");
+					prevnext.append("<li class='dreamer-next'>");
+					prevnext.append("<span class='dreamer-prevnext-label'>下一篇：没有了</span>");
 				}
 				prevnext.append("</ul>");
 			}else if("next".equalsIgnoreCase(layout)) {
-				prevnext.append("<ul class=\"dreamer-prevnext\">");
+				prevnext.append("<ul class='dreamer-prevnext'>");
 				if(nextArc != null) {
-					prevnext.append("<li class=\"dreamer-next\">");
-					prevnext.append("<span class=\"dreamer-prevnext-label\">下一篇：</span>");
+					prevnext.append("<li class='dreamer-next'>");
+					prevnext.append("<span class='dreamer-prevnext-label'>下一篇：</span>");
 					if(StringUtil.isBlank(t) || "P".equals(t)) {//解析
-						prevnext.append("<a href=\"/article/"+nextArc.getId() + "\">" + nextArc.getTitle() + "</a>");
+						prevnext.append("<a href='/article/"+nextArc.getId() + "' title='" + nextArc.getTitle() + "'>" + nextArc.getTitle() + "</a>");
 					}else {//生成
 						String categoryDir = URLUtils.getCategoryDir(categoryWithBLOBs);
 						Date createTime = nextArc.getCreateTime();
 						String artDate = sdf.format(createTime);
 						String artUrl = "/" + system.getStaticdir() + categoryDir + "/" + artDate + "/" + nextArc.getId() + ".html";
-						prevnext.append("<a href=\"" + artUrl + "\">" + nextArc.getTitle() + "</a>");
+						prevnext.append("<a href='" + artUrl + "' title='" + nextArc.getTitle() + "'>" + nextArc.getTitle() + "</a>");
 					}
 					prevnext.append("</li>");
 				}else {
-					prevnext.append("<li class=\"dreamer-next\">");
-					prevnext.append("<span class=\"dreamer-prevnext-label\">下一篇：没有了</span>");
+					prevnext.append("<li class='dreamer-next'>");
+					prevnext.append("<span class='dreamer-prevnext-label'>下一篇：没有了</span>");
 				}
 				prevnext.append("</ul>");
 			}else if("prev,next".equalsIgnoreCase(layout)) {
-				prevnext.append("<ul class=\"dreamer-prevnext\">");
+				prevnext.append("<ul class='dreamer-prevnext'>");
 				if(prevArc != null) { 
-					prevnext.append("<li class=\"dreamer-prev\">");
-					prevnext.append("<span class=\"dreamer-prevnext-label\">上一篇：</span>");
+					prevnext.append("<li class='dreamer-prev'>");
+					prevnext.append("<span class='dreamer-prevnext-label'>上一篇：</span>");
 					if(StringUtil.isBlank(t) || "P".equals(t)) {//解析
-						prevnext.append("<a href=\"/article/"+prevArc.getId() + "\">" + prevArc.getTitle() + "</a>");
+						prevnext.append("<a href='/article/"+prevArc.getId() + "' title='" + prevArc.getTitle() + "'>" + prevArc.getTitle() + "</a>");
 					}else {//生成
 						String categoryDir = URLUtils.getCategoryDir(categoryWithBLOBs);
 						Date createTime = prevArc.getCreateTime();
 						String artDate = sdf.format(createTime);
 						String artUrl = "/" + system.getStaticdir() + categoryDir + "/" + artDate + "/" + prevArc.getId() + ".html";
-						prevnext.append("<a href=\"" + artUrl + "\">" + prevArc.getTitle() + "</a>");
+						prevnext.append("<a href='" + artUrl + "' title='" + prevArc.getTitle() + "'>" + prevArc.getTitle() + "</a>");
 					}
 					prevnext.append("</li>");
 				}else {
-					prevnext.append("<li class=\"dreamer-next\">");
-					prevnext.append("<span class=\"dreamer-prevnext-label\">下一篇：没有了</span>");
+					prevnext.append("<li class='dreamer-next'>");
+					prevnext.append("<span class='dreamer-prevnext-label'>下一篇：没有了</span>");
 				}
 				
 				if(nextArc != null) {
-					prevnext.append("<li class=\"dreamer-next\">");
-					prevnext.append("<span class=\"dreamer-prevnext-label\">下一篇：</span>");
+					prevnext.append("<li class='dreamer-next'>");
+					prevnext.append("<span class='dreamer-prevnext-label'>下一篇：</span>");
 					if(StringUtil.isBlank(t) || "P".equals(t)) {//解析
-						prevnext.append("<a href=\"/article/"+nextArc.getId() + "\">" + nextArc.getTitle() + "</a>");
+						prevnext.append("<a href='/article/"+nextArc.getId() + "' title='" + nextArc.getTitle() + "'>" + nextArc.getTitle() + "</a>");
 					}else {//生成
 						String categoryDir = URLUtils.getCategoryDir(categoryWithBLOBs);
 						Date createTime = nextArc.getCreateTime();
 						String artDate = sdf.format(createTime);
 						String artUrl = "/" + system.getStaticdir() + categoryDir + "/" + artDate + "/" + nextArc.getId() + ".html";
-						prevnext.append("<a href=\"" + artUrl + "\">" + nextArc.getTitle() + "</a>");
+						prevnext.append("<a href='" + artUrl + "' title='" + nextArc.getTitle() + "'>" + nextArc.getTitle() + "</a>");
 					}
 					prevnext.append("</li>");
 				}else {
-					prevnext.append("<li class=\"dreamer-next\">");
-					prevnext.append("<span class=\"dreamer-prevnext-label\">下一篇：没有了</span>");
+					prevnext.append("<li class='dreamer-next'>");
+					prevnext.append("<span class='dreamer-prevnext-label'>下一篇：没有了</span>");
 				}
 				
 				prevnext.append("</ul>");

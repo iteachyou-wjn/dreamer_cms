@@ -96,11 +96,11 @@ public class PaginationTag implements IParse {
 		//
 		String firstUrl = pageurl.replace("{pageNum}", String.valueOf(1)).replace("{pageSize}", String.valueOf(pageInfo.getPageSize()));
 		if(pageInfo.getTotal() != 0) {
-			sb.append("<li><a href='"+firstUrl+"'><i class='fa fa-angle-double-left'></i></a></li>");
+			sb.append("<li><a href='"+firstUrl+"' title='首页'><i class='fa fa-angle-double-left'></i></a></li>");
 		}
 		if(pageInfo.getPrePage() != 0) {
 			String preUrl = pageurl.replace("{pageNum}", String.valueOf(pageInfo.getPrePage())).replace("{pageSize}", String.valueOf(pageInfo.getPageSize()));
-			sb.append("<li><a href='"+preUrl+"'><i class='fa fa-angle-left'></i></a></li>");
+			sb.append("<li><a href='"+preUrl+"' title='上一页'><i class='fa fa-angle-left'></i></a></li>");
 		}
 		
 		for (int i = 0; i < pageInfo.getNavigatepageNums().length; i++) {
@@ -110,16 +110,16 @@ public class PaginationTag implements IParse {
 			if(pageInfo.getPageNum() == pageNum) {
 				className = "active";
 			}
-			sb.append("<li class='"+className+"'><a href='"+pageUrl+"'>"+pageNum+"</a></li>");
+			sb.append("<li class='"+className+"'><a href='"+pageUrl+"' title='第" + pageNum + "页'>"+pageNum+"</a></li>");
 		}
 		
 		if(pageInfo.getNextPage() != 0) {
 			String nextUrl = pageurl.replace("{pageNum}", String.valueOf(pageInfo.getNextPage())).replace("{pageSize}", String.valueOf(pageInfo.getPageSize()));
-			sb.append("<li><a href='"+nextUrl+"'><i class='fa fa-angle-right'></i></a></li>");
+			sb.append("<li><a href='"+nextUrl+"' title='下一页'><i class='fa fa-angle-right'></i></a></li>");
 		}
 		String lastUrl = pageurl.replace("{pageNum}", String.valueOf(pageInfo.getPages())).replace("{pageSize}", String.valueOf(pageInfo.getPageSize()));
 		if(pageInfo.getTotal() != 0) {
-			sb.append("<li><a href='"+lastUrl+"'><i class='fa fa-angle-double-right'></i></a></li>");
+			sb.append("<li><a href='"+lastUrl+"' title='尾页'><i class='fa fa-angle-double-right'></i></a></li>");
 		}
 		sb.append("</ul>");
 		sb.append("</div>");
@@ -170,10 +170,10 @@ public class PaginationTag implements IParse {
 		sb.append("<ul class='dreamer-ul'>");
 		//
 		String firstUrl = pageurl.replace("{pageNum}", String.valueOf(1)).replace("{pageSize}", String.valueOf(pageInfo.getPageSize()));
-		sb.append("<li><a href='"+firstUrl+"'>首页</a></li>");
+		sb.append("<li><a href='"+firstUrl+"' title='首页'><i class='fa fa-angle-double-left'></i></a></li>");
 		if(pageInfo.getPrePage() != 0) {
 			String preUrl = pageurl.replace("{pageNum}", String.valueOf(pageInfo.getPrePage())).replace("{pageSize}", String.valueOf(pageInfo.getPageSize()));
-			sb.append("<li><a href='"+preUrl+"'>上一页</a></li>");
+			sb.append("<li><a href='"+preUrl+"' title='上一页'><i class='fa fa-angle-left'></i></a></li>");
 		}
 		
 		for (int i = 0; i < pageInfo.getNavigatepageNums().length; i++) {
@@ -183,15 +183,15 @@ public class PaginationTag implements IParse {
 			if(pageInfo.getPageNum() == pageNum) {
 				className = "active";
 			}
-			sb.append("<li class='"+className+"'><a href='"+pageUrl+"'>"+pageNum+"</a></li>");
+			sb.append("<li class='"+className+"'><a href='"+pageUrl+"' title='第" + pageNum + "页'>"+pageNum+"</a></li>");
 		}
 		
 		if(pageInfo.getNextPage() != 0) {
 			String nextUrl = pageurl.replace("{pageNum}", String.valueOf(pageInfo.getNextPage())).replace("{pageSize}", String.valueOf(pageInfo.getPageSize()));
-			sb.append("<li><a href='"+nextUrl+"'>下一页</a></li>");
+			sb.append("<li><a href='"+nextUrl+"' title='下一页'><i class='fa fa-angle-right'></i></a></li>");
 		}
 		String lastUrl = pageurl.replace("{pageNum}", String.valueOf(pageInfo.getPages())).replace("{pageSize}", String.valueOf(pageInfo.getPageSize()));
-		sb.append("<li><a href='"+lastUrl+"'>尾页</a></li>");
+		sb.append("<li><a href='"+lastUrl+"' title='尾页'><i class='fa fa-angle-double-right'></i></a></li>");
 		sb.append("</ul>");
 		sb.append("</div>");
 		
