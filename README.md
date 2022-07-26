@@ -1,5 +1,5 @@
 <p align="center">
-	<a href="https://www.itechyou.cn/" target="_blank"><img src="https://cdn.itechyou.cn/logo.png" width="400" ></a>
+	<a href="https://www.iteachyou.cc/" target="_blank"><img src="https://oss.iteachyou.cc/logo.png" width="400" ></a>
 </p>
 
 # 梦想家CMS内容管理系统开源版J2EE代码
@@ -7,14 +7,14 @@
 
 当前版本：4.0.0
 
-1. 梦想家CMS官网：http://cms.itechyou.cn
-2. 梦想家CMS管理后台：http://cms.itechyou.cn/admin
+1. 梦想家CMS官网：http://cms.iteachyou.cc
+2. 梦想家CMS管理后台：http://cms.iteachyou.cc/admin
 - 演示账号：demo1
 - 演示密码：123456
 - 管理员：wangjn
 - 管理员密码：123456
-3. I Tech You,我教你! 官网：http://www.itechyou.cn
-4. 模版标签开发教程请参考：http://doc.itechyou.cn 
+3. I Tech You,我教你! 官网：https://www.iteachyou.cc
+4. 模版标签开发教程请参考：http://doc.iteachyou.cc
 
 QQ群交流：
 - ①597652651
@@ -51,23 +51,23 @@ DreamerCMS从2.0.0版本开始采用了解析式引擎与编译式引擎并存�
 * Lombok
 
 # 系统结构
-![系统结构](http://cdn.itechyou.cn/20200107103015.jpg "系统结构")
+![系统结构](https://oss.iteachyou.cc/20200107103015.jpg "系统结构")
 
 # 开发环境
 建议开发者使用以下环境，这样避免版本带来的问题
 * IDE：Spring Tool Suite 4（STS）
 * DB：Mysql 5.7
 * JDK：Jdk8
-* Redis：3.2+，Windows配置安装Redis教程，请参考：https://itechyou.cn/article/4b0a638f65fa4fb1b9644cf461dba602
-* LomBok 项目需要使用Lombok支持，Lombok安装教程，请参考https://itechyou.cn/article/55ec2939c29147eca5bebabf19621655
+* Redis：3.2+，Windows配置安装Redis教程，请参考：https://www.iteachyou.cc/article/4b0a638f65fa4fb1b9644cf461dba602
+* LomBok 项目需要使用Lombok支持，Lombok安装教程，请参考https://www.iteachyou.cc/article/55ec2939c29147eca5bebabf19621655
 
 # 快速入门
 CMS包括两个部分（代码部分、资源部分）代码不多说。资源就是图片、模版等，该目录在application.yml中web.resource-path配置项目中配置。视频教程：
 ```
 Dreamer CMS后台使用教程：
-https://itechyou.cn/list-6s3bg7tf/dreamercms/1/10
+https://www.iteachyou.cc/list-6s3bg7tf/dreamercms/1/10
 Dreamer CMS模版开发教程：
-https://itechyou.cn/list-l54xs53b/tempdev/1/10
+https://www.iteachyou.cc/list-l54xs53b/tempdev/1/10
 
 百度网盘下载链接：
 https://pan.baidu.com/s/1plsfBl_ds_5TkVa-yRkESQ 提取码：2c8i
@@ -76,7 +76,7 @@ https://pan.baidu.com/s/1plsfBl_ds_5TkVa-yRkESQ 提取码：2c8i
 https://space.bilibili.com/482273402
 ```
 1. 克隆项目到本地工作空间
-2. 导入Eclipse或Sts等开发工具（推荐使用Spring Tools Suite 4），项目需要使用Lombok支持，Lombok安装教程，请参考https://itechyou.cn/article/55ec2939c29147eca5bebabf19621655
+2. 导入Eclipse或Sts等开发工具（推荐使用Spring Tools Suite 4），项目需要使用Lombok支持，Lombok安装教程，请参考https://www.iteachyou.cc/article/55ec2939c29147eca5bebabf19621655
 3. 项目需要Redis，请自行修改application.yml中Redis配置
 4. 修改项目资源目录，application.yml文件web.resource-path配置项（如D:/dreamer-cms/）
 5. 导入数据库src/main/resources/db/db.sql，要求Mysql5.7版本，并修改application-(dev|prd).yml中数据配置
@@ -84,7 +84,7 @@ https://space.bilibili.com/482273402
 7. 运行项目DreamerCMSApplication.java
 8. 网站首页：http://localhost:8888 项目管理后台：http://localhost:8888/admin
 9. 管理后台用户名：wangjn；密码：123456
-10. 模版标签开发教程请参考：http://doc.itechyou.cn 
+10. 模版标签开发教程请参考：http://doc.www.iteachyou.cc 
 
 # 捐赠详情 
 
@@ -149,43 +149,43 @@ https://space.bilibili.com/482273402
 </table>
 
 
-同时也希望更多的用户来捐赠本项目。您的支持，是我一直坚持下去的动力，另外为大家提供使用文档（http://doc.itechyou.cn）、教程（https://www.itechyou.cn）的网站及服务器也需要运营维护，个人精力、经费都有限，希望大家多多理解！！！
+同时也希望更多的用户来捐赠本项目。您的支持，是我一直坚持下去的动力，另外为大家提供使用文档（http://doc.www.iteachyou.cc）、教程（https://www.www.iteachyou.cc）的网站及服务器也需要运营维护，个人精力、经费都有限，希望大家多多理解！！！
 
 <center>
     <div style="width:50%;float:left;text-align:right;">
-        <img src="http://cdn.itechyou.cn/20201201174329.png" width="200" />
+        <img src="http://oss.iteachyou.cc/20201201174329.png" width="200" />
     </div>
     <div style="width:50%;float:right;text-align:left;">
-        <img src="http://cdn.itechyou.cn/20201201174339.jpg" width="200" />
+        <img src="http://oss.iteachyou.cc/20201201174339.jpg" width="200" />
     </div>
     <div style="clear:both;"></div>
 </center>
 
 
 # 系统美图
-![后台登录](http://cdn.itechyou.cn/20190821102434.png)
+![后台登录](http://oss.iteachyou.cc/20190821102434.png)
 
-![系统管理](http://cdn.itechyou.cn/20190821102526.png)
+![系统管理](http://oss.iteachyou.cc/20190821102526.png)
 
-![栏目管理](http://cdn.itechyou.cn/20190821102608.png)
+![栏目管理](http://oss.iteachyou.cc/20190821102608.png)
 
-![发布文章](http://cdn.itechyou.cn/20190821102712.png)
+![发布文章](http://oss.iteachyou.cc/20190821102712.png)
 
-![标签管理](http://cdn.itechyou.cn/20190821102742.png)
+![标签管理](http://oss.iteachyou.cc/20190821102742.png)
 
-![表单管理](http://cdn.itechyou.cn/20190821102847.png)
+![表单管理](http://oss.iteachyou.cc/20190821102847.png)
 
-![风格管理](http://cdn.itechyou.cn/20190821102932.png)
+![风格管理](http://oss.iteachyou.cc/20190821102932.png)
 
-![变量管理](http://cdn.itechyou.cn/20190821103012.png)
+![变量管理](http://oss.iteachyou.cc/20190821103012.png)
 
-![前台首页](http://cdn.itechyou.cn/20190820092155.png)
+![前台首页](http://oss.iteachyou.cc/20190820092155.png)
 
-![封面页面](http://cdn.itechyou.cn/20190820092156.png)
+![封面页面](http://oss.iteachyou.cc/20190820092156.png)
 
-![列表页面](http://cdn.itechyou.cn/20190820092157.png)
+![列表页面](http://oss.iteachyou.cc/20190820092157.png)
 
-![文章页面](http://cdn.itechyou.cn/20190820092158.png)
+![文章页面](http://oss.iteachyou.cc/20190820092158.png)
 
 
 
