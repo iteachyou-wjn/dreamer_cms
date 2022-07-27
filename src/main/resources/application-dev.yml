@@ -1,3 +1,6 @@
+server: 
+  port: 8888
+
 web:
   resource-path: D:/dreamer-cms/
 

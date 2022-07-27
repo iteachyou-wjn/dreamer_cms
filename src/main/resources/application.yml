@@ -1,5 +1,4 @@
 server:
-  port: 8888
   servlet:
     context-path: /
 
@@ -41,5 +40,3 @@ pagehelper:
   reasonable: false # 如果为true，则分页参数无效的情况下，则查询全部数据
   supportMethodsArguments: true
   params: count=countSql
-
-
