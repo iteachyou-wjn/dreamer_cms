@@ -2,7 +2,15 @@
 	<a href="https://www.iteachyou.cc/" target="_blank"><img src="https://oss.iteachyou.cc/logo.png" width="400" ></a>
 </p>
 
-# 梦想家CMS内容管理系统开源版J2EE代码 [![OSCS Status](https://www.oscs1024.com/platform/badge/isoftforce/dreamer_cms.git.svg?size=small)](https://www.murphysec.com/dr/uURRBRDjHq7ttx9MvG)
+<div style="display: flex; justify-content: center;">
+
+[![OSCS Status](https://www.oscs1024.com/platform/badge/isoftforce/dreamer_cms.git.svg?size=small)](https://www.murphysec.com/dr/uURRBRDjHq7ttx9MvG)
+[![Apache-2.0](https://img.shields.io/badge/license-Apache%202-blue)](https://github.com/murphysecurity/murphysec/blob/master/LICENSE)
+[![Star 1000+](https://img.shields.io/badge/stars-%E2%98%85%E2%98%85%E2%98%85%E2%98%85%E2%98%86-brightgreen)](https://gitee.com/isoftforce/dreamer_cms/stargazers)
+
+</div>
+
+# 梦想家CMS内容管理系统开源版J2EE代码 
 
 当前版本：4.0.0
 
