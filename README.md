@@ -2,8 +2,7 @@
 	<a href="https://www.iteachyou.cc/" target="_blank"><img src="https://oss.iteachyou.cc/logo.png" width="400" ></a>
 </p>
 
-# 梦想家CMS内容管理系统开源版J2EE代码
-
+# 梦想家CMS内容管理系统开源版J2EE代码 [![OSCS Status](https://www.oscs1024.com/platform/badge/xinhudong/dreamer_cms.svg?size=small)](https://www.oscs1024.com/project/xinhudong/dreamer_cms?ref=badge_small)
 
 当前版本：4.0.0
 
