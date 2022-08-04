@@ -20,7 +20,7 @@
 - 演示密码：123456
 - 管理员：wangjn
 - 管理员密码：123456
-3. I Tech You,我教你! 官网：https://www.iteachyou.cc
+3. I Teach You,我教你! 官网：https://www.iteachyou.cc
 4. 模版标签开发教程请参考：http://doc.iteachyou.cc
 
 QQ群交流：
