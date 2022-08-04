@@ -18,7 +18,7 @@ import cc.iteachyou.cms.vo.ArchivesVo;
 
 /**
  * 搜索
- * @author Administrator
+ * @author 王俊南
  *
  */
 @Controller

@@ -1,13 +1,18 @@
 package cc.iteachyou.cms.common;
+import java.io.File;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import cc.iteachyou.cms.interceptor.UserAuthorizationInterceptor;
 import cc.iteachyou.cms.service.SystemService;
+import cc.iteachyou.cms.utils.FileConfiguration;
+import lombok.extern.slf4j.Slf4j;
 
 
 /**
@@ -15,8 +20,11 @@ import cc.iteachyou.cms.service.SystemService;
  * @author sam
  * @since 2017/7/16
  */
+@Slf4j
 @Configuration
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
+	@Autowired
+	private FileConfiguration configuration;
 	@Autowired
 	private UserAuthorizationInterceptor userAuthorizationInterceptor;
 	@Autowired
@@ -43,4 +51,15 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 						.addPathPatterns("/admin/**")
 						.excludePathPatterns("/admin/u/**");
 	}
+
+	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		File file = new File(configuration.getResourceDir());
+		if(!file.exists()) {
+			log.error("资源目录不存在或设置错误！");
+		}
+		registry.addResourceHandler("/**").addResourceLocations(file.toURI().toString()).setCachePeriod(31556926);
+		super.addResourceHandlers(registry);
+	}
+    
 }
