@@ -6,7 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import cc.iteachyou.cms.common.BaseController;
+import cc.iteachyou.cms.annotation.Log;
+import cc.iteachyou.cms.annotation.Log.OperatorType;
 import cc.iteachyou.cms.entity.System;
 import cc.iteachyou.cms.service.SystemService;
 
@@ -17,14 +18,16 @@ import cc.iteachyou.cms.service.SystemService;
  */
 @Controller
 @RequestMapping("admin/system")
-public class SystemController extends BaseController{
+public class SystemController{
 
 	@Autowired
 	private SystemService systemService;
+	
 	/**
 	 * 首页跳转
 	 * @return
 	 */
+	@Log(operType = OperatorType.SELECT, module = "系统设置", content = "查询系统设置")
 	@RequestMapping({"","toIndex"})
 	@RequiresPermissions("8q1735f2")
 	public String toIndex(Model model) {
@@ -37,6 +40,7 @@ public class SystemController extends BaseController{
 	 * 更新
 	 * @return
 	 */
+	@Log(operType = OperatorType.UPDATE, module = "系统设置", content = "修改系统设置")
 	@RequestMapping("update")
 	@RequiresPermissions("66e0j92s")
 	public String update(System system) {

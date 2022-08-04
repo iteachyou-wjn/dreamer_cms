@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
+import cc.iteachyou.cms.annotation.Log;
+import cc.iteachyou.cms.annotation.Log.OperatorType;
 import cc.iteachyou.cms.common.BaseController;
 import cc.iteachyou.cms.common.ExceptionEnum;
 import cc.iteachyou.cms.common.SearchEntity;
@@ -50,10 +52,10 @@ public class ThemesController extends BaseController {
 	@Autowired
 	private SystemService systemService;
 	
+	@Log(operType = OperatorType.PAGE, module = "主题管理", content = "主题分页列表")
 	@RequestMapping({"","/list"})
 	@RequiresPermissions("t5atzaz6")
 	public String list(Model model, SearchEntity params) {
-		Map<String,Object> map = new HashMap<>();
 		System system = systemService.getSystem();
 		List<Theme> themes = themeService.queryListByPage(params);
 		model.addAttribute("themes", themes);
@@ -61,6 +63,7 @@ public class ThemesController extends BaseController {
 		return "admin/themes/list";
 	}
 	
+	@Log(operType = OperatorType.INSERT, module = "主题管理", content = "添加主题")
 	@RequestMapping("/add")
 	@RequiresPermissions("j8rj0lp8")
 	public String add(String themePath) throws IOException, CmsException {
@@ -140,6 +143,7 @@ public class ThemesController extends BaseController {
 		return "redirect:/admin/theme/list";
 	}
 	
+	@Log(operType = OperatorType.UPDATE, module = "主题管理", content = "修改主题状态")
 	@RequestMapping("/updateStatus")
 	@RequiresPermissions("g1u4y47a")
 	public String updateStatus(String id, int status) {
@@ -158,6 +162,7 @@ public class ThemesController extends BaseController {
 		return "redirect:/admin/theme/list";
 	}
 	
+	@Log(operType = OperatorType.UPDATE, module = "主题管理", content = "修改主题")
 	@RequestMapping("/update")
 	@RequiresPermissions("g1u4y47a")
 	public String update(Theme theme) {
@@ -168,6 +173,7 @@ public class ThemesController extends BaseController {
 		return "redirect:/admin/theme/list";
 	}
 	
+	@Log(operType = OperatorType.DELETE, module = "主题管理", content = "删除主题")
 	@RequestMapping("/delete")
 	@RequiresPermissions("4ng92074")
 	public String delete(String id) {

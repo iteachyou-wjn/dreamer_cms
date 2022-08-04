@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.github.pagehelper.PageInfo;
 
+import cc.iteachyou.cms.annotation.Log;
+import cc.iteachyou.cms.annotation.Log.OperatorType;
 import cc.iteachyou.cms.common.ExceptionEnum;
 import cc.iteachyou.cms.common.SearchEntity;
 import cc.iteachyou.cms.entity.Field;
@@ -39,6 +41,7 @@ public class FormController {
 	@Autowired
 	private FieldService fieldService;
 	
+	@Log(operType = OperatorType.PAGE, module = "表单模型", content = "表单模型分页列表")
 	@RequestMapping({"","/list"})
 	@RequiresPermissions("7pswu738")
 	public String toIndex(Model model ,SearchEntity params) {
@@ -47,12 +50,14 @@ public class FormController {
 		return "admin/forms/list";
 	}
 	
+	@Log(operType = OperatorType.OTHER, module = "表单模型", content = "添加表单模型页面")
 	@RequestMapping("/toAdd")
 	@RequiresPermissions("w0kbe38p")
 	public String toAdd() {
 		return "admin/forms/add";
 	}
 	
+	@Log(operType = OperatorType.INSERT, module = "表单模型", content = "添加表单模型")
 	@RequestMapping("/add")
 	@RequiresPermissions("fn9o6433")
 	public String add(Model model,Form form) throws CmsException {
@@ -72,6 +77,7 @@ public class FormController {
 		return "redirect:/admin/forms/list";
 	}
 	
+	@Log(operType = OperatorType.OTHER, module = "表单模型", content = "修改表单模型页面")
 	@RequestMapping(value = "/toEdit", method = RequestMethod.GET)
 	@RequiresPermissions("u51mogha")
 	public String toEdit(Model model, String id) {
@@ -84,6 +90,7 @@ public class FormController {
 		return "admin/forms/edit";
 	}
 	
+	@Log(operType = OperatorType.UPDATE, module = "表单模型", content = "修改表单模型")
 	@RequestMapping("/edit")
 	@RequiresPermissions("19wh2wrf")
 	public String edit(Model model,Form newForm) throws CmsException {
@@ -103,6 +110,7 @@ public class FormController {
 		return "redirect:/admin/forms/list";
 	}
 	
+	@Log(operType = OperatorType.DELETE, module = "表单模型", content = "删除表单模型")
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
 	@RequiresPermissions("3kc86164")
 	public String delete(Model model, String id) throws CmsException {

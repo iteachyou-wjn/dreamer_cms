@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.pagehelper.PageInfo;
 
+import cc.iteachyou.cms.annotation.Log;
+import cc.iteachyou.cms.annotation.Log.OperatorType;
 import cc.iteachyou.cms.common.BaseController;
 import cc.iteachyou.cms.common.ResponseResult;
 import cc.iteachyou.cms.common.SearchEntity;
@@ -46,6 +48,7 @@ public class CategoryController extends BaseController{
 	@Autowired
 	private SystemService systemService;
 	
+	@Log(operType = OperatorType.PAGE, module = "栏目管理", content = "栏目分页列表")
 	@RequestMapping({"","/list"})
 	@RequiresPermissions("up0t1rv4")
 	public String list(Model model,SearchEntity params) {
@@ -54,6 +57,7 @@ public class CategoryController extends BaseController{
 		return "admin/category/list";
 	}
 	
+	@Log(operType = OperatorType.OTHER, module = "栏目管理", content = "添加栏目页面")
 	@RequestMapping("/toAdd")
 	@RequiresPermissions("o6499pg5")
 	public String toAdd(Model model,String id) {
@@ -75,6 +79,7 @@ public class CategoryController extends BaseController{
 		return "admin/category/add";
 	}
 	
+	@Log(operType = OperatorType.OTHER, module = "栏目管理", content = "修改栏目页面")
 	@RequestMapping("/toEdit")
 	@RequiresPermissions("0157q6w4")
 	public String toEdit(Model model,String id) {
@@ -94,6 +99,7 @@ public class CategoryController extends BaseController{
 		return "admin/category/edit";
 	}
 	
+	@Log(operType = OperatorType.INSERT, module = "栏目管理", content = "添加栏目")
 	@RequestMapping("/add")
 	@RequiresPermissions("pdr1y803")
 	public String add(Category category) {
@@ -124,6 +130,7 @@ public class CategoryController extends BaseController{
 		return "redirect:/admin/category/list";
 	}
 	
+	@Log(operType = OperatorType.UPDATE, module = "栏目管理", content = "修改栏目")
 	@RequestMapping(value ="/edit")
 	@RequiresPermissions("bira5jia")
 	public String edit(Category category) {
@@ -143,6 +150,7 @@ public class CategoryController extends BaseController{
 		return "redirect:/admin/category/list";
 	}
 	
+	@Log(operType = OperatorType.DELETE, module = "栏目管理", content = "删除栏目")
 	@RequestMapping(value ="/delete")
 	@RequiresPermissions("56p8k0im")
 	public String delete(String id) throws CmsException {
@@ -150,6 +158,7 @@ public class CategoryController extends BaseController{
 		return "redirect:/admin/category/list";
 	}
 	
+	@Log(operType = OperatorType.SELECT, module = "栏目管理", content = "加载下级栏目")
 	@RequestMapping(value = "/loadSon", method = RequestMethod.GET)
 	@RequiresPermissions("tvu49h42")
 	public void loadSon(String id) {
@@ -160,6 +169,7 @@ public class CategoryController extends BaseController{
 		this.outJson(result);
 	}
 	
+	@Log(operType = OperatorType.UPDATE, module = "栏目管理", content = "修改栏目排序")
 	@RequestMapping(value = "/updateSort")
 	@RequiresPermissions("3ywkqhmv")
 	@ResponseBody

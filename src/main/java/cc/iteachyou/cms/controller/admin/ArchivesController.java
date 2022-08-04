@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.github.pagehelper.PageInfo;
 
+import cc.iteachyou.cms.annotation.Log;
+import cc.iteachyou.cms.annotation.Log.OperatorType;
 import cc.iteachyou.cms.common.ExceptionEnum;
 import cc.iteachyou.cms.common.SearchEntity;
 import cc.iteachyou.cms.entity.Archives;
@@ -59,6 +61,7 @@ public class ArchivesController {
 	@Autowired
 	private SystemService systemService;
 	
+	@Log(operType = OperatorType.PAGE, module = "文章管理", content = "文章分页列表")
 	@RequestMapping("/list")
 	@RequiresPermissions("e6r77x94")
 	public String toIndex(Model model ,SearchEntity params) {
@@ -87,6 +90,7 @@ public class ArchivesController {
 		return "admin/archives/list";
 	}
 	
+	@Log(operType = OperatorType.OTHER, module = "文章管理", content = "添加文章页面")
 	@RequestMapping("/toAdd")
 	@RequiresPermissions("a7f3sqap")
 	public String toAdd(Model model, String code) {
@@ -107,6 +111,12 @@ public class ArchivesController {
 		return "admin/archives/add";
 	}
 	
+	/**
+	 * 添加文章
+	 * @return
+	 * @throws CmsException
+	 */
+	@Log(operType = OperatorType.INSERT, module = "文章管理", content = "添加文章")
 	@RequestMapping("/add")
 	@RequiresPermissions("0d2132i8")
 	public String add(Model model,HttpServletRequest request,@RequestParam Map<String,String> entity) throws CmsException {
@@ -204,7 +214,7 @@ public class ArchivesController {
 		return "redirect:/admin/archives/list?entity%5Bcid%5D=" + categoryCode;
 	}
 	
-	
+	@Log(operType = OperatorType.OTHER, module = "文章管理", content = "修改文章页面")
 	@RequestMapping(value = "/toEdit", method = RequestMethod.GET)
 	@RequiresPermissions("lk7s7t2n")
 	public String toEdit(Model model, String id,String cid) {
@@ -230,6 +240,7 @@ public class ArchivesController {
 		return "admin/archives/edit";
 	}
 	
+	@Log(operType = OperatorType.UPDATE, module = "文章管理", content = "修改文章")
 	@RequestMapping(value ="/edit")
 	@RequiresPermissions("th018nx3")
 	public String edit(Model model,HttpServletRequest request,@RequestParam Map<String,String> entity) throws CmsException {
@@ -328,6 +339,7 @@ public class ArchivesController {
 		return "redirect:/admin/archives/list?entity%5Bcid%5D=" + categoryCode;
 	}
 	
+	@Log(operType = OperatorType.DELETE, module = "文章管理", content = "删除文章")
 	@RequestMapping(value ="/delete")
 	@RequiresPermissions("n4lyn017")
 	public String delete(Model model, String id,String cid) throws CmsException {

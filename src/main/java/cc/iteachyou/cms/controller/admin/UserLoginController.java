@@ -24,6 +24,7 @@ import com.wf.captcha.ArithmeticCaptcha;
 import com.wf.captcha.utils.CaptchaUtil;
 
 import cc.iteachyou.cms.annotation.Log;
+import cc.iteachyou.cms.annotation.Log.OperatorType;
 import cc.iteachyou.cms.common.BaseController;
 import cc.iteachyou.cms.common.ResponseResult;
 import cc.iteachyou.cms.common.StateCodeEnum;
@@ -93,7 +94,7 @@ public class UserLoginController extends BaseController {
 	 * @param request，用来取登录之前Url地址，用来登录后跳转到没有登录之前的页面。
 	 * @return
 	 */
-	@Log(module = "登录模块",content = "用户登录操作")
+	@Log(operType = OperatorType.OTHER, module = "登录模块", content = "用户登录")
 	@RequestMapping(value = "login", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseResult login(@RequestBody UserVO entity,HttpServletRequest request) {
@@ -141,6 +142,7 @@ public class UserLoginController extends BaseController {
 	 * 
 	 * @return
 	 */
+	@Log(operType = OperatorType.OTHER, module = "登录模块", content = "用户退出登录")
 	@RequestMapping(value = "logout", method = RequestMethod.GET)
 	public String logout() {
 		try {

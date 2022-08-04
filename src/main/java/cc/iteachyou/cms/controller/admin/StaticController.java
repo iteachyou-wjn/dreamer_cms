@@ -23,6 +23,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.github.pagehelper.PageInfo;
 
+import cc.iteachyou.cms.annotation.Log;
+import cc.iteachyou.cms.annotation.Log.OperatorType;
 import cc.iteachyou.cms.common.ExceptionEnum;
 import cc.iteachyou.cms.common.ResponseResult;
 import cc.iteachyou.cms.common.SearchEntity;
@@ -54,7 +56,6 @@ import cc.iteachyou.cms.websocket.WebSocketServer;
 @Controller
 @RequestMapping("admin/static")
 public class StaticController {
-	
 	@Autowired
 	private ThemeService themeService;
 	@Autowired
@@ -72,6 +73,7 @@ public class StaticController {
 	 * 跳转页面
 	 * @return
 	 */
+	@Log(operType = OperatorType.OTHER, module = "静态化", content = "静态化页面")
 	@RequestMapping({"","toIndex"})
 	@RequiresPermissions("49sbzt90")
 	public ModelAndView toIndex() {
@@ -95,6 +97,7 @@ public class StaticController {
 	 * @throws IOException
 	 * @throws EncodeException
 	 */
+	@Log(operType = OperatorType.UPDATE, module = "静态化", content = "静态化首页")
 	@RequestMapping("generateIndex/{clientId}")
 	@RequiresPermissions("g2pse5y0")
 	@ResponseBody
@@ -149,6 +152,7 @@ public class StaticController {
 	 * @throws IOException
 	 * @throws EncodeException
 	 */
+	@Log(operType = OperatorType.UPDATE, module = "静态化", content = "静态化栏目页")
 	@RequestMapping("generateCategory/{clientId}")
 	@RequiresPermissions("ji766569")
 	@ResponseBody

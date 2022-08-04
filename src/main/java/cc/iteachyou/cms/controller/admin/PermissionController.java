@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.github.pagehelper.PageInfo;
 
+import cc.iteachyou.cms.annotation.Log;
+import cc.iteachyou.cms.annotation.Log.OperatorType;
 import cc.iteachyou.cms.common.ExceptionEnum;
 import cc.iteachyou.cms.common.SearchEntity;
 import cc.iteachyou.cms.entity.Menu;
@@ -23,6 +25,11 @@ import cc.iteachyou.cms.service.MenuService;
 import cc.iteachyou.cms.service.PermissionService;
 import cc.iteachyou.cms.utils.UUIDUtils;
 
+/**
+ * 权限管理
+ * @author Administrator
+ *
+ */
 @Controller
 @RequestMapping("admin/permission")
 public class PermissionController {
@@ -34,6 +41,7 @@ public class PermissionController {
 	/**
 	 * 列表
 	 */
+	@Log(operType = OperatorType.PAGE, module = "权限管理", content = "权限分页列表")
 	@RequestMapping({"","/list"})
 	@RequiresPermissions("6g1755tx")
 	public String list(Model model, SearchEntity params) {
@@ -45,6 +53,7 @@ public class PermissionController {
 	/**
 	 * 添加跳转
 	 */
+	@Log(operType = OperatorType.OTHER, module = "权限管理", content = "添加权限页面")
 	@RequestMapping("/toAdd")
 	@RequiresPermissions("d00f103e")
 	public String toAdd(Model model) {
@@ -57,6 +66,7 @@ public class PermissionController {
 	 * 添加
 	 * @throws CmsException 
 	 */
+	@Log(operType = OperatorType.INSERT, module = "权限管理", content = "添加权限")
 	@RequestMapping("/add")
 	@RequiresPermissions("088livwa")
 	public String add(Model model, Permission permission) throws CmsException {
@@ -78,6 +88,7 @@ public class PermissionController {
 	/**
 	 * 编辑
 	 */
+	@Log(operType = OperatorType.OTHER, module = "权限管理", content = "修改权限页面")
 	@RequestMapping(value = "/toEdit", method = RequestMethod.GET)
 	@RequiresPermissions("8f63055b")
 	public String toEdit(Model model, String id) {
@@ -91,6 +102,7 @@ public class PermissionController {
 	/**
 	 * 修改
 	 */
+	@Log(operType = OperatorType.UPDATE, module = "权限管理", content = "修改权限")
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	@RequiresPermissions("0h4ejf33")
 	public String update(Model model, Permission permission) {
@@ -101,6 +113,7 @@ public class PermissionController {
 	/**
 	 * 删除
 	 */
+	@Log(operType = OperatorType.DELETE, module = "权限管理", content = "删除权限")
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
 	@RequiresPermissions("qk8ogfi6")
 	public String delete(Model model, String id) {

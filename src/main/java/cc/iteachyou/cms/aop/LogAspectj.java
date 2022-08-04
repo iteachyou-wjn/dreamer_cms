@@ -59,13 +59,13 @@ public class LogAspectj {
 		SysLogger logEntity = new SysLogger();
 		logEntity.setId(UUIDUtils.getPrimaryKey());
 		logEntity.setLevel("INFO");
-		logEntity.setOperType(1);
 		
 		Log syslog = method.getAnnotation(Log.class);
 		if (syslog != null) {
 			// 注解上的描述
 			logEntity.setModule(syslog.module());
 			logEntity.setContent(syslog.content());
+			logEntity.setOperType(syslog.operType().name());
 		}
 
 		// 请求的方法名

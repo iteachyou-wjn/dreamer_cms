@@ -33,7 +33,7 @@ public class SysLogger implements Serializable {
     private String operUser;
 
 	@Column(name = "oper_type")
-    private Integer operType;
+    private String operType;
 
 	@Column(name = "oper_source")
     private String operSource;

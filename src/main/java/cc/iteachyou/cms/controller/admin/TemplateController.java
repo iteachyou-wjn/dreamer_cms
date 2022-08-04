@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import cc.iteachyou.cms.annotation.Log;
+import cc.iteachyou.cms.annotation.Log.OperatorType;
 import cc.iteachyou.cms.common.StateCodeEnum;
 import cc.iteachyou.cms.entity.Theme;
 import cc.iteachyou.cms.exception.CmsException;
@@ -24,6 +26,11 @@ import cc.iteachyou.cms.service.ThemeService;
 import cc.iteachyou.cms.utils.FileConfiguration;
 import cc.iteachyou.cms.vo.TemplateVo;
 
+/**
+ * 模板管理
+ * @author Administrator
+ *
+ */
 @Controller
 @RequestMapping("admin/templates")
 public class TemplateController {
@@ -32,6 +39,7 @@ public class TemplateController {
 	@Autowired
 	private ThemeService themeService;
 	
+	@Log(operType = OperatorType.SELECT, module = "模板管理", content = "模板列表")
 	@RequestMapping({"","toIndex"})
 	@RequiresPermissions("psqg04kn")
 	public ModelAndView toIndex() {
@@ -66,6 +74,7 @@ public class TemplateController {
 		return mv;
 	}
 	
+	@Log(operType = OperatorType.SELECT, module = "模板管理", content = "模板详情")
 	@GetMapping("toView")
 	@RequiresPermissions("5dg093r8")
 	public ModelAndView toView(String path,String fileName) throws IOException,CmsException {
@@ -107,6 +116,7 @@ public class TemplateController {
 		return mv;
 	}
 	
+	@Log(operType = OperatorType.OTHER, module = "模板管理", content = "修改模板页面")
 	@GetMapping("toEdit")
 	@RequiresPermissions("3oc5ri29")
 	public ModelAndView toEdit(String path,String file) throws IOException, CmsException {
@@ -132,6 +142,7 @@ public class TemplateController {
 		return mv;
 	}
 	
+	@Log(operType = OperatorType.UPDATE, module = "模板管理", content = "修改模板")
 	@PostMapping("save")
 	@RequiresPermissions("5n6ta53y")
 	public String save(TemplateVo template) throws IOException {

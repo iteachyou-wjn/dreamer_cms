@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import cc.iteachyou.cms.annotation.Log;
+import cc.iteachyou.cms.annotation.Log.OperatorType;
 import cc.iteachyou.cms.common.BaseController;
 import cc.iteachyou.cms.entity.Archives;
 import cc.iteachyou.cms.service.ArchivesService;
@@ -27,6 +29,7 @@ public class LabelController extends BaseController{
 	@Autowired
 	private ArchivesService archivesService;
 	
+	@Log(operType = OperatorType.SELECT, module = "标签管理", content = "标签分组查询")
 	@RequestMapping({"","/toIndex"})
 	public String toIndex(Model model) {
 		String[] classs = {"label-default","label-primary","label-success","label-info","label-inverse","label-warning","label-danger"};
@@ -36,6 +39,7 @@ public class LabelController extends BaseController{
 		return "admin/label/list";
 	}
 	
+	@Log(operType = OperatorType.DELETE, module = "标签管理", content = "删除标签")
 	@RequestMapping("/delete")
 	public String delete(String tagName) {
 		List<Archives> list = archivesService.queryListByTagName(tagName);

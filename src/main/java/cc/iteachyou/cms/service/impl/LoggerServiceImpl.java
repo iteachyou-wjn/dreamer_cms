@@ -61,7 +61,6 @@ public class LoggerServiceImpl implements LoggerService {
         log.setModule(module);
         log.setContent(msg);
         log.setOperUser(username);
-        log.setOperType(1);
         log.setIp(request.getRemoteAddr());
         log.setBrowser(request.getBroswer());
         log.setPlatform(request.getPlatform());
@@ -100,7 +99,6 @@ public class LoggerServiceImpl implements LoggerService {
     	log.setId(UUIDUtils.getPrimaryKey());
         log.setLevel("ERROR");
         log.setOperUser(username);
-        log.setOperType(2);
         log.setIp(request.getRemoteAddr());
         log.setBrowser(request.getBroswer());
         log.setPlatform(request.getPlatform());
@@ -159,10 +157,8 @@ public class LoggerServiceImpl implements LoggerService {
             SysLogger logInfo = new SysLogger();
             if (log.level() == Log.Level.INFO){
                 logInfo.setLevel("INFO");
-                logInfo.setOperType(1);
             }else if (log.level() == Log.Level.ERROR){
             	logInfo.setLevel("ERROR");
-            	logInfo.setOperType(2);
             }
             logInfo.setId(UUIDUtils.getPrimaryKey());
             logInfo.setContent(content);
@@ -215,7 +211,6 @@ public class LoggerServiceImpl implements LoggerService {
 		}
 		String classname = stackElements[index].getClassName();
 		String methodName = stackElements[index].getMethodName();
-		//classname = classname.substring(classname.lastIndexOf(".") + 1, classname.length());
 		
 		if (classname.indexOf("$$") > 0) {
 			classname = classname.substring(0, classname.indexOf("$$"));

@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.pagehelper.PageInfo;
 
+import cc.iteachyou.cms.annotation.Log;
+import cc.iteachyou.cms.annotation.Log.OperatorType;
 import cc.iteachyou.cms.common.ResponseResult;
 import cc.iteachyou.cms.common.SearchEntity;
 import cc.iteachyou.cms.common.StateCodeEnum;
@@ -24,7 +26,7 @@ import cc.iteachyou.cms.utils.CronUtils;
 import cc.iteachyou.cms.utils.UUIDUtils;
 
 /**
- * 管理定时任务(需要做权限控制)
+ * 计划任务(需要做权限控制)
  * @author 王俊南
  * @date 2021/3/16
  */
@@ -40,6 +42,7 @@ public class TaskController {
     /**
      * 查看任务列表
      */
+    @Log(operType = OperatorType.PAGE, module = "计划任务", content = "计划任务分页列表")
     @RequestMapping({"","/list"})
     @RequiresPermissions("6b3i98zz")
     public String taskList(Model model, SearchEntity params) {
@@ -51,6 +54,7 @@ public class TaskController {
     /**
 	 * 添加跳转
 	 */
+    @Log(operType = OperatorType.OTHER, module = "计划任务", content = "添加计划任务页面")
 	@RequestMapping("/toAdd")
 	@RequiresPermissions("qucfo6dh")
 	public String toAdd(Model model) {
@@ -60,6 +64,7 @@ public class TaskController {
 	/**
      * 编辑任务cron表达式
      */
+    @Log(operType = OperatorType.INSERT, module = "计划任务", content = "添加计划任务")
     @RequestMapping("/add")
     @RequiresPermissions("5752e68v")
     public String add(Scheduled scheduled) {
@@ -76,6 +81,7 @@ public class TaskController {
 	/**
 	 * 编辑跳转
 	 */
+    @Log(operType = OperatorType.OTHER, module = "计划任务", content = "修改计划任务页面")
 	@RequestMapping("/toEdit")
 	@RequiresPermissions("6ru3g0r0")
 	public String toEdit(Model model,String id) {
@@ -87,6 +93,7 @@ public class TaskController {
     /**
      * 编辑任务
      */
+    @Log(operType = OperatorType.UPDATE, module = "计划任务", content = "修改计划任务")
     @RequestMapping("/update")
     @RequiresPermissions("l81dwx0y")
     public String update(Scheduled scheduled) {
@@ -102,6 +109,7 @@ public class TaskController {
     /**
 	 * 删除
 	 */
+    @Log(operType = OperatorType.DELETE, module = "计划任务", content = "修改计划任务")
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
 	@RequiresPermissions("s2j11527")
 	public String delete(Model model, String id) {
@@ -112,6 +120,7 @@ public class TaskController {
     /**
      * 执行定时任务
      */
+    @Log(operType = OperatorType.OTHER, module = "计划任务", content = "执行计划任务")
     @RequestMapping("/run")
     @RequiresPermissions("4n23xrch")
     @ResponseBody
@@ -126,6 +135,7 @@ public class TaskController {
     /**
      * 启用或禁用定时任务
      */
+    @Log(operType = OperatorType.UPDATE, module = "计划任务", content = "修改计划任务状态")
     @RequestMapping("/changeStatus")
     @RequiresPermissions("wu4ujb04")
     public String changeStatusTaskCron(String id, String status) {

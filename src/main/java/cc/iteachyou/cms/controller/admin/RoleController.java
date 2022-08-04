@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.pagehelper.PageInfo;
 
+import cc.iteachyou.cms.annotation.Log;
+import cc.iteachyou.cms.annotation.Log.OperatorType;
 import cc.iteachyou.cms.common.ExceptionEnum;
 import cc.iteachyou.cms.common.ResponseResult;
 import cc.iteachyou.cms.common.SearchEntity;
@@ -30,6 +32,11 @@ import cc.iteachyou.cms.utils.StringUtil;
 import cc.iteachyou.cms.utils.UUIDUtils;
 import cc.iteachyou.cms.vo.PermissionVo;
 
+/**
+ * 角色管理
+ * @author 王俊南
+ *
+ */
 @Controller
 @RequestMapping("admin/role")
 public class RoleController {
@@ -39,6 +46,7 @@ public class RoleController {
 	/**
 	 * 列表
 	 */
+	@Log(operType = OperatorType.PAGE, module = "角色管理", content = "角色管理分页列表")
 	@RequestMapping({"","/list"})
 	@RequiresPermissions("7s73s67l")
 	public String list(Model model, SearchEntity params) {
@@ -50,6 +58,7 @@ public class RoleController {
 	/**
 	 * 添加跳转
 	 */
+	@Log(operType = OperatorType.OTHER, module = "角色管理", content = "添加角色页面")
 	@RequestMapping("/toAdd")
 	@RequiresPermissions("8h9r1tin")
 	public String toAdd(Model model) {
@@ -60,6 +69,7 @@ public class RoleController {
 	 * 添加
 	 * @throws CmsException 
 	 */
+	@Log(operType = OperatorType.INSERT, module = "角色管理", content = "添加角色")
 	@RequestMapping("/add")
 	@RequiresPermissions("sd5jepm0")
 	public String add(Model model, Role role) throws CmsException {
@@ -84,6 +94,7 @@ public class RoleController {
 	/**
 	 * 编辑
 	 */
+	@Log(operType = OperatorType.OTHER, module = "角色管理", content = "修改角色页面")
 	@RequestMapping(value = "/toEdit", method = RequestMethod.GET)
 	@RequiresPermissions("6g6w462l")
 	public String toEdit(Model model, String id) {
@@ -95,6 +106,7 @@ public class RoleController {
 	/**
 	 * 修改
 	 */
+	@Log(operType = OperatorType.UPDATE, module = "角色管理", content = "修改角色")
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	@RequiresPermissions("jg2066e5")
 	public String update(Model model, Role role) {
@@ -105,6 +117,7 @@ public class RoleController {
 	/**
 	 * 删除
 	 */
+	@Log(operType = OperatorType.DELETE, module = "角色管理", content = "删除角色")
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
 	@RequiresPermissions("zr25t2e0")
 	public String delete(Model model, String id) {
@@ -115,6 +128,7 @@ public class RoleController {
 	/**
 	 * 分配权限页面
 	 */
+	@Log(operType = OperatorType.OTHER, module = "角色管理", content = "角色分配权限")
 	@RequestMapping(value = "/toGrant", method = RequestMethod.GET)
 	@RequiresPermissions("63p5qb94")
 	public String toGrant(Model model, String id) {
@@ -127,6 +141,7 @@ public class RoleController {
 		return "admin/role/grant";
 	}
 	
+	@Log(operType = OperatorType.OTHER, module = "角色管理", content = "角色分配权限")
 	@PostMapping("grant/{roleId}")
 	@RequiresPermissions("ac71i30f")
 	@ResponseBody

@@ -263,7 +263,7 @@ CREATE TABLE `system_logger` (
   `id` varchar(32) COLLATE utf8mb4_bin NOT NULL,
   `level` varchar(32) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '级别',
   `oper_user` varchar(64) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '操作用户',
-  `oper_type` int(11) DEFAULT NULL COMMENT '操作类型',
+  `oper_type` varchar(32) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '操作类型',
   `oper_source` varchar(128) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '操作源',
   `ip` varchar(64) COLLATE utf8mb4_bin DEFAULT NULL COMMENT 'IP',
   `module` varchar(64) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '模块',
@@ -511,7 +511,7 @@ CREATE TABLE `system_user` (
 
 /*Data for the table `system_user` */
 
-insert  into `system_user`(`id`,`username`,`password`,`mobile`,`realname`,`status`,`page_style`,`salt`,`last_login_ip`,`last_login_time`,`portrait`,`create_by`,`create_time`,`update_by`,`update_time`) values ('1443c458e49c44539b63212cba8b9b1e','demo1','1f352f09d1a9bfb3f840a78804d9610c','','演示账号1',1,NULL,'ZGVtbzExMjM0NTY=',NULL,'2021-03-11 08:19:24.706',NULL,'9f4b807db2e94670bb02cdc212ea7389','2021-03-11 07:26:56',NULL,'2021-03-11 15:26:55'),('9f4b807db2e94670bb02cdc212ea7389','wangjn','51c04b026c6cf5f785622796aba7e56f','111','超级管理员',1,NULL,'d2FuZ2puMTIzNDU2',NULL,'2022-07-23 11:09:34.29',NULL,NULL,'2018-01-01 00:00:00','9f4b807db2e94670bb02cdc212ea7389','2021-03-09 03:50:34');
+insert  into `system_user`(`id`,`username`,`password`,`mobile`,`realname`,`status`,`page_style`,`salt`,`last_login_ip`,`last_login_time`,`portrait`,`create_by`,`create_time`,`update_by`,`update_time`) values ('1443c458e49c44539b63212cba8b9b1e','demo1','1f352f09d1a9bfb3f840a78804d9610c','','演示账号1',1,NULL,'ZGVtbzExMjM0NTY=',NULL,'2021-03-11 08:19:24.706',NULL,'9f4b807db2e94670bb02cdc212ea7389','2021-03-11 07:26:56',NULL,'2021-03-11 15:26:55'),('9f4b807db2e94670bb02cdc212ea7389','wangjn','51c04b026c6cf5f785622796aba7e56f','111','超级管理员',1,NULL,'d2FuZ2puMTIzNDU2',NULL,'2022-08-04 11:16:31.552',NULL,NULL,'2018-01-01 00:00:00','9f4b807db2e94670bb02cdc212ea7389','2021-03-09 03:50:34');
 
 /*Table structure for table `system_user_role` */
 

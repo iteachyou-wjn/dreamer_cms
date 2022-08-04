@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.github.pagehelper.PageInfo;
 
+import cc.iteachyou.cms.annotation.Log;
+import cc.iteachyou.cms.annotation.Log.OperatorType;
 import cc.iteachyou.cms.common.BaseController;
 import cc.iteachyou.cms.common.ExceptionEnum;
 import cc.iteachyou.cms.common.SearchEntity;
@@ -47,6 +49,7 @@ public class AttachmentController extends BaseController {
 	@Autowired
 	private SystemService systemService;
 	
+	@Log(operType = OperatorType.PAGE, module = "附件管理", content = "附件分页列表")
 	@RequestMapping({"","/list"})
 	@RequiresPermissions("5z1mj7i6")
 	public String toIndex(Model model ,SearchEntity params) {
@@ -57,6 +60,7 @@ public class AttachmentController extends BaseController {
 		return "admin/attachment/list";
 	}
 	
+	@Log(operType = OperatorType.INSERT, module = "附件管理", content = "添加附件")
 	@RequestMapping("/add")
 	@RequiresPermissions("ors4k771")
 	public String add(Attachment attachment) throws AdminGeneralException {
@@ -77,6 +81,7 @@ public class AttachmentController extends BaseController {
 		return "redirect:/admin/attachment/list";
 	}
 	
+	@Log(operType = OperatorType.DELETE, module = "附件管理", content = "删除附件")
 	@RequestMapping("/delete")
 	@RequiresPermissions("7b3w257s")
 	public String delete(String id) throws AdminGeneralException {
@@ -97,6 +102,7 @@ public class AttachmentController extends BaseController {
 		return "redirect:/admin/attachment/list";
 	}
 	
+	@Log(operType = OperatorType.OTHER, module = "附件管理", content = "下载附件")
 	@RequestMapping("/download")
 	public void download(String id,HttpServletRequest request,HttpServletResponse response) throws AdminGeneralException {
 		try {

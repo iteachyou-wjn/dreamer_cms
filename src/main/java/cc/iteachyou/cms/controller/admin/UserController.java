@@ -9,7 +9,6 @@ import javax.annotation.Resource;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.util.ByteSource;
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +21,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.github.pagehelper.PageInfo;
 
+import cc.iteachyou.cms.annotation.Log;
+import cc.iteachyou.cms.annotation.Log.OperatorType;
 import cc.iteachyou.cms.common.ExceptionEnum;
 import cc.iteachyou.cms.common.ResponseResult;
 import cc.iteachyou.cms.common.SearchEntity;
@@ -34,10 +35,10 @@ import cc.iteachyou.cms.exception.CmsException;
 import cc.iteachyou.cms.security.token.TokenManager;
 import cc.iteachyou.cms.service.RoleService;
 import cc.iteachyou.cms.service.UserService;
-import cc.iteachyou.cms.utils.LoggerUtils;
 import cc.iteachyou.cms.utils.StringUtil;
 import cc.iteachyou.cms.utils.UUIDUtils;
 import cc.iteachyou.cms.vo.UserPasswordVO;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 用户管理
@@ -45,16 +46,17 @@ import cc.iteachyou.cms.vo.UserPasswordVO;
  * @date 2018-07-30
  *
  */
+@Slf4j
 @Controller
 @RequestMapping("admin/user")
 public class UserController {
-	private Logger logger = LoggerUtils.getPlatformLogger();
 	
 	@Resource
 	private UserService userService;
 	@Autowired
 	private RoleService roleService;
 	
+	@Log(operType = OperatorType.PAGE, module = "用户管理", content = "用户分页列表")
 	@RequestMapping({"","list"})
 	@RequiresPermissions("498jkr41")
 	public ModelAndView list(Model model, SearchEntity searchEntity) {
@@ -65,6 +67,7 @@ public class UserController {
 		return mv;
 	}
 	
+	@Log(operType = OperatorType.OTHER, module = "用户管理", content = "添加用户页面")
 	@RequestMapping("toAdd")
 	@RequiresPermissions("db9xb4dy")
 	public ModelAndView toAdd() {
@@ -79,6 +82,7 @@ public class UserController {
 	 * @return
 	 * @throws CmsException
 	 */
+	@Log(operType = OperatorType.INSERT, module = "用户管理", content = "添加用户")
 	@RequestMapping("add")
 	@RequiresPermissions("00esg6hw")
 	public String add(User user) throws CmsException {
@@ -107,6 +111,7 @@ public class UserController {
 		return "redirect:/admin/user/list";
 	}
 	
+	@Log(operType = OperatorType.OTHER, module = "用户管理", content = "修改用户页面")
 	@RequestMapping("toEdit")
 	@RequiresPermissions("f9wezq49")
 	public ModelAndView toEdit(String id) {
@@ -123,6 +128,7 @@ public class UserController {
 	 * @return
 	 * @throws CmsException
 	 */
+	@Log(operType = OperatorType.UPDATE, module = "用户管理", content = "修改用户")
 	@RequestMapping("update")
 	@RequiresPermissions("q85s17tm")
 	public String update(User user) throws CmsException {
@@ -142,6 +148,7 @@ public class UserController {
 	/**
 	 * 删除
 	 */
+	@Log(operType = OperatorType.UPDATE, module = "用户管理", content = "删除用户")
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
 	@RequiresPermissions("p39sena0")
 	public String delete(Model model, String id) {
@@ -152,6 +159,7 @@ public class UserController {
 	/**
 	 * 跳转分配角色页面
 	 */
+	@Log(operType = OperatorType.OTHER, module = "用户管理", content = "用户授权角色页面")
 	@RequestMapping(value = "/toGrant", method = RequestMethod.GET)
 	@RequiresPermissions("2tvig6l7")
 	public ModelAndView toGrant(Model model, String userId) {
@@ -179,6 +187,7 @@ public class UserController {
 	 * 分配角色
 	 * @throws CmsException 
 	 */
+	@Log(operType = OperatorType.OTHER, module = "用户管理", content = "用户授权角色")
 	@RequestMapping(value = "/grant", method = RequestMethod.POST)
 	@RequiresPermissions("2o2sny2j")
 	public String grant(Model model, String userId, @RequestParam(value = "roles", required = false) List<String> roles) throws CmsException {
@@ -196,6 +205,7 @@ public class UserController {
 		return "redirect:/admin/user/toGrant?userId=" + userId;
 	}
 	
+	@Log(operType = OperatorType.OTHER, module = "用户管理", content = "用户修改密码页面")
 	@RequestMapping("toUpdatePwd")
 	public ModelAndView toUpdatePwd(String userId) {
 		ModelAndView mv = new ModelAndView();
@@ -214,6 +224,7 @@ public class UserController {
 	 * @param user
 	 * @return
 	 */
+	@Log(operType = OperatorType.OTHER, module = "用户管理", content = "用户修改密码")
 	@RequestMapping("/updatePwd")
 	@ResponseBody
 	public ResponseResult updatePwd(@RequestBody UserPasswordVO user) {
