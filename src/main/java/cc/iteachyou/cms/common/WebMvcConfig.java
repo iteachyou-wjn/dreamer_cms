@@ -7,8 +7,10 @@ import org.springframework.core.Ordered;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import cc.iteachyou.cms.entity.System;
 import cc.iteachyou.cms.interceptor.UserAuthorizationInterceptor;
 import cc.iteachyou.cms.service.SystemService;
 import cc.iteachyou.cms.utils.FileConfiguration;
@@ -22,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @Configuration
-public class WebMvcConfig extends WebMvcConfigurerAdapter {
+public class WebMvcConfig implements WebMvcConfigurer {
 	@Autowired
 	private FileConfiguration configuration;
 	@Autowired
@@ -42,7 +44,6 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         registry.addViewController("/").setViewName("forward:/index");
     	registry.addViewController("").setViewName("forward:/index");
         registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
-        super.addViewControllers(registry);
     }
     
     @Override
@@ -54,12 +55,12 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		System system = systemService.getSystem();
 		File file = new File(configuration.getResourceDir());
 		if(!file.exists()) {
 			log.error("资源目录不存在或设置错误！");
 		}
-		registry.addResourceHandler("/**").addResourceLocations(file.toURI().toString()).setCachePeriod(31556926);
-		super.addResourceHandlers(registry);
+		registry.addResourceHandler("/resources/**").addResourceLocations(file.toURI().toString()).setCachePeriod(31556926);
 	}
     
 }

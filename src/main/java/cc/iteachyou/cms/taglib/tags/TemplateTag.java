@@ -25,7 +25,7 @@ public class TemplateTag implements IParse {
 	public String parse(String html) {
 		Tag annotations = TemplateTag.class.getAnnotation(Tag.class);
 		Theme currentTheme = themeService.getCurrentTheme();
-		String templatePath = "/templates/" + currentTheme.getThemePath() + "/";
+		String templatePath = "/resources/templates/" + currentTheme.getThemePath() + "/";
 		String newHtml = html.replaceAll(annotations.regexp(), templatePath);
 		return newHtml;
 	}

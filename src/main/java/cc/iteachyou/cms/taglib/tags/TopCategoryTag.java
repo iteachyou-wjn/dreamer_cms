@@ -117,7 +117,7 @@ public class TopCategoryTag implements IParse {
 				}else if (FieldEnum.FIELD_TYPESEQ.getField().equalsIgnoreCase(name)) {
 					newHtml = newHtml.replace(string, StringUtil.isBlank(temp.getCatSeq()) ? "" : temp.getCatSeq());
 				}else if (FieldEnum.FIELD_TYPEIMG.getField().equalsIgnoreCase(name)) {
-					newHtml = newHtml.replace(string, system.getWebsite() + system.getUploaddir() + "/" + imagePath);
+					newHtml = newHtml.replace(string, system.getWebsite() + "resources/" + system.getUploaddir() + "/" + imagePath);
 				}else if (FieldEnum.FIELD_DESCRIPTION.getField().equalsIgnoreCase(name)) {
 					newHtml = newHtml.replace(string, StringUtil.isBlank(temp.getDescription()) ? "" : temp.getDescription());
 				}else if (FieldEnum.FIELD_LINKTARGET.getField().equalsIgnoreCase(name)) {

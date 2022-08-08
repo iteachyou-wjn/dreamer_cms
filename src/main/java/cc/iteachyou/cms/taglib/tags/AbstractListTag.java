@@ -59,7 +59,7 @@ public abstract class AbstractListTag {
 		
 		item = FunctionUtil.replaceByFunction(item, FieldEnum.FIELD_TITLE.getRegexp(), StringUtil.isBlank(archives.get("title")) ? "" : archives.get("title").toString());
 		item = item.replaceAll(FieldEnum.FIELD_PROPERTIES.getRegexp(), StringUtil.isBlank(archives.get("properties")) ? "" : archives.get("properties").toString());
-		item = item.replaceAll(FieldEnum.FIELD_LITPIC.getRegexp(), StringUtil.isBlank(imagePath) ? "" : system.getWebsite() + system.getUploaddir() + "/" + imagePath);
+		item = item.replaceAll(FieldEnum.FIELD_LITPIC.getRegexp(), StringUtil.isBlank(imagePath) ? "" : system.getWebsite() + "resources/" + system.getUploaddir() + "/" + imagePath);
 		//是否有缩略图
 		item = item.replaceAll(FieldEnum.FIELD_HASTHUMBNAIL.getRegexp(), StringUtil.isBlank(imagePath) ? "no-thumbnail" : "yes-thumbnail");
 		
