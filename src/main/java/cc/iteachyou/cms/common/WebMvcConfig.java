@@ -60,7 +60,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 		if(!file.exists()) {
 			log.error("资源目录不存在或设置错误！");
 		}
-		registry.addResourceHandler("/resources/**").addResourceLocations(file.toURI().toString()).setCachePeriod(31556926);
+		registry.addResourceHandler("/" + Constant.UPLOAD_PREFIX + "**").addResourceLocations(file.toURI().toString()).setCachePeriod(31556926);
 	}
     
 }

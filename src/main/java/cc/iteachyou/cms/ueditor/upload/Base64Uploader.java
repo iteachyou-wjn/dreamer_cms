@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.apache.commons.codec.binary.Base64;
 
+import cc.iteachyou.cms.common.Constant;
 import cc.iteachyou.cms.ueditor.PathFormat;
 import cc.iteachyou.cms.ueditor.define.AppInfo;
 import cc.iteachyou.cms.ueditor.define.BaseState;
@@ -13,7 +14,6 @@ import cc.iteachyou.cms.ueditor.define.State;
 public final class Base64Uploader {
 
 	public static State save(String content, Map<String, Object> conf) {
-		
 		byte[] data = decode(content);
 
 		long maxSize = ((Long) conf.get("maxSize")).longValue();
@@ -33,7 +33,7 @@ public final class Base64Uploader {
 		State storageState = StorageManager.saveBinaryFile(data, physicalPath);
 
 		if (storageState.isSuccess()) {
-			storageState.putInfo("url", PathFormat.format(savePath));
+			storageState.putInfo("url", "/" + Constant.UPLOAD_PREFIX + PathFormat.format(savePath));
 			storageState.putInfo("type", suffix);
 			storageState.putInfo("original", "");
 		}

@@ -484,7 +484,7 @@ CREATE TABLE `system_theme` (
 
 /*Data for the table `system_theme` */
 
-insert  into `system_theme`(`id`,`theme_name`,`theme_author`,`theme_img`,`theme_path`,`status`,`create_by`,`create_time`,`update_by`,`update_time`) values ('782c003ac9024eba94ae3b59dab17b5d','默认主题','王俊南','http://localhost:8888/uploads\\20190815\\18c8a53e1b63493b821c9ab865c4b395.jpg','default',1,'9f4b807db2e94670bb02cdc212ea7389','2018-01-01 00:00:00','9f4b807db2e94670bb02cdc212ea7389','2021-01-03 17:30:06');
+insert  into `system_theme`(`id`,`theme_name`,`theme_author`,`theme_img`,`theme_path`,`status`,`create_by`,`create_time`,`update_by`,`update_time`) values ('782c003ac9024eba94ae3b59dab17b5d','默认主题','王俊南','http://localhost:8888/resources/uploads/20191225/64c9af7c9b0e4907a2394347ecb19f63.jpg','default',1,'9f4b807db2e94670bb02cdc212ea7389','2018-01-01 00:00:00','9f4b807db2e94670bb02cdc212ea7389','2022-08-10 11:44:37');
 
 /*Table structure for table `system_user` */
 
@@ -511,7 +511,7 @@ CREATE TABLE `system_user` (
 
 /*Data for the table `system_user` */
 
-insert  into `system_user`(`id`,`username`,`password`,`mobile`,`realname`,`status`,`page_style`,`salt`,`last_login_ip`,`last_login_time`,`portrait`,`create_by`,`create_time`,`update_by`,`update_time`) values ('1443c458e49c44539b63212cba8b9b1e','demo1','1f352f09d1a9bfb3f840a78804d9610c','','演示账号1',1,NULL,'ZGVtbzExMjM0NTY=',NULL,'2021-03-11 08:19:24.706',NULL,'9f4b807db2e94670bb02cdc212ea7389','2021-03-11 07:26:56',NULL,'2021-03-11 15:26:55'),('9f4b807db2e94670bb02cdc212ea7389','wangjn','51c04b026c6cf5f785622796aba7e56f','111','超级管理员',1,NULL,'d2FuZ2puMTIzNDU2',NULL,'2022-08-04 11:16:31.552',NULL,NULL,'2018-01-01 00:00:00','9f4b807db2e94670bb02cdc212ea7389','2021-03-09 03:50:34');
+insert  into `system_user`(`id`,`username`,`password`,`mobile`,`realname`,`status`,`page_style`,`salt`,`last_login_ip`,`last_login_time`,`portrait`,`create_by`,`create_time`,`update_by`,`update_time`) values ('1443c458e49c44539b63212cba8b9b1e','demo1','1f352f09d1a9bfb3f840a78804d9610c','','演示账号1',1,NULL,'ZGVtbzExMjM0NTY=',NULL,'2021-03-11 08:19:24.706',NULL,'9f4b807db2e94670bb02cdc212ea7389','2021-03-11 07:26:56',NULL,'2021-03-11 15:26:55'),('9f4b807db2e94670bb02cdc212ea7389','wangjn','51c04b026c6cf5f785622796aba7e56f','111','超级管理员',1,NULL,'d2FuZ2puMTIzNDU2',NULL,'2022-08-10 11:14:23.854',NULL,NULL,'2018-01-01 00:00:00','9f4b807db2e94670bb02cdc212ea7389','2021-03-09 03:50:34');
 
 /*Table structure for table `system_user_role` */
 

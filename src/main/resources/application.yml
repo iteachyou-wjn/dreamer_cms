@@ -3,7 +3,9 @@ server:
     context-path: /
 
 spring:    
-  profiles:    active: dev  mvc:
+  profiles:
+    active: dev
+  mvc:
     static-path-pattern: /**
     favicon:
       enabled: false
@@ -22,7 +24,8 @@ spring:
       
 ## 该配置节点为独立的节点，有很多同学容易将这个配置放在spring的节点下，导致配置无法被识别
 mybatis: 
-  configuration:    call-setters-on-nulls: true
+  configuration:
+    call-setters-on-nulls: true
     map-underscore-to-camel-case: true
     # log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   mapper-locations: classpath:mapping/*.xml  #注意：一定要对应mapper映射xml文件的所在路径

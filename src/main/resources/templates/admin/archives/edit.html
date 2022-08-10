@@ -84,7 +84,7 @@
 				<div id="uploader" class="wu-example">
 				    <!--用来存放文件信息-->
 				    <div id="file-priview" class="file-priview">
-				    	<img th:src="${system.website} + ${system.uploaddir} + '/' + *{imagePath}" th:if="*{imagePath} != null and *{imagePath} != ''" />
+				    	<img th:src="${system.website} + 'resources/' + ${system.uploaddir} + *{imagePath}" th:if="*{imagePath} != null and *{imagePath} != ''" />
 				    </div>
 				    <div class="btns">
 				        <div id="picker">选择文件...</div>

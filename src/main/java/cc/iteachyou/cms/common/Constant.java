@@ -28,4 +28,9 @@ public class Constant {
 	public static final String ERROR = "error/exception";
 	
 	public static final String ADMIN_ROLE = "00000000";
+	
+	/**
+	 * 上传访问前缀
+	 */
+	public static final String UPLOAD_PREFIX = "resources/";
 }

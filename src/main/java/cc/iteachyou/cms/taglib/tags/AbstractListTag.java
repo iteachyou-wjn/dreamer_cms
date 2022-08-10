@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import cc.iteachyou.cms.common.Constant;
 import cc.iteachyou.cms.entity.Category;
 import cc.iteachyou.cms.exception.CmsException;
 import cc.iteachyou.cms.service.CategoryService;
@@ -59,7 +60,7 @@ public abstract class AbstractListTag {
 		
 		item = FunctionUtil.replaceByFunction(item, FieldEnum.FIELD_TITLE.getRegexp(), StringUtil.isBlank(archives.get("title")) ? "" : archives.get("title").toString());
 		item = item.replaceAll(FieldEnum.FIELD_PROPERTIES.getRegexp(), StringUtil.isBlank(archives.get("properties")) ? "" : archives.get("properties").toString());
-		item = item.replaceAll(FieldEnum.FIELD_LITPIC.getRegexp(), StringUtil.isBlank(imagePath) ? "" : system.getWebsite() + "resources/" + system.getUploaddir() + "/" + imagePath);
+		item = item.replaceAll(FieldEnum.FIELD_LITPIC.getRegexp(), StringUtil.isBlank(imagePath) ? "" : system.getWebsite() + Constant.UPLOAD_PREFIX + system.getUploaddir() + "/" + imagePath);
 		//是否有缩略图
 		item = item.replaceAll(FieldEnum.FIELD_HASTHUMBNAIL.getRegexp(), StringUtil.isBlank(imagePath) ? "no-thumbnail" : "yes-thumbnail");
 		
@@ -118,7 +119,7 @@ public abstract class AbstractListTag {
 		item = item.replaceAll(FieldEnum.FIELD_ID.getRegexp(), archives.getId());
 		item = FunctionUtil.replaceByFunction(item, FieldEnum.FIELD_TITLE.getRegexp(), StringUtil.isBlank(archives.getTitle()) ? "" : archives.getTitle());
 		item = item.replaceAll(FieldEnum.FIELD_PROPERTIES.getRegexp(), StringUtil.isBlank(archives.getProperties()) ? "" : archives.getProperties());
-		item = item.replaceAll(FieldEnum.FIELD_LITPIC.getRegexp(), StringUtil.isBlank(imagePath) ? "" : system.getWebsite() + system.getUploaddir() + "/" + imagePath);
+		item = item.replaceAll(FieldEnum.FIELD_LITPIC.getRegexp(), StringUtil.isBlank(imagePath) ? "" : system.getWebsite() + Constant.UPLOAD_PREFIX + system.getUploaddir() + "/" + imagePath);
 		//是否有缩略图
 		item = item.replaceAll(FieldEnum.FIELD_HASTHUMBNAIL.getRegexp(), StringUtil.isBlank(imagePath) ? "no-thumbnail" : "yes-thumbnail");
 		item = item.replaceAll(FieldEnum.FIELD_TAG.getRegexp(), StringUtil.isBlank(archives.getTag()) ? "" : archives.getTag());
