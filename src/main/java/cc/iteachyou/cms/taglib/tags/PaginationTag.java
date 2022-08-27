@@ -148,8 +148,15 @@ public class PaginationTag implements IParse {
 		 * %27:'
 		 * %5D:]
 		 */
-		String keywords = params.getEntity().get("keywords").toString();
-		String pageurl = "/search" + "?pageNum={pageNum}&pageSize={pageSize}&entity%5B%27keywords%27%5D=" + keywords; 
+		String pageurl = "/search" + "?pageNum={pageNum}&pageSize={pageSize}";
+		if(params.getEntity().containsKey("keywords") && StringUtil.isNotBlank(params.getEntity().get("keywords"))) {
+			String keywords = params.getEntity().get("keywords").toString();
+			pageurl += "&entity%5B%27keywords%27%5D=" + keywords;
+		}
+		if(params.getEntity().containsKey("tag") && StringUtil.isNotBlank(params.getEntity().get("tag"))) {
+			String label = params.getEntity().get("tag").toString();
+			pageurl += "&entity%5B%27tag%27%5D=" + label;
+		}
 		
 		Attribute[] attributes = annotations.attributes();
 		Map<String,Object> entity = new HashMap<String,Object>();

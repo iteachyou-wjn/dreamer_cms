@@ -123,14 +123,17 @@ public class PageListTag extends AbstractListTag implements IParse {
 				String addfieldsStr = entity.get("addfields").toString();
 				addfields = addfieldsStr.split(",");
 			}
-			
-			for (int j = 0; j < list.size(); j++) {
-				Map<String, Object> archivesVo = list.get(j);
-				String item = new String(content);
-				item = this.buildHTML(item, archivesVo, addfields, (j+1));
-				sb.append(item);
+			if(list == null || list.size() <= 0) {
+				newHtml = newHtml.replace(tag, "<div class='dreamer-empty'>暂无数据</div>");
+			}else {
+				for (int j = 0; j < list.size(); j++) {
+					Map<String, Object> archivesVo = list.get(j);
+					String item = new String(content);
+					item = this.buildHTML(item, archivesVo, addfields, (j+1));
+					sb.append(item);
+				}
+				newHtml = newHtml.replace(tag, sb.toString());
 			}
-			newHtml = newHtml.replace(tag, sb.toString());
 			paginationTag.setT(this.getT());
 			newHtml = paginationTag.parse(newHtml, typeid, pageInfo);
 		}
@@ -154,13 +157,19 @@ public class PageListTag extends AbstractListTag implements IParse {
 		
 		Map<String,Object> searchParams = new HashMap<String,Object>();
 		//关键词
-		String keywords = params.getEntity().get("keywords").toString();
-		searchParams.put("keywords", keywords);
+		if(params.getEntity().containsKey("keywords") && StringUtil.isNotBlank(params.getEntity().get("keywords"))) {
+			String keywords = params.getEntity().get("keywords").toString();
+			searchParams.put("keywords", keywords);
+		}
 		//栏目,可指定多个，多个用英文逗号隔开
 		if(params.getEntity().containsKey("typeid") && StringUtil.isNotBlank(params.getEntity().get("typeid"))) {
 			String typeid = params.getEntity().get("typeid").toString();
 			typeid = typeid.replace(",", "','");
 			searchParams.put("typeid", "'" + typeid + "'");
+		}
+		if(params.getEntity().containsKey("tag") && StringUtil.isNotBlank(params.getEntity().get("tag"))) {
+			String tag = params.getEntity().get("tag").toString();
+			searchParams.put("tag", tag);
 		}
 		
 		String newHtml = html;
@@ -176,12 +185,15 @@ public class PageListTag extends AbstractListTag implements IParse {
 			PageInfo<ArchivesVo> pageInfo = new PageInfo<ArchivesVo>(list);
 			
 			StringBuilder sb = new StringBuilder();
-			
-			for (int j = 0; j < list.size(); j++) {
-				ArchivesVo archivesVo = list.get(j);
-				String item = new String(content);
-				item = this.buildHTML(item, archivesVo, (j+1));
-				sb.append(item);
+			if(list == null || list.size() <= 0) {
+				newHtml = newHtml.replace(tag, "<div class='dreamer-empty'>暂无数据</div>");
+			}else {
+				for (int j = 0; j < list.size(); j++) {
+					ArchivesVo archivesVo = list.get(j);
+					String item = new String(content);
+					item = this.buildHTML(item, archivesVo, (j+1));
+					sb.append(item);
+				}
 			}
 			newHtml = newHtml.replace(tag, sb.toString());
 			newHtml = paginationTag.parse(newHtml, params, pageInfo);

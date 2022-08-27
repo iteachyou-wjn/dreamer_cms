@@ -453,19 +453,22 @@ public class FrontController {
 		
 		try {
 			Map<String, Object> entity = params.getEntity();
-			if(entity == null || !entity.containsKey("keywords")) {
+			if(entity == null || entity.size() <= 0) {
 				throw new FormParameterException(
 						ExceptionEnum.FORM_PARAMETER_EXCEPTION.getCode(),
 						ExceptionEnum.FORM_PARAMETER_EXCEPTION.getMessage(),
 						"请仔细检查Form表单参数结构，正确参数格式应该包含entity['keywords']、pageNum、pageSize。");
 			}
-			
-			String keywords = params.getEntity().get("keywords").toString();
-			if(keywords.getBytes("GBK").length < 3) {
-				throw new FormParameterException(
-						ExceptionEnum.FORM_PARAMETER_EXCEPTION.getCode(),
-						ExceptionEnum.FORM_PARAMETER_EXCEPTION.getMessage(),
-						"搜索关键字不能少于5个字符，请重新输入后进行搜索。");
+			String keywords = "";
+			if(entity.containsKey("keywords")) {
+				keywords = params.getEntity().get("keywords").toString();
+
+				if(keywords.getBytes("GBK").length < 3) {
+					throw new FormParameterException(
+							ExceptionEnum.FORM_PARAMETER_EXCEPTION.getCode(),
+							ExceptionEnum.FORM_PARAMETER_EXCEPTION.getMessage(),
+							"搜索关键字不能少于5个字符，请重新输入后进行搜索。");
+				}
 			}
 			
 			String path = templateDir + templatePath;

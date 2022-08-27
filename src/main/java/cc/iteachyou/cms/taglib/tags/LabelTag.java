@@ -1,5 +1,6 @@
 package cc.iteachyou.cms.taglib.tags;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 
 import cc.iteachyou.cms.common.SearchEntity;
 import cc.iteachyou.cms.dao.LabelMapper;
@@ -66,14 +68,17 @@ public class LabelTag implements IParse {
 			
 			SearchEntity params = new SearchEntity();
 			params.setEntity(entity);
+			List<Label> list = new ArrayList<>();
 			if(entity.containsKey("start") && entity.containsKey("length")) {
-				params.setPageNum(Integer.parseInt(entity.get("start").toString()));
-				params.setPageSize(Integer.parseInt(entity.get("length").toString()));
+				int start = Integer.parseInt(entity.get("start").toString());
+				int length = Integer.parseInt(entity.get("length").toString());
+				params.setPageNum(start <= 0 ? 1 : start);
+				params.setPageSize(length <= 0 ? 10 : length);
 				PageHelper.startPage(params.getPageNum(), params.getPageSize());
+				list = labelMapper.queryLabelByPage(params.getEntity());
+			}else {
+				list = labelMapper.selectAll();
 			}
-			
-			List<Label> list = labelMapper.queryLabelByPage(params.getEntity());
-			
 			StringBuilder sb = new StringBuilder();
 			for (int j = 0; j < list.size(); j++) {
 				Label label = list.get(j);
