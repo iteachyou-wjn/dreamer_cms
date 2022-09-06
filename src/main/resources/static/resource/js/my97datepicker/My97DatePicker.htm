@@ -2,7 +2,7 @@
 <head>
 <meta http-equiv="content-type" content="text/xml; charset=gb2312" />
 <title>My97DatePicker</title>
-<script type="text/javascript" src="config.js" charset=gb2312></script>
+<script src="config.js" charset=gb2312></script>
 <script>
 //var l = location;
 if(parent==window)
@@ -17,7 +17,7 @@ else{
 */
 var $d, $dp, $pdp = parent.$dp, $dt, $tdt, $sdt, $lastInput, $IE=$pdp.ie, $FF = $pdp.ff,$OPERA=$pdp.opera, $ny, $cMark = false;
 
-//说明是flat此时,拷贝一份$dp
+//说锟斤拷锟斤拷flat锟斤拷时,锟斤拷锟斤拷一锟斤拷$dp
 if ($pdp.eCont) {
 	$dp = {};
 	for (var p in $pdp) {
@@ -46,17 +46,17 @@ $dp.getLang = function(name){
 	return langList[index];
 }
 
-//根据语言设置选择语言    
+//锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷选锟斤拷锟斤拷锟斤拷    
 $dp.realLang = $dp.getLang($dp.lang);
 document.write("<script src='lang/" + $dp.realLang.name + ".js' charset='" + $dp.realLang.charset + "'><\/script>");
 
-//导入皮肤列表文件
+//锟斤拷锟斤拷皮锟斤拷锟叫憋拷锟侥硷拷
 for (var i = 0; i < skinList.length; i++) {
     document.write('<link rel="stylesheet" type="text/css" href="skin/' + skinList[i].name + '/datepicker.css" title="' + skinList[i].name + '" charset="' + skinList[i].charset + '" disabled="true"/>');
 }
 
 </script>
-<script type="text/javascript" src="calendar.js" charset="gb2312"></script>
+<script src="calendar.js" charset="gb2312"></script>
 </head>
 <body leftmargin="0" topmargin="0" onLoad="$c.autoSize()" tabindex=0>
 </body>

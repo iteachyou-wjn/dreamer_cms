@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dreamer CMS - 后台登录</title>
     <link href="/resource/css/custom-login.css" rel="stylesheet" />
-    <link rel="stylesheet" type="text/css" href="/resource/js/jQueryMessage/css/message.skin.css" />
 </head>
 
 <body>
@@ -30,10 +29,10 @@
 	</form>
 </div>
 <div class="copyright">Copyright © 2018 I Teach You，我教你！  冀ICP备19026223号</div>
-<script type="text/javascript" src="/resource/js/jquery.min.js"></script>
-<script type="text/javascript" src="/resource/js/jQueryMessage/js/jquery.plugin.message.js"></script>
-<script type="text/javascript" src="/resource/js/vector.js"></script>
-<script type="text/javascript">
+<script src="/resource/js/jquery.min.js"></script>
+<script src="/resource/js/coco-message/coco-message.js"></script>
+<script src="/resource/js/vector.js"></script>
+<script>
 	if (window.frames.length != parent.frames.length) {
 		window.parent.location.href = "/admin/u/logout";
 	}
@@ -72,7 +71,6 @@
 			type : "POST",
 			dataType : "JSON",
 			success : function(result) {
-				console.log(result);
 				if(result.success){
 					sessionStorage.setItem("dreamer-cms-user", JSON.stringify(result.data));
 					setTimeout(function() {
@@ -80,12 +78,7 @@
 						window.location.href = "/admin/u/toIndex";
 					}, 500);
 				}else{
-					$("body").MessageBox({
-						type: 'error',
-						message:result.info,
-						timeout:3000,
-						callbak:null
-					});
+					cocoMessage.error(result.info);
 				}
 			}
 		});

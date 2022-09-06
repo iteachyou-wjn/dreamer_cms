@@ -9,7 +9,6 @@
     <link href="/resource/css/ionicons.min.css" rel="stylesheet" type="text/css" />
     <link href="/resource/css/style.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="/resource/js/webuploader-0.1.5/webuploader.css">
-    <link rel="stylesheet" type="text/css" href="/resource/js/jQueryMessage/css/message.skin.css" />
     <style type="text/css">
 	    .file-item{display:flex;align-items: center;height: 50px;justify-content: space-between;}
 	   	.file-item .info,.file-item .state{margin:0;padding:0;}
@@ -70,12 +69,12 @@
     </div>
 </div>
 <!-- jQuery 2.0.2 -->
-<script src="/resource/js/jquery.min.js" type="text/javascript"></script>
+<script src="/resource/js/jquery.min.js"></script>
 <!-- Bootstrap -->
-<script src="/resource/js/bootstrap.min.js" type="text/javascript"></script>
-<script type="text/javascript" src="/resource/js/webuploader-0.1.5/webuploader.js"></script>
-<script type="text/javascript" src="/resource/js/jQueryMessage/js/jquery.plugin.message.js"></script>
-<script type="text/javascript">
+<script src="/resource/js/bootstrap.min.js"></script>
+<script src="/resource/js/webuploader-0.1.5/webuploader.js"></script>
+<script src="/resource/js/coco-message/coco-message.js"></script>
+<script>
 	var files = 0;
 	$(document).ready(function () {
 		//初始化上传组件
@@ -110,12 +109,7 @@
 	            msg = "上传出错！请检查后重新上传！错误代码" + type;
 	        }
 	        uploader.reset();
-			$("body").MessageBox({
-				type: 'error',
-				message: msg,
-				timeout:3000,
-				callbak:null
-			});
+			cocoMessage.error(msg);
 	    });
 	   	// 当有文件被添加进队列的时候
 	   	uploader.on('fileQueued', function(file) {
@@ -133,21 +127,11 @@
 	    	$("#file-input-"+file.id).val(response.data.filepath);
 	        $("#" + file.id + ">.state").html('上传成功！');
 	    	uploader.reset();
-	        $("body").MessageBox({
-				type: 'success',
-				message: '上传成功！',
-				timeout:3000,
-				callbak:null
-			});
+			cocoMessage.success("上传成功");
 	    });
 	    uploader.on('uploadError', function( file ) {
 			uploader.reset();
-	    	$("body").MessageBox({
-				type: 'error',
-				message: '上传失败！',
-				timeout:3000,
-				callbak:null
-			});
+			cocoMessage.error("上传失败");
 	    });
 	}
 	
@@ -161,12 +145,7 @@
 	function confrim(){
 		var inputs = $("input[id^='file-input-']");
 		if(inputs.length <= 0){
-			$("body").MessageBox({
-				type: 'error',
-				message: "请先选择备份文件！",
-				timeout:3000,
-				callbak:null
-			});
+			cocoMessage.error("请先选择备份文件");
 			return;
 		}
 		$("#confrim-dialog").modal();
@@ -189,19 +168,9 @@
 			success : function(result) {
 				$("#confrim-dialog").modal('hide');
 				if(result.success){
-					$("body").MessageBox({
-						type: 'success',
-						message:result.info,
-						timeout:3000,
-						callbak:null
-					});
+					cocoMessage.success(result.info);
 				}else{
-					$("body").MessageBox({
-						type: 'error',
-						message:result.info,
-						timeout:3000,
-						callbak:null
-					});
+					cocoMessage.error(result.info);
 				}
 			}
 		});

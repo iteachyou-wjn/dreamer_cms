@@ -6,7 +6,6 @@
     <title>Dreamer CMS - 后台管理系统</title> 
     <link href="/resource/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="/resource/css/style.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="/resource/js/jQueryMessage/css/message.skin.css" />
 </head>
 
 <body>
@@ -26,24 +25,24 @@
 		<form class="col s12" id="form1" th:action="@{/admin/task/add}" onsubmit="return validateForm();" method="post">
 			<div class="form-group form-control-medium">
 				<label for="taskName">任务名称：</label>
-				<input id="taskName" name="taskName" type="text" class="form-control"/>
+				<input id="taskName" name="taskName" type="text" class="form-control" placeholder="任务名称" />
 			</div>
 			<div class="form-group form-control-large">
 				<label for="clazzName">完整类路径：</label>
-				<input id="clazzName" name="clazzName" type="text" class="form-control"/>
+				<input id="clazzName" name="clazzName" type="text" class="form-control" placeholder="完整类路径" />
 			</div>
 			<div class="form-group form-control-medium">
 				<label for="cronExpression">Cron表达式：</label>
-				<input id="cronExpression" name="cronExpression" type="text" class="form-control"/>
+				<input id="cronExpression" name="cronExpression" type="text" class="form-control" placeholder="Cron表达式" />
 			</div>
 			<div class="form-group form-control-medium">
 				<label for="remark">备注：</label>
-				<textarea rows="5" name="remark" class="form-control"></textarea>
+				<textarea rows="5" name="remark" class="form-control" placeholder="备注"></textarea>
 			</div>
 			<div class="form-group form-control-medium">
 				<label for="status">状态：</label>
-				<input id="status-yes" name="status" type="radio" value="1" checked="checked"/> 有效
-				<input id="status-no" name="status" type="radio" value="0"/> 无效
+				<input id="status-yes" name="status" type="radio" value="1" checked="checked" /> 有效
+				<input id="status-no" name="status" type="radio" value="0" /> 无效
 			</div>
 			<div class="form-btn-group-left">
             	<button type="submit" class="btn btn-info">保存</button>
@@ -51,39 +50,24 @@
 		</form>
 	</div>
 </section>
-<script src="/resource/js/jquery.min.js" type="text/javascript"></script>
-<script type="text/javascript" src="/resource/js/jQueryMessage/js/jquery.plugin.message.js"></script>
-<script type="text/javascript">
+<script src="/resource/js/jquery.min.js"></script>
+<script src="/resource/js/coco-message/coco-message.js"></script>
+<script>
    	/* 保存方法 */
     function validateForm(){
     	var taskName = $("#taskName").val();
     	var clazzName = $("#clazzName").val();
     	var cronExpression = $("#cronExpression").val();
     	if(taskName == null || taskName==''){
-    		$("body").MessageBox({
-				type: 'error',
-				message:'任务名称不能为空',
-				timeout:3000,
-				callbak:null
-			});
+			cocoMessage.error("任务名称不能为空");
     		return false;
     	}
     	if(clazzName == null || clazzName==''){
-    		$("body").MessageBox({
-				type: 'error',
-				message:'完整类路径不能为空',
-				timeout:3000,
-				callbak:null
-			});
+			cocoMessage.error("完整类路径不能为空");
     		return false;
     	}
     	if(cronExpression == null || cronExpression==''){
-    		$("body").MessageBox({
-				type: 'error',
-				message:'Cron表达式不能为空',
-				timeout:3000,
-				callbak:null
-			});
+			cocoMessage.error("Cron表达式不能为空");
     		return false;
     	}
     	return true;

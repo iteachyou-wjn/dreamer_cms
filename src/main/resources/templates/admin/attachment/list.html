@@ -9,7 +9,6 @@
     <link href="/resource/css/iCheck/all.css" rel="stylesheet" type="text/css" />
     <link href="/resource/css/style.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="/resource/js/webuploader-0.1.5/webuploader.css">   
-    <link rel="stylesheet" type="text/css" href="/resource/js/jQueryMessage/css/message.skin.css" /> 
 </head>
 
 <body>
@@ -28,7 +27,7 @@
 	<div class="panel-body">
          <!-- <span class="pull-right badge badge-info">32</span> -->
          <button class="btn btn-primary btn-addon btn-sm" data-toggle="modal" th:onclick="javascript: openUploadDialog()">
-             <i class="fa fa-plus"></i>上传附件
+             <i class="fa fa-plus"></i> 上传附件
          </button>
     </div>
     <div class="panel-body table-responsive">
@@ -123,15 +122,15 @@
     </div>
 </div>
 <!-- jQuery 2.0.2 -->
-<script src="/resource/js/jquery.min.js" type="text/javascript"></script>
+<script src="/resource/js/jquery.min.js"></script>
 <!-- Bootstrap -->
-<script src="/resource/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/resource/js/bootstrap.min.js"></script>
 <!-- iCheck -->
-<script src="/resource/js/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
-<script type="text/javascript" src="/resource/js/webuploader-0.1.5/webuploader.js"></script>
-<script type="text/javascript" src="/resource/js/jQueryMessage/js/jquery.plugin.message.js"></script>
-<script src="/resource/js/clipboard.min.js" type="text/javascript"></script>
-<script type="text/javascript" th:inline="javascript">
+<script src="/resource/js/plugins/iCheck/icheck.min.js"></script>
+<script src="/resource/js/coco-message/coco-message.js"></script>
+<script src="/resource/js/webuploader-0.1.5/webuploader.js"></script>
+<script src="/resource/js/clipboard.min.js"></script>
+<script th:inline="javascript">
 	var system = [[${system}]];
 	function initUploader(picker,inputEl){
     	var uploader = WebUploader.create({
@@ -152,25 +151,14 @@
     		
     	});
 	    uploader.on('uploadSuccess', function(file, response) {
-	    	console.log(response);
-	    	$("body").MessageBox({
-				type: 'success',
-				message: '上传成功！',
-				timeout:3000,
-				callbak:null
-			});
+			cocoMessage.success("上传成功");
 	    	$("#filename").val(response.data.originalFilename);
 	    	$("#filepath").val(response.data.filepath);
 	    	$("#filesize").val(response.data.filesize);
 	    	$("#filetype").val(response.data.filetype);
 	    });
 	    uploader.on('uploadError', function( file ) {
-	    	$("body").MessageBox({
-				type: 'error',
-				message: '上传失败！',
-				timeout:3000,
-				callbak:null
-			});
+			cocoMessage.error("上传失败");
 	    });
     }
     
@@ -228,21 +216,11 @@
 			}
 		});
 		clipboard.on('success', function(e) {
-			$("body").MessageBox({
-				type: 'success',
-				message: '复制成功！',
-				timeout:3000,
-				callbak:null
-			});
+			cocoMessage.success("复制成功");
 		});
 	
 		clipboard.on('error', function(e) {
-			$("body").MessageBox({
-				type: 'error',
-				message: '复制失败！',
-				timeout:3000,
-				callbak:null
-			});
+			cocoMessage.error("复制失败");
 		});
 	}
 </script>

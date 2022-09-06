@@ -14,14 +14,14 @@
             overflow: hidden;
         }
     </style>
-    <script type="text/javascript" src="http://api.map.baidu.com/api?key=&v=1.1&services=true"></script>
+    <script src="http://api.map.baidu.com/api?key=&v=1.1&services=true"></script>
 </head>
 
 <body onload="initMap();">
 <!--百度地图容器-->
 <div style="width:697px;height:550px;border:#ccc solid 1px;" id="dituContent"></div>
 </body>
-<script type="text/javascript">
+<script>
     function getParam(name) {
         return location.href.match(new RegExp('[?#&]' + name + '=([^?#&]+)', 'i')) ? RegExp.$1 : '';
     }

@@ -9,7 +9,6 @@
     <link href="/resource/css/ionicons.min.css" rel="stylesheet" type="text/css" />
     <link href="/resource/css/iCheck/all.css" rel="stylesheet" type="text/css" />
     <link href="/resource/css/style.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="/resource/js/jQueryMessage/css/message.skin.css" />
 </head>
 
 <body>
@@ -74,39 +73,16 @@
     </div>
 </div>
 <!-- jQuery 2.0.2 -->
-<script src="/resource/js/jquery.min.js" type="text/javascript"></script>
+<script src="/resource/js/jquery.min.js"></script>
 <!-- Bootstrap -->
-<script src="/resource/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/resource/js/bootstrap.min.js"></script>
 <!-- iCheck -->
-<script src="/resource/js/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
-<script src="/resource/js/aceeditor/ace.js" type="text/javascript" charset="utf-8"></script>
-<script src="/resource/js/aceeditor/ext-language_tools.js" type="text/javascript" charset="utf-8"></script>
-<script type="text/javascript" src="/resource/js/jQueryMessage/js/jquery.plugin.message.js"></script>
-<script type="text/javascript">
+<script src="/resource/js/plugins/iCheck/icheck.min.js"></script>
+<script src="/resource/js/coco-message/coco-message.js"></script>
+<script>
 	var editor = null;
 	window.onload = function(){
 		renderCheckBox();
-		
-		//初始化对象
-    	editor = ace.edit("codeEditor");
-    	//设置风格和语言（更多风格和语言，请到github上相应目录查看）
-    	theme = "monokai";
-    	language = "sql";
-    	editor.setTheme("ace/theme/" + theme);
-    	editor.session.setMode("ace/mode/" + language);
-    	//字体大小
-    	editor.setFontSize(16);
-    	//设置只读（true时只读，用于展示代码）
-    	editor.setReadOnly(false);
-    	//自动换行,设置为off关闭
-    	editor.setOption("wrap", "free");
-    	//启用提示菜单
-    	ace.require("ace/ext/language_tools");
-    	editor.setOptions({
-    		enableBasicAutocompletion: true,
-    		enableSnippets: true,
-    		enableLiveAutocompletion: true
-    	});
 	}
 	
 	function renderCheckBox(){
@@ -135,19 +111,9 @@
 			dataType : "JSON",
 			success : function(result) {
 				if(result.success){
-					$("body").MessageBox({
-						type: 'success',
-						message:result.info,
-						timeout:3000,
-						callbak:null
-					});
+					cocoMessage.success(result.info);
 				}else{
-					$("body").MessageBox({
-						type: 'error',
-						message:result.info,
-						timeout:3000,
-						callbak:null
-					});
+					cocoMessage.error(result.info);
 				}
 			}
 		});
@@ -167,12 +133,7 @@
 					editor.setValue(result.data);
 					$("#struct-dialog").modal("show");
 				}else{
-					$("body").MessageBox({
-						type: 'error',
-						message:result.info,
-						timeout:3000,
-						callbak:null
-					});
+					cocoMessage.error(result.info);
 				}
 			}
 		});

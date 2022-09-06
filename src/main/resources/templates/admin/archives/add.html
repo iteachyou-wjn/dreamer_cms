@@ -13,7 +13,6 @@
     <link href="/resource/js/tagit/jquery.tagit.css" rel="stylesheet" type="text/css" />
     <link href="/resource/js/tagit/tagit.ui-zendesk.css" rel="stylesheet" type="text/css" />
     <link href="/resource/js/webuploader-0.1.5/webuploader.css" rel="stylesheet" type="text/css" />
-    <link href="/resource/js/jQueryMessage/css/message.skin.css" rel="stylesheet" type="text/css" />
     <link href="/resource/js/my97datepicker/skin/WdatePicker.css" rel="stylesheet" type="text/css" />
     <style type="text/css">
     	.btns{display:flex;}
@@ -48,29 +47,29 @@
 			<input name="imagePath" id="filepath" type="hidden">
 			<div class="form-group form-control-medium">
 				<label for="title">文章标题：</label>
-				<input id="title" name="title" type="text" class="form-control">
+				<input id="title" name="title" type="text" class="form-control" placeholder="文章标题" />
 			</div>
 			<div class="form-group form-control-small">
                 <label for="weight">权重：</label>
-                <input id="weight" name="weight" type="text" class="form-control">
+                <input id="weight" name="weight" type="text" class="form-control" placeholder="权重" />
 			</div>
 			<div class="form-group form-control-small">
                 <label for="clicks">点击：</label>
-                <input id="clicks" name="clicks" type="text" class="form-control">
+                <input id="clicks" name="clicks" type="text" class="form-control" placeholder="点击数" />
 			</div>
 			<div class="form-group form-control-medium">
 				<label for="properties">自定义属性：</label>
                 <label class="checkbox-inline">
-                    <input type="checkbox" name="properties" id="h" value="h">头条[h]
+                    <input type="checkbox" name="properties" id="h" value="h" /> 头条[h]
                 </label>
                 <label class="checkbox-inline">
-                    <input type="checkbox" name="properties" id="b" value="b">加粗[b]
+                    <input type="checkbox" name="properties" id="b" value="b" /> 加粗[b]
                 </label>
                 <label class="checkbox-inline">
-                    <input type="checkbox" name="properties" id="f" value="f">幻灯[f]
+                    <input type="checkbox" name="properties" id="f" value="f" /> 幻灯[f]
                 </label>
                 <label class="checkbox-inline">
-                    <input type="checkbox" name="properties" id="p" value="p">图片[p]
+                    <input type="checkbox" name="properties" id="p" value="p" /> 图片[p]
                 </label>
 			</div>
 			<div class="form-group form-control-medium">
@@ -93,7 +92,7 @@
 			</div>
 			<div class="form-group">
 				<label for="description">内容摘要：</label>
-				<textarea id="description" name="description" class="form-control"></textarea>
+				<textarea id="description" name="description" class="form-control" placeholder="内容摘要"></textarea>
 			</div>
 			
 			<div th:each="field : ${fields}" 
@@ -101,7 +100,7 @@
 				<!-- 提示文字 -->
 				<label for="description" th:attr="for=${field.id}" th:text="${field.fieldText}+'：'"></label>
 				<!-- 单行文本框（CHAR和VARCHAR） -->
-				<input th:id="${field.id}" th:name="${field.fieldName}" type="text" class="form-control" th:if="${field.dataType} == 'varchar' or ${field.dataType} == 'char'" />
+				<input th:id="${field.id}" th:name="${field.fieldName}" type="text" class="form-control" th:if="${field.dataType} == 'varchar' or ${field.dataType} == 'char'" th:placeholder="${field.fieldText}" />
 				<!-- 多行文本框（TEXTAREA） -->
 				<textarea th:id="${field.id}" th:name="${field.fieldName}" class="form-control" th:if="${field.dataType} == 'textarea'"></textarea>
 				<!-- MARKDOWN -->
@@ -120,7 +119,7 @@
                 <div class="row" th:if="${field.dataType} == 'radio'">
                     <div class="checkbox-item" th:each="radio : ${#strings.arraySplit(field.defaultValue,',')}">
                         <label class="checkbox-inline">
-                            <input type="radio" th:name="${field.fieldName}" th:id="${field.id}+'-'+${radio}" th:value="${radio}" th:text="${radio}">
+                            <input type="radio" th:name="${field.fieldName}" th:id="${field.id}+'-'+${radio}" th:value="${radio}" th:text="${radio}" />
                         </label>
                     </div>
                     <div class="clearfix"></div>
@@ -129,7 +128,7 @@
                 <div class="row" th:if="${field.dataType} == 'checkbox'">
                     <div class="checkbox-item" th:each="checkbox : ${#strings.arraySplit(field.defaultValue,',')}">
                         <label class="checkbox-inline">
-                            <input type="checkbox" th:name="${field.fieldName}" th:id="${field.id}+'-'+${checkbox}" th:value="${checkbox}" th:text="${checkbox}">
+                            <input type="checkbox" th:name="${field.fieldName}" th:id="${field.id}+'-'+${checkbox}" th:value="${checkbox}" th:text="${checkbox}" />
                         </label>
                     </div>
                     <div class="clearfix"></div>
@@ -162,19 +161,19 @@
 				<div class="col-lg-6">
 					<label for="comment">允许评论：</label>
                     <label class="checkbox-inline">
-                        <input type="radio" name="comment" id="comment-yes" value="1" checked="">是
+                        <input type="radio" name="comment" id="comment-yes" value="1" checked="checked" /> 是
                     </label>
                     <label class="checkbox-inline">
-                        <input type="radio" name="comment" id="comment-no" value="0">否
+                        <input type="radio" name="comment" id="comment-no" value="0" /> 否
                     </label>
                 </div>
                 <div class="col-lg-6">
                     <label for="subscribe">允许订阅：</label>
                     <label class="checkbox-inline">
-                        <input type="radio" name="subscribe" id="subscribe-yes" value="1" checked="">是
+                        <input type="radio" name="subscribe" id="subscribe-yes" value="1" checked="checked" /> 是
                     </label>
                     <label class="checkbox-inline">
-                        <input type="radio" name="subscribe" id="subscribe-no" value="0">否
+                        <input type="radio" name="subscribe" id="subscribe-no" value="0" /> 否
                     </label>
                 </div>
                 <div class="col-lg-6"></div>
@@ -186,16 +185,16 @@
 		</form>
 	</div>
 </section>
-<script src="/resource/js/jquery.min.js" type="text/javascript"></script>
+<script src="/resource/js/jquery.min.js"></script>
 <script src="/resource/js/editor.md-master/editormd.min.js"></script>
-<script type="text/javascript" charset="utf-8" src="/resource/js/ueditor-1.4.3.3/ueditor.config.js"></script>
-<script type="text/javascript" charset="utf-8" src="/resource/js/ueditor-1.4.3.3/ueditor.all.min.js"></script>
+<script charset="utf-8" src="/resource/js/ueditor-1.4.3.3/ueditor.config.js"></script>
+<script charset="utf-8" src="/resource/js/ueditor-1.4.3.3/ueditor.all.min.js"></script>
 <script src="/resource/js/tagit/jquery-ui.min.js"></script>
 <script src="/resource/js/tagit/tag-it.js"></script>
-<script type="text/javascript" src="/resource/js/webuploader-0.1.5/webuploader.js"></script>
-<script type="text/javascript" src="/resource/js/jQueryMessage/js/jquery.plugin.message.js"></script>
-<script type="text/javascript" src="/resource/js/my97datepicker/WdatePicker.js"></script>
-<script type="text/javascript" th:inline="javascript">
+<script src="/resource/js/webuploader-0.1.5/webuploader.js"></script>
+<script src="/resource/js/coco-message/coco-message.js"></script>
+<script src="/resource/js/my97datepicker/WdatePicker.js"></script>
+<script th:inline="javascript">
     var fields = [[${fields}]];
     var thumbnailWidth = 178,thumbnailHeight = 178;
     var imagesetUploader = null;
@@ -270,20 +269,10 @@
 	    	        var crtVal = $("#input-" + field.id).val();
 	    			if(crtVal != null && crtVal != "" && crtVal != "undefined") crtVal += ",";
 	    			$("#input-" + field.id).val(crtVal + response.data.filepath);
-	    	        $("body").MessageBox({
-	    				type: 'success',
-	    				message: '上传成功！',
-	    				timeout: 3000,
-	    				callbak: null
-	    			});
+	    	        cocoMessage.success("上传成功");
 	    	    });
 	        	imagesetUploader.on('uploadError', function( file ) {
-	    	    	$("body").MessageBox({
-	    				type: 'error',
-	    				message: '上传失败！',
-	    				timeout:3000,
-	    				callbak:null
-	    			});
+	    	    	cocoMessage.error("上传失败")
 	    	    });
 	    	}
 	    }
@@ -343,21 +332,11 @@
     		}
 	        $("#"+inputEl).val(response.data.filepath);
 	        uploader.reset();
-	        $("body").MessageBox({
-				type: 'success',
-				message: '上传成功！',
-				timeout: 3000,
-				callbak: null
-			});
+	        cocoMessage.success("上传成功");
 	    });
 	    uploader.on('uploadError', function( file ) {
 			uploader.reset();
-	    	$("body").MessageBox({
-				type: 'error',
-				message: '上传失败！',
-				timeout:3000,
-				callbak:null
-			});
+	    	cocoMessage.error("上传失败")
 	    });
     }
     
@@ -367,12 +346,7 @@
 	    if (fileNumbers > 0) {
 	    	imagesetUploader.upload();
 	    } else {
-	    	$("body").MessageBox({
-				type: 'error',
-				message: '请选择文件！',
-				timeout: 3000,
-				callbak:null
-			});
+	    	cocoMessage.error("请选择文件");
 	    }
 	}
 
@@ -422,12 +396,7 @@
     function validateForm(){
     	var title = $("#title").val();
     	if(title == null || title == ""){
-    		$("body").MessageBox({
-				type: 'error',
-				message: '标题不能为空！',
-				timeout:3000,
-				callbak:null
-			});
+			cocoMessage.error("标题不能为空");
     		return false;
     	}
     	for(var i = 0;i < fields.length;i++){

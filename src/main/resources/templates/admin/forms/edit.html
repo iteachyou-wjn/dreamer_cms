@@ -41,19 +41,19 @@
 					<input name="id" id="id" type="hidden" th:value="*{id}" />
 					<div class="form-group form-control-medium">
 						<label for="formName">表单名：</label>
-						<input id="formName" name="formName" type="text" class="form-control" th:value="*{formName}">
+						<input id="formName" name="formName" type="text" class="form-control" th:value="*{formName}" placeholder="表单名称">
 					</div>
 					<div class="form-group form-control-medium">
-						<label for="tableName">附加表名：</label>
-						<input id="tableName" name="tableName" type="text" class="form-control" th:value="*{tableName}">
+						<label for="tableName">附加表名（系统会自动添加表前缀system_）：</label>
+						<input id="tableName" name="tableName" type="text" class="form-control" th:value="*{tableName}" placeholder="系统会自动添加表前缀system_" th:readonly="${form.type} != '1'">
 					</div>
 					<div class="form-group">
 						<label for="type">表单性质：</label>
 						<label class="checkbox-inline">
-							<input type="radio" name="type" id="type-yes" value="1" th:checked="${form.type} == 1">自定义表单
+							<input type="radio" name="type" id="type-yes" value="1" th:checked="${form.type} == 1" /> 自定义表单
 						</label>
 						<label class="checkbox-inline">
-							<input type="radio" name="type" id="type-no" value="0" th:checked="${form.type} == 0">系统表单
+							<input type="radio" name="type" id="type-no" value="0" th:checked="${form.type} == 0" /> 系统表单
 						</label>
 					</div>
 					<div class="form-btn-group-left">
@@ -116,14 +116,24 @@
 		</div>
 	</div>
 </div>
-<script src="/resource/js/jquery.min.js" type="text/javascript"></script>
+<script src="/resource/js/jquery.min.js"></script>
 <!-- Bootstrap -->
-<script src="/resource/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/resource/js/bootstrap.min.js"></script>
 <!-- iCheck -->
-<script src="/resource/js/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
-<script type="text/javascript">
+<script src="/resource/js/plugins/iCheck/icheck.min.js"></script>
+<script src="/resource/js/coco-message/coco-message.js"></script>
+<script>
     function validateForm(){
-    	//console.log($("#content").val());
+    	var formName = $("#formName").val();
+    	var tableName = $("#tableName").val();
+    	if(formName == null || menuName==''){
+    		cocoMessage.error("表单名称不能为空");
+    		return false;
+    	}
+    	if(tableName == null || tableName==''){
+    		cocoMessage.error("附加表名不能为空");
+    		return false;
+    	}
     	return true;
     }
     

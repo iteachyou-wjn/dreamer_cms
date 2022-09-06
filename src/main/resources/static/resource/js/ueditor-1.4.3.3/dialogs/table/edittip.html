@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>表格删除提示</title>
-    <script type="text/javascript" src="../internal.js"></script>
+    <script src="../internal.js"></script>
     <style type="text/css">
         .section {
             width: 200px;
@@ -24,7 +24,7 @@
         <label><input type="radio" id="J_delCol" name="cmd"/><var id="lang_delCol"></var></label>
     </div>
 </div>
-<script type="text/javascript">
+<script>
     dialog.onok = function () {
         $G("J_delRow").checked ? editor.execCommand("deleterow") : editor.execCommand("deletecol");
     };

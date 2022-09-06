@@ -10,7 +10,6 @@
     <link href="/resource/css/iCheck/all.css" rel="stylesheet" type="text/css" />
     <link href="/resource/css/style.css" rel="stylesheet" type="text/css" />
 	<link rel="stylesheet" type="text/css" href="/resource/js/webuploader-0.1.5/webuploader.css">    
-	<link rel="stylesheet" type="text/css" href="/resource/js/jQueryMessage/css/message.skin.css" />
 	<style type="text/css">
     	.btns{display:flex;}
     	.btns>#ctlBtn{height:32px;margin-left:10px;}
@@ -143,14 +142,14 @@
     </div>
 </div>
 <!-- jQuery 2.0.2 -->
-<script src="/resource/js/jquery.min.js" type="text/javascript"></script>
+<script src="/resource/js/jquery.min.js"></script>
 <!-- Bootstrap -->
-<script src="/resource/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/resource/js/bootstrap.min.js"></script>
 <!-- iCheck -->
-<script src="/resource/js/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
-<script type="text/javascript" src="/resource/js/webuploader-0.1.5/webuploader.js"></script>
-<script type="text/javascript" src="/resource/js/jQueryMessage/js/jquery.plugin.message.js"></script>
-<script type="text/javascript" th:inline="javascript">
+<script src="/resource/js/plugins/iCheck/icheck.min.js"></script>
+<script src="/resource/js/webuploader-0.1.5/webuploader.js"></script>
+<script src="/resource/js/coco-message/coco-message.js"></script>
+<script th:inline="javascript">
 	var system = [[${system}]];
     function initUploader(picker,inputEl){
     	var uploader = WebUploader.create({
@@ -177,21 +176,11 @@
 	    uploader.on('uploadSuccess', function(file, response) {
 	    	$("#" + inputEl).val(response.data.filepath);
 	    	uploader.reset();
-	    	$("body").MessageBox({
-				type: 'success',
-				message: '上传成功！',
-				timeout:3000,
-				callbak:null
-			});
+			cocoMessage.success("上传成功");
 	    });
 	    uploader.on('uploadError', function( file ) {
 			uploader.reset();
-	    	$("body").MessageBox({
-				type: 'error',
-				message: '上传失败！',
-				timeout:3000,
-				callbak:null
-			});
+			cocoMessage.error("上传失败");
 	    });
     }
     
@@ -228,21 +217,11 @@
 	    uploader.on('uploadSuccess', function(file, response) {
 	    	$("#" + inputEl).val(system.website + system.uploaddir + '/' + response.data.filepath);
 			uploader.reset();
-	    	$("body").MessageBox({
-				type: 'success',
-				message: '上传成功！',
-				timeout:3000,
-				callbak:null
-			});
+	    	cocoMessage.success("上传成功");
 	    });
 	    uploader.on('uploadError', function( file ) {
 			uploader.reset();
-	    	$("body").MessageBox({
-				type: 'error',
-				message: '上传失败！',
-				timeout:3000,
-				callbak:null
-			});
+	    	cocoMessage.error("上传失败");
 	    });
     }
     
@@ -262,12 +241,7 @@
 	function save(){
 		var themePath = $("#themePath").val();
 		if(themePath == null || themePath == "" || themePath == "undefined"){
-			$("body").MessageBox({
-				type: 'error',
-				message: '请先上传主题包！',
-				timeout:3000,
-				callbak:null
-			});
+			cocoMessage.error("请先上传主题包");
 			return;
 		}
 		$("#form1").submit();
@@ -277,22 +251,12 @@
 	function update(){
 		var cacheID = $("#uploadCacheID").val();
 		if(cacheID == null || cacheID == "" || cacheID == "undefined"){
-			$("body").MessageBox({
-				type: 'error',
-				message: '缺少必要的参数！',
-				timeout:3000,
-				callbak:null
-			});
+			cocoMessage.error("缺少必要的参数");
 			return;
 		}
 		var themeImg = $("#themeImg").val();
 		if(themeImg == null || themeImg == "" || themeImg == "undefined"){
-			$("body").MessageBox({
-				type: 'error',
-				message: '请先上传缩略图！',
-				timeout:3000,
-				callbak:null
-			});
+			cocoMessage.error("请先上传缩略图");
 			return;
 		}
 		$("#form2").submit();

@@ -1,8 +1,5 @@
-server: 
-  port: 8888
-
 web:
-  resource-path: /opt/resources/cms.iteachyou.cc/
+  resource-path: /opt/resources/cms.iteachyou.io/
 
 spring: 
   datasource: 
@@ -24,6 +21,6 @@ spring:
 
 # 日志配置
 logging:
-  path: /opt/resources/cms.iteachyou.cc/logs/
+  path: /opt/resources/cms.iteachyou.io/logs/
   level:
-    root: info           
+    root: info

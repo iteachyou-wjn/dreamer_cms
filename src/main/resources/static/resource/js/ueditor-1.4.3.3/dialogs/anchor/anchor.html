@@ -15,8 +15,8 @@
         <div class="content">
             <span><var id="lang_input_anchorName"></var></span><input id="anchorName"  value="" />
         </div>
-        <script type="text/javascript" src="../internal.js"></script>
-        <script type="text/javascript">
+        <script src="../internal.js"></script>
+        <script>
             var anchorInput = $G('anchorName'),
                 node = editor.selection.getRange().getClosedNode();
             if(node && node.tagName == 'IMG' && (node = node.getAttribute('anchorname'))){

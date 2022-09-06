@@ -3,8 +3,8 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title></title>
-    <script type="text/javascript" src="../internal.js"></script>
-    <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.1&services=true"></script>
+    <script src="../internal.js"></script>
+    <script src="http://api.map.baidu.com/api?v=1.1&services=true"></script>
     <style type="text/css">
         .content{width:530px; height: 350px;margin: 10px auto;}
         .content table{width: 100%}
@@ -31,7 +31,7 @@
     <div style="width:100%;height:340px;margin:5px auto;border:1px solid gray" id="container"></div>
 
 </div>
-<script type="text/javascript">
+<script>
     var map = new BMap.Map("container"),marker,point,styleStr;
     map.enableScrollWheelZoom();
     map.enableContinuousZoom();

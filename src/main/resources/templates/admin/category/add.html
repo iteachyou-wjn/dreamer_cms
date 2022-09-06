@@ -50,16 +50,17 @@
 					<input name="mdContent" id="mdContent" type="hidden" />
 					<input name="htmlContent" id="htmlContent" type="hidden" />
 					<div class="form-group form-control-medium">
-						<label for="cnname">栏目名称：</label>
-						<input id="cnname" name="cnname" type="text" class="form-control">
+						<label for="cnname">栏目中文名称：</label>
+						<input id="cnname" name="cnname" type="text" class="form-control" placeholder="栏目中文名称" />
 					</div>
 					<div class="form-group form-control-medium">
 						<label for="enname">栏目英文名称：</label>
-						<input id="enname" name="enname" type="text" class="form-control">
+						<input id="enname" name="enname" type="text" class="form-control" placeholder="栏目英文名称" />
 					</div>
 					<div class="form-group form-control-small">
 						<label for="arcdir">表单模型：</label>
 						<select class="form-control m-b-10" name="formId">
+							<option>请选择表单模型</option>
                             <option th:each="form : ${forms}" th:text="${form.formName}+' | '+${form.code}" th:value="${form.id}" th:selected="${category.formId eq form.id}"></option>
                         </select>
 					</div>
@@ -76,7 +77,7 @@
 					<div class="form-group form-control-small">
 						<label>上级栏目：</label>
 						<select class="form-control m-b-10" disabled="disabled">
-                            <option th:value="${category.id}" th:text="${category.cnname}">Option 1</option>
+                            <option th:value="${category.id}" th:text="${category.cnname}"></option>
                         </select>
 					</div>
 					<div class="form-group form-control-small">
@@ -88,11 +89,11 @@
 					</div>
 					<div class="form-group form-control-small">
 						<label for="pageSize">分页大小：</label>
-						<input id="pageSize" name="pageSize" type="text" class="form-control" value="10">
+						<input id="pageSize" name="pageSize" type="text" class="form-control" value="10" placeholder="分页大小">
 					</div>
 					<div class="form-group">
 						<label for="description">栏目描述：</label>
-						<textarea id="description" name="description" class="form-control"></textarea>
+						<textarea id="description" name="description" class="form-control" placeholder="栏目描述"></textarea>
 					</div>
                 	<div class="form-group">
                     	<label>栏目内容：</label>
@@ -103,19 +104,19 @@
 					<div class="form-group">
 						<label>显示/隐藏：</label>
 						<div class="checkbox-inline">
-                            <input type="radio" name="isShow" id="show" value="1" checked="checked">显示
+                            <input type="radio" name="isShow" id="show" value="1" checked="checked" /> 显示
                         </div>
                         <div class="checkbox-inline">
-                            <input type="radio" name="isShow" id="hide" value="0">隐藏
+                            <input type="radio" name="isShow" id="hide" value="0" /> 隐藏
                         </div>
 					</div>
 					<div class="form-group">
 						<label>是否允许投稿：</label>
 						<div class="checkbox-inline">
-                            <input type="radio" name="isInput" id="isInput-yes" value="1">是
+                            <input type="radio" name="isInput" id="isInput-yes" value="1" /> 是
                         </div>
                         <div class="checkbox-inline">
-                            <input type="radio" name="isInput" id="isInput-no" value="0" checked="checked">否
+                            <input type="radio" name="isInput" id="isInput-no" value="0" checked="checked" /> 否
                         </div>
 					</div>
             	</div><!-- 基础信息 -->
@@ -130,45 +131,45 @@
 					</div>
 					<div class="form-group form-control-medium">
 						<label for="visitUrl">访问地址：</label>
-						<input id="visitUrl" name="visitUrl" type="text" class="form-control">
+						<input id="visitUrl" name="visitUrl" type="text" class="form-control" placeholder="访问地址" />
 					</div>
 					<div class="form-group form-control-medium">
 						<label for="coverTemp">封面模版：</label>
-						<input id="coverTemp" name="coverTemp" type="text" class="form-control" value="index_article.html" />
+						<input id="coverTemp" name="coverTemp" type="text" class="form-control" value="index_article.html" placeholder="封面模版" />
 					</div>
 					<div class="form-group form-control-medium">
 						<label for="listTemp">列表模版：</label>
-						<input id="listTemp" name="listTemp" type="text" class="form-control" value="list_article.html" />
+						<input id="listTemp" name="listTemp" type="text" class="form-control" value="list_article.html" placeholder="列表模板" />
 					</div>
 					<div class="form-group form-control-medium">
 						<label for="articleTemp">内容页模版：</label>
-						<input id="articleTemp" name="articleTemp" type="text" class="form-control" value="article_article.html" />
+						<input id="articleTemp" name="articleTemp" type="text" class="form-control" value="article_article.html" placeholder="内容页模版" />
 					</div>
 					<div class="form-group form-control-medium">
 						<label for="linkUrl">链接地址：</label>
-						<input id="linkUrl" name="linkUrl" type="text" class="form-control">
+						<input id="linkUrl" name="linkUrl" type="text" class="form-control" placeholder="链接地址" />
 					</div>
                 </div>
                 <div id="extend" class="tab-pane">
                 	<div class="form-group form-control-medium">
 						<label for="ext01">扩展字段1：</label>
-						<input id="ext01" name="ext01" type="text" class="form-control">
+						<input id="ext01" name="ext01" type="text" class="form-control" placeholder="扩展字段1" />
 					</div>
 					<div class="form-group form-control-medium">
 						<label for="ext02">扩展字段2：</label>
-						<input id="ext02" name="ext02" type="text" class="form-control">
+						<input id="ext02" name="ext02" type="text" class="form-control" placeholder="扩展字段2" />
 					</div>
 					<div class="form-group form-control-medium">
 						<label for="ext03">扩展字段3：</label>
-						<input id="ext03" name="ext03" type="text" class="form-control">
+						<input id="ext03" name="ext03" type="text" class="form-control" placeholder="扩展字段3" />
 					</div>
 					<div class="form-group form-control-medium">
 						<label for="ext04">扩展字段4：</label>
-						<input id="ext04" name="ext04" type="text" class="form-control">
+						<input id="ext04" name="ext04" type="text" class="form-control" placeholder="扩展字段4" />
 					</div>
 					<div class="form-group form-control-medium">
 						<label for="ext05">扩展字段5：</label>
-						<input id="ext05" name="ext05" type="text" class="form-control">
+						<input id="ext05" name="ext05" type="text" class="form-control" placeholder="扩展字段5" />
 					</div>
                 </div>
             </div>
@@ -178,14 +179,14 @@
 		</form>
     </div>
 </section>
-<script src="/resource/js/jquery.min.js" type="text/javascript"></script>
+<script src="/resource/js/jquery.min.js"></script>
 <!-- Bootstrap -->
-<script src="/resource/js/bootstrap.min.js" type="text/javascript"></script>
-<script type="text/javascript" charset="utf-8" src="/resource/js/ueditor-1.4.3.3/ueditor.config.js"></script>
-<script type="text/javascript" charset="utf-8" src="/resource/js/ueditor-1.4.3.3/ueditor.all.min.js"></script>
-<script type="text/javascript" src="/resource/js/webuploader-0.1.5/webuploader.js"></script>
-<script type="text/javascript" src="/resource/js/jQueryMessage/js/jquery.plugin.message.js"></script>
-<script type="text/javascript">
+<script src="/resource/js/bootstrap.min.js"></script>
+<script charset="utf-8" src="/resource/js/ueditor-1.4.3.3/ueditor.config.js"></script>
+<script charset="utf-8" src="/resource/js/ueditor-1.4.3.3/ueditor.all.min.js"></script>
+<script src="/resource/js/webuploader-0.1.5/webuploader.js"></script>
+<script src="/resource/js/coco-message/coco-message.js"></script>
+<script>
 	var thumbnailWidth = 178,thumbnailHeight = 178;
     var ueEditor = null;
     
@@ -228,21 +229,11 @@
 	        $("#"+el).append($("<img src='"+response.data.url+"'/>"));
 	        $("#"+inputEl).val(response.data.filepath);
 	        uploader.reset();
-	        $("body").MessageBox({
-				type: 'success',
-				message: '上传成功！',
-				timeout: 3000,
-				callbak: null
-			});
+			cocoMessage.success("上传成功");
 	    });
 	    uploader.on('uploadError', function( file ) {
 			uploader.reset();
-	    	$("body").MessageBox({
-				type: 'error',
-				message: '上传失败！',
-				timeout:3000,
-				callbak:null
-			});
+			cocoMessage.error("上传失败");
 	    });
     }
     

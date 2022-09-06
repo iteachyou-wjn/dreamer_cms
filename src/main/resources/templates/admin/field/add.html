@@ -29,11 +29,11 @@
 			<input name="formId" id="formId" type="hidden" th:value="${formId}" />
 			<div class="form-group form-control-medium">
 				<label for="fieldText">表单提示文字：</label>
-				<input id="fieldText" name="fieldText" type="text" class="form-control">
+				<input id="fieldText" name="fieldText" type="text" class="form-control" placeholder="表单提示文字" />
 			</div>
 			<div class="form-group form-control-medium">
                 <label for="fieldName">字段名称：</label>
-                <input id="fieldName" name="fieldName" type="text" class="form-control">
+                <input id="fieldName" name="fieldName" type="text" class="form-control" placeholder="字段名称">
 			</div>
 			<div class="form-group">
 				<label for="dataType">数据类型：</label>
@@ -41,17 +41,17 @@
 				<div class="row">
 					<div class="checkbox-item">
                         <label class="checkbox-inline">
-                            <input type="radio" name="dataType" id="dataType-1" value="varchar" checked="">单行文本（VARCHAR）
+                            <input type="radio" name="dataType" id="dataType-1" value="varchar" checked="checked" /> 单行文本（VARCHAR）
                         </label>
                     </div>
                     <div class="checkbox-item">
                         <label class="checkbox-inline">
-                            <input type="radio" name="dataType" id="dataType-2" value="char">单行文本（CHAR）
+                            <input type="radio" name="dataType" id="dataType-2" value="char" /> 单行文本（CHAR）
                         </label>
                     </div>
                     <div class="checkbox-item">
                         <label class="checkbox-inline">
-                            <input type="radio" name="dataType" id="dataType-3" value="textarea">多行文本（TEXT）
+                            <input type="radio" name="dataType" id="dataType-3" value="textarea" /> 多行文本（TEXT）
                         </label>
                     </div>
                     <div class="clearfix"></div>
@@ -59,17 +59,17 @@
 				<div class="row">
                     <div class="checkbox-item">
                         <label class="checkbox-inline">
-                            <input type="radio" name="dataType" id="dataType-4" value="html">HTML文本
+                            <input type="radio" name="dataType" id="dataType-4" value="html" /> HTML文本
                         </label>
                     </div>
                     <div class="checkbox-item">
                         <label class="checkbox-inline">
-                            <input type="radio" name="dataType" id="dataType-5" value="markdown">MARKDOWN文本
+                            <input type="radio" name="dataType" id="dataType-5" value="markdown" /> MARKDOWN文本
                         </label>
                     </div>
                     <div class="checkbox-item">
                         <label class="checkbox-inline">
-                            <input type="radio" name="dataType" id="dataType-6" value="file">附件类型
+                            <input type="radio" name="dataType" id="dataType-6" value="file" /> 附件类型
                         </label>
                     </div>
                     <div class="clearfix"></div>
@@ -77,17 +77,17 @@
                 <div class="row">
                 	<div class="checkbox-item">
                         <label class="checkbox-inline">
-                            <input type="radio" name="dataType" id="dataType-7" value="datetime">时间类型
+                            <input type="radio" name="dataType" id="dataType-7" value="datetime" /> 时间类型
                         </label>
                     </div>
                     <div class="checkbox-item">
                         <label class="checkbox-inline">
-                            <input type="radio" name="dataType" id="dataType-8" value="radio">单选（RADIO）
+                            <input type="radio" name="dataType" id="dataType-8" value="radio" /> 单选（RADIO）
                         </label>
                     </div>
                     <div class="checkbox-item">
                         <label class="checkbox-inline">
-                            <input type="radio" name="dataType" id="dataType-9" value="checkbox">多选（CHECKBOX）
+                            <input type="radio" name="dataType" id="dataType-9" value="checkbox" /> 多选（CHECKBOX）
                         </label>
                     </div>
                     <div class="clearfix"></div>
@@ -95,29 +95,29 @@
                 <div class="row">
                 	<div class="checkbox-item">
                         <label class="checkbox-inline">
-                            <input type="radio" name="dataType" id="dataType-10" value="select">下拉选（SELECT）
+                            <input type="radio" name="dataType" id="dataType-10" value="select" /> 下拉选（SELECT）
                         </label>
                     </div>
                     <div class="checkbox-item">
                         <label class="checkbox-inline">
-                            <input type="radio" name="dataType" id="dataType-11" value="image">图片类型（IMAGE）
+                            <input type="radio" name="dataType" id="dataType-11" value="image" /> 图片类型（IMAGE）
                         </label>
                     </div>
                     <div class="checkbox-item">
                         <label class="checkbox-inline">
-                            <input type="radio" name="dataType" id="dataType-12" value="imageset">图集（IMAGESET）
+                            <input type="radio" name="dataType" id="dataType-12" value="imageset" /> 图集（IMAGESET）
                         </label>
                     </div>
                 </div>
 			</div>
 			<div class="form-group">
                 <label for="defaultValue">默认值：</label>
-                <textarea id="defaultValue" name="defaultValue" class="form-control"></textarea>
-                <span>如果定义数据类型为select、radio、checkbox时，此处填写被选择的项目(用“,”分开，如“男,女,人妖”)</span>
+                <textarea id="defaultValue" name="defaultValue" class="form-control" placeholder="默认值"></textarea>
+                <span>如果定义数据类型为select、radio、checkbox时，此处填写被选择的项目(用“,”分开，如“男,女,未知”)</span>
 			</div>
 			<div class="form-group form-control-small">
                 <label for="maxLength">字段长度：</label>
-                <input id="maxLength" name="maxLength" type="text" class="form-control">
+                <input id="maxLength" name="maxLength" type="text" class="form-control" placeholder="字段长度" />
 			</div>
 			<div class="form-btn-group-left">
             	<button type="submit" class="btn btn-info">保存</button>
@@ -125,9 +125,20 @@
 		</form>
 	</div>
 </section>
-<script src="/resource/js/jquery.min.js" type="text/javascript"></script>
-<script type="text/javascript">
+<script src="/resource/js/jquery.min.js"></script>
+<script src="/resource/js/coco-message/coco-message.js"></script>
+<script>
     function validateForm(){
+		var fieldText = $("#fieldText").val();
+    	var fieldName = $("#fieldName").val();
+    	if(fieldText == null || fieldText==''){
+    		cocoMessage.error("表单提示文字不能为空");
+    		return false;
+    	}
+    	if(fieldName == null || fieldName==''){
+    		cocoMessage.error("字段名称不能为空");
+    		return false;
+    	}
     	return true;
     }
 </script>

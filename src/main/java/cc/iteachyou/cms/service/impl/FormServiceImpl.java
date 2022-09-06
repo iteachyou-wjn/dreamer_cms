@@ -76,9 +76,9 @@ public class FormServiceImpl implements FormService {
 		try {
 			num = formMapper.updateByPrimaryKeySelective(newForm);
 			Map<String,Object> params = new HashMap<String,Object>();
-			if(!oldForm.getTableName().equals("system_"+newForm.getTableName())) {
-				params.put("oldTableName", oldForm.getTableName());
-				params.put("newTableName", newForm.getTableName());
+			if(!oldForm.getTableName().equals(newForm.getTableName())) {
+				params.put("oldTableName", "system_" + oldForm.getTableName());
+				params.put("newTableName", "system_" + newForm.getTableName());
 				formMapper.renameTable(params);
 			}
 		} catch (Exception e) {

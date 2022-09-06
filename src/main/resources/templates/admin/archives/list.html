@@ -9,7 +9,6 @@
     <link href="/resource/css/ionicons.min.css" rel="stylesheet" type="text/css" />
     <link href="/resource/css/iCheck/all.css" rel="stylesheet" type="text/css" />
     <link href="/resource/css/style.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="/resource/js/jQueryMessage/css/message.skin.css" />
 </head>
 
 <body>
@@ -28,7 +27,7 @@
 <section class="panel">
 	<div class="panel-body">
          <button class="btn btn-primary btn-addon btn-sm" th:typeid="${#strings.isEmpty(cid) ? '-1' : cid}" th:onclick="javascript: toAddArticle(this.getAttribute('typeid'))">
-             <i class="fa fa-plus"></i>发布文章
+             <i class="fa fa-plus"></i> 发布文章
          </button>
     </div>
     <div class="panel-body table-responsive">
@@ -100,16 +99,14 @@
     </div>
 </div>
 <!-- jQuery 2.0.2 -->
-<script src="/resource/js/jquery.min.js" type="text/javascript"></script>
-<!-- jQuery UI 1.10.3 -->
-<script src="/resource/js/jquery-ui-1.10.3.min.js" type="text/javascript"></script>
+<script src="/resource/js/jquery.min.js"></script>
 <!-- Bootstrap -->
-<script src="/resource/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/resource/js/bootstrap.min.js"></script>
 <!-- iCheck -->
-<script src="/resource/js/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
-<script type="text/javascript" src="/resource/js/jQueryMessage/js/jquery.plugin.message.js"></script>
-<script src="/resource/js/clipboard.min.js" type="text/javascript"></script>
-<script type="text/javascript">
+<script src="/resource/js/plugins/iCheck/icheck.min.js"></script>
+<script src="/resource/js/coco-message/coco-message.js"></script>
+<script src="/resource/js/clipboard.min.js"></script>
+<script>
 	window.onload = function(){
 		renderCheckBox();
 	}
@@ -155,21 +152,11 @@
 			}
 		});
 		clipboard.on('success', function(e) {
-			$("body").MessageBox({
-				type: 'success',
-				message: '复制成功！',
-				timeout:3000,
-				callbak:null
-			});
+			cocoMessage.success("复制成功");
 		});
 	
 		clipboard.on('error', function(e) {
-			$("body").MessageBox({
-				type: 'error',
-				message: '复制失败！',
-				timeout:3000,
-				callbak:null
-			});
+			cocoMessage.error("复制失败");
 		});
 	}
 </script>

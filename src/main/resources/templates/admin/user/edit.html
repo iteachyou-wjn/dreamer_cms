@@ -6,7 +6,6 @@
     <title>Dreamer CMS - 后台管理系统</title> 
     <link href="/resource/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="/resource/css/style.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="/resource/js/jQueryMessage/css/message.skin.css" />
 </head>
 
 <body>
@@ -27,20 +26,20 @@
 			<input type="hidden" th:value="${user.id}" id="id" name="id"/>
 			<div class="form-group form-control-medium">
 				<label for="username">用户名：</label>
-				<input id="username" name="username" type="text" th:value="${user.username}" class="form-control" readonly="readonly"/>
+				<input id="username" name="username" type="text" th:value="${user.username}" class="form-control" readonly="readonly" placeholder="用户名" />
 			</div>
 			<div class="form-group form-control-medium">
 				<label for="mobile">手机号：</label>
-				<input id="mobile" name="mobile" type="text" th:value="${user.mobile}" class="form-control"/>
+				<input id="mobile" name="mobile" type="text" th:value="${user.mobile}" class="form-control" placeholder="手机号" />
 			</div>
 			<div class="form-group form-control-medium">
 				<label for="realname">真实姓名：</label>
-				<input id="realname" name="realname" type="text" th:value="${user.realname}" class="form-control"/>
+				<input id="realname" name="realname" type="text" th:value="${user.realname}" class="form-control" placeholder="真实姓名" />
 			</div>
 			<div class="form-group form-control-medium">
 				<label for="status">状态：</label>
-				<input id="status-yes" name="status" type="radio" value="1" th:checked="${user.status} == 1"/> 有效
-				<input id="status-no" name="status" type="radio" value="0" th:checked="${user.status} == 0"/> 无效
+				<input id="status-yes" name="status" type="radio" value="1" th:checked="${user.status} == 1" /> 有效
+				<input id="status-no" name="status" type="radio" value="0" th:checked="${user.status} == 0" /> 无效
 			</div>
 			<div class="form-btn-group-left">
             	<button type="submit" class="btn btn-info">保存</button>
@@ -48,19 +47,14 @@
 		</form>
 	</div>
 </section>
-<script src="/resource/js/jquery.min.js" type="text/javascript"></script>
-<script type="text/javascript" src="/resource/js/jQueryMessage/js/jquery.plugin.message.js"></script>
-<script type="text/javascript" th:inline="javascript">
+<script src="/resource/js/jquery.min.js"></script>
+<script src="/resource/js/coco-message/coco-message.js"></script>
+<script th:inline="javascript">
    	/* 保存方法 */
     function validateForm(){
     	var username = $("#username").val();
     	if(username == null || username==''){
-    		$("body").MessageBox({
-				type: 'error',
-				message:'用户名不能为空！',
-				timeout:3000,
-				callbak:null
-			});
+    		cocoMessage.error("用户名不能为空");
     		return false;
     	}
     	return true;

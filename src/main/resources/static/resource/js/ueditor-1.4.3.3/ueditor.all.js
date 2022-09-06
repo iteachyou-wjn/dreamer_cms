@@ -2119,7 +2119,7 @@ var domUtils = dom.domUtils = {
      *      <div id="test">
      *      </div>
      *
-     *      <script type="text/javascript">
+     *      <script>
      *
      *          //output: DIV, BODY
      *          var filterNode = UE.dom.domUtils.findParent( document.getElementById( "test" ), function ( node ) {
