@@ -66,6 +66,7 @@ public class PrevNextTag implements IParse {
 		//上一篇下一篇 
 		Map<String,Object> params = new HashMap<String, Object>(); 
 		params.put("arcid", id); 
+		params.put("status", 1);// 查询状态为已发布
 		params.put("categoryId", archives.getCategoryId());
 		ArchivesWithRownum currentArticle = archivesService.queryArticleRowNum(params);
 		

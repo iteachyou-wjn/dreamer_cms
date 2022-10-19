@@ -108,8 +108,8 @@ public class PageListTag extends AbstractListTag implements IParse {
 				String catSeq = categoryWithBLOBs.getCatSeq();
 				entity.put("cascade", catSeq);
 			}
-			SearchEntity params = new SearchEntity();
-			params.setEntity(entity);
+			// 查询状态为已发布
+			entity.put("status", 1);
 			//开始分页
 			PageHelper.startPage(pageNum, pageSize);
 			List<Map<String, Object>> list = archivesMapper.queryListByPage(entity);
@@ -164,13 +164,15 @@ public class PageListTag extends AbstractListTag implements IParse {
 		//栏目,可指定多个，多个用英文逗号隔开
 		if(params.getEntity().containsKey("typeid") && StringUtil.isNotBlank(params.getEntity().get("typeid"))) {
 			String typeid = params.getEntity().get("typeid").toString();
-			typeid = typeid.replace(",", "','");
-			searchParams.put("typeid", "'" + typeid + "'");
+			String[] typeids = typeid.split(",");
+			searchParams.put("typeids", typeids);
 		}
 		if(params.getEntity().containsKey("tag") && StringUtil.isNotBlank(params.getEntity().get("tag"))) {
 			String tag = params.getEntity().get("tag").toString();
 			searchParams.put("tag", tag);
 		}
+		// 查询状态为已发布
+		searchParams.put("status", 1);
 		
 		String newHtml = html;
 		for (int i = 0;i < listTags.size();i++) {

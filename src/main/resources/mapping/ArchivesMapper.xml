@@ -88,6 +88,9 @@
     <if test="flag != null and flag != ''">
         and a.properties like concat(concat('%',#{flag,jdbcType=VARCHAR}),'%')
     </if>
+    <if test="status != null">
+      	and a.status = #{status,jdbcType=INTEGER}
+    </if>
     order by 
     <if test="(sortBy != null and sortBy != '')">
         a.${sortBy} ${sortWay},
@@ -125,12 +128,18 @@
           , CASE WHEN a.category_id = '-1' THEN 'Top Column' ELSE c.enname END AS categoryEnName
       from system_archives a
       LEFT JOIN system_category c ON a.category_id = c.id
-      where 1 = 1 
+      where 1 = 1
       <if test="keywords != null and keywords != ''">
       	and a.title like concat('%',concat(#{keywords,jdbcType=VARCHAR},'%'))
       </if>
-      <if test="typeid != null and typeid != ''">
-      	and c.code in (${typeid})
+      <if test="status != null">
+      	and a.status = #{status,jdbcType=INTEGER}
+      </if>
+      <if test="typeids != null and typeids != ''">
+      	and c.code in 
+      	<foreach collection="typeids" item="item" index="index" open="(" close=")" separator=",">
+		  #{item}
+		</foreach>
       </if>
       <if test="tag != null and typeid != ''">
       	and a.tag like concat('%',concat(#{tag,jdbcType=VARCHAR},'%'))
@@ -216,33 +225,36 @@
     <if test="nextNum != null and nextNum != ''">
         and t1.rownum = #{nextNum,jdbcType=VARCHAR}
     </if>
+    <if test="status != null">
+      	and a.status = #{status,jdbcType=INTEGER}
+    </if>
   </select>
   
   <select id="queryRecommend" parameterType="java.util.Map" resultType="cc.iteachyou.cms.vo.ArchivesVo">
       SELECT 
-          t1.id
-          , t1.title
-          , t1.properties
-          , t1.image_path imagePath
-          , t1.tag
-          , t1.description
-          , t1.category_id categoryId
-          , t1.category_ids categoryIds
-          , t1.comment
-          , t1.subscribe
-          , t1.clicks
-          , t1.weight
-          , t1.status
-          , t1.create_by createBy
-          , t1.create_time createTime
-          , t1.update_by updateBy
-          , t1.update_time updateTime
-          , CASE WHEN t1.category_id = '-1' THEN '顶级栏目' ELSE c.cnname END AS categoryCnName
-          , CASE WHEN t1.category_id = '-1' THEN 'Top Column' ELSE c.enname END AS categoryEnName
+          t1.id, 
+          t1.title, 
+          t1.properties, 
+          t1.image_path imagePath, 
+          t1.tag, 
+          t1.description, 
+          t1.category_id categoryId, 
+          t1.category_ids categoryIds, 
+          t1.comment, 
+          t1.subscribe, 
+          t1.clicks, 
+          t1.weight, 
+          t1.status, 
+          t1.create_by createBy, 
+          t1.create_time createTime, 
+          t1.update_by updateBy, 
+          t1.update_time updateTime, 
+          CASE WHEN t1.category_id = '-1' THEN '顶级栏目' ELSE c.cnname END AS categoryCnName, 
+          CASE WHEN t1.category_id = '-1' THEN 'Top Column' ELSE c.enname END AS categoryEnName
     FROM system_archives t1
     LEFT JOIN system_category c ON t1.category_id = c.id
     INNER JOIN (
-        SELECT keywords    FROM system_search GROUP BY keywords order by count(keywords) desc limit 0,5
+        SELECT keywords FROM system_search GROUP BY keywords order by count(keywords) desc limit 0,5
     ) t2 ON INSTR(t1.title,t2.keywords) > 0
     GROUP BY t1.id
   </select>
