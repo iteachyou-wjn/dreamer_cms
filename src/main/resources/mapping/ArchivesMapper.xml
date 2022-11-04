@@ -49,25 +49,25 @@
   
   <select id="queryListByPage" parameterType="java.util.HashMap" resultType="java.util.Map">
       select 
-          a.id aid
-          , a.title
-          , a.properties
-          , a.image_path imagePath
-          , a.tag
-          , a.description
-          , a.category_id categoryId
-          , a.category_ids categoryIds
-          , a.comment
-          , a.subscribe
-          , a.clicks
-          , a.weight
-          , a.status
-          , a.create_by createBy
-          , a.create_time createTime
-          , a.update_by updateBy
-          , a.update_time updateTime
-          , CASE WHEN a.category_id = '-1' THEN '顶级栏目' ELSE c.cnname END AS categoryCnName
-          , CASE WHEN a.category_id = '-1' THEN 'Top Column' ELSE c.enname END AS categoryEnName
+          a.id aid, 
+          a.title, 
+          a.properties, 
+          a.image_path imagePath, 
+          a.tag, 
+          a.description, 
+          a.category_id categoryId, 
+          a.category_ids categoryIds, 
+          a.comment, 
+          a.subscribe, 
+          a.clicks, 
+          a.weight, 
+          a.status, 
+          a.create_by createBy, 
+          a.create_time createTime, 
+          a.update_by updateBy, 
+          a.update_time updateTime, 
+          CASE WHEN a.category_id = '-1' THEN '顶级栏目' ELSE c.cnname END AS categoryCnName, 
+          CASE WHEN a.category_id = '-1' THEN 'Top Column' ELSE c.enname END AS categoryEnName
           <if test="tableName != null and tableName != ''">
           , f.*
           </if>
@@ -226,7 +226,7 @@
         and t1.rownum = #{nextNum,jdbcType=VARCHAR}
     </if>
     <if test="status != null">
-      	and a.status = #{status,jdbcType=INTEGER}
+      	and t1.status = #{status,jdbcType=INTEGER}
     </if>
   </select>
   
