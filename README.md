@@ -140,8 +140,13 @@ https://space.bilibili.com/482273402
 	</tr>
 	<tr>
 		<td>seele</td>
-		<td>200</td>
+		<td>200.00</td>
 		<td>2022-10-17 11:20:32</td>
+	</tr>
+	<tr>
+		<td>弥彦</td>
+		<td>66.00</td>
+		<td>2022-11-16 16:24:05</td>
 	</tr>
 </table>
 

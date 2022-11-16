@@ -126,4 +126,7 @@ public class Category implements Serializable {
 
 	@Transient
     private List<Category> nodes;
+
+	@Transient
+	private Integer childrenFlag;
 }

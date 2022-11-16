@@ -1,16 +1,5 @@
 package cc.iteachyou.cms.service.impl;
 
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-
-import cn.hutool.core.map.MapUtil;
 import cc.iteachyou.cms.common.ExceptionEnum;
 import cc.iteachyou.cms.common.SearchEntity;
 import cc.iteachyou.cms.dao.ArchivesMapper;
@@ -19,6 +8,16 @@ import cc.iteachyou.cms.entity.Category;
 import cc.iteachyou.cms.exception.AdminGeneralException;
 import cc.iteachyou.cms.exception.CmsException;
 import cc.iteachyou.cms.service.CategoryService;
+import cn.hutool.core.map.MapUtil;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import org.apache.commons.collections.CollectionUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Map;
 /**
  *      栏目管理业务类
  * @author LIGW
@@ -56,6 +55,12 @@ public class CategoryServiceImpl implements CategoryService {
 		}
 		PageHelper.startPage(params.getPageNum(), params.getPageSize());
 		List<Category> list = categoryMapper.queryListByPage(params.getEntity());
+		if (CollectionUtils.isNotEmpty(list)){
+			list.forEach(i->{
+				List<Category> childrenNodes = categoryMapper.selectByParentId(i.getId());
+				i.setChildrenFlag(CollectionUtils.isEmpty(childrenNodes)?0:1);
+			});
+		}
 		PageInfo<Category> page = new PageInfo<Category>(list);
 		return page;
 	}
@@ -73,7 +78,14 @@ public class CategoryServiceImpl implements CategoryService {
 	 */
 	@Override
 	public List<Category> selectByParentId(String id) {
-		return categoryMapper.selectByParentId(id) ;
+		List<Category> list = categoryMapper.selectByParentId(id);
+		if (CollectionUtils.isNotEmpty(list)){
+			list.forEach(i->{
+				List<Category> childrenNodes = categoryMapper.selectByParentId(i.getId());
+				i.setChildrenFlag(CollectionUtils.isEmpty(childrenNodes)?0:1);
+			});
+		}
+		return list;
 	}
 
 	/** 

@@ -50,7 +50,7 @@
 				<tr th:id="${category.id}" th:attr="parent=${category.parentId}" th:each="category : ${page.list}">
 					<td><input type="checkbox" class="flat-grey list-child" th:value="${category.id}" /></td>
 					<td>
-						<img src="/resource/img/explode.gif" style="cursor:pointer;" th:typeid="${category.id}" th:attr="level=${category.level}" onclick="javascript:loadSons(this.getAttribute('typeid'),this)" width="11" height="11" />
+						<img src="/resource/img/explode.gif" th:if="${category.childrenFlag}==1" style="cursor:pointer;" th:typeid="${category.id}" th:attr="level=${category.level}" onclick="javascript:loadSons(this.getAttribute('typeid'),this)" width="11" height="11" />
 					</td>
 					<td th:text="${category.code}"></td>
 					<td><a th:href="@{/admin/archives/list(entity[cid]=${category.code})}" th:text="${category.cnname}"></a></td>
@@ -179,11 +179,11 @@
 	function buildHTML(element){
 		var trstr = '<tr id="' + element.id + '" parent="' + element.parentId + '">';
 	    trstr += '<td><input type="checkbox" class="flat-grey list-child"/></td>';
-	    trstr += '<td><img src="/resource/img/explode.gif" style="cursor:pointer;" onclick="loadSons(\''+ element.id +'\',this);" width="11" height="11" /></td>';
+	    trstr += '<td>' + (element.childrenFlag == 1 ? '<img src="/resource/img/explode.gif" style="cursor:pointer;" onclick="loadSons(\''+ element.id +'\',this);" width="11" height="11" />':'') + '</td>';
 	    trstr += '<td>' + element.code + '</td>';
 	    trstr += '<td style="padding-left:' + ((element.level++)*20) + 'px;"><a href="/admin/archives/list?entity%5Bcid%5D='+element.code+'">' + element.cnname + '</a></td>';
 	    trstr += '<td>' + element.enname + '</td>';
-	    trstr += '<td>' + (element.isInput == 1 ? '<span class="label label-success">是</span>' : '<span class="label label-danger">否</span>') + '</td>';
+		trstr += '<td>' + (element.isInput == 1 ? '<span class="label label-success">是</span>' : '<span class="label label-danger">否</span>') + '</td>';
 	    trstr += '<td>' + (element.isShow == 1 ? '<span class="label label-success">是</span>' : '<span class="label label-danger">否</span>') + '</td>';
 	    trstr += '<td>';
 	    trstr += '<input name="orderBy" type="text" cid="'+element.id+'" class="form-control input-sm" value="'+element.sort+'" style="width:50px;height:20px;">';
