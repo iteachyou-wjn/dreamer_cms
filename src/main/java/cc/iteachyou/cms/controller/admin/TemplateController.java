@@ -21,6 +21,7 @@ import cc.iteachyou.cms.annotation.Log.OperatorType;
 import cc.iteachyou.cms.common.StateCodeEnum;
 import cc.iteachyou.cms.entity.Theme;
 import cc.iteachyou.cms.exception.CmsException;
+import cc.iteachyou.cms.exception.TemplateNotFoundException;
 import cc.iteachyou.cms.exception.TemplatePermissionDeniedException;
 import cc.iteachyou.cms.service.ThemeService;
 import cc.iteachyou.cms.utils.FileConfiguration;
@@ -145,7 +146,25 @@ public class TemplateController {
 	@Log(operType = OperatorType.UPDATE, module = "模板管理", content = "修改模板")
 	@PostMapping("save")
 	@RequiresPermissions("5n6ta53y")
-	public String save(TemplateVo template) throws IOException {
+	public String save(TemplateVo template) throws IOException, CmsException {
+		String fileName = template.getPath() + File.separator + template.getFile();
+		File templateFile = new File(fileName);
+		/**
+		 * 查询当前模版目录，判断是否为模版目录，如不是，则报错
+		 */
+		Theme currentTheme = themeService.getCurrentTheme();
+		String resourceDir = fileConfiguration.getResourceDir();
+		String themePath = resourceDir + File.separator + "templates" + File.separator + currentTheme.getThemePath() + File.separator;
+		themePath = themePath.replaceAll("\\*", "/");
+		File themeDir = new File(themePath);
+		// 检查当前编辑文件是否有权限
+		if(!templateFile.getCanonicalPath().startsWith(themeDir.getCanonicalPath())) {
+			throw new TemplatePermissionDeniedException(StateCodeEnum.HTTP_FORBIDDEN.getCode(), StateCodeEnum.HTTP_FORBIDDEN.getDescription(), "您没有操作权限！");
+		}
+		if(!templateFile.exists()) {
+			throw new TemplateNotFoundException(StateCodeEnum.HTTP_NOTFOUND.getCode(), StateCodeEnum.HTTP_NOTFOUND.getDescription(), "模板文件不存在！");
+		}
+		
 		String filePath = template.getPath() + File.separator + template.getFile();
 		filePath = filePath.replaceAll("\\*", "/");
 		File file = new File(filePath);
