@@ -207,6 +207,14 @@ public class XssAndSqlHttpServletRequestWrapper extends HttpServletRequestWrappe
 			if (flag) {
 				return flag;
 			}
+            //Avoid video tag
+            scriptPattern = Pattern.compile("video[\r\n| | ]*=[\r\n| | ]*[\\\"|\\\'](.*?)[\\\"|\\\']",
+					Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
+			flag = scriptPattern.matcher(value).find();
+			if (flag) {
+				return flag;
+			}
+            
 			// Remove any lonesome </script> tag
 			scriptPattern = Pattern.compile("</[\r\n| | ]*script[\r\n| | ]*>", Pattern.CASE_INSENSITIVE);
 			flag = scriptPattern.matcher(value).find();
