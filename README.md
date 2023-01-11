@@ -14,14 +14,14 @@
 
 当前版本：4.0.0
 
-1. 梦想家CMS官网：http://cms.iteachyou.cc
-2. 梦想家CMS管理后台：http://cms.iteachyou.cc/admin
+1. 梦想家CMS官网：https://cms.iteachyou.cc
+2. 梦想家CMS管理后台：https://cms.iteachyou.cc/admin
 - 演示账号：demo1
 - 演示密码：123456
 - 管理员：wangjn
 - 管理员密码：123456
 3. I Teach You,我教你! 官网：https://www.iteachyou.cc
-4. 模版标签开发教程请参考：http://doc.iteachyou.cc
+4. 模版标签开发教程请参考：https://doc.iteachyou.cc
 
 QQ群交流：
 - ①597652651
@@ -89,19 +89,19 @@ https://space.bilibili.com/482273402
 5. 导入数据库src/main/resources/db/db.sql，要求Mysql5.7版本，并修改application-(dev|prd).yml中数据配置
 6. 将项目src/main/resources/db/dreamer-cms.zip文件解压，保证解压后的目录路径的名称和资源目录一致
 7. 运行项目DreamerCMSApplication.java
-8. 网站首页：http://localhost:8888 项目管理后台：http://localhost:8888/admin
+8. 网站首页：https://localhost:8888 项目管理后台：https://localhost:8888/admin
 9. 管理后台用户名：wangjn；密码：123456
-10. 模版标签开发教程请参考：http://doc.www.iteachyou.cc 
+10. 模版标签开发教程请参考：https://doc.www.iteachyou.cc 
 
 # 捐赠详情 
 
 ##### 感谢各位大佬的支持，以下排名不分先后！同时也感谢各位开发者为社区作出的贡献。
 
-<table width="100%" cellspacing="0" cellpadding="0" border="0" style="width:100%;">
+<table>
 	<tr>
-		<th width="30%">用户</th>
-		<th width="30%">金额</th>
-		<th width="40%">时间</th>
+		<th>用户</th>
+		<th>金额</th>
+		<th>时间</th>
 	</tr>
 	<tr>
 		<td>个.秋</td>
@@ -151,45 +151,30 @@ https://space.bilibili.com/482273402
 </table>
 
 
-同时也希望更多的用户来捐赠本项目。您的支持，是我一直坚持下去的动力，另外为大家提供使用文档（http://doc.www.iteachyou.cc）、教程（https://www.www.iteachyou.cc）的网站及服务器也需要运营维护，个人精力、经费都有限，希望大家多多理解！！！
+同时也希望更多的用户来捐赠本项目。您的支持，是我一直坚持下去的动力，另外为大家提供使用文档（https://doc.www.iteachyou.cc）、教程（https://www.www.iteachyou.cc）的网站及服务器也需要运营维护，个人精力、经费都有限，希望大家多多理解！！！
 
-<center>
-    <div style="width:50%;float:left;text-align:right;">
-        <img src="http://oss.iteachyou.cc/20201201174329.png" width="200" />
-    </div>
-    <div style="width:50%;float:right;text-align:left;">
-        <img src="http://oss.iteachyou.cc/20201201174339.jpg" width="200" />
-    </div>
-    <div style="clear:both;"></div>
-</center>
+<table>
+	<tr>
+		<td><img src="https://oss.iteachyou.cc/20201201174329.png" width="200" /></td>
+		<td><img src="https://oss.iteachyou.cc/20201201174339.jpg" width="200" /></td>
+	</tr>
+</table>
 
 
 # 系统美图
-![后台登录](http://oss.iteachyou.cc/20190821102434.png)
 
-![系统管理](http://oss.iteachyou.cc/20190821102526.png)
-
-![栏目管理](http://oss.iteachyou.cc/20190821102608.png)
-
-![发布文章](http://oss.iteachyou.cc/20190821102712.png)
-
-![标签管理](http://oss.iteachyou.cc/20190821102742.png)
-
-![表单管理](http://oss.iteachyou.cc/20190821102847.png)
-
-![风格管理](http://oss.iteachyou.cc/20190821102932.png)
-
-![变量管理](http://oss.iteachyou.cc/20190821103012.png)
-
-![前台首页](http://oss.iteachyou.cc/20190820092155.png)
-
-![封面页面](http://oss.iteachyou.cc/20190820092156.png)
-
-![列表页面](http://oss.iteachyou.cc/20190820092157.png)
-
-![文章页面](http://oss.iteachyou.cc/20190820092158.png)
-
-
+<img src="https://oss.iteachyou.cc/20190821102434.png"/>
+<img src="https://oss.iteachyou.cc/20190821102526.png"/>
+<img src="https://oss.iteachyou.cc/20190821102608.png"/>
+<img src="https://oss.iteachyou.cc/20190821102712.png"/>
+<img src="https://oss.iteachyou.cc/20190821102742.png"/>
+<img src="https://oss.iteachyou.cc/20190821102847.png"/>
+<img src="https://oss.iteachyou.cc/20190821102932.png"/>
+<img src="https://oss.iteachyou.cc/20190821103012.png"/>
+<img src="https://oss.iteachyou.cc/20190820092155.png"/>
+<img src="https://oss.iteachyou.cc/20190820092156.png"/>
+<img src="https://oss.iteachyou.cc/20190820092157.png"/>
+<img src="https://oss.iteachyou.cc/20190820092158.png"/>
 
 
 
