@@ -33,4 +33,9 @@ public class Constant {
 	 * 上传访问前缀
 	 */
 	public static final String UPLOAD_PREFIX = "resources/";
+	
+	/**
+	 * 静态化访问前缀
+	 */
+	public static final String STATIC_PREFIX = "htmls/";
 }

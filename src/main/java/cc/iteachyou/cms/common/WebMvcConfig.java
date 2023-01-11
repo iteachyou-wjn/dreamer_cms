@@ -56,11 +56,17 @@ public class WebMvcConfig implements WebMvcConfigurer {
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		System system = systemService.getSystem();
-		File file = new File(configuration.getResourceDir());
-		if(!file.exists()) {
+		File uploadFile = new File(configuration.getResourceDir());
+		if(!uploadFile.exists()) {
 			log.error("资源目录不存在或设置错误！");
 		}
-		registry.addResourceHandler("/" + Constant.UPLOAD_PREFIX + "**").addResourceLocations(file.toURI().toString()).setCachePeriod(31556926);
+		registry.addResourceHandler("/" + Constant.UPLOAD_PREFIX + "**").addResourceLocations(uploadFile.toURI().toString()).setCachePeriod(31556926);
+		
+		File staticFile = new File(configuration.getResourceDir() + system.getStaticdir());
+		if(!staticFile.exists()) {
+			log.error("资源目录不存在或设置错误！");
+		}
+		registry.addResourceHandler("/" + Constant.STATIC_PREFIX + "**").addResourceLocations(staticFile.toURI().toString()).setCachePeriod(31556926);
 	}
     
 }

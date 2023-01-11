@@ -6,7 +6,7 @@ web:
 
 spring: 
   datasource: 
-    name: prd
+    name: dev
     url: jdbc:mysql://127.0.0.1:3306/dreamer-cms?serverTimezone=GMT%2B8&useSSL=false&useUnicode=true&characterEncoding=UTF8&zeroDateTimeBehavior=convertToNull
     username: root
     password: root
