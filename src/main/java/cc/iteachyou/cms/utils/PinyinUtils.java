@@ -7,6 +7,7 @@ import net.sourceforge.pinyin4j.format.HanyuPinyinToneType;
 import net.sourceforge.pinyin4j.format.HanyuPinyinVCharType;
 
 public class PinyinUtils {
+	public static final String SPECIAL_CHARACTERS_REGEX = "[\n`~!@#$%^&*()+=|{}':;',\\[\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。， 、？]";
 	/**
 	 * 获取字符串拼音的第一个字母
 	 * 
@@ -14,6 +15,7 @@ public class PinyinUtils {
 	 * @return
 	 */
 	public static String toFirstChar(String chinese) {
+		chinese = chinese.replaceAll(SPECIAL_CHARACTERS_REGEX, "");
 		String pinyinStr = "";
 		char[] newChar = chinese.toCharArray(); // 转为单个字符
 		HanyuPinyinOutputFormat defaultFormat = new HanyuPinyinOutputFormat();

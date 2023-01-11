@@ -38,10 +38,12 @@
 		<div class="row" style="margin-bottom:5px;">
 			<div class="col-md-2 theme-box" th:each="item : ${themes}">
                 <div class="theme-img">
-                	<img th:src="${item.themeImg}" />
+                	<img th:src="${'/resources/' + system.uploaddir + item.themeImg}" />
                 </div>
                 <div class="theme-text" th:text="${item.themeName}" th:if="${item.status} eq '0'"></div>
-                <div class="theme-text" th:text="${item.themeName} + '（当前主题）'" th:if="${item.status} eq '1'"></div>
+                <div class="theme-text" th:if="${item.status} eq '1'">
+                	<b th:text="${item.themeName} + '（当前主题）'"></b>
+                </div>
                 <div class="theme-text">
                 	<div class="btn-group">
                     	<button data-toggle="dropdown" class="btn btn-primary btn-addon btn-sm dropdown-toggle"><i class="fa fa-cog"></i>主题设置 <span class="caret"></span></button>
@@ -150,7 +152,6 @@
 <script src="/resource/js/webuploader-0.1.5/webuploader.js"></script>
 <script src="/resource/js/coco-message/coco-message.js"></script>
 <script th:inline="javascript">
-	var system = [[${system}]];
     function initUploader(picker,inputEl){
     	var uploader = WebUploader.create({
     		auto: true,
@@ -215,7 +216,7 @@
 	    	$("#"+el).append($img);
     	});
 	    uploader.on('uploadSuccess', function(file, response) {
-	    	$("#" + inputEl).val(system.website + system.uploaddir + '/' + response.data.filepath);
+	    	$("#" + inputEl).val(response.data.filepath);
 			uploader.reset();
 	    	cocoMessage.success("上传成功");
 	    });

@@ -38,7 +38,7 @@ public enum FieldEnum {
 	FIELD_LITPIC("litpic","(\\[field:litpic[\\s]*?/\\])"),
 	FIELD_HASTHUMBNAIL("hasthumbnail","(\\[field:hasthumbnail[\\s]*?/\\])"),
 	FIELD_TAG("tag","(\\[field:tag[\\s]*?/\\])"),
-	FIELD_REMARK("remark","(\\[field:remark[\\s]*?/\\])"),
+	FIELD_REMARK("remark","(\\[field:remark([\\s]+function=\\\"((.*?)\\((.*?)\\)?)\\\"){0,1}[\\s]*?/\\])"),
 	FIELD_CATEGORYID("categoryid","(\\[field:categoryid[\\s]*?/\\])"),
 	FIELD_COMMENT("comment","(\\[field:comment[\\s]*?/\\])"),
 	FIELD_SUBSCRIBE("subscribe","(\\[field:subscribe[\\s]*?/\\])"),

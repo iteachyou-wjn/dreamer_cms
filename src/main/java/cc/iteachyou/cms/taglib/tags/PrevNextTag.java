@@ -116,8 +116,8 @@ public class PrevNextTag implements IParse {
 					}
 					prevnext.append("</li>");
 				}else {
-					prevnext.append("<li class='dreamer-next'>");
-					prevnext.append("<span class='dreamer-prevnext-label'>下一篇：没有了</span>");
+					prevnext.append("<li class='dreamer-prev'>");
+					prevnext.append("<span class='dreamer-prevnext-label'>上一篇：没有了</span>");
 				}
 				prevnext.append("</ul>");
 			}else if("next".equalsIgnoreCase(layout)) {
@@ -156,8 +156,8 @@ public class PrevNextTag implements IParse {
 					}
 					prevnext.append("</li>");
 				}else {
-					prevnext.append("<li class='dreamer-next'>");
-					prevnext.append("<span class='dreamer-prevnext-label'>下一篇：没有了</span>");
+					prevnext.append("<li class='dreamer-prev'>");
+					prevnext.append("<span class='dreamer-prevnext-label'>上一篇：没有了</span>");
 				}
 				
 				if(nextArc != null) {

@@ -25,12 +25,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.wf.captcha.ArithmeticCaptcha;
 import com.wf.captcha.utils.CaptchaUtil;
 
 import cc.iteachyou.cms.common.ExceptionEnum;
+import cc.iteachyou.cms.common.ResponseResult;
 import cc.iteachyou.cms.common.SearchEntity;
+import cc.iteachyou.cms.common.StateCodeEnum;
 import cc.iteachyou.cms.entity.Archives;
 import cc.iteachyou.cms.entity.Attachment;
 import cc.iteachyou.cms.entity.Category;
@@ -513,33 +516,22 @@ public class FrontController {
 	 * @return
 	 * @throws CmsException
 	 */
+	@ResponseBody
 	@RequestMapping(value = "/input",method = RequestMethod.POST)
-	public String input(Model model, @RequestParam Map<String,Object> params) throws CmsException {
+	public ResponseResult input(Model model, @RequestParam Map<String,Object> params) throws CmsException {
 		// 验证码校验
 		if(!params.containsKey("captcha") || StringUtil.isBlank(params.get("captcha"))) {
-			throw new FormParameterException(
-					ExceptionEnum.FORM_PARAMETER_EXCEPTION.getCode(),
-					ExceptionEnum.FORM_PARAMETER_EXCEPTION.getMessage(),
-					"缺少验证码参数，请添加该参数后重试。");
+			return ResponseResult.Factory.newInstance(Boolean.FALSE, ExceptionEnum.FORM_PARAMETER_EXCEPTION.getCode(), null, "缺少验证码参数，请添加该参数后重试。");
 		}
 		if(!CaptchaUtil.ver(params.get("captcha").toString(), request)) {
-			throw new FormParameterException(
-					ExceptionEnum.FORM_PARAMETER_EXCEPTION.getCode(),
-					ExceptionEnum.FORM_PARAMETER_EXCEPTION.getMessage(),
-					"验证码输入错误或已超时，请仔细检查后再试。");
+			return ResponseResult.Factory.newInstance(Boolean.FALSE, ExceptionEnum.FORM_PARAMETER_EXCEPTION.getCode(), null, "验证码输入错误或已超时，请仔细检查后再试。");
 		}
 		System system = systemService.getSystem();
 		if(!params.containsKey("typeid") || StringUtil.isBlank(params.get("typeid"))) {
-			throw new FormParameterException(
-					ExceptionEnum.FORM_PARAMETER_EXCEPTION.getCode(),
-					ExceptionEnum.FORM_PARAMETER_EXCEPTION.getMessage(),
-					"缺少[typeid]参数，请添加该参数后重试。");
+			return ResponseResult.Factory.newInstance(Boolean.FALSE, ExceptionEnum.FORM_PARAMETER_EXCEPTION.getCode(), null, "缺少[typeid]参数，请添加该参数后重试。");
 		}
 		if(!params.containsKey("formkey") || StringUtil.isBlank(params.get("formkey"))) {
-			throw new FormParameterException(
-					ExceptionEnum.FORM_PARAMETER_EXCEPTION.getCode(),
-					ExceptionEnum.FORM_PARAMETER_EXCEPTION.getMessage(),
-					"缺少[formkey]参数，请添加该参数后重试。");
+			return ResponseResult.Factory.newInstance(Boolean.FALSE, ExceptionEnum.FORM_PARAMETER_EXCEPTION.getCode(), null, "缺少[formkey]参数，请添加该参数后重试。");
 		}
 		
 		String typeid = params.get("typeid").toString();
@@ -547,25 +539,16 @@ public class FrontController {
 		
 		Category categoryWithBLOBs = categoryService.queryCategoryByCode(typeid);
 		if(categoryWithBLOBs == null) {
-			throw new FormParameterException(
-					ExceptionEnum.FORM_PARAMETER_EXCEPTION.getCode(),
-					ExceptionEnum.FORM_PARAMETER_EXCEPTION.getMessage(),
-					"栏目不存在，请仔细检查[typeid]参数是否有误，核实后重试。");
+			return ResponseResult.Factory.newInstance(Boolean.FALSE, ExceptionEnum.FORM_PARAMETER_EXCEPTION.getCode(), null, "栏目不存在，请仔细检查[typeid]参数是否有误，核实后重试。");
 		}
 		
 		if(categoryWithBLOBs.getIsInput() != 1) {
-			throw new FormParameterException(
-					ExceptionEnum.FORM_PARAMETER_EXCEPTION.getCode(),
-					ExceptionEnum.FORM_PARAMETER_EXCEPTION.getMessage(),
-					"栏目不允许投稿，请仔细检查栏目的详情并设置是否允许投稿为是后重试。");
+			return ResponseResult.Factory.newInstance(Boolean.FALSE, ExceptionEnum.FORM_PARAMETER_EXCEPTION.getCode(), null, "栏目不允许投稿，请仔细检查栏目的详情并设置是否允许投稿为是后重试。");
 		}
 		
 		Form form = formService.queryFormByCode(formkey);
 		if(form == null) {
-			throw new FormParameterException(
-					ExceptionEnum.FORM_PARAMETER_EXCEPTION.getCode(),
-					ExceptionEnum.FORM_PARAMETER_EXCEPTION.getMessage(),
-					"表单模型不存在，请仔细检查[formkey]参数是否有误，核实后重试。");
+			return ResponseResult.Factory.newInstance(Boolean.FALSE, ExceptionEnum.FORM_PARAMETER_EXCEPTION.getCode(), null, "表单模型不存在，请仔细检查[formkey]参数是否有误，核实后重试。");
 		}
 		
 		Archives archives = new Archives();
@@ -609,14 +592,10 @@ public class FrontController {
 		try {
 			archivesService.save(archives,tableName,additional);
 		} catch (TransactionException e) {
-			throw new AdminGeneralException(
-					ExceptionEnum.HTTP_INTERNAL_SERVER_ERROR.getCode(),
-					ExceptionEnum.HTTP_INTERNAL_SERVER_ERROR.getMessage(),
-					e.getMessage());
+			return ResponseResult.Factory.newInstance(Boolean.TRUE, ExceptionEnum.HTTP_INTERNAL_SERVER_ERROR.getCode(), null, ExceptionEnum.HTTP_INTERNAL_SERVER_ERROR.getMessage());
 		}
 		
-		String typeUrl = URLUtils.parseURL(system, categoryWithBLOBs, "P");
-		return "redirect:" + typeUrl;
+		return ResponseResult.Factory.newInstance(Boolean.TRUE, StateCodeEnum.HTTP_SUCCESS.getCode(), null, StateCodeEnum.HTTP_SUCCESS.getDescription());
 	}
 	
 	// 产生验证码

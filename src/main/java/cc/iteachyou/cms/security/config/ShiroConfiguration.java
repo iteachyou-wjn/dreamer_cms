@@ -44,6 +44,7 @@ public class ShiroConfiguration {
         fc.put("/admin/toLogin", "anon");
         fc.put("/logout", "logout");
         fc.put("/admin/**", "authc");
+        fc.put("/upload/**", "authc");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(fc);
         // 登录成功后要跳转的链接
         shiroFilterFactoryBean.setSuccessUrl("/index");

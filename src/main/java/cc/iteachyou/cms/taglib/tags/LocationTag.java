@@ -46,8 +46,6 @@ public class LocationTag implements IParse {
 		if(locationTags == null || locationTags.size() <= 0) {
 			return html;
 		}
-		
-		System.out.println(locationTags);
 		return html;
 	}
 
@@ -110,8 +108,6 @@ public class LocationTag implements IParse {
 				}
 				
 			}
-			
-			System.out.println(entity);
 			
 			location.append("</ul>");
 			newHtml = newHtml.replace(tag, location.toString());

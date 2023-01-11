@@ -77,6 +77,31 @@ public class XssAndSqlHttpServletRequestWrapper extends HttpServletRequestWrappe
 			return results;
 		}
 	}
+	
+	/**
+     * 对 application/x-www-form-urlencoded 格式的POST请求参数，进行 cleanXSS解析
+     * @return cleanXSS解析后的参数
+     */
+    @Override
+    public Map<String, String[]> getParameterMap() {
+        Map<String, String[]> values = super.getParameterMap();
+        if (values == null) {
+            return null;
+        }
+
+        Map<String, String[]> result = new HashMap<>();
+        for (String key : values.keySet()) {
+            String encodedKey = xssEncode(key);
+            int count = values.get(key).length;
+            String[] encodedValues = new String[count];
+            for (int i = 0; i < count; i++) {
+                encodedValues[i] = xssEncode(values.get(key)[i]);
+            }
+            result.put(encodedKey, encodedValues);
+        }
+        return result;
+    }
+
 
 	/**
 	 * 覆盖getHeader方法，将参数名和参数值都做xss & sql过滤。<br/>

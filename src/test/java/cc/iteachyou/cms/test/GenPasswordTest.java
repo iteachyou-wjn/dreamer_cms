@@ -1,16 +1,15 @@
-package cn.itechyou.blog.test;
+package cc.iteachyou.cms.test;
 
 import java.io.IOException;
 
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.util.ByteSource;
+import org.junit.Test;
 
-import cn.itechyou.cms.utils.PinyinUtils;
+public class GenPasswordTest {
 
-
-public class Test {
-
-	public static void main(String[] args) throws IOException {
+	@Test
+	public void genUsernameAndPassword() throws IOException {
 		String username = "admin";
 		String password = "admin";
 		
@@ -20,10 +19,5 @@ public class Test {
         System.out.printf("密码：%s",sh.toString());
         System.out.println();
         System.out.printf("盐：%s",salt.toString());
-        
-        
-        
-        String pinyin = PinyinUtils.toPinyin("法律法规");
-        System.out.println(pinyin);
 	}
 }

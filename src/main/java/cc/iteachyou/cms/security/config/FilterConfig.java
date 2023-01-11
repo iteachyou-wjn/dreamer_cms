@@ -28,7 +28,7 @@ public class FilterConfig {
         registration.setOrder(Integer.MAX_VALUE);
         Map<String, String> initParameters = new HashMap<String, String>();
         //-excludes用于配置不需要参数过滤的请求url;
-        initParameters.put("excludes", "/resource/*,/admin/archives/*,/admin/category/*,/admin/templates/*");
+        initParameters.put("excludes", "/resource/*,/admin/templates/*,/admin/archives/*,/admin/category/*");
         //-isIncludeRichText默认为true，主要用于设置富文本内容是否需要过滤。
         initParameters.put("isIncludeRichText", "true");
         registration.setInitParameters(initParameters);

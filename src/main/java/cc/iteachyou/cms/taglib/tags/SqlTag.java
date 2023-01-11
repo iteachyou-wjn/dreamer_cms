@@ -81,6 +81,7 @@ public class SqlTag extends AbstractChannelTag implements IParse {
 				
 				for(int f = 0;f < count;f++) {
 					String fieldName = RegexUtil.parseFirst(item, "\\[field:(.*?)/\\]", 1);
+					fieldName = fieldName.trim();
 					if(map.containsKey(fieldName) && StringUtil.isNotBlank(map.get(fieldName))) {
 						String value = map.get(fieldName).toString();
 						if("litpic".equals(fieldName)) {//针对图片路径做特殊处理
