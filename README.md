@@ -14,14 +14,14 @@
 
 当前版本：4.0.0
 
-1. 梦想家CMS官网：https://cms.iteachyou.cc
-2. 梦想家CMS管理后台：https://cms.iteachyou.cc/admin
+1. 梦想家CMS官网：http://cms.iteachyou.cc
+2. 梦想家CMS管理后台：http://cms.iteachyou.cc/admin
 - 演示账号：demo1
 - 演示密码：123456
 - 管理员：wangjn
 - 管理员密码：123456
 3. I Teach You,我教你! 官网：https://www.iteachyou.cc
-4. 模版标签开发教程请参考：https://doc.iteachyou.cc
+4. 模版标签开发教程请参考：http://doc.iteachyou.cc
 
 QQ群交流：
 - ①597652651
@@ -91,7 +91,7 @@ https://space.bilibili.com/482273402
 7. 运行项目DreamerCMSApplication.java
 8. 网站首页：https://localhost:8888 项目管理后台：https://localhost:8888/admin
 9. 管理后台用户名：wangjn；密码：123456
-10. 模版标签开发教程请参考：https://doc.www.iteachyou.cc 
+10. 模版标签开发教程请参考：http://doc.www.iteachyou.cc 
 
 # 捐赠详情 
 
