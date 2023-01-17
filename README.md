@@ -77,7 +77,7 @@ Dreamer CMS模版开发教程：
 https://www.iteachyou.cc/list-l54xs53b/tempdev/1/10
 
 百度网盘下载链接：
-https://pan.baidu.com/s/1plsfBl_ds_5TkVa-yRkESQ 提取码：2c8i
+https://pan.baidu.com/s/16nLVa44OkloL8sTpW6e2QQ 提取码：2c8i 
 
 在线观看视频地址：
 https://space.bilibili.com/482273402
