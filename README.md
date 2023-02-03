@@ -23,10 +23,12 @@
 3. I Teach You,我教你! 官网：https://www.iteachyou.cc
 4. 模版标签开发教程请参考：http://doc.iteachyou.cc
 
-QQ群交流：
+QQ交流群：
 - ①597652651
 - ②623605199
 - ③573574854
+微信交流群：
+- 微信交流群可添加群主微信好友，群主拉群；微信二维码见下方。
 
 DreamerCMS（梦想家CMS内容管理系统）史上最精简的CMS系统，完全开源、完全免费。公开解决了快速搭建展示型网站（如：企业官网、技术博客、信息门户等）的框架体系，是电子政务、电信综合门户、企业信息门户、知识管理平台、电子商务平台的基础性软件系统。可以帮助政府、企业或组织灵活、准确、高效、智能地管理信息内容，实现信息的采集、加工、审核、发布、存储、检索、统计、分析、 反馈等整个信息生命周期的管理。采用时下最流行的Springboot+thymeleaf框架搭建，具有灵活小巧，配置简单，标签化模版，快速开发等特点。主要解决公司搭建网站成本高、投入大、周期长等问题，也可作为初创公司很好的基础技术框架。使用过程中不需要专业的后端技术开发技能，只要使用系统提供的模版标签，即可轻轻松松建设网站。
 
@@ -157,6 +159,7 @@ https://space.bilibili.com/482273402
 	<tr>
 		<td><img src="https://oss.iteachyou.cc/20201201174329.png" width="200" /></td>
 		<td><img src="https://oss.iteachyou.cc/20201201174339.jpg" width="200" /></td>
+		<td><img src="https://www.iteachyou.cc/templates/iteachyou/images/qrcode.jpg" width="200" /></td>
 	</tr>
 </table>
 
