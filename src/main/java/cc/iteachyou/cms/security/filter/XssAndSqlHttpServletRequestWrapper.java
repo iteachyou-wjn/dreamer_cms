@@ -240,6 +240,14 @@ public class XssAndSqlHttpServletRequestWrapper extends HttpServletRequestWrappe
 				return flag;
 			}
             
+            //Avoid svg tag
+            scriptPattern = Pattern.compile("svg[\r\n| | ]*=[\r\n| | ]*[\\\"|\\\'](.*?)[\\\"|\\\']",
+					Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
+			flag = scriptPattern.matcher(value).find();
+			if (flag) {
+				return flag;
+			}
+
 			// Remove any lonesome </script> tag
 			scriptPattern = Pattern.compile("</[\r\n| | ]*script[\r\n| | ]*>", Pattern.CASE_INSENSITIVE);
 			flag = scriptPattern.matcher(value).find();
