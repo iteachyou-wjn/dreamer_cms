@@ -12,7 +12,7 @@
 
 # 梦想家CMS内容管理系统开源版J2EE代码 
 
-当前版本：4.0.0
+当前版本：4.1.3
 
 1. 梦想家CMS官网：http://cms.iteachyou.cc
 2. 梦想家CMS管理后台：http://cms.iteachyou.cc/admin
