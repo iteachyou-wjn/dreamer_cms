@@ -63,6 +63,7 @@ public class ZipUtils {
 			in.close();
 			out.close();
 		}
+		zip.close();
 		System.out.println("******************解压完毕******************");
 		return theme;
 	}

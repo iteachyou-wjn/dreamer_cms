@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 
 import cc.iteachyou.cms.common.SearchEntity;
 import cc.iteachyou.cms.dao.LabelMapper;

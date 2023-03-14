@@ -1,8 +1,6 @@
 package cc.iteachyou.cms.exception;
 
 import org.apache.shiro.authz.UnauthorizedException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
@@ -14,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 import cc.iteachyou.cms.common.ExceptionEnum;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 全局异常处理
@@ -21,18 +20,16 @@ import cc.iteachyou.cms.common.ExceptionEnum;
  * @author jun hu
  * 
  */
+@Slf4j
 @ControllerAdvice
 public class GlobalExceptionHandler {
-
-	private Logger logger = LoggerFactory.getLogger(this.getClass());
-	
 	/**
      * 400 - 错误的请求
      */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ModelAndView handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
-        logger.error("错误的请求", e);
+        log.error("错误的请求", e);
         ModelAndView mv = new ModelAndView();
         mv.setViewName("error/400");
         mv.addObject("code", ExceptionEnum.HTTP_BAD_REQUEST.getCode());
@@ -46,7 +43,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.FORBIDDEN)
     @ExceptionHandler(UnauthorizedException.class)
     public ModelAndView handleUnauthorizedException(UnauthorizedException e) {
-        logger.error("禁止访问", e);
+    	log.error("禁止访问", e);
         ModelAndView mv = new ModelAndView();
         mv.setViewName("error/403");
         mv.addObject("code", ExceptionEnum.HTTP_FORBIDDEN.getCode());
@@ -60,7 +57,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(NoHandlerFoundException.class)
     public ModelAndView handleNotFoundException(NoHandlerFoundException e) {
-        logger.error("资源没有找到", e);
+    	log.error("资源没有找到", e);
         ModelAndView mv = new ModelAndView();
         mv.setViewName("error/404");
         mv.addObject("code", ExceptionEnum.HTTP_NOT_FOUND.getCode());
@@ -74,7 +71,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public ModelAndView handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
-        logger.error("没有权限！", e);
+    	log.error("没有权限！", e);
         ModelAndView mv = new ModelAndView();
         mv.setViewName("error/405");
         mv.addObject("code", ExceptionEnum.HTTP_METHOD_NOT_ALLOWED.getCode());
@@ -88,7 +85,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
     @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
     public ModelAndView handleHttpMediaTypeNotSupportedException(HttpMediaTypeNotSupportedException e) {
-        logger.error("不支持的媒体类型", e);
+    	log.error("不支持的媒体类型", e);
         ModelAndView mv = new ModelAndView();
         mv.setViewName("error/415");
         mv.addObject("code", ExceptionEnum.HTTP_UNSUPPORTED_MEDIA_TYPE.getCode());
@@ -102,7 +99,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
     public ModelAndView handleUnauthorizedException(Exception e) {
-        logger.error("内部服务器错误", e);
+    	log.error("内部服务器错误", e);
         ModelAndView mv = new ModelAndView();
         mv.setViewName("error/500");
         mv.addObject("code", ExceptionEnum.HTTP_INTERNAL_SERVER_ERROR.getCode());
@@ -116,7 +113,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(CmsException.class)
     public ModelAndView cmsException(CmsException e) {
-        logger.error("异常：", e);
+    	log.error("异常：", e);
         ModelAndView mv = new ModelAndView();
         mv.setViewName("error/exception");
         mv.addObject("code", e.getCode());
