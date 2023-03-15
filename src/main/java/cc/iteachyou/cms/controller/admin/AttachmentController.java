@@ -5,6 +5,8 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,11 +22,14 @@ import com.github.pagehelper.PageInfo;
 import cc.iteachyou.cms.annotation.Log;
 import cc.iteachyou.cms.annotation.Log.OperatorType;
 import cc.iteachyou.cms.common.BaseController;
+import cc.iteachyou.cms.common.Constant;
 import cc.iteachyou.cms.common.ExceptionEnum;
 import cc.iteachyou.cms.common.SearchEntity;
 import cc.iteachyou.cms.entity.Attachment;
 import cc.iteachyou.cms.entity.System;
 import cc.iteachyou.cms.exception.AdminGeneralException;
+import cc.iteachyou.cms.exception.CmsException;
+import cc.iteachyou.cms.exception.FileNotFoundException;
 import cc.iteachyou.cms.security.token.TokenManager;
 import cc.iteachyou.cms.service.AttachmentService;
 import cc.iteachyou.cms.service.SystemService;
@@ -63,21 +68,28 @@ public class AttachmentController extends BaseController {
 	@Log(operType = OperatorType.INSERT, module = "附件管理", content = "添加附件")
 	@RequestMapping("/add")
 	@RequiresPermissions("ors4k771")
-	public String add(Attachment attachment) throws AdminGeneralException {
-		try {
-			attachment.setId(UUIDUtils.getPrimaryKey());
-			attachment.setCode(UUIDUtils.getCharAndNumr(8));
-			attachment.setCreateBy(TokenManager.getUserId());
-			attachment.setCreateTime(new Date());
-			attachment.setUpdateBy(TokenManager.getUserId());
-			attachment.setUpdateTime(new Date());
-			int rows = attachmentService.save(attachment);
-		}catch (Exception e) {
+	public String add(Attachment attachment) throws CmsException {
+		System system = systemService.getSystem();
+		if(attachment.getFilepath().contains("../") || attachment.getFilepath().contains("..\\")) {
 			throw new AdminGeneralException(
-					ExceptionEnum.HTTP_INTERNAL_SERVER_ERROR.getCode(),
-					ExceptionEnum.HTTP_INTERNAL_SERVER_ERROR.getMessage(),
-					e.getMessage());
+					ExceptionEnum.XSS_SQL_EXCEPTION.getCode(),
+					ExceptionEnum.XSS_SQL_EXCEPTION.getMessage(),
+					"附件路径疑似不安全，详情：" + attachment.getFilepath());
 		}
+		File file = new File(fileConfiguration.getResourceDir() + system.getUploaddir() + attachment.getFilepath());
+		if(!file.exists()) {
+			throw new FileNotFoundException(
+					ExceptionEnum.XSS_SQL_EXCEPTION.getCode(),
+					ExceptionEnum.XSS_SQL_EXCEPTION.getMessage(),
+					"附件不存在，路径：" + attachment.getFilepath());
+		}
+		attachment.setId(UUIDUtils.getPrimaryKey());
+		attachment.setCode(UUIDUtils.getCharAndNumr(8));
+		attachment.setCreateBy(TokenManager.getUserId());
+		attachment.setCreateTime(new Date());
+		attachment.setUpdateBy(TokenManager.getUserId());
+		attachment.setUpdateTime(new Date());
+		int rows = attachmentService.save(attachment);
 		return "redirect:/admin/attachment/list";
 	}
 	
@@ -85,20 +97,13 @@ public class AttachmentController extends BaseController {
 	@RequestMapping("/delete")
 	@RequiresPermissions("7b3w257s")
 	public String delete(String id) throws AdminGeneralException {
-		try {
-			System system = systemService.getSystem();
-			Attachment attachment = attachmentService.queryAttachmentById(id);
-			File file = new File(fileConfiguration.getResourceDir() + system.getUploaddir() + attachment.getFilepath());
-			if(file.exists()) {
-				file.delete();
-			}
-			int rows = attachmentService.delete(id);
-		}catch (Exception e) {
-			throw new AdminGeneralException(
-					ExceptionEnum.HTTP_INTERNAL_SERVER_ERROR.getCode(),
-					ExceptionEnum.HTTP_INTERNAL_SERVER_ERROR.getMessage(),
-					e.getMessage());
+		System system = systemService.getSystem();
+		Attachment attachment = attachmentService.queryAttachmentById(id);
+		File file = new File(fileConfiguration.getResourceDir() + system.getUploaddir() + attachment.getFilepath());
+		if(file.exists()) {
+			file.delete();
 		}
+		int rows = attachmentService.delete(id);
 		return "redirect:/admin/attachment/list";
 	}
 	
