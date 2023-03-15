@@ -79,9 +79,31 @@
 <!-- iCheck -->
 <script src="/resource/js/plugins/iCheck/icheck.min.js"></script>
 <script src="/resource/js/coco-message/coco-message.js"></script>
+<script src="/resource/js/aceeditor/ace.js" charset="utf-8"></script>
+<script src="/resource/js/aceeditor/ext-language_tools.js" charset="utf-8"></script>
 <script>
 	var editor = null;
 	window.onload = function(){
+		//初始化对象
+    	editor = ace.edit("codeEditor");
+    	//设置风格和语言（更多风格和语言，请到github上相应目录查看）
+    	theme = "monokai";
+    	language = "sql";
+    	editor.setTheme("ace/theme/" + theme);
+    	editor.session.setMode("ace/mode/" + language);
+    	//字体大小
+    	editor.setFontSize(16);
+    	//设置只读（true时只读，用于展示代码）
+    	editor.setReadOnly(false);
+    	//自动换行,设置为off关闭
+    	editor.setOption("wrap", "free");
+    	//启用提示菜单
+    	//ace.require("ace/ext/language_tools");
+    	editor.setOptions({
+    		//enableBasicAutocompletion: true,
+    		//enableSnippets: true,
+    		//enableLiveAutocompletion: true
+    	});
 		renderCheckBox();
 	}
 	
@@ -128,7 +150,6 @@
 			type : "GET",
 			dataType : "JSON",
 			success : function(result) {
-				console.log(result);
 				if(result.success){
 					editor.setValue(result.data);
 					$("#struct-dialog").modal("show");
