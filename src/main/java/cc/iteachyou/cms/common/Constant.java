@@ -43,6 +43,10 @@ public class Constant {
 	 */
 	public static final String STATIC_PREFIX = "htmls/";
 	
+	public static final String FILE_NAME_REGEXP = "\\pP|\\pS|\\s+";
+	
+	public static final String SQL_TAG_REGEXP = "INSERT|DELETE|TRUNCATE|UPDATE|CREATE|ALTER|DROP|INTO|DUMPFILE|LOAD_FILE|USING|UTF8|CONVERT";
+	
 	/** 静态变量，用来记录当前在线连接数。应该把它设计成线程安全的。 */
 	public static int ONLINE = 0;
 	/** concurrent包的线程安全Set，用来存放每个客户端对应的MyWebSocket对象。 */

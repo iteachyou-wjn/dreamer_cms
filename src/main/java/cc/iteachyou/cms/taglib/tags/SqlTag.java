@@ -2,10 +2,13 @@ package cc.iteachyou.cms.taglib.tags;
 
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import cc.iteachyou.cms.common.Constant;
 import cc.iteachyou.cms.common.ExceptionEnum;
 import cc.iteachyou.cms.dao.SqlMapper;
 import cc.iteachyou.cms.exception.CmsException;
@@ -58,6 +61,14 @@ public class SqlTag extends AbstractChannelTag implements IParse {
 			}
 			
 			sql = sql.replaceAll("\\[", "'").replaceAll("\\]", "'");
+			Pattern pattern = Pattern.compile("(?<!\\w)(?i)(" + Constant.SQL_TAG_REGEXP + ")(?!\\w)");
+			Matcher matcher = pattern.matcher(sql);
+			if(matcher.find()) {
+				throw new XssAndSqlException(
+						ExceptionEnum.XSS_SQL_EXCEPTION.getCode(), 
+						ExceptionEnum.XSS_SQL_EXCEPTION.getMessage(), 
+						"为了保证系统安全，Sql标签不允许包含[" + Constant.SQL_TAG_REGEXP + "]关键词。");
+			}
 			
 			if(!sql.startsWith("select") && !sql.startsWith("SELECT")) {
 				throw new XssAndSqlException(

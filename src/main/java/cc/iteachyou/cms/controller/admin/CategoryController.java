@@ -2,6 +2,8 @@ package cc.iteachyou.cms.controller.admin;
 
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +19,15 @@ import com.github.pagehelper.PageInfo;
 import cc.iteachyou.cms.annotation.Log;
 import cc.iteachyou.cms.annotation.Log.OperatorType;
 import cc.iteachyou.cms.common.BaseController;
+import cc.iteachyou.cms.common.Constant;
+import cc.iteachyou.cms.common.ExceptionEnum;
 import cc.iteachyou.cms.common.ResponseResult;
 import cc.iteachyou.cms.common.SearchEntity;
 import cc.iteachyou.cms.common.StateCodeEnum;
 import cc.iteachyou.cms.entity.Category;
 import cc.iteachyou.cms.entity.Form;
 import cc.iteachyou.cms.entity.System;
+import cc.iteachyou.cms.exception.AdminGeneralException;
 import cc.iteachyou.cms.exception.CmsException;
 import cc.iteachyou.cms.security.token.TokenManager;
 import cc.iteachyou.cms.service.CategoryService;
@@ -102,7 +107,7 @@ public class CategoryController extends BaseController{
 	@Log(operType = OperatorType.INSERT, module = "栏目管理", content = "添加栏目")
 	@RequestMapping("/add")
 	@RequiresPermissions("pdr1y803")
-	public String add(Category category) {
+	public String add(Category category) throws CmsException {
 		category.setId(UUIDUtils.getPrimaryKey());
 		category.setCode(UUIDUtils.getCharAndNumr(8));
 		category.setLevel(category.getParentId().equals("-1")?"1":category.getLevel());
@@ -114,6 +119,29 @@ public class CategoryController extends BaseController{
 			category.setCatSeq(parent.getCatSeq() + "." + category.getCode());
 		}else {
 			category.setCatSeq("." + category.getCode());
+		}
+		
+		Pattern pattern = Pattern.compile(Constant.FILE_NAME_REGEXP);
+		Matcher coverTempMatcher = pattern.matcher(category.getCoverTemp());
+		Matcher listTempMatcher = pattern.matcher(category.getListTemp());
+		Matcher articleTempMatcher = pattern.matcher(category.getArticleTemp());
+		if(coverTempMatcher.find()) {
+			throw new AdminGeneralException(
+					ExceptionEnum.XSS_SQL_EXCEPTION.getCode(),
+					ExceptionEnum.XSS_SQL_EXCEPTION.getMessage(),
+					"栏目封面模板文件名疑似不安全，详情：" + category.getCoverTemp());
+		}
+		if(listTempMatcher.find()) {
+			throw new AdminGeneralException(
+					ExceptionEnum.XSS_SQL_EXCEPTION.getCode(),
+					ExceptionEnum.XSS_SQL_EXCEPTION.getMessage(),
+					"栏目列表模板文件名疑似不安全，详情：" + category.getListTemp());
+		}
+		if(articleTempMatcher.find()) {
+			throw new AdminGeneralException(
+					ExceptionEnum.XSS_SQL_EXCEPTION.getCode(),
+					ExceptionEnum.XSS_SQL_EXCEPTION.getMessage(),
+					"栏目内容页模板文件名疑似不安全，详情：" + category.getArticleTemp());
 		}
 		
 		//处理模版
@@ -133,9 +161,34 @@ public class CategoryController extends BaseController{
 	@Log(operType = OperatorType.UPDATE, module = "栏目管理", content = "修改栏目")
 	@RequestMapping(value ="/edit")
 	@RequiresPermissions("bira5jia")
-	public String edit(Category category) {
+	public String edit(Category category) throws CmsException {
 		category.setUpdateBy(TokenManager.getToken().getId());
 		category.setUpdateTime(new Date());
+		
+		Pattern pattern = Pattern.compile(Constant.FILE_NAME_REGEXP);
+		Matcher coverTempMatcher = pattern.matcher(category.getCoverTemp());
+		Matcher listTempMatcher = pattern.matcher(category.getListTemp());
+		Matcher articleTempMatcher = pattern.matcher(category.getArticleTemp());
+		
+		if(coverTempMatcher.find()) {
+			throw new AdminGeneralException(
+					ExceptionEnum.XSS_SQL_EXCEPTION.getCode(),
+					ExceptionEnum.XSS_SQL_EXCEPTION.getMessage(),
+					"栏目封面模板文件名疑似不安全，详情：" + category.getCoverTemp());
+		}
+		if(listTempMatcher.find()) {
+			throw new AdminGeneralException(
+					ExceptionEnum.XSS_SQL_EXCEPTION.getCode(),
+					ExceptionEnum.XSS_SQL_EXCEPTION.getMessage(),
+					"栏目列表模板文件名疑似不安全，详情：" + category.getListTemp());
+		}
+		if(articleTempMatcher.find()) {
+			throw new AdminGeneralException(
+					ExceptionEnum.XSS_SQL_EXCEPTION.getCode(),
+					ExceptionEnum.XSS_SQL_EXCEPTION.getMessage(),
+					"栏目内容页模板文件名疑似不安全，详情：" + category.getArticleTemp());
+		}
+		
 		//处理模版
 		if(StringUtil.isNotBlank(category.getCoverTemp()) && !category.getCoverTemp().startsWith("/")) {
 			category.setCoverTemp("/" + category.getCoverTemp());
