@@ -10,7 +10,10 @@ import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import cc.iteachyou.cms.common.ExceptionEnum;
 import cc.iteachyou.cms.entity.Theme;
+import cc.iteachyou.cms.exception.CmsException;
+import cc.iteachyou.cms.exception.XssAndSqlException;
 import cc.iteachyou.cms.service.ThemeService;
 import cc.iteachyou.cms.taglib.IParse;
 import cc.iteachyou.cms.taglib.annotation.Attribute;
@@ -36,7 +39,7 @@ public class IncludeTag implements IParse {
 	private FileConfiguration fileConfiguration;
 
 	@Override
-	public String parse(String html) {
+	public String parse(String html) throws CmsException {
 		Tag annotations = IncludeTag.class.getAnnotation(Tag.class);
 		Attribute[] attributes = annotations.attributes();
 		List<String> all = RegexUtil.parseAll(html, annotations.regexp(), 0);
@@ -65,7 +68,16 @@ public class IncludeTag implements IParse {
 			}
 			
 			if(entity.keySet() != null && entity.keySet().size() > 0) {
-				String path = basePath + entity.get("file").toString();
+				String file = entity.get("file").toString();
+				
+				if(file.contains("../") || file.contains("..\\")) {
+					throw new XssAndSqlException(
+							ExceptionEnum.XSS_SQL_EXCEPTION.getCode(),
+							ExceptionEnum.XSS_SQL_EXCEPTION.getMessage(),
+							"Include标签文件名疑似不安全，详情：" + file);
+				}
+				
+				String path = basePath + file;
 				File includeFile = new File(path);
 				String includeHtml;
 				try {

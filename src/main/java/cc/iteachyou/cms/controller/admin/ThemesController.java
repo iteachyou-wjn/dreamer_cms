@@ -27,6 +27,7 @@ import cc.iteachyou.cms.entity.Theme;
 import cc.iteachyou.cms.exception.CmsException;
 import cc.iteachyou.cms.exception.FileFormatErrorException;
 import cc.iteachyou.cms.exception.FileNotFoundException;
+import cc.iteachyou.cms.exception.XssAndSqlException;
 import cc.iteachyou.cms.security.token.TokenManager;
 import cc.iteachyou.cms.service.SystemService;
 import cc.iteachyou.cms.service.ThemeService;
@@ -105,6 +106,14 @@ public class ThemesController extends BaseController {
 		String themeImage = jsonObject.getString("themeImage");
 		String themeAuthor = jsonObject.getString("themeAuthor");
 		String themePath1 = jsonObject.getString("themePath");
+		
+		if(themePath1.contains("../") || themePath1.contains("..\\")) {
+			throw new XssAndSqlException(
+					ExceptionEnum.XSS_SQL_EXCEPTION.getCode(),
+					ExceptionEnum.XSS_SQL_EXCEPTION.getMessage(),
+					"theme.json文件疑似不安全，详情：" + themePath1);
+		}
+		
 		if(StringUtil.isBlank(themeName) 
 				|| StringUtil.isBlank(themeImage) 
 				|| StringUtil.isBlank(themeAuthor) 
