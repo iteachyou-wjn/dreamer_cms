@@ -34,7 +34,8 @@ import cc.iteachyou.cms.service.CategoryService;
 import cc.iteachyou.cms.service.FormService;
 import cc.iteachyou.cms.service.SystemService;
 import cc.iteachyou.cms.utils.StringUtil;
-import cc.iteachyou.cms.utils.UUIDUtils;
+import cc.iteachyou.cms.utils.RandomUtil;
+import cn.hutool.core.util.IdUtil;
 
 /**
  * 栏目管理
@@ -43,13 +44,10 @@ import cc.iteachyou.cms.utils.UUIDUtils;
 @Controller
 @RequestMapping("admin/category")
 public class CategoryController extends BaseController{
-	
 	@Autowired
 	private CategoryService categoryService;
-	
 	@Autowired
 	private FormService formService;
-	
 	@Autowired
 	private SystemService systemService;
 	
@@ -108,8 +106,8 @@ public class CategoryController extends BaseController{
 	@RequestMapping("/add")
 	@RequiresPermissions("pdr1y803")
 	public String add(Category category) throws CmsException {
-		category.setId(UUIDUtils.getPrimaryKey());
-		category.setCode(UUIDUtils.getCharAndNumr(8));
+		category.setId(IdUtil.getSnowflakeNextIdStr());
+		category.setCode(RandomUtil.getCharAndNumr(8));
 		category.setLevel(category.getParentId().equals("-1")?"1":category.getLevel());
 		category.setParentId(StringUtil.isBlank(category.getParentId())? "-1" : category.getParentId());
 		category.setCreateBy(TokenManager.getToken().getId());

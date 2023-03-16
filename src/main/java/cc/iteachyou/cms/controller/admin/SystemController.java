@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import cc.iteachyou.cms.annotation.Log;
 import cc.iteachyou.cms.annotation.Log.OperatorType;
+import cc.iteachyou.cms.common.BaseController;
 import cc.iteachyou.cms.entity.System;
 import cc.iteachyou.cms.service.SystemService;
 
@@ -18,8 +19,7 @@ import cc.iteachyou.cms.service.SystemService;
  */
 @Controller
 @RequestMapping("admin/system")
-public class SystemController{
-
+public class SystemController extends BaseController {
 	@Autowired
 	private SystemService systemService;
 	

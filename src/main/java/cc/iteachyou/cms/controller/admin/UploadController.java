@@ -24,7 +24,7 @@ import cc.iteachyou.cms.service.SystemService;
 import cc.iteachyou.cms.ueditor.ActionEnter;
 import cc.iteachyou.cms.utils.DateUtils;
 import cc.iteachyou.cms.utils.FileConfiguration;
-import cc.iteachyou.cms.utils.UUIDUtils;
+import cn.hutool.core.util.IdUtil;
 
 /**
  * 上传控制器
@@ -34,7 +34,6 @@ import cc.iteachyou.cms.utils.UUIDUtils;
 @Controller
 @RequestMapping("upload")
 public class UploadController extends BaseController{
-	
 	@Autowired
 	private FileConfiguration fileConfiguration;
 	@Autowired
@@ -60,7 +59,7 @@ public class UploadController extends BaseController{
 			if(!directory.exists()){
 				directory.mkdirs();
 			}
-			String newFileName = UUIDUtils.getPrimaryKey() + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
+			String newFileName = IdUtil.getSnowflakeNextIdStr() + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
 			String absolutePath = directory.getAbsolutePath(); //获取绝对路径
 			File uploadpath = new File(absolutePath + "/" + newFileName);
 			file.transferTo(uploadpath);
@@ -98,7 +97,7 @@ public class UploadController extends BaseController{
 			if(!directory.exists()){
 				directory.mkdirs();
 			}
-			String newFileName = UUIDUtils.getPrimaryKey() + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
+			String newFileName = IdUtil.getSnowflakeNextIdStr() + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
 			String absolutePath = directory.getAbsolutePath(); //获取绝对路径
 			File uploadpath = new File(absolutePath + "/" + newFileName);
 			file.transferTo(uploadpath);
@@ -115,7 +114,7 @@ public class UploadController extends BaseController{
 	}
 	
 	@RequestMapping("ueditorConfig")
-	public void ueditorConfig(HttpServletRequest request,HttpServletResponse response) throws Exception {
+	public void ueditorConfig() throws Exception {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json");
 		response.setHeader("Content-Type", "text/html");

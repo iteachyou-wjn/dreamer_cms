@@ -105,7 +105,7 @@
       where tag like concat('%',concat(#{tag,jdbcType=VARCHAR},'%'))
   </select>
   
-  <select id="queryListByKeywords" parameterType="java.util.Map" resultType="cc.iteachyou.cms.vo.ArchivesVo">
+  <select id="queryListByKeywords" parameterType="java.util.Map" resultType="cc.iteachyou.cms.entity.vo.ArchivesVO">
       select 
           a.id
           , a.title
@@ -230,7 +230,7 @@
     </if>
   </select>
   
-  <select id="queryRecommend" parameterType="java.util.Map" resultType="cc.iteachyou.cms.vo.ArchivesVo">
+  <select id="queryRecommend" parameterType="java.util.Map" resultType="cc.iteachyou.cms.entity.vo.ArchivesVO">
       SELECT 
           t1.id, 
           t1.title, 

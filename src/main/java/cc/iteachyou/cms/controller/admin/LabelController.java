@@ -23,7 +23,6 @@ import cc.iteachyou.cms.service.LabelService;
 @Controller
 @RequestMapping("admin/label")
 public class LabelController extends BaseController{
-	
 	@Autowired
 	private LabelService labelService;
 	@Autowired

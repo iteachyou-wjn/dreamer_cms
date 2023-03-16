@@ -34,7 +34,7 @@
   	order by create_time desc
   </select>
   
-  <select id="selectPermissionsByRoleId" parameterType="java.lang.String" resultType="cc.iteachyou.cms.vo.PermissionVo">
+  <select id="selectPermissionsByRoleId" parameterType="java.lang.String" resultType="cc.iteachyou.cms.entity.vo.PermissionVO">
   	SELECT 
 		m.id,
 		m.menu_name AS permissionName,

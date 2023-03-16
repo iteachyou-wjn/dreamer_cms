@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import cc.iteachyou.cms.annotation.Log;
 import cc.iteachyou.cms.annotation.Log.OperatorType;
+import cc.iteachyou.cms.common.BaseController;
 import cc.iteachyou.cms.common.ExceptionEnum;
 import cc.iteachyou.cms.entity.Field;
 import cc.iteachyou.cms.entity.Form;
@@ -21,7 +22,7 @@ import cc.iteachyou.cms.security.token.TokenManager;
 import cc.iteachyou.cms.service.FieldService;
 import cc.iteachyou.cms.service.FormService;
 import cc.iteachyou.cms.utils.StringUtil;
-import cc.iteachyou.cms.utils.UUIDUtils;
+import cn.hutool.core.util.IdUtil;
 
 /**
  * 字段管理
@@ -30,11 +31,9 @@ import cc.iteachyou.cms.utils.UUIDUtils;
  */
 @Controller
 @RequestMapping("admin/field")
-public class FieldController {
-	
+public class FieldController extends BaseController {
 	@Autowired
 	private FormService formService;
-	
 	@Autowired
 	private FieldService fieldService;
 	
@@ -50,7 +49,7 @@ public class FieldController {
 	@RequestMapping("/add")
 	@RequiresPermissions("8435902p")
 	public String add(Model model,Field field) throws CmsException {
-		field.setId(UUIDUtils.getPrimaryKey());
+		field.setId(IdUtil.getSnowflakeNextIdStr());
 		field.setCreateBy(TokenManager.getToken().getId());
 		field.setCreateTime(new Date());
 		if(StringUtil.isBlank(field.getMaxLength())) {

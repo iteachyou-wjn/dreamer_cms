@@ -12,7 +12,7 @@ import cc.iteachyou.cms.dao.LabelMapper;
 import cc.iteachyou.cms.entity.Label;
 import cc.iteachyou.cms.service.LabelService;
 import cc.iteachyou.cms.utils.PinyinUtils;
-import cc.iteachyou.cms.utils.UUIDUtils;
+import cn.hutool.core.util.IdUtil;
 
 /**
  * 标签管理
@@ -35,7 +35,7 @@ public class LabelServiceImpl implements LabelService {
 				labelMapper.updateByPrimaryKeySelective(label);
 			}else {
 				Label label = new Label();
-				label.setId(UUIDUtils.getPrimaryKey());
+				label.setId(IdUtil.getSnowflakeNextIdStr());
 				label.setTagName(arr[i]);
 				label.setTagCount(1+"");
 				label.setPinyin(PinyinUtils.toPinyin(arr[i]));

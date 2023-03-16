@@ -17,7 +17,6 @@ import cc.iteachyou.cms.entity.Category;
 import cc.iteachyou.cms.entity.Form;
 import cc.iteachyou.cms.exception.CmsException;
 import cc.iteachyou.cms.service.FormService;
-import cc.iteachyou.cms.service.SystemService;
 import cc.iteachyou.cms.taglib.IParse;
 import cc.iteachyou.cms.taglib.annotation.Attribute;
 import cc.iteachyou.cms.taglib.annotation.Tag;
@@ -42,9 +41,6 @@ import cc.iteachyou.cms.utils.StringUtil;
 	@Attribute(name = "sortBy",regex = "[ \t]+sortBy=[\"\'].*?[\"\']"),
 })
 public class ListTag extends AbstractListTag implements IParse {
-
-	@Autowired
-	private SystemService systemService;
 	@Autowired
 	private ArchivesMapper archivesMapper;
 	@Autowired
@@ -62,7 +58,6 @@ public class ListTag extends AbstractListTag implements IParse {
 			return html;
 		}
 		
-		cc.iteachyou.cms.entity.System system = systemService.getSystem();
 		Attribute[] attributes = listAnnotation.attributes();
 		
 		String newHtml = html;
@@ -141,7 +136,6 @@ public class ListTag extends AbstractListTag implements IParse {
 			return html;
 		}
 		
-		cc.iteachyou.cms.entity.System system = systemService.getSystem();
 		Attribute[] attributes = listAnnotation.attributes();
 		
 		String newHtml = html;

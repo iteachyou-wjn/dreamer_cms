@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import cc.iteachyou.cms.common.Constant;
 import cc.iteachyou.cms.entity.Category;
+import cc.iteachyou.cms.entity.vo.ArchivesVO;
 import cc.iteachyou.cms.exception.CmsException;
 import cc.iteachyou.cms.service.CategoryService;
 import cc.iteachyou.cms.service.SystemService;
@@ -15,7 +16,6 @@ import cc.iteachyou.cms.taglib.enums.FieldEnum;
 import cc.iteachyou.cms.taglib.utils.FunctionUtil;
 import cc.iteachyou.cms.taglib.utils.URLUtils;
 import cc.iteachyou.cms.utils.StringUtil;
-import cc.iteachyou.cms.vo.ArchivesVo;
 
 /**
  * 列表标签抽象类
@@ -96,7 +96,7 @@ public abstract class AbstractListTag {
 		return item;
 	}
 	
-	public String buildHTML(String item, ArchivesVo archives, int i) throws CmsException{
+	public String buildHTML(String item, ArchivesVO archives, int i) throws CmsException{
 		cc.iteachyou.cms.entity.System system = systemService.getSystem();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		

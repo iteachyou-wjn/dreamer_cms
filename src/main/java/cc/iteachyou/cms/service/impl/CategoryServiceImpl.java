@@ -1,23 +1,24 @@
 package cc.iteachyou.cms.service.impl;
 
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+
 import cc.iteachyou.cms.common.ExceptionEnum;
 import cc.iteachyou.cms.common.SearchEntity;
-import cc.iteachyou.cms.dao.ArchivesMapper;
 import cc.iteachyou.cms.dao.CategoryMapper;
 import cc.iteachyou.cms.entity.Category;
 import cc.iteachyou.cms.exception.AdminGeneralException;
 import cc.iteachyou.cms.exception.CmsException;
 import cc.iteachyou.cms.service.CategoryService;
 import cn.hutool.core.map.MapUtil;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-import org.apache.commons.collections.CollectionUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.Map;
 /**
  *      栏目管理业务类
  * @author LIGW
@@ -27,8 +28,6 @@ import java.util.Map;
 public class CategoryServiceImpl implements CategoryService {
 	@Autowired
 	private CategoryMapper categoryMapper;
-	@Autowired
-	private ArchivesMapper archivesMapper;
 	
 	/**
 	 * 添加

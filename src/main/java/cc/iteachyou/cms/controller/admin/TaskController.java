@@ -15,6 +15,7 @@ import com.github.pagehelper.PageInfo;
 
 import cc.iteachyou.cms.annotation.Log;
 import cc.iteachyou.cms.annotation.Log.OperatorType;
+import cc.iteachyou.cms.common.BaseController;
 import cc.iteachyou.cms.common.ResponseResult;
 import cc.iteachyou.cms.common.SearchEntity;
 import cc.iteachyou.cms.common.StateCodeEnum;
@@ -23,7 +24,7 @@ import cc.iteachyou.cms.security.token.TokenManager;
 import cc.iteachyou.cms.service.ScheduledService;
 import cc.iteachyou.cms.task.ScheduledOfTask;
 import cc.iteachyou.cms.utils.CronUtils;
-import cc.iteachyou.cms.utils.UUIDUtils;
+import cn.hutool.core.util.IdUtil;
 
 /**
  * 计划任务(需要做权限控制)
@@ -32,8 +33,7 @@ import cc.iteachyou.cms.utils.UUIDUtils;
  */
 @Controller
 @RequestMapping("admin/task")
-public class TaskController {
-
+public class TaskController extends BaseController {
     @Autowired
     private ApplicationContext context;
     @Autowired
@@ -71,7 +71,7 @@ public class TaskController {
         if (!CronUtils.isValidExpression(scheduled.getCronExpression())) {
             throw new IllegalArgumentException("失败,非法表达式:" + scheduled.getCronExpression());
         }
-        scheduled.setId(UUIDUtils.getPrimaryKey());
+        scheduled.setId(IdUtil.getSnowflakeNextIdStr());
         scheduled.setCreateBy(TokenManager.getUserId());
         scheduled.setCreateTime(new Date());
         int i = scheduledService.add(scheduled);

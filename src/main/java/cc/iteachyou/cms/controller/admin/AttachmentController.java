@@ -5,8 +5,6 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Date;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,7 +20,6 @@ import com.github.pagehelper.PageInfo;
 import cc.iteachyou.cms.annotation.Log;
 import cc.iteachyou.cms.annotation.Log.OperatorType;
 import cc.iteachyou.cms.common.BaseController;
-import cc.iteachyou.cms.common.Constant;
 import cc.iteachyou.cms.common.ExceptionEnum;
 import cc.iteachyou.cms.common.SearchEntity;
 import cc.iteachyou.cms.entity.Attachment;
@@ -34,7 +31,8 @@ import cc.iteachyou.cms.security.token.TokenManager;
 import cc.iteachyou.cms.service.AttachmentService;
 import cc.iteachyou.cms.service.SystemService;
 import cc.iteachyou.cms.utils.FileConfiguration;
-import cc.iteachyou.cms.utils.UUIDUtils;
+import cc.iteachyou.cms.utils.RandomUtil;
+import cn.hutool.core.util.IdUtil;
 
 /**
  * 附件管理
@@ -83,8 +81,8 @@ public class AttachmentController extends BaseController {
 					ExceptionEnum.XSS_SQL_EXCEPTION.getMessage(),
 					"附件不存在，路径：" + attachment.getFilepath());
 		}
-		attachment.setId(UUIDUtils.getPrimaryKey());
-		attachment.setCode(UUIDUtils.getCharAndNumr(8));
+		attachment.setId(IdUtil.getSnowflakeNextIdStr());
+		attachment.setCode(RandomUtil.getCharAndNumr(8));
 		attachment.setCreateBy(TokenManager.getUserId());
 		attachment.setCreateTime(new Date());
 		attachment.setUpdateBy(TokenManager.getUserId());
@@ -109,7 +107,7 @@ public class AttachmentController extends BaseController {
 	
 	@Log(operType = OperatorType.OTHER, module = "附件管理", content = "下载附件")
 	@RequestMapping("/download")
-	public void download(String id,HttpServletRequest request,HttpServletResponse response) throws AdminGeneralException {
+	public void download(String id) throws AdminGeneralException {
 		try {
 			System system = systemService.getSystem();
 			Attachment attachment = attachmentService.queryAttachmentById(id);

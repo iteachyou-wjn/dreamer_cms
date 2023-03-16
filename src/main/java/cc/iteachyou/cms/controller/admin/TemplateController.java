@@ -18,14 +18,15 @@ import org.springframework.web.servlet.ModelAndView;
 
 import cc.iteachyou.cms.annotation.Log;
 import cc.iteachyou.cms.annotation.Log.OperatorType;
+import cc.iteachyou.cms.common.BaseController;
 import cc.iteachyou.cms.common.StateCodeEnum;
 import cc.iteachyou.cms.entity.Theme;
+import cc.iteachyou.cms.entity.vo.TemplateVO;
 import cc.iteachyou.cms.exception.CmsException;
 import cc.iteachyou.cms.exception.TemplateNotFoundException;
 import cc.iteachyou.cms.exception.TemplatePermissionDeniedException;
 import cc.iteachyou.cms.service.ThemeService;
 import cc.iteachyou.cms.utils.FileConfiguration;
-import cc.iteachyou.cms.vo.TemplateVo;
 
 /**
  * 模板管理
@@ -34,7 +35,7 @@ import cc.iteachyou.cms.vo.TemplateVo;
  */
 @Controller
 @RequestMapping("admin/templates")
-public class TemplateController {
+public class TemplateController extends BaseController {
 	@Autowired
 	private FileConfiguration fileConfiguration;
 	@Autowired
@@ -146,7 +147,7 @@ public class TemplateController {
 	@Log(operType = OperatorType.UPDATE, module = "模板管理", content = "修改模板")
 	@PostMapping("save")
 	@RequiresPermissions("5n6ta53y")
-	public String save(TemplateVo template) throws IOException, CmsException {
+	public String save(TemplateVO template) throws IOException, CmsException {
 		String fileName = template.getPath() + File.separator + template.getFile();
 		File templateFile = new File(fileName);
 		/**

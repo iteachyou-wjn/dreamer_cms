@@ -1,13 +1,8 @@
 package cc.iteachyou.cms.utils;
 
 import java.util.Random;
-import java.util.UUID;
 
-public class UUIDUtils {
-	public static String getPrimaryKey() {
-		return UUID.randomUUID().toString().replaceAll("-", "");
-	}
-	
+public class RandomUtil {
 	/**
      * java生成随机数字和字母组合
      * 

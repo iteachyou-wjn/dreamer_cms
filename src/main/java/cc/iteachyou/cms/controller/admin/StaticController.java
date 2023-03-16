@@ -25,6 +25,7 @@ import com.github.pagehelper.PageInfo;
 
 import cc.iteachyou.cms.annotation.Log;
 import cc.iteachyou.cms.annotation.Log.OperatorType;
+import cc.iteachyou.cms.common.BaseController;
 import cc.iteachyou.cms.common.ExceptionEnum;
 import cc.iteachyou.cms.common.ResponseResult;
 import cc.iteachyou.cms.common.SearchEntity;
@@ -34,6 +35,7 @@ import cc.iteachyou.cms.entity.Category;
 import cc.iteachyou.cms.entity.Message;
 import cc.iteachyou.cms.entity.System;
 import cc.iteachyou.cms.entity.Theme;
+import cc.iteachyou.cms.entity.vo.CategoryVO;
 import cc.iteachyou.cms.exception.CmsException;
 import cc.iteachyou.cms.exception.TemplateNotFoundException;
 import cc.iteachyou.cms.exception.TemplateReadException;
@@ -45,7 +47,6 @@ import cc.iteachyou.cms.taglib.ParseEngine;
 import cc.iteachyou.cms.taglib.utils.URLUtils;
 import cc.iteachyou.cms.utils.FileConfiguration;
 import cc.iteachyou.cms.utils.StringUtil;
-import cc.iteachyou.cms.vo.CategoryVo;
 import cc.iteachyou.cms.websocket.WebSocketServer;
 
 /**
@@ -55,7 +56,7 @@ import cc.iteachyou.cms.websocket.WebSocketServer;
  */
 @Controller
 @RequestMapping("admin/static")
-public class StaticController {
+public class StaticController extends BaseController {
 	@Autowired
 	private ThemeService themeService;
 	@Autowired
@@ -156,7 +157,7 @@ public class StaticController {
 	@RequestMapping("generateCategory/{clientId}")
 	@RequiresPermissions("ji766569")
 	@ResponseBody
-	public ResponseResult generateCategory(@PathVariable String clientId, @RequestBody CategoryVo categoryVo) throws CmsException, IOException, EncodeException {
+	public ResponseResult generateCategory(@PathVariable String clientId, @RequestBody CategoryVO categoryVo) throws CmsException, IOException, EncodeException {
 		Message message = new Message(StateCodeEnum.HTTP_SUCCESS.getCode(),"准备生成栏目HTML...",3);
 		WebSocketServer.sendInfo(message,clientId);
 		String id = categoryVo.getId();

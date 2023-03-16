@@ -1,9 +1,9 @@
-package cc.iteachyou.cms.vo;
+package cc.iteachyou.cms.entity.vo;
 
 import lombok.Data;
 
 @Data
-public class PermissionVo {
+public class PermissionVO {
 	private String id;
 	private String permissionName;
 	private String parentId;

@@ -38,8 +38,6 @@ public class LocationTag implements IParse {
 	
 	@Override
 	public String parse(String html) throws CmsException {
-		cc.iteachyou.cms.entity.System system = systemService.getSystem();
-		
 		Tag locationAnnotation = LocationTag.class.getAnnotation(Tag.class);
 		List<String> locationTags = RegexUtil.parseAll(html, locationAnnotation.regexp(), 0);
 		

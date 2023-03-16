@@ -1,4 +1,4 @@
-package cc.iteachyou.cms.vo;
+package cc.iteachyou.cms.entity.req;
 
 import lombok.Data;
 
@@ -8,7 +8,7 @@ import lombok.Data;
  * Date: 2020-12-29
  */
 @Data
-public class UserVO {
+public class UsernamePasswordREQ {
 	private String username;
 	private String password;
 	private String vcode;

@@ -14,6 +14,7 @@ import com.github.pagehelper.PageInfo;
 
 import cc.iteachyou.cms.annotation.Log;
 import cc.iteachyou.cms.annotation.Log.OperatorType;
+import cc.iteachyou.cms.common.BaseController;
 import cc.iteachyou.cms.common.ExceptionEnum;
 import cc.iteachyou.cms.common.SearchEntity;
 import cc.iteachyou.cms.entity.Menu;
@@ -23,7 +24,8 @@ import cc.iteachyou.cms.exception.CmsException;
 import cc.iteachyou.cms.security.token.TokenManager;
 import cc.iteachyou.cms.service.MenuService;
 import cc.iteachyou.cms.service.PermissionService;
-import cc.iteachyou.cms.utils.UUIDUtils;
+import cc.iteachyou.cms.utils.RandomUtil;
+import cn.hutool.core.util.IdUtil;
 
 /**
  * 权限管理
@@ -32,7 +34,7 @@ import cc.iteachyou.cms.utils.UUIDUtils;
  */
 @Controller
 @RequestMapping("admin/permission")
-public class PermissionController {
+public class PermissionController extends BaseController {
 	@Autowired
 	private MenuService menuService;
 	@Autowired
@@ -70,8 +72,8 @@ public class PermissionController {
 	@RequestMapping("/add")
 	@RequiresPermissions("088livwa")
 	public String add(Model model, Permission permission) throws CmsException {
-		permission.setId(UUIDUtils.getPrimaryKey());
-		permission.setPermissionCode(UUIDUtils.getCharAndNumr(8));
+		permission.setId(IdUtil.getSnowflakeNextIdStr());
+		permission.setPermissionCode(RandomUtil.getCharAndNumr(8));
 		permission.setCreateBy(TokenManager.getToken().getId());
 		permission.setCreateTime(new Date());
 		try {

@@ -1,4 +1,4 @@
-package cc.iteachyou.cms.vo;
+package cc.iteachyou.cms.entity.vo;
 
 import cc.iteachyou.cms.entity.Archives;
 import lombok.Data;
@@ -9,7 +9,7 @@ import lombok.Data;
  * Date: 2020-12-29
  */
 @Data
-public class ArchivesVo extends Archives {
+public class ArchivesVO extends Archives {
 	private String categoryCnName;
 	private String categoryEnName;
 }

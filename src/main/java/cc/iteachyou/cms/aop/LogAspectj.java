@@ -20,7 +20,7 @@ import cc.iteachyou.cms.entity.SysLogger;
 import cc.iteachyou.cms.security.token.TokenManager;
 import cc.iteachyou.cms.service.LoggerService;
 import cc.iteachyou.cms.utils.RequestEntity;
-import cc.iteachyou.cms.utils.UUIDUtils;
+import cn.hutool.core.util.IdUtil;
 
 /**
  * 日志记录切面
@@ -57,7 +57,7 @@ public class LogAspectj {
 		Method method = signature.getMethod();
 
 		SysLogger logEntity = new SysLogger();
-		logEntity.setId(UUIDUtils.getPrimaryKey());
+		logEntity.setId(IdUtil.getSnowflakeNextIdStr());
 		logEntity.setLevel("INFO");
 		
 		Log syslog = method.getAnnotation(Log.class);

@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 import cc.iteachyou.cms.entity.Category;
 import cc.iteachyou.cms.exception.CmsException;
 import cc.iteachyou.cms.service.CategoryService;
-import cc.iteachyou.cms.service.ThemeService;
 import cc.iteachyou.cms.taglib.IParse;
 import cc.iteachyou.cms.taglib.annotation.Attribute;
 import cc.iteachyou.cms.taglib.annotation.Tag;
@@ -27,10 +26,6 @@ import cc.iteachyou.cms.utils.StringUtil;
 		@Attribute(name = "typeid",regex = "[ \t]+typeid=[\"\'].*?[\"\']"),
 	})
 public class TypeTag extends AbstractChannelTag implements IParse {
-	
-	@Autowired
-	private ThemeService themeService;
-	
 	@Autowired
 	private CategoryService categoryService;
 

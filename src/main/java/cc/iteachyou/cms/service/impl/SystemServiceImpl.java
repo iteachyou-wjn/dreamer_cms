@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import cc.iteachyou.cms.dao.SystemMapper;
 import cc.iteachyou.cms.entity.System;
 import cc.iteachyou.cms.service.SystemService;
-import cc.iteachyou.cms.utils.FileConfiguration;
 
 /**
  * 系统设置业务处理类
@@ -17,8 +16,6 @@ import cc.iteachyou.cms.utils.FileConfiguration;
 public class SystemServiceImpl implements SystemService {
 	@Autowired
 	private SystemMapper systemMapper;
-	@Autowired
-	private FileConfiguration fileConfiguration;
 
 	/**
 	 * 系统设置列表

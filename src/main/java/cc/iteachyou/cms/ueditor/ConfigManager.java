@@ -21,7 +21,6 @@ import cc.iteachyou.cms.ueditor.define.ActionMap;
  *
  */
 public final class ConfigManager {
-
 	private final String rootPath;
 	private final String originalPath;
 	private final String contextPath;

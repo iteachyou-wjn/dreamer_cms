@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
  * @date: 2018-11-22
  */
 @Slf4j
-public class HttpRequestUtils {
+public class HttpRequestUtil {
 
 	public static HttpServletRequest getRequest(){
 		ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();

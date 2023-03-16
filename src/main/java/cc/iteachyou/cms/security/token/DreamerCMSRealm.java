@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AccountException;
@@ -25,6 +25,7 @@ import cc.iteachyou.cms.common.Constant;
 import cc.iteachyou.cms.entity.User;
 import cc.iteachyou.cms.service.RoleService;
 import cc.iteachyou.cms.service.UserService;
+import cc.iteachyou.cms.utils.HttpRequestUtil;
 
 /**
  * 
@@ -32,8 +33,7 @@ import cc.iteachyou.cms.service.UserService;
  * 
  */
 public class DreamerCMSRealm extends AuthorizingRealm {
-
-	@Resource
+	@Autowired
 	private UserService userService;
 	@Autowired
 	private RoleService roleService;
@@ -60,7 +60,11 @@ public class DreamerCMSRealm extends AuthorizingRealm {
 			String password = user.getPassword();
 
 			ByteSource salt = token.getSalt();
-			// 更新登录时间 last login time
+			// 更新登录IP和时间
+			HttpServletRequest request = HttpRequestUtil.getRequest();
+			String ip = HttpRequestUtil.getRequestAddr(request);
+			
+			user.setLastLoginIp(ip);
 			user.setLastLoginTime(new Date());
 			userService.save(user);
 			return new SimpleAuthenticationInfo(user, password, salt, getName());

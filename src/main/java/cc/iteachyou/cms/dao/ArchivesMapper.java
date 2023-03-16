@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import cc.iteachyou.cms.common.BaseMapper;
 import cc.iteachyou.cms.entity.Archives;
 import cc.iteachyou.cms.entity.ArchivesWithRownum;
-import cc.iteachyou.cms.vo.ArchivesVo;
+import cc.iteachyou.cms.entity.vo.ArchivesVO;
 
 public interface ArchivesMapper extends BaseMapper<Archives> {
     
@@ -26,11 +26,11 @@ public interface ArchivesMapper extends BaseMapper<Archives> {
 
 	int updateTagByPrimaryKey(Archives article);
 
-	List<ArchivesVo> queryListByKeywords(Map<String, Object> entity);
+	List<ArchivesVO> queryListByKeywords(Map<String, Object> entity);
 
 	ArchivesWithRownum queryArticleRowNum(Map<String, Object> params);
 
-	List<ArchivesVo> queryRecommend(Map<String, Object> entity);
+	List<ArchivesVO> queryRecommend(Map<String, Object> entity);
 
 	List<Archives> queryListByTop();
 

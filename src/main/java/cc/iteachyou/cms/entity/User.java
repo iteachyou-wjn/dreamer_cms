@@ -13,6 +13,7 @@ import org.springframework.data.annotation.Transient;
 import com.alibaba.fastjson.annotation.JSONField;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 用户
@@ -20,6 +21,7 @@ import lombok.Data;
  * Date: 2020-12-29
  */
 @Data
+@NoArgsConstructor
 @Table(name = "system_user")
 public class User implements Serializable {
 	
@@ -74,10 +76,6 @@ public class User implements Serializable {
 	@Transient
     @JSONField(serialize=false)
     private ByteSource saltByte;
-    
-    public User() {
-		super();
-	}
 
 	public User(User user) {
 		super();

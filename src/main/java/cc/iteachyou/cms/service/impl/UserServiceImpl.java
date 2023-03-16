@@ -18,7 +18,7 @@ import cc.iteachyou.cms.dao.UserRoleMapper;
 import cc.iteachyou.cms.entity.User;
 import cc.iteachyou.cms.entity.UserRole;
 import cc.iteachyou.cms.service.UserService;
-import cc.iteachyou.cms.utils.UUIDUtils;
+import cn.hutool.core.util.IdUtil;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -95,7 +95,7 @@ public class UserServiceImpl implements UserService {
 		List<UserRole> userRoles = new ArrayList<UserRole>();
 		for(int i = 0;i < roles.size();i++) {
 			UserRole ur = new UserRole();
-			ur.setId(UUIDUtils.getPrimaryKey());
+			ur.setId(IdUtil.getSnowflakeNextIdStr());
 			ur.setUserId(userId);
 			ur.setRoleId(roles.get(i));
 			userRoles.add(ur);

@@ -13,6 +13,7 @@ import com.github.pagehelper.PageInfo;
 
 import cc.iteachyou.cms.annotation.Log;
 import cc.iteachyou.cms.annotation.Log.OperatorType;
+import cc.iteachyou.cms.common.BaseController;
 import cc.iteachyou.cms.common.ExceptionEnum;
 import cc.iteachyou.cms.common.SearchEntity;
 import cc.iteachyou.cms.entity.Variable;
@@ -20,7 +21,7 @@ import cc.iteachyou.cms.exception.AdminGeneralException;
 import cc.iteachyou.cms.exception.CmsException;
 import cc.iteachyou.cms.security.token.TokenManager;
 import cc.iteachyou.cms.service.VariableService;
-import cc.iteachyou.cms.utils.UUIDUtils;
+import cn.hutool.core.util.IdUtil;
 
 /**
  * @Description: 变量管理
@@ -30,7 +31,7 @@ import cc.iteachyou.cms.utils.UUIDUtils;
  */
 @Controller
 @RequestMapping("admin/variable")
-public class VariableController {
+public class VariableController extends BaseController {
 	@Autowired
 	private VariableService variableService;
 
@@ -73,7 +74,7 @@ public class VariableController {
 					"变量名已经存在，请检查变量名。");
 		}
 		
-		variable.setId(UUIDUtils.getPrimaryKey());
+		variable.setId(IdUtil.getSnowflakeNextIdStr());
 		variable.setCreateBy(TokenManager.getToken().getId());
 		variable.setCreateTime(new Date());
 		try {

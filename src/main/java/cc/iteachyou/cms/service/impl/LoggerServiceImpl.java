@@ -24,10 +24,10 @@ import cc.iteachyou.cms.entity.SysLogger;
 import cc.iteachyou.cms.entity.User;
 import cc.iteachyou.cms.security.token.TokenManager;
 import cc.iteachyou.cms.service.LoggerService;
-import cc.iteachyou.cms.utils.HttpRequestUtils;
+import cc.iteachyou.cms.utils.HttpRequestUtil;
 import cc.iteachyou.cms.utils.RequestEntity;
 import cc.iteachyou.cms.utils.StringUtil;
-import cc.iteachyou.cms.utils.UUIDUtils;
+import cn.hutool.core.util.IdUtil;
 
 /**
  * 记录日志到数据库中 数据库中
@@ -56,7 +56,7 @@ public class LoggerServiceImpl implements LoggerService {
     @Transactional
     public void info(String module, String msg, String username, RequestEntity request) {
     	SysLogger log = new SysLogger();
-    	log.setId(UUIDUtils.getPrimaryKey());
+    	log.setId(IdUtil.getSnowflakeNextIdStr());
         log.setLevel("INFO");
         log.setModule(module);
         log.setContent(msg);
@@ -81,7 +81,7 @@ public class LoggerServiceImpl implements LoggerService {
     @Transactional
     @Override
     public void info(String module, String msg) {
-        this.info(module, msg, TokenManager.getToken() == null ? SysLogger.UNKNOW : TokenManager.getToken().getUsername(), RequestEntity.fromWebRequest(HttpRequestUtils.getRequest()));
+        this.info(module, msg, TokenManager.getToken() == null ? SysLogger.UNKNOW : TokenManager.getToken().getUsername(), RequestEntity.fromWebRequest(HttpRequestUtil.getRequest()));
     }
 
     /**
@@ -96,7 +96,7 @@ public class LoggerServiceImpl implements LoggerService {
     @Transactional
     public void error(String module, String msg, String username, RequestEntity request) {
     	SysLogger log = new SysLogger();
-    	log.setId(UUIDUtils.getPrimaryKey());
+    	log.setId(IdUtil.getSnowflakeNextIdStr());
         log.setLevel("ERROR");
         log.setOperUser(username);
         log.setIp(request.getRemoteAddr());
@@ -121,7 +121,7 @@ public class LoggerServiceImpl implements LoggerService {
     @Transactional
     @Override
     public void error(String module, String msg) {
-        this.error(module, msg, TokenManager.getToken() == null ? SysLogger.UNKNOW : TokenManager.getToken().getUsername(), RequestEntity.fromWebRequest(HttpRequestUtils.getRequest()));
+        this.error(module, msg, TokenManager.getToken() == null ? SysLogger.UNKNOW : TokenManager.getToken().getUsername(), RequestEntity.fromWebRequest(HttpRequestUtil.getRequest()));
     }
 
     /**
@@ -160,7 +160,7 @@ public class LoggerServiceImpl implements LoggerService {
             }else if (log.level() == Log.Level.ERROR){
             	logInfo.setLevel("ERROR");
             }
-            logInfo.setId(UUIDUtils.getPrimaryKey());
+            logInfo.setId(IdUtil.getSnowflakeNextIdStr());
             logInfo.setContent(content);
             logInfo.setOperUser(username);
             logInfo.setIp(request.getRemoteAddr());

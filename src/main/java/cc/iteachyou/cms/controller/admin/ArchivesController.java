@@ -20,6 +20,7 @@ import com.github.pagehelper.PageInfo;
 
 import cc.iteachyou.cms.annotation.Log;
 import cc.iteachyou.cms.annotation.Log.OperatorType;
+import cc.iteachyou.cms.common.BaseController;
 import cc.iteachyou.cms.common.ExceptionEnum;
 import cc.iteachyou.cms.common.SearchEntity;
 import cc.iteachyou.cms.entity.Archives;
@@ -38,7 +39,7 @@ import cc.iteachyou.cms.service.FormService;
 import cc.iteachyou.cms.service.LabelService;
 import cc.iteachyou.cms.service.SystemService;
 import cc.iteachyou.cms.utils.StringUtil;
-import cc.iteachyou.cms.utils.UUIDUtils;
+import cn.hutool.core.util.IdUtil;
 
 /**
  * 文章管理
@@ -47,7 +48,7 @@ import cc.iteachyou.cms.utils.UUIDUtils;
  */
 @Controller
 @RequestMapping("admin/archives")
-public class ArchivesController {
+public class ArchivesController extends BaseController {
 	@Autowired
 	private CategoryService categoryService;
 	@Autowired
@@ -119,9 +120,9 @@ public class ArchivesController {
 	@Log(operType = OperatorType.INSERT, module = "文章管理", content = "添加文章")
 	@RequestMapping("/add")
 	@RequiresPermissions("0d2132i8")
-	public String add(Model model,HttpServletRequest request,@RequestParam Map<String,String> entity) throws CmsException {
+	public String add(Model model,@RequestParam Map<String,String> entity) throws CmsException {
 		Archives archives = new Archives();
-		archives.setId(UUIDUtils.getPrimaryKey());
+		archives.setId(IdUtil.getSnowflakeNextIdStr());
 		archives.setCreateTime(new Date());
 		archives.setCreateBy(TokenManager.getToken().getId());
 		archives.setStatus(1);//未发布
@@ -182,7 +183,7 @@ public class ArchivesController {
 		Form form = formService.queryFormById(formId);
 		List<Field> fields = fieldService.queryFieldByFormId(formId);
 		Map<String,Object> additional = new LinkedHashMap<String,Object>();
-		additional.put("id", UUIDUtils.getPrimaryKey());
+		additional.put("id", IdUtil.getSnowflakeNextIdStr());
 		additional.put("aid", archives.getId());
 		for(int i = 0;i < fields.size();i++) {
 			Field field = fields.get(i);
@@ -243,7 +244,7 @@ public class ArchivesController {
 	@Log(operType = OperatorType.UPDATE, module = "文章管理", content = "修改文章")
 	@RequestMapping(value ="/edit")
 	@RequiresPermissions("th018nx3")
-	public String edit(Model model,HttpServletRequest request,@RequestParam Map<String,String> entity) throws CmsException {
+	public String edit(Model model, @RequestParam Map<String,String> entity) throws CmsException {
 		Archives archives = new Archives();
 		archives.setId(entity.get("id"));
 		archives.setTitle(entity.get("title"));

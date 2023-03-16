@@ -12,9 +12,10 @@ import com.github.pagehelper.PageInfo;
 
 import cc.iteachyou.cms.annotation.Log;
 import cc.iteachyou.cms.annotation.Log.OperatorType;
+import cc.iteachyou.cms.common.BaseController;
 import cc.iteachyou.cms.common.SearchEntity;
+import cc.iteachyou.cms.entity.vo.ArchivesVO;
 import cc.iteachyou.cms.service.ArchivesService;
-import cc.iteachyou.cms.vo.ArchivesVo;
 
 /**
  * 搜索
@@ -23,7 +24,7 @@ import cc.iteachyou.cms.vo.ArchivesVo;
  */
 @Controller
 @RequestMapping("admin/search")
-public class SearchController {
+public class SearchController extends BaseController {
 	@Autowired
 	private ArchivesService archivesService;
 	
@@ -34,7 +35,7 @@ public class SearchController {
 			Map<String,Object> entity = new HashMap<String,Object>();
 			params.setEntity(entity);
 		}
-		PageInfo<ArchivesVo> page = archivesService.queryListByKeywords(params);
+		PageInfo<ArchivesVO> page = archivesService.queryListByKeywords(params);
 		model.addAttribute("keywords", params.getEntity().containsKey("keywords") ? params.getEntity().get("keywords") : "");
 		model.addAttribute("page", page);
 		return "admin/search/result";

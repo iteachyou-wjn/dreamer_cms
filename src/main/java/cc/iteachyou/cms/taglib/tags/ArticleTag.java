@@ -9,12 +9,10 @@ import org.springframework.stereotype.Component;
 
 import cc.iteachyou.cms.entity.Archives;
 import cc.iteachyou.cms.entity.Category;
-import cc.iteachyou.cms.entity.Field;
 import cc.iteachyou.cms.entity.Form;
 import cc.iteachyou.cms.exception.CmsException;
 import cc.iteachyou.cms.service.ArchivesService;
 import cc.iteachyou.cms.service.CategoryService;
-import cc.iteachyou.cms.service.FieldService;
 import cc.iteachyou.cms.service.FormService;
 import cc.iteachyou.cms.service.SystemService;
 import cc.iteachyou.cms.taglib.IParse;
@@ -36,7 +34,6 @@ import cc.iteachyou.cms.utils.StringUtil;
 		@Attribute(name = "function",regex = "[ \t]+function=\\\"((.*)\\((.*?)\\)?)\\\""),
 	})
 public class ArticleTag implements IParse {
-
 	@Autowired
 	private SystemService systemService;
 	@Autowired
@@ -45,8 +42,6 @@ public class ArticleTag implements IParse {
 	private ArchivesService archivesService;
 	@Autowired
 	private FormService formService;
-	@Autowired
-	private FieldService fieldService;
 	
 	@Override
 	public String parse(String html) {
@@ -91,7 +86,6 @@ public class ArticleTag implements IParse {
 			}
 			
 			Form form = formService.queryFormById(formId);
-			List<Field> fields = fieldService.queryFieldByFormId(formId);
 			
 			Map<String,Object> params = new HashMap<String,Object>();
 			params.put("tableName", "system_" + form.getTableName());

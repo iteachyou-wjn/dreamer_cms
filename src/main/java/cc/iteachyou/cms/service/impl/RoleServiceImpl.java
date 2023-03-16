@@ -14,13 +14,12 @@ import cc.iteachyou.cms.dao.RoleMapper;
 import cc.iteachyou.cms.dao.RolePermissionMapper;
 import cc.iteachyou.cms.entity.Role;
 import cc.iteachyou.cms.entity.RolePermission;
+import cc.iteachyou.cms.entity.vo.PermissionVO;
 import cc.iteachyou.cms.service.RoleService;
-import cc.iteachyou.cms.utils.UUIDUtils;
-import cc.iteachyou.cms.vo.PermissionVo;
+import cn.hutool.core.util.IdUtil;
 
 @Service
 public class RoleServiceImpl implements RoleService {
-	
 	@Autowired
 	private RoleMapper roleMapper;
 	@Autowired
@@ -66,7 +65,7 @@ public class RoleServiceImpl implements RoleService {
 	}
 
 	@Override
-	public List<PermissionVo> queryPermissionsByRoleId(String id) {
+	public List<PermissionVO> queryPermissionsByRoleId(String id) {
 		return roleMapper.selectPermissionsByRoleId(id);
 	}
 
@@ -78,11 +77,10 @@ public class RoleServiceImpl implements RoleService {
 		rolePermissionMapper.delete(example);
 		for(int i = 0;i < list.size();i++) {
 			RolePermission rp = list.get(i);
-			rp.setId(UUIDUtils.getPrimaryKey());
+			rp.setId(IdUtil.getSnowflakeNextIdStr());
 		}
-		int i = 0;
 		if(list.size() > 0) {
-			i = rolePermissionMapper.insertBatchList(list);
+			rolePermissionMapper.insertBatchList(list);
 		}
 		return 0;
 	}

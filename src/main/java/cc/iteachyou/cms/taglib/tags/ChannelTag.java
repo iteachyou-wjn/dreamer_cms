@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 import cc.iteachyou.cms.entity.Category;
 import cc.iteachyou.cms.exception.CmsException;
 import cc.iteachyou.cms.service.CategoryService;
-import cc.iteachyou.cms.service.SystemService;
 import cc.iteachyou.cms.taglib.IParse;
 import cc.iteachyou.cms.taglib.annotation.Attribute;
 import cc.iteachyou.cms.taglib.annotation.Tag;
@@ -31,10 +30,6 @@ import cc.iteachyou.cms.utils.StringUtil;
 		@Attribute(name = "showall",regex = "[ \t]+showall=\".*?\"")
 	})
 public class ChannelTag extends AbstractChannelTag implements IParse {
-
-	@Autowired
-	private SystemService systemService;
-	
 	@Autowired
 	private CategoryService categoryService;
 	

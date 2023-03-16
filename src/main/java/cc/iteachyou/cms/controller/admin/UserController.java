@@ -23,6 +23,7 @@ import com.github.pagehelper.PageInfo;
 
 import cc.iteachyou.cms.annotation.Log;
 import cc.iteachyou.cms.annotation.Log.OperatorType;
+import cc.iteachyou.cms.common.BaseController;
 import cc.iteachyou.cms.common.ExceptionEnum;
 import cc.iteachyou.cms.common.ResponseResult;
 import cc.iteachyou.cms.common.SearchEntity;
@@ -30,14 +31,14 @@ import cc.iteachyou.cms.common.StateCodeEnum;
 import cc.iteachyou.cms.entity.Role;
 import cc.iteachyou.cms.entity.User;
 import cc.iteachyou.cms.entity.UserRole;
+import cc.iteachyou.cms.entity.req.PasswordREQ;
 import cc.iteachyou.cms.exception.AdminGeneralException;
 import cc.iteachyou.cms.exception.CmsException;
 import cc.iteachyou.cms.security.token.TokenManager;
 import cc.iteachyou.cms.service.RoleService;
 import cc.iteachyou.cms.service.UserService;
 import cc.iteachyou.cms.utils.StringUtil;
-import cc.iteachyou.cms.utils.UUIDUtils;
-import cc.iteachyou.cms.vo.UserPasswordVO;
+import cn.hutool.core.util.IdUtil;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -49,8 +50,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
 @RequestMapping("admin/user")
-public class UserController {
-	
+public class UserController extends BaseController {
 	@Resource
 	private UserService userService;
 	@Autowired
@@ -93,7 +93,7 @@ public class UserController {
 					ExceptionEnum.USERNAME_EXIST_EXCEPTION.getMessage(),
 					"输入的用户名已经存在，请输入其它用户名再次尝试。");
 		}
-		user.setId(UUIDUtils.getPrimaryKey());
+		user.setId(IdUtil.getSnowflakeNextIdStr());
 		user.setCreateBy(TokenManager.getToken().getId());
 		user.setCreateTime(new Date());
 		ByteSource salt = ByteSource.Util.bytes(user.getUsername() + user.getPassword());
@@ -227,17 +227,17 @@ public class UserController {
 	@Log(operType = OperatorType.OTHER, module = "用户管理", content = "用户修改密码")
 	@RequestMapping("/updatePwd")
 	@ResponseBody
-	public ResponseResult updatePwd(@RequestBody UserPasswordVO user) {
-		User user2 = userService.getByID(user.getId());
-		ByteSource oldSalt = ByteSource.Util.bytes(user2.getUsername() + user.getOldPwd());
-		SimpleHash sh = new SimpleHash("MD5", user.getOldPwd(), oldSalt, 1024);
+	public ResponseResult updatePwd(@RequestBody PasswordREQ params) {
+		User user2 = userService.getByID(params.getId());
+		ByteSource oldSalt = ByteSource.Util.bytes(user2.getUsername() + params.getOldPwd());
+		SimpleHash sh = new SimpleHash("MD5", params.getOldPwd(), oldSalt, 1024);
 		
 		if(!user2.getPassword().equals(sh.toString())) {
 			return ResponseResult.Factory.newInstance(Boolean.FALSE, StateCodeEnum.USER_OLDPWD_ERROR.getCode(), null, StateCodeEnum.USER_OLDPWD_ERROR.getDescription());
 		}
 		
-		ByteSource newSalt = ByteSource.Util.bytes(user2.getUsername() + user.getNewPwd());
-		SimpleHash sh1 = new SimpleHash("MD5", user.getNewPwd(), newSalt, 1024);
+		ByteSource newSalt = ByteSource.Util.bytes(user2.getUsername() + params.getNewPwd());
+		SimpleHash sh1 = new SimpleHash("MD5", params.getNewPwd(), newSalt, 1024);
 		user2.setSalt(newSalt.toString());
 		user2.setPassword(sh1.toString());
 		userService.save(user2);

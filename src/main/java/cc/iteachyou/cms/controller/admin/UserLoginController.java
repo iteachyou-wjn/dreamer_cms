@@ -1,9 +1,7 @@
 package cc.iteachyou.cms.controller.admin;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,6 +10,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.DisabledAccountException;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.util.ByteSource;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,13 +25,17 @@ import com.wf.captcha.utils.CaptchaUtil;
 import cc.iteachyou.cms.annotation.Log;
 import cc.iteachyou.cms.annotation.Log.OperatorType;
 import cc.iteachyou.cms.common.BaseController;
+import cc.iteachyou.cms.common.Constant;
 import cc.iteachyou.cms.common.ResponseResult;
 import cc.iteachyou.cms.common.StateCodeEnum;
 import cc.iteachyou.cms.entity.Menu;
 import cc.iteachyou.cms.entity.User;
+import cc.iteachyou.cms.entity.req.UsernamePasswordREQ;
+import cc.iteachyou.cms.entity.vo.UserLoginVO;
 import cc.iteachyou.cms.security.token.TokenManager;
 import cc.iteachyou.cms.service.MenuService;
-import cc.iteachyou.cms.vo.UserVO;
+import cn.hutool.crypto.asymmetric.KeyType;
+import cn.hutool.crypto.asymmetric.RSA;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -45,11 +48,10 @@ import lombok.extern.slf4j.Slf4j;
 public class UserLoginController extends BaseController {
 	@Autowired
 	private MenuService menuService;
-	
 
 	// 产生验证码
 	@RequestMapping("/getVerifyCode")
-	public void getKaptcha(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public void getKaptcha() throws IOException {
 		ArithmeticCaptcha captcha = new ArithmeticCaptcha(130, 48);
         captcha.getArithmeticString();  // 获取运算的公式：3+2=?
         captcha.text();  // 获取运算的结果：5
@@ -65,6 +67,11 @@ public class UserLoginController extends BaseController {
 	public ModelAndView toLogin() {
 		ModelAndView mv = new ModelAndView();
 		User user = (User) SecurityUtils.getSubject().getPrincipal();
+		RSA rsa = new RSA();
+		
+		session.setAttribute(Constant.RSA_PRIVATE_KEY, rsa.getPrivateKeyBase64());
+		
+		mv.addObject("publicKey", rsa.getPublicKeyBase64());
 		mv.setViewName("admin/login");
 		return mv;
 	}
@@ -97,7 +104,7 @@ public class UserLoginController extends BaseController {
 	@Log(operType = OperatorType.OTHER, module = "登录模块", content = "用户登录")
 	@RequestMapping(value = "login", method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseResult login(@RequestBody UserVO entity,HttpServletRequest request) {
+	public ResponseResult login(@RequestBody UsernamePasswordREQ entity) {
 		ResponseResult result = null;
 		User user = new User();
 		try {
@@ -109,18 +116,26 @@ public class UserLoginController extends BaseController {
 				return result;
 			}
 			
+			String privateKey = (String) session.getAttribute(Constant.RSA_PRIVATE_KEY);
+			session.removeAttribute(Constant.RSA_PRIVATE_KEY);
+			RSA rsa = new RSA(privateKey, null);
+			
+			String username = new String(rsa.decrypt(entity.getUsername(), KeyType.PrivateKey));
+			String password = new String(rsa.decrypt(entity.getPassword(), KeyType.PrivateKey));
+			
 			boolean rememberMe = entity.isRememberMe();
-			ByteSource salt = ByteSource.Util.bytes(entity.getUsername() + entity.getPassword());
-			SimpleHash sh = new SimpleHash("MD5", entity.getPassword(), salt, 1024);
-			user.setUsername(entity.getUsername());
+			ByteSource salt = ByteSource.Util.bytes(username + password);
+			SimpleHash sh = new SimpleHash("MD5", password, salt, 1024);
+			user.setUsername(username);
 			user.setPassword(sh.toString());
 			user.setSaltByte(salt);
 			user = TokenManager.login(user, rememberMe, salt);
+			
+			UserLoginVO userVO = new UserLoginVO();
+			BeanUtils.copyProperties(user, userVO);
 
-			Map<String, Object> retMap = new HashMap<String, Object>();
-			retMap.put("users", user);
 			result = ResponseResult.Factory.newInstance(Boolean.TRUE,
-					StateCodeEnum.HTTP_SUCCESS.getCode(), user,
+					StateCodeEnum.HTTP_SUCCESS.getCode(), userVO,
 					StateCodeEnum.HTTP_SUCCESS.getDescription());
 		} catch (DisabledAccountException e) {
 			// 帐号已经禁用

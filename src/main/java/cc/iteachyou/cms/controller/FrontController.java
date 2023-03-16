@@ -11,16 +11,13 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,6 +27,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.wf.captcha.ArithmeticCaptcha;
 import com.wf.captcha.utils.CaptchaUtil;
 
+import cc.iteachyou.cms.common.BaseController;
 import cc.iteachyou.cms.common.ExceptionEnum;
 import cc.iteachyou.cms.common.ResponseResult;
 import cc.iteachyou.cms.common.SearchEntity;
@@ -60,23 +58,12 @@ import cc.iteachyou.cms.taglib.ParseEngine;
 import cc.iteachyou.cms.taglib.utils.URLUtils;
 import cc.iteachyou.cms.utils.FileConfiguration;
 import cc.iteachyou.cms.utils.StringUtil;
-import cc.iteachyou.cms.utils.UUIDUtils;
+import cn.hutool.core.util.IdUtil;
 
 @Controller
 @Scope("prototype")
 @RequestMapping("/")
-public class FrontController {
-	protected HttpServletRequest request;  
-    protected HttpServletResponse response;  
-    protected HttpSession session;
-
-    @ModelAttribute  
-    public void setReqAndRes(HttpServletRequest request, HttpServletResponse response){  
-        this.request = request;
-        this.response = response;
-        this.session = request.getSession();
-    } 
-    
+public class FrontController extends BaseController {
 	@Autowired
 	private ArchivesService archivesService;
 	@Autowired
@@ -324,7 +311,6 @@ public class FrontController {
 			
 			Date createTime = archives.getCreateTime();
 			String dateDir = sdf.format(createTime);
-			String url = URLUtils.parseFileName(null, 1);
 			
 			File staticFile = new File(fileConfiguration.getResourceDir() + staticdir + catDir + "/" + dateDir + "/" + archives.getId() + ".html");
 			if(!staticFile.exists()) {
@@ -347,11 +333,9 @@ public class FrontController {
 		templatePath.append(theme.getThemePath());
 
 		
-		String formId = formService.queryDefaultForm().getId();
 		Category category = null;
 		if(!"-1".equals(archives.getCategoryId())) {
 			category = categoryService.selectById(archives.getCategoryId());
-			formId = category.getFormId();
 			//构建路径
 			templatePath.append("/" + category.getArticleTemp());
 		}else {//顶级分类走该模版
@@ -400,7 +384,7 @@ public class FrontController {
 	 * @throws AdminGeneralException
 	 */
 	@RequestMapping("/download/{id}")
-	public void download(@PathVariable String id, HttpServletRequest request,HttpServletResponse response) throws AdminGeneralException {
+	public void download(@PathVariable String id) throws AdminGeneralException {
 		try {
 			System system = systemService.getSystem();
 			Attachment attachment = attachmentService.queryAttachmentById(id);
@@ -494,7 +478,7 @@ public class FrontController {
 			
 			//记录搜索关键词
 			SearchRecord sr = new SearchRecord();
-			sr.setId(UUIDUtils.getPrimaryKey());
+			sr.setId(IdUtil.getSnowflakeNextIdStr());
 			sr.setKeywords(keywords);
 			sr.setCreateTime(new Date());
 			searchRecordService.add(sr);
@@ -526,7 +510,6 @@ public class FrontController {
 		if(!CaptchaUtil.ver(params.get("captcha").toString(), request)) {
 			return ResponseResult.Factory.newInstance(Boolean.FALSE, ExceptionEnum.FORM_PARAMETER_EXCEPTION.getCode(), null, "验证码输入错误或已超时，请仔细检查后再试。");
 		}
-		System system = systemService.getSystem();
 		if(!params.containsKey("typeid") || StringUtil.isBlank(params.get("typeid"))) {
 			return ResponseResult.Factory.newInstance(Boolean.FALSE, ExceptionEnum.FORM_PARAMETER_EXCEPTION.getCode(), null, "缺少[typeid]参数，请添加该参数后重试。");
 		}
@@ -552,7 +535,7 @@ public class FrontController {
 		}
 		
 		Archives archives = new Archives();
-		archives.setId(UUIDUtils.getPrimaryKey());
+		archives.setId(IdUtil.getSnowflakeNextIdStr());
 		archives.setCreateTime(new Date());
 		archives.setStatus(1);//未发布
 		
@@ -570,7 +553,7 @@ public class FrontController {
 		
 		List<Field> fields = fieldService.queryFieldByFormId(form.getId());
 		Map<String,Object> additional = new LinkedHashMap<String,Object>();
-		additional.put("id", UUIDUtils.getPrimaryKey());
+		additional.put("id", IdUtil.getSnowflakeNextIdStr());
 		additional.put("aid", archives.getId());
 		for(int i = 0;i < fields.size();i++) {
 			Field field = fields.get(i);
@@ -599,28 +582,12 @@ public class FrontController {
 	}
 	
 	// 产生验证码
-	@RequestMapping("/getKaptcha")
-	public void getKaptcha(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	@RequestMapping("getKaptcha")
+	public void getKaptcha() throws IOException {
 		ArithmeticCaptcha captcha = new ArithmeticCaptcha(130, 48);
         captcha.getArithmeticString();  // 获取运算的公式：3+2=?
         captcha.text();  // 获取运算的结果：5
 		CaptchaUtil.out(captcha, request, response);
-	}
-	
-	/**
-	 * 取得HttpServletRequest对象
-	 * @return HttpServletRequest对象
-	 */
-	public HttpServletRequest getRequest() {
-		return request;
-	}
-
-	/**
-	 * 取得Response对象
-	 * @return
-	 */
-	public HttpServletResponse getResponse() {
-		return response;
 	}
 	
 	/**

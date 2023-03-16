@@ -55,9 +55,9 @@ public class RequestEntity {
      */
     public static RequestEntity fromWebRequest(HttpServletRequest req){
     	RequestEntity request = new RequestEntity();
-    	request.setRemoteAddr(HttpRequestUtils.getRequestAddr(req));
-    	request.setBroswer(HttpRequestUtils.getBrowser(req));
-    	request.setPlatform(HttpRequestUtils.getPlatform(req));
+    	request.setRemoteAddr(HttpRequestUtil.getRequestAddr(req));
+    	request.setBroswer(HttpRequestUtil.getBrowser(req));
+    	request.setPlatform(HttpRequestUtil.getPlatform(req));
         return request;
     }
 }

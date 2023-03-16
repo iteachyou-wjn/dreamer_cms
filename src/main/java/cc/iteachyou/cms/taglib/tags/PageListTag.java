@@ -15,6 +15,7 @@ import cc.iteachyou.cms.dao.ArchivesMapper;
 import cc.iteachyou.cms.dao.CategoryMapper;
 import cc.iteachyou.cms.entity.Category;
 import cc.iteachyou.cms.entity.Form;
+import cc.iteachyou.cms.entity.vo.ArchivesVO;
 import cc.iteachyou.cms.exception.CmsException;
 import cc.iteachyou.cms.service.FormService;
 import cc.iteachyou.cms.taglib.IParse;
@@ -22,7 +23,6 @@ import cc.iteachyou.cms.taglib.annotation.Attribute;
 import cc.iteachyou.cms.taglib.annotation.Tag;
 import cc.iteachyou.cms.taglib.utils.RegexUtil;
 import cc.iteachyou.cms.utils.StringUtil;
-import cc.iteachyou.cms.vo.ArchivesVo;
 
 /**
  * List标签解析器
@@ -183,15 +183,15 @@ public class PageListTag extends AbstractListTag implements IParse {
 			params.setEntity(entity);
 			//开始分页
 			PageHelper.startPage(params.getPageNum(), params.getPageSize());
-			List<ArchivesVo> list = archivesMapper.queryListByKeywords(searchParams);
-			PageInfo<ArchivesVo> pageInfo = new PageInfo<ArchivesVo>(list);
+			List<ArchivesVO> list = archivesMapper.queryListByKeywords(searchParams);
+			PageInfo<ArchivesVO> pageInfo = new PageInfo<ArchivesVO>(list);
 			
 			StringBuilder sb = new StringBuilder();
 			if(list == null || list.size() <= 0) {
 				newHtml = newHtml.replace(tag, "<div class='dreamer-empty'>暂无数据</div>");
 			}else {
 				for (int j = 0; j < list.size(); j++) {
-					ArchivesVo archivesVo = list.get(j);
+					ArchivesVO archivesVo = list.get(j);
 					String item = new String(content);
 					item = this.buildHTML(item, archivesVo, (j+1));
 					sb.append(item);

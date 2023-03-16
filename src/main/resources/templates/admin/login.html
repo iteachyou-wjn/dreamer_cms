@@ -12,6 +12,7 @@
 <div class="login">
 	<h1>Dreamer CMS</h1>
 	<form method="post" id="loginForm">
+		<input id="publicKey" type="hidden" th:value="${publicKey}" />
 		<div class="login-form-row">
 			<input type="text" name="username" placeholder="用户名" required="required" />
 		</div>
@@ -30,6 +31,7 @@
 </div>
 <div class="copyright">Copyright © 2018 I Teach You，我教你！  冀ICP备19026223号</div>
 <script src="/resource/js/jquery.min.js"></script>
+<script src="/resource/js/jsencrypt/jsencrypt.min.js"></script>
 <script src="/resource/js/coco-message/coco-message.js"></script>
 <script src="/resource/js/vector.js"></script>
 <script>
@@ -53,13 +55,17 @@
     	});
 	});
     function login(){
+		// 创建RSA加密器
+		var encryptor = new JSEncrypt();
+        encryptor.setPublicKey($('#publicKey').val());
+        
 		var username = $('input[name="username"]').val();
 		var password = $('input[name="password"]').val();
 		var vcode = $('input[name="vcode"]').val();
 		
 		var data = {
-			username : username,
-			password : password,
+			username : encryptor.encrypt(username),
+			password : encryptor.encrypt(password),
 			vcode : vcode,
 			rememberMe : false
 		};

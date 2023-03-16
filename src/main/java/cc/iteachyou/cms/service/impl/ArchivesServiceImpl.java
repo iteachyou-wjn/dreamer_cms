@@ -16,9 +16,9 @@ import cc.iteachyou.cms.common.SearchEntity;
 import cc.iteachyou.cms.dao.ArchivesMapper;
 import cc.iteachyou.cms.entity.Archives;
 import cc.iteachyou.cms.entity.ArchivesWithRownum;
+import cc.iteachyou.cms.entity.vo.ArchivesVO;
 import cc.iteachyou.cms.exception.TransactionException;
 import cc.iteachyou.cms.service.ArchivesService;
-import cc.iteachyou.cms.vo.ArchivesVo;
 
 /**
  * 文章管理处理类
@@ -144,7 +144,7 @@ public class ArchivesServiceImpl implements ArchivesService {
 
 	@Transactional(propagation=Propagation.NOT_SUPPORTED)
 	@Override
-	public PageInfo<ArchivesVo> queryListByKeywords(SearchEntity params) {
+	public PageInfo<ArchivesVO> queryListByKeywords(SearchEntity params) {
 		if(params.getPageNum() == null || params.getPageNum() == 0) {
 			params.setPageNum(1);
 		}
@@ -152,8 +152,8 @@ public class ArchivesServiceImpl implements ArchivesService {
 			params.setPageSize(10);
 		}
 		PageHelper.startPage(params.getPageNum(), params.getPageSize());
-		List<ArchivesVo> list = this.archivesMapper.queryListByKeywords(params.getEntity());
-		PageInfo<ArchivesVo> page = new PageInfo<ArchivesVo>(list);
+		List<ArchivesVO> list = this.archivesMapper.queryListByKeywords(params.getEntity());
+		PageInfo<ArchivesVO> page = new PageInfo<ArchivesVO>(list);
 		return page;
 	}
 

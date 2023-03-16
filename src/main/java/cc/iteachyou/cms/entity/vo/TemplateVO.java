@@ -1,4 +1,4 @@
-package cc.iteachyou.cms.vo;
+package cc.iteachyou.cms.entity.vo;
 
 import lombok.Data;
 
@@ -8,7 +8,7 @@ import lombok.Data;
  * Date: 2020-12-29
  */
 @Data
-public class TemplateVo {
+public class TemplateVO {
 	private String path;
 	private String file;
 	private String content;

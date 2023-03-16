@@ -10,17 +10,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import cc.iteachyou.cms.common.BaseController;
 import cc.iteachyou.cms.entity.Archives;
 import cc.iteachyou.cms.service.ArchivesService;
 import cc.iteachyou.cms.service.DashboardService;
 
 @RestController
 @RequestMapping("/admin/dashboard")
-public class DashboardController {
-	
+public class DashboardController extends BaseController {
 	@Autowired
 	private DashboardService dashboardService;
-	
 	@Autowired
 	private ArchivesService archivesService;
 	

@@ -7,7 +7,7 @@ import com.github.pagehelper.PageInfo;
 import cc.iteachyou.cms.common.SearchEntity;
 import cc.iteachyou.cms.entity.Role;
 import cc.iteachyou.cms.entity.RolePermission;
-import cc.iteachyou.cms.vo.PermissionVo;
+import cc.iteachyou.cms.entity.vo.PermissionVO;
 
 public interface RoleService {
 
@@ -23,7 +23,7 @@ public interface RoleService {
 
 	List<Role> queryAll();
 
-	List<PermissionVo> queryPermissionsByRoleId(String id);
+	List<PermissionVO> queryPermissionsByRoleId(String id);
 
 	int grant(String roleId, List<RolePermission> list);
 

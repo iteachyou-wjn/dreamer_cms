@@ -14,6 +14,7 @@ import com.github.pagehelper.PageInfo;
 
 import cc.iteachyou.cms.annotation.Log;
 import cc.iteachyou.cms.annotation.Log.OperatorType;
+import cc.iteachyou.cms.common.BaseController;
 import cc.iteachyou.cms.common.ExceptionEnum;
 import cc.iteachyou.cms.common.SearchEntity;
 import cc.iteachyou.cms.entity.Menu;
@@ -21,7 +22,8 @@ import cc.iteachyou.cms.exception.AdminGeneralException;
 import cc.iteachyou.cms.exception.CmsException;
 import cc.iteachyou.cms.security.token.TokenManager;
 import cc.iteachyou.cms.service.MenuService;
-import cc.iteachyou.cms.utils.UUIDUtils;
+import cc.iteachyou.cms.utils.RandomUtil;
+import cn.hutool.core.util.IdUtil;
 
 /**
  * 菜单管理
@@ -30,8 +32,7 @@ import cc.iteachyou.cms.utils.UUIDUtils;
  */
 @Controller
 @RequestMapping("admin/menu")
-public class MenuController {
-	
+public class MenuController extends BaseController {
 	@Autowired
 	private MenuService menuService;
 	
@@ -67,8 +68,8 @@ public class MenuController {
 	@RequestMapping("/add")
 	@RequiresPermissions("75m8k4mk")
 	public String add(Model model, Menu menu) throws CmsException {
-		menu.setId(UUIDUtils.getPrimaryKey());
-		menu.setMenuCode(UUIDUtils.getCharAndNumr(8));
+		menu.setId(IdUtil.getSnowflakeNextIdStr());
+		menu.setMenuCode(RandomUtil.getCharAndNumr(8));
 		menu.setCreateBy(TokenManager.getToken().getId());
 		menu.setCreateTime(new Date());
 		try {

@@ -18,19 +18,21 @@ import com.github.pagehelper.PageInfo;
 
 import cc.iteachyou.cms.annotation.Log;
 import cc.iteachyou.cms.annotation.Log.OperatorType;
+import cc.iteachyou.cms.common.BaseController;
 import cc.iteachyou.cms.common.ExceptionEnum;
 import cc.iteachyou.cms.common.ResponseResult;
 import cc.iteachyou.cms.common.SearchEntity;
 import cc.iteachyou.cms.common.StateCodeEnum;
 import cc.iteachyou.cms.entity.Role;
 import cc.iteachyou.cms.entity.RolePermission;
+import cc.iteachyou.cms.entity.vo.PermissionVO;
 import cc.iteachyou.cms.exception.AdminGeneralException;
 import cc.iteachyou.cms.exception.CmsException;
 import cc.iteachyou.cms.security.token.TokenManager;
 import cc.iteachyou.cms.service.RoleService;
 import cc.iteachyou.cms.utils.StringUtil;
-import cc.iteachyou.cms.utils.UUIDUtils;
-import cc.iteachyou.cms.vo.PermissionVo;
+import cc.iteachyou.cms.utils.RandomUtil;
+import cn.hutool.core.util.IdUtil;
 
 /**
  * 角色管理
@@ -39,7 +41,7 @@ import cc.iteachyou.cms.vo.PermissionVo;
  */
 @Controller
 @RequestMapping("admin/role")
-public class RoleController {
+public class RoleController extends BaseController {
 	@Autowired
 	private RoleService roleService;
 	
@@ -73,10 +75,10 @@ public class RoleController {
 	@RequestMapping("/add")
 	@RequiresPermissions("sd5jepm0")
 	public String add(Model model, Role role) throws CmsException {
-		role.setId(UUIDUtils.getPrimaryKey());
+		role.setId(IdUtil.getSnowflakeNextIdStr());
 		//如果编码为空，系统则生成编码
 		if(StringUtil.isBlank(role.getRoleCode())) {
-			role.setRoleCode(UUIDUtils.getCharAndNumr(8));
+			role.setRoleCode(RandomUtil.getCharAndNumr(8));
 		}
 		role.setCreateBy(TokenManager.getToken().getId());
 		role.setCreateTime(new Date());
@@ -134,7 +136,7 @@ public class RoleController {
 	public String toGrant(Model model, String id) {
 		Role role = roleService.queryRoleById(id);
 
-		List<PermissionVo> permissions = roleService.queryPermissionsByRoleId(id);
+		List<PermissionVO> permissions = roleService.queryPermissionsByRoleId(id);
 		
 		model.addAttribute("role", role);
 		model.addAttribute("permissions", permissions);

@@ -14,6 +14,7 @@ import com.github.pagehelper.PageInfo;
 
 import cc.iteachyou.cms.annotation.Log;
 import cc.iteachyou.cms.annotation.Log.OperatorType;
+import cc.iteachyou.cms.common.BaseController;
 import cc.iteachyou.cms.common.ExceptionEnum;
 import cc.iteachyou.cms.common.SearchEntity;
 import cc.iteachyou.cms.entity.Field;
@@ -24,7 +25,8 @@ import cc.iteachyou.cms.exception.TransactionException;
 import cc.iteachyou.cms.security.token.TokenManager;
 import cc.iteachyou.cms.service.FieldService;
 import cc.iteachyou.cms.service.FormService;
-import cc.iteachyou.cms.utils.UUIDUtils;
+import cc.iteachyou.cms.utils.RandomUtil;
+import cn.hutool.core.util.IdUtil;
 
 /**
  * 表单管理
@@ -33,11 +35,9 @@ import cc.iteachyou.cms.utils.UUIDUtils;
  */
 @Controller
 @RequestMapping("admin/forms")
-public class FormController {
-	
+public class FormController extends BaseController {
 	@Autowired
 	private FormService formService;
-	
 	@Autowired
 	private FieldService fieldService;
 	
@@ -61,10 +61,10 @@ public class FormController {
 	@RequestMapping("/add")
 	@RequiresPermissions("fn9o6433")
 	public String add(Model model,Form form) throws CmsException {
-		form.setId(UUIDUtils.getPrimaryKey());
+		form.setId(IdUtil.getSnowflakeNextIdStr());
 		form.setCreateBy(TokenManager.getToken().getId());
 		form.setCreateTime(new Date());
-		form.setCode(UUIDUtils.getCharAndNumr(8));
+		form.setCode(RandomUtil.getCharAndNumr(8));
 		
 		try {
 			formService.add(form);

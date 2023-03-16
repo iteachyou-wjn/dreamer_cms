@@ -20,7 +20,6 @@ import cc.iteachyou.cms.service.FieldService;
 @Service
 @Transactional(rollbackFor = Exception.class) 
 public class FieldServiceImpl implements FieldService {
-	
 	@Autowired
 	private FieldMapper fieldMapper;
 	@Autowired

@@ -10,6 +10,7 @@ import com.github.pagehelper.PageInfo;
 
 import cc.iteachyou.cms.common.SearchEntity;
 import cc.iteachyou.cms.entity.Category;
+import cc.iteachyou.cms.entity.vo.ArchivesVO;
 import cc.iteachyou.cms.service.CategoryService;
 import cc.iteachyou.cms.taglib.IParse;
 import cc.iteachyou.cms.taglib.annotation.Attribute;
@@ -17,7 +18,6 @@ import cc.iteachyou.cms.taglib.annotation.Tag;
 import cc.iteachyou.cms.taglib.utils.RegexUtil;
 import cc.iteachyou.cms.utils.PinyinUtils;
 import cc.iteachyou.cms.utils.StringUtil;
-import cc.iteachyou.cms.vo.ArchivesVo;
 
 @Component
 @Tag(beginTag="{dreamer-cms:pagination /}",endTag="",regexp="(\\{dreamer-cms:pagination[ \\t]+.*?/\\})|(\\{dreamer-cms:pagination[ \\t]+.*\\}\\{/dreamer-cms:pagination\\})", attributes={
@@ -134,7 +134,7 @@ public class PaginationTag implements IParse {
 	 * @param pageInfo
 	 * @return
 	 */
-	public String parse(String html, SearchEntity params, PageInfo<ArchivesVo> pageInfo) {
+	public String parse(String html, SearchEntity params, PageInfo<ArchivesVO> pageInfo) {
 		Tag annotations = PaginationTag.class.getAnnotation(Tag.class);
 		String tag = RegexUtil.parseFirst(html, annotations.regexp(), 0);
 		if(StringUtil.isBlank(tag)) {

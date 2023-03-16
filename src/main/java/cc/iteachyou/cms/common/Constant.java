@@ -46,6 +46,8 @@ public class Constant {
 	public static final String FILE_NAME_REGEXP = "\\pP|\\pS|\\s+";
 	
 	public static final String SQL_TAG_REGEXP = "INSERT|DELETE|TRUNCATE|UPDATE|CREATE|ALTER|DROP|INTO|DUMPFILE|LOAD_FILE|USING|UTF8|CONVERT";
+
+	public static final String RSA_PRIVATE_KEY = "dreamer-cms-rsa-private-key";
 	
 	/** 静态变量，用来记录当前在线连接数。应该把它设计成线程安全的。 */
 	public static int ONLINE = 0;

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import cc.iteachyou.cms.annotation.Log;
 import cc.iteachyou.cms.annotation.Log.OperatorType;
+import cc.iteachyou.cms.common.BaseController;
 import cc.iteachyou.cms.common.ResponseResult;
 import cc.iteachyou.cms.common.StateCodeEnum;
 import cc.iteachyou.cms.service.DatabaseService;
@@ -26,7 +27,7 @@ import cc.iteachyou.cms.service.DatabaseService;
  */
 @Controller
 @RequestMapping("admin/database")
-public class DataBaseController {
+public class DataBaseController extends BaseController {
 	@Autowired
 	private DatabaseService databaseService;
 	

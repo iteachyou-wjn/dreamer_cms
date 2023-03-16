@@ -8,8 +8,8 @@ import com.github.pagehelper.PageInfo;
 import cc.iteachyou.cms.common.SearchEntity;
 import cc.iteachyou.cms.entity.Archives;
 import cc.iteachyou.cms.entity.ArchivesWithRownum;
+import cc.iteachyou.cms.entity.vo.ArchivesVO;
 import cc.iteachyou.cms.exception.TransactionException;
-import cc.iteachyou.cms.vo.ArchivesVo;
 
 public interface ArchivesService {
 
@@ -35,7 +35,7 @@ public interface ArchivesService {
 
 	Archives selectByPrimaryKey(String id);
 
-	PageInfo<ArchivesVo> queryListByKeywords(SearchEntity params);
+	PageInfo<ArchivesVO> queryListByKeywords(SearchEntity params);
 
 	ArchivesWithRownum queryArticleRowNum(Map<String, Object> params);
 

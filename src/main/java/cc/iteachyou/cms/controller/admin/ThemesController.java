@@ -32,8 +32,8 @@ import cc.iteachyou.cms.service.SystemService;
 import cc.iteachyou.cms.service.ThemeService;
 import cc.iteachyou.cms.utils.FileConfiguration;
 import cc.iteachyou.cms.utils.StringUtil;
-import cc.iteachyou.cms.utils.UUIDUtils;
 import cc.iteachyou.cms.utils.ZipUtils;
+import cn.hutool.core.util.IdUtil;
 
 /**
  * 主题管理
@@ -43,8 +43,6 @@ import cc.iteachyou.cms.utils.ZipUtils;
 @Controller
 @RequestMapping("admin/theme")
 public class ThemesController extends BaseController {
-	private static final long serialVersionUID = 1L;
-	
 	@Autowired
 	private ThemeService themeService;
 	@Autowired
@@ -117,7 +115,7 @@ public class ThemesController extends BaseController {
 					"主题描述文件theme.json格式错误，请仔细检查描述文件内容是否有为空的项。");
 		}
 		
-		theme.setId(UUIDUtils.getPrimaryKey());
+		theme.setId(IdUtil.getSnowflakeNextIdStr());
 		theme.setThemeName(themeName);
 		theme.setThemeImg(themeImage);
 		theme.setThemeAuthor(themeAuthor);
