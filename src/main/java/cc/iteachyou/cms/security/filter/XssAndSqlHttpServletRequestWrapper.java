@@ -232,23 +232,35 @@ public class XssAndSqlHttpServletRequestWrapper extends HttpServletRequestWrappe
 			if (flag) {
 				return flag;
 			}
-            //Avoid video tag
+			//audio
+            scriptPattern = Pattern.compile("audio[\r\n| | ]*=[\r\n| | ]*[\\\"|\\\'](.*?)[\\\"|\\\']",
+					Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
+			flag = scriptPattern.matcher(value).find();
+			if (flag) {
+				return flag;
+			}
+            //video
             scriptPattern = Pattern.compile("video[\r\n| | ]*=[\r\n| | ]*[\\\"|\\\'](.*?)[\\\"|\\\']",
 					Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
 			flag = scriptPattern.matcher(value).find();
 			if (flag) {
 				return flag;
 			}
-            
-            //Avoid svg tag
+            //img
+            scriptPattern = Pattern.compile("img[\r\n| | ]*=[\r\n| | ]*[\\\"|\\\'](.*?)[\\\"|\\\']",
+					Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
+			flag = scriptPattern.matcher(value).find();
+			if (flag) {
+				return flag;
+			}
+            //svg
             scriptPattern = Pattern.compile("svg[\r\n| | ]*=[\r\n| | ]*[\\\"|\\\'](.*?)[\\\"|\\\']",
 					Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
 			flag = scriptPattern.matcher(value).find();
 			if (flag) {
 				return flag;
 			}
-
-            //Avoid source tag
+            //source
             scriptPattern = Pattern.compile("source[\r\n| | ]*=[\r\n| | ]*[\\\"|\\\'](.*?)[\\\"|\\\']",
 					Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
 			flag = scriptPattern.matcher(value).find();
