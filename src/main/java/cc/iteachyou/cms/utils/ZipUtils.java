@@ -7,12 +7,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
 import java.util.Enumeration;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
-import cc.iteachyou.cms.common.Constant;
 import cc.iteachyou.cms.common.ExceptionEnum;
 import cc.iteachyou.cms.entity.Theme;
 import cc.iteachyou.cms.exception.AdminGeneralException;
@@ -36,8 +33,7 @@ public class ZipUtils {
 			String entryName = entry.getName();
 			System.out.println(entryName);
 			
-		    Matcher matcher = Pattern.compile(Constant.FILE_NAME_REGEXP).matcher(entryName);
-			if(matcher.find()) {
+		    if(entryName.contains("../") || entryName.contains("..\\")) {
 				throw new AdminGeneralException(
 						ExceptionEnum.XSS_SQL_EXCEPTION.getCode(),
 						ExceptionEnum.XSS_SQL_EXCEPTION.getMessage(),
