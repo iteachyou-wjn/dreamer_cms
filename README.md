@@ -102,9 +102,9 @@ https://space.bilibili.com/482273402
 
 <table>
 	<tr>
-		<th>用户</th>
-		<th>金额</th>
-		<th>时间</th>
+		<th width="50%">用户</th>
+		<th width="20%">金额</th>
+		<th width="30%">时间</th>
 	</tr>
 	<tr>
 		<td>个.秋</td>
@@ -153,14 +153,13 @@ https://space.bilibili.com/482273402
 	</tr>
 </table>
 
-
-同时也希望更多的用户来捐赠本项目。您的支持，是我一直坚持下去的动力，另外为大家提供使用文档（https://doc.www.iteachyou.cc）、教程（https://www.www.iteachyou.cc）的网站及服务器也需要运营维护，个人精力、经费都有限，希望大家多多理解！！！
+同时也希望更多的用户来捐赠本项目。您的支持，是我一直坚持下去的动力，另外为大家提供使用文档（ https://doc.www.iteachyou.cc ）、教程（ https://www.www.iteachyou.cc ）的网站及服务器也需要运营维护，个人精力、经费都有限，希望大家多多理解！！！
 
 <table>
 	<tr>
-		<td><img src="https://oss.iteachyou.cc/20201201174329.png" width="200" /></td>
-		<td><img src="https://oss.iteachyou.cc/20201201174339.jpg" width="200" /></td>
-		<td><img src="https://www.iteachyou.cc/templates/iteachyou/images/qrcode.jpg" width="200" /></td>
+		<td width="33.33%"><img src="https://oss.iteachyou.cc/20201201174329.png" /></td>
+		<td width="33.33%"><img src="https://oss.iteachyou.cc/20201201174339.jpg" /></td>
+		<td width="33.33%"><img src="https://oss.iteachyou.cc/20230327163517.jpg" /></td>
 	</tr>
 </table>
 
