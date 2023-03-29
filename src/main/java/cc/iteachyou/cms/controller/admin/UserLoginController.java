@@ -116,6 +116,9 @@ public class UserLoginController extends BaseController {
 				return result;
 			}
 			
+			// 清除验证码
+			CaptchaUtil.clear(request);
+			
 			String privateKey = (String) session.getAttribute(Constant.RSA_PRIVATE_KEY);
 			session.removeAttribute(Constant.RSA_PRIVATE_KEY);
 			RSA rsa = new RSA(privateKey, null);

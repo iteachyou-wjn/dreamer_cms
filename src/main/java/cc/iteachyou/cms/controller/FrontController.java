@@ -517,6 +517,9 @@ public class FrontController extends BaseController {
 			return ResponseResult.Factory.newInstance(Boolean.FALSE, ExceptionEnum.FORM_PARAMETER_EXCEPTION.getCode(), null, "缺少[formkey]参数，请添加该参数后重试。");
 		}
 		
+		// 清除验证码
+		CaptchaUtil.clear(request);
+		
 		String typeid = params.get("typeid").toString();
 		String formkey = params.get("formkey").toString();
 		

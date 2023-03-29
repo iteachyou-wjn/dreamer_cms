@@ -196,7 +196,15 @@
                         <input type="radio" name="subscribe" id="subscribe-no" value="0" th:checked="${article.subscribe} == 0" /> 否
                     </label>
                 </div>
-                <div class="col-lg-6"></div>
+                <div class="col-lg-3">
+                    <label for="status">发布状态：</label>
+                    <label class="checkbox-inline">
+                        <input type="radio" name="status" id="status-yes" value="1" th:checked="${article.status} == 1" /> 已发布
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="radio" name="status" id="status-no" value="0" th:checked="${article.status} == 0" /> 未发布
+                    </label>
+                </div>
                 <div style="clear:both;"></div>
 			</div>
 			<div class="form-btn-group-left">
