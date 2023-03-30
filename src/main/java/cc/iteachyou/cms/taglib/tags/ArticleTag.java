@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import cc.iteachyou.cms.common.Constant;
 import cc.iteachyou.cms.entity.Archives;
 import cc.iteachyou.cms.entity.Category;
 import cc.iteachyou.cms.entity.Form;
@@ -112,7 +113,7 @@ public class ArticleTag implements IParse {
 				}else if (FieldEnum.FIELD_PROPERTIES.getField().equalsIgnoreCase(name)) {
 					newHtml = newHtml.replace(string, StringUtil.isBlank(archivesVo.get("properties")) ? "" : archivesVo.get("properties").toString());
 				}else if (FieldEnum.FIELD_LITPIC.getField().equalsIgnoreCase(name)) {
-					newHtml = newHtml.replace(string, system.getWebsite() + system.getUploaddir() + "/" + imagePath);
+					newHtml = newHtml.replace(string, system.getWebsite() + Constant.UPLOAD_PREFIX + system.getUploaddir() + "/" + imagePath);
 				}else if (FieldEnum.FIELD_TAG.getField().equalsIgnoreCase(name)) {
 					newHtml = newHtml.replace(string, StringUtil.isBlank(archivesVo.get("tag")) ? "" : archivesVo.get("tag").toString());
 				}else if (FieldEnum.FIELD_REMARK.getField().equalsIgnoreCase(name)) {
