@@ -125,7 +125,6 @@ public class ArchivesController extends BaseController {
 		archives.setId(IdUtil.getSnowflakeNextIdStr());
 		archives.setCreateTime(new Date());
 		archives.setCreateBy(TokenManager.getToken().getId());
-		archives.setStatus(1);//未发布
 		archives.setTitle(entity.get("title"));
 		archives.setTag(entity.get("tag"));
 		archives.setCategoryId(entity.get("categoryId"));
@@ -133,6 +132,7 @@ public class ArchivesController extends BaseController {
 		archives.setImagePath(entity.get("imagePath"));
 		archives.setWeight(StringUtil.isBlank(entity.get("weight")) ? 0 : Integer.parseInt(entity.get("weight")));
 		archives.setClicks(StringUtil.isBlank(entity.get("clicks")) ? 0 : Integer.parseInt(entity.get("clicks")));
+		archives.setStatus(StringUtil.isBlank(entity.get("status")) ? 0 : Integer.parseInt(entity.get("status")));
 		archives.setDescription(entity.get("description"));
 		archives.setComment(Integer.parseInt(entity.get("comment")));
 		archives.setSubscribe(Integer.parseInt(entity.get("subscribe")));
@@ -252,6 +252,7 @@ public class ArchivesController extends BaseController {
 		archives.setImagePath(entity.get("imagePath"));
 		archives.setWeight(StringUtil.isBlank(entity.get("weight")) ? 0 : Integer.parseInt(entity.get("weight")));
 		archives.setClicks(StringUtil.isBlank(entity.get("clicks")) ? 0 : Integer.parseInt(entity.get("clicks")));
+		archives.setStatus(StringUtil.isBlank(entity.get("status")) ? 0 : Integer.parseInt(entity.get("status")));
 		archives.setDescription(entity.get("description"));
 		archives.setComment(Integer.parseInt(entity.get("comment")));
 		archives.setSubscribe(Integer.parseInt(entity.get("subscribe")));
