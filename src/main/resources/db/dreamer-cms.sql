@@ -520,7 +520,7 @@ CREATE TABLE `system_sliders` (
 
 /*Data for the table `system_sliders` */
 
-insert  into `system_sliders`(`id`,`aid`,`ext01`,`ext02`,`ext03`,`ext04`,`ext05`,`href`) values ('8dae83840c7e4cec85f4581ddc7a51b9','b2d86668da714a1c839c016d70066c53',NULL,NULL,NULL,NULL,NULL,'＃'),('f0b8f52910e84417896f5a037fda1609','6c2e8cc97f9346cb8f09926b74a0854f',NULL,NULL,NULL,NULL,NULL,'＃');
+insert  into `system_sliders`(`id`,`aid`,`ext01`,`ext02`,`ext03`,`ext04`,`ext05`,`href`) values ('8dae83840c7e4cec85f4581ddc7a51b9','b2d86668da714a1c839c016d70066c53',NULL,NULL,NULL,NULL,NULL,'#'),('f0b8f52910e84417896f5a037fda1609','6c2e8cc97f9346cb8f09926b74a0854f',NULL,NULL,NULL,NULL,NULL,'#');
 
 /*Table structure for table `system_templates` */
 
