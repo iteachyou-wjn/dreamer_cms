@@ -45,7 +45,7 @@ public class PermissionController extends BaseController {
 	 */
 	@Log(operType = OperatorType.PAGE, module = "权限管理", content = "权限分页列表")
 	@RequestMapping({"","/list"})
-	@RequiresPermissions("6g1755tx")
+	@RequiresPermissions("system:permission:page")
 	public String list(Model model, SearchEntity params) {
 		PageInfo<Permission> page = permissionService.queryListByPage(params);
 		model.addAttribute("page", page);
@@ -57,7 +57,7 @@ public class PermissionController extends BaseController {
 	 */
 	@Log(operType = OperatorType.OTHER, module = "权限管理", content = "添加权限页面")
 	@RequestMapping("/toAdd")
-	@RequiresPermissions("d00f103e")
+	@RequiresPermissions("system:permission:toadd")
 	public String toAdd(Model model) {
 		List<Menu> list = menuService.queryAll();
 		model.addAttribute("menuList", list);
@@ -70,7 +70,7 @@ public class PermissionController extends BaseController {
 	 */
 	@Log(operType = OperatorType.INSERT, module = "权限管理", content = "添加权限")
 	@RequestMapping("/add")
-	@RequiresPermissions("088livwa")
+	@RequiresPermissions("system:permission:add")
 	public String add(Model model, Permission permission) throws CmsException {
 		permission.setId(IdUtil.getSnowflakeNextIdStr());
 		permission.setPermissionCode(RandomUtil.getCharAndNumr(8));
@@ -92,7 +92,7 @@ public class PermissionController extends BaseController {
 	 */
 	@Log(operType = OperatorType.OTHER, module = "权限管理", content = "修改权限页面")
 	@RequestMapping(value = "/toEdit", method = RequestMethod.GET)
-	@RequiresPermissions("8f63055b")
+	@RequiresPermissions("system:permission:toedit")
 	public String toEdit(Model model, String id) {
 		List<Menu> list = menuService.queryAll();
 		Permission permission = permissionService.queryMenuById(id);
@@ -106,7 +106,7 @@ public class PermissionController extends BaseController {
 	 */
 	@Log(operType = OperatorType.UPDATE, module = "权限管理", content = "修改权限")
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	@RequiresPermissions("0h4ejf33")
+	@RequiresPermissions("system:permission:update")
 	public String update(Model model, Permission permission) {
 		permissionService.update(permission);
 		return "redirect:/admin/permission/list";
@@ -117,7 +117,7 @@ public class PermissionController extends BaseController {
 	 */
 	@Log(operType = OperatorType.DELETE, module = "权限管理", content = "删除权限")
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	@RequiresPermissions("qk8ogfi6")
+	@RequiresPermissions("system:permission:delete")
 	public String delete(Model model, String id) {
 		permissionService.delete(id);
 		return "redirect:/admin/permission/list";

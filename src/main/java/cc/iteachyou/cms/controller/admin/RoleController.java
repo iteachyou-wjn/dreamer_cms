@@ -50,7 +50,7 @@ public class RoleController extends BaseController {
 	 */
 	@Log(operType = OperatorType.PAGE, module = "角色管理", content = "角色管理分页列表")
 	@RequestMapping({"","/list"})
-	@RequiresPermissions("7s73s67l")
+	@RequiresPermissions("system:role:page")
 	public String list(Model model, SearchEntity params) {
 		PageInfo<Role> page = roleService.queryListByPage(params);
 		model.addAttribute("page", page);
@@ -62,7 +62,7 @@ public class RoleController extends BaseController {
 	 */
 	@Log(operType = OperatorType.OTHER, module = "角色管理", content = "添加角色页面")
 	@RequestMapping("/toAdd")
-	@RequiresPermissions("8h9r1tin")
+	@RequiresPermissions("system:role:toadd")
 	public String toAdd(Model model) {
 		return "admin/role/add";
 	}
@@ -73,7 +73,7 @@ public class RoleController extends BaseController {
 	 */
 	@Log(operType = OperatorType.INSERT, module = "角色管理", content = "添加角色")
 	@RequestMapping("/add")
-	@RequiresPermissions("sd5jepm0")
+	@RequiresPermissions("system:role:add")
 	public String add(Model model, Role role) throws CmsException {
 		role.setId(IdUtil.getSnowflakeNextIdStr());
 		//如果编码为空，系统则生成编码
@@ -98,7 +98,7 @@ public class RoleController extends BaseController {
 	 */
 	@Log(operType = OperatorType.OTHER, module = "角色管理", content = "修改角色页面")
 	@RequestMapping(value = "/toEdit", method = RequestMethod.GET)
-	@RequiresPermissions("6g6w462l")
+	@RequiresPermissions("system:role:toedit")
 	public String toEdit(Model model, String id) {
 		Role role = roleService.queryRoleById(id);
 		model.addAttribute("role", role);
@@ -110,7 +110,7 @@ public class RoleController extends BaseController {
 	 */
 	@Log(operType = OperatorType.UPDATE, module = "角色管理", content = "修改角色")
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	@RequiresPermissions("jg2066e5")
+	@RequiresPermissions("system:role:update")
 	public String update(Model model, Role role) {
 		roleService.update(role);
 		return "redirect:/admin/role/list";
@@ -121,7 +121,7 @@ public class RoleController extends BaseController {
 	 */
 	@Log(operType = OperatorType.DELETE, module = "角色管理", content = "删除角色")
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	@RequiresPermissions("zr25t2e0")
+	@RequiresPermissions("system:role:delete")
 	public String delete(Model model, String id) {
 		roleService.delete(id);
 		return "redirect:/admin/role/list";
@@ -132,7 +132,7 @@ public class RoleController extends BaseController {
 	 */
 	@Log(operType = OperatorType.OTHER, module = "角色管理", content = "角色分配权限")
 	@RequestMapping(value = "/toGrant", method = RequestMethod.GET)
-	@RequiresPermissions("63p5qb94")
+	@RequiresPermissions("system:role:togrant")
 	public String toGrant(Model model, String id) {
 		Role role = roleService.queryRoleById(id);
 
@@ -145,7 +145,7 @@ public class RoleController extends BaseController {
 	
 	@Log(operType = OperatorType.OTHER, module = "角色管理", content = "角色分配权限")
 	@PostMapping("grant/{roleId}")
-	@RequiresPermissions("ac71i30f")
+	@RequiresPermissions("system:role:grant")
 	@ResponseBody
 	public ResponseResult grant(@PathVariable String roleId, @RequestBody List<RolePermission> list) {
 		ResponseResult result = null;

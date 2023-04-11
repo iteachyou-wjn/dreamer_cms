@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -24,10 +24,10 @@
     </div>
 </div>
 <section class="panel">
-	<div class="panel-body">
-         <button class="btn btn-primary btn-addon btn-sm" th:onclick="toAdd();">
-             <i class="fa fa-plus"></i> 添加用户
-         </button>
+	<div class="panel-body" shiro:hasAnyPermissions="system:user:toadd,system:user:add">
+        <button class="btn btn-primary btn-addon btn-sm" th:onclick="toAdd();">
+            <i class="fa fa-plus"></i> 添加用户
+        </button>
     </div>
     <div class="panel-body table-responsive">
 		<table class="table table-hover">
@@ -51,14 +51,11 @@
 						<span th:if="${item.status} == 1">有效</span>
 						<span th:if="${item.status} == 0">无效</span>
 					</td>
-					<td>
-						<a th:href="@{/admin/user/toGrant(userId=${item.id})}" class="btn btn-xs btn-success">分配权限</a>
-						<span>&nbsp;|&nbsp;</span>
-						<a th:href="@{/admin/user/toUpdatePwd(userId=${item.id})}" class="btn btn-xs btn-success">修改密码</a>
-						<span>&nbsp;|&nbsp;</span>
-						<a th:href="@{/admin/user/toEdit(id=${item.id})}" class="btn btn-xs btn-success">编辑</a>
-						<span>&nbsp;|&nbsp;</span>
-						<a href="javascript:void(0)" data-toggle="modal" class="btn btn-xs btn-danger" th:userId="${item.id}" th:onclick="confrimRemove(this.getAttribute('userId'));">删除</a>
+					<td class="operate">
+						<a th:href="@{/admin/user/toGrant(userId=${item.id})}" class="btn btn-xs btn-success" shiro:hasAnyPermissions="system:user:togrant,system:user:grant">分配角色</a>
+						<a th:href="@{/admin/user/toUpdatePwd(userId=${item.id})}" class="btn btn-xs btn-success" shiro:hasAnyPermissions="system:user:toedit,system:user:update">修改密码</a>
+						<a th:href="@{/admin/user/toEdit(id=${item.id})}" class="btn btn-xs btn-success" shiro:hasAnyPermissions="system:user:toedit,system:user:update">编辑</a>
+						<a href="javascript:void(0)" data-toggle="modal" class="btn btn-xs btn-danger" th:userId="${item.id}" th:onclick="confrimRemove(this.getAttribute('userId'));" shiro:hasAnyPermissions="system:user:delete">删除</a>
 					</td>
 				</tr>
 				<tr th:if="${#lists.isEmpty(page.list)}">

@@ -43,7 +43,7 @@ public class TemplateController extends BaseController {
 	
 	@Log(operType = OperatorType.SELECT, module = "模板管理", content = "模板列表")
 	@RequestMapping({"","toIndex"})
-	@RequiresPermissions("psqg04kn")
+	@RequiresPermissions("system:template:index")
 	public ModelAndView toIndex() {
 		ModelAndView mv = new ModelAndView();
 		Theme currentTheme = themeService.getCurrentTheme();
@@ -78,7 +78,7 @@ public class TemplateController extends BaseController {
 	
 	@Log(operType = OperatorType.SELECT, module = "模板管理", content = "模板详情")
 	@GetMapping("toView")
-	@RequiresPermissions("5dg093r8")
+	@RequiresPermissions("system:template:view")
 	public ModelAndView toView(String path,String fileName) throws IOException,CmsException {
 		ModelAndView mv = new ModelAndView();
 		String themeDirPath = path + File.separator + fileName + File.separator;
@@ -120,7 +120,7 @@ public class TemplateController extends BaseController {
 	
 	@Log(operType = OperatorType.OTHER, module = "模板管理", content = "修改模板页面")
 	@GetMapping("toEdit")
-	@RequiresPermissions("3oc5ri29")
+	@RequiresPermissions("system:template:toedit")
 	public ModelAndView toEdit(String path,String file) throws IOException, CmsException {
 		ModelAndView mv = new ModelAndView();
 		String fileName = path + File.separator + file;
@@ -146,7 +146,7 @@ public class TemplateController extends BaseController {
 	
 	@Log(operType = OperatorType.UPDATE, module = "模板管理", content = "修改模板")
 	@PostMapping("save")
-	@RequiresPermissions("5n6ta53y")
+	@RequiresPermissions("system:template:save")
 	public String save(TemplateVO template) throws IOException, CmsException {
 		String fileName = template.getPath() + File.separator + template.getFile();
 		File templateFile = new File(fileName);

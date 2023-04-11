@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -16,9 +16,9 @@
     	<h1 class="panel-heading">系统设置</h1>
         <!--breadcrumbs start -->
         <ul class="breadcrumb">
-				<li><a href="/admin/dashboard/toIndex"><i class="fa fa-home"></i> 首页</a></li>
-				<li class="active">系统设置</li>
-			</ul>
+			<li><a href="/admin/dashboard/toIndex"><i class="fa fa-home"></i> 首页</a></li>
+			<li class="active">系统设置</li>
+		</ul>
         <!--breadcrumbs end -->
     </div>
 </div>
@@ -70,7 +70,7 @@
 				<label for="copyright">站点版权：</label>
 				<input id="copyright" name="copyright" type="text" class="form-control" th:value="*{copyright}" placeholder="站点版权" />
             </div>
-            <div class="form-btn-group-left">
+            <div class="form-btn-group-left" shiro:hasAnyPermissions="system:setting:update">
             	<button type="submit" class="btn btn-info">保存设置</button>
             </div>
         </form>

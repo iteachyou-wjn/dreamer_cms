@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -56,14 +56,14 @@
 							<input type="radio" name="type" id="type-no" value="0" th:checked="${form.type} == 0" /> 系统表单
 						</label>
 					</div>
-					<div class="form-btn-group-left">
+					<div class="form-btn-group-left" shiro:hasAnyPermissions="system:form:toedit,system:form:edit">
 						<button type="submit" class="btn btn-info">保存</button>
 					</div>
 				</form>
 			</div>
 			<div id="fields" class="tab-pane">
-				<div class="panel-body">
-					 <button class="btn btn-primary btn-addon btn-sm" th:formid="${form.id}" th:onclick="javascript: toAdd(this.getAttribute('formid'))">
+				<div class="panel-body" shiro:hasAnyPermissions="system:field:toadd,system:field:add">
+					 <button class="btn btn-primary btn-addon btn-sm" th:formid="${form.id}" th:onclick="javascript: toAdd(this.getAttribute('formid'))" shiro:hasAnyPermissions="system:field:toadd,system:field:add">
 						 <i class="fa fa-plus"></i>添加字段
 					 </button>
 				</div>
@@ -83,10 +83,9 @@
 							<td th:text="${field.fieldText}"></td>
 							<td th:text="${field.fieldName}"></td>
 							<td th:text="${field.dataType}"></td>
-							<td>
-								<a th:href="@{/admin/field/toEdit(id=${field.id})}" class="btn btn-xs btn-success">编辑</a>
-								<span>&nbsp;|&nbsp;</span>
-								<a href="javascript:void(0)" data-toggle="modal" class="btn btn-xs btn-danger" th:fieldid="${field.id}" th:onclick="javascript: confrimRemove(this.getAttribute('fieldid'))">删除</a>
+							<td class="operate">
+								<a th:href="@{/admin/field/toEdit(id=${field.id})}" class="btn btn-xs btn-success" shiro:hasAnyPermissions="system:field:toedit,system:field:update">编辑</a>
+								<a href="javascript:void(0)" data-toggle="modal" class="btn btn-xs btn-danger" th:fieldid="${field.id}" th:onclick="javascript: confrimRemove(this.getAttribute('fieldid'))" shiro:hasAnyPermissions="system:field:delete">删除</a>
 							</td>
 						</tr>
 					</tbody>

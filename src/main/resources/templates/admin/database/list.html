@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -42,9 +42,8 @@
 					<td><input type="checkbox" class="flat-grey list-child" th:value="${item}" /></td>
 					<td th:text="${item}"></td>
 					<td>
-						<a href="javascript:void(0)" data-toggle="modal" class="btn btn-xs btn-success" th:tableName="${item}" th:onclick="backup(this.getAttribute('tableName'));">备份</a>
-						<span>&nbsp;|&nbsp;</span>
-						<a href="javascript:void(0)" data-toggle="modal" class="btn btn-xs btn-success" th:tableName="${item}" th:onclick="struct(this.getAttribute('tableName'));">结构</a>
+						<a href="javascript:void(0)" data-toggle="modal" class="btn btn-xs btn-success" th:tableName="${item}" th:onclick="backup(this.getAttribute('tableName'));" shiro:hasAnyPermissions="system:database:backup">备份</a>
+						<a href="javascript:void(0)" data-toggle="modal" class="btn btn-xs btn-success" th:tableName="${item}" th:onclick="struct(this.getAttribute('tableName'));" shiro:hasAnyPermissions="system:database:struct">结构</a>
 					</td>
 				</tr>
 				<tr th:if="${#lists.isEmpty(tables)}">

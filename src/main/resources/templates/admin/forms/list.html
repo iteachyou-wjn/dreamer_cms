@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -24,11 +24,10 @@
     </div>
 </div>
 <section class="panel">
-	<div class="panel-body">
-         <!-- <span class="pull-right badge badge-info">32</span> -->
-         <button class="btn btn-primary btn-addon btn-sm"  th:onclick="javascript: toAdd()">
-             <i class="fa fa-plus"></i> 添加表单
-         </button>
+	<div class="panel-body" shiro:hasAnyPermissions="system:form:toadd,system:form:add">
+        <button class="btn btn-primary btn-addon btn-sm"  th:onclick="javascript: toAdd()">
+            <i class="fa fa-plus"></i> 添加表单
+        </button>
     </div>
     <div class="panel-body table-responsive">
 		<table class="table table-hover">
@@ -51,10 +50,9 @@
 					<td th:text="${'system_' + form.tableName}"></td>
 					<td><span th:text="${form.type} == '1' ? '自定义表单' : '系统表单'" th:class="${form.type}=='1'? 'label label-success' : 'label label-danger'"></span></td>
 					<td th:text="${#dates.format(form.createTime, 'yyyy-MM-dd')}"></td>
-					<td>
-						<a th:href="@{/admin/forms/toEdit(id=${form.id})}" class="btn btn-xs btn-success">编辑</a>
-						<span th:if="${form.type}=='1'">&nbsp;|&nbsp;</span>
-						<a href="javascript:void(0)" data-toggle="modal" class="btn btn-xs btn-danger" th:formid="${form.id}" th:onclick="javascript: confrimRemove(this.getAttribute('formid'))" th:if="${form.type}=='1'">删除</a>
+					<td class="operate">
+						<a th:href="@{/admin/forms/toEdit(id=${form.id})}" class="btn btn-xs btn-success" shiro:hasAnyPermissions="system:form:toedit,system:form:update">编辑</a>
+						<a href="javascript:void(0)" data-toggle="modal" class="btn btn-xs btn-danger" th:formid="${form.id}" th:onclick="javascript: confrimRemove(this.getAttribute('formid'))" th:if="${form.type}=='1'" shiro:hasAnyPermissions="system:form:delete">删除</a>
 					</td>
 				</tr>
 				<tr th:if="${#lists.isEmpty(page.list)}">

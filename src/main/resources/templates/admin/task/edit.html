@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
     <meta charset="utf-8" />
   	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -45,7 +45,7 @@
 				<input id="status-yes" name="status" type="radio" value="1" th:checked="${scheduled.status} == 1" /> 有效
 				<input id="status-no" name="status" type="radio" value="0" th:checked="${scheduled.status} == 0" /> 无效
 			</div>
-			<div class="form-btn-group-left">
+			<div class="form-btn-group-left" shiro:hasAnyPermissions="system:task:toedit,system:task:update">
             	<button type="submit" class="btn btn-info">保存</button>
             </div>
 		</form>

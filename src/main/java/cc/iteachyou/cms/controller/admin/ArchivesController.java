@@ -64,7 +64,7 @@ public class ArchivesController extends BaseController {
 	
 	@Log(operType = OperatorType.PAGE, module = "文章管理", content = "文章分页列表")
 	@RequestMapping("/list")
-	@RequiresPermissions("e6r77x94")
+	@RequiresPermissions("system:article:page")
 	public String toIndex(Model model ,SearchEntity params) {
 		if(params.getEntity() == null) {
 			Map<String,Object> entity = new HashMap<String,Object>();
@@ -93,7 +93,7 @@ public class ArchivesController extends BaseController {
 	
 	@Log(operType = OperatorType.OTHER, module = "文章管理", content = "添加文章页面")
 	@RequestMapping("/toAdd")
-	@RequiresPermissions("a7f3sqap")
+	@RequiresPermissions("system:article:toadd")
 	public String toAdd(Model model, String code) {
 		Category category = null;
 		Form form = new Form();
@@ -119,7 +119,7 @@ public class ArchivesController extends BaseController {
 	 */
 	@Log(operType = OperatorType.INSERT, module = "文章管理", content = "添加文章")
 	@RequestMapping("/add")
-	@RequiresPermissions("0d2132i8")
+	@RequiresPermissions("system:article:add")
 	public String add(Model model,@RequestParam Map<String,String> entity) throws CmsException {
 		Archives archives = new Archives();
 		archives.setId(IdUtil.getSnowflakeNextIdStr());
@@ -217,7 +217,7 @@ public class ArchivesController extends BaseController {
 	
 	@Log(operType = OperatorType.OTHER, module = "文章管理", content = "修改文章页面")
 	@RequestMapping(value = "/toEdit", method = RequestMethod.GET)
-	@RequiresPermissions("lk7s7t2n")
+	@RequiresPermissions("system:article:toedit")
 	public String toEdit(Model model, String id,String cid) {
 		String formId = formService.queryDefaultForm().getId();
 		if(!"-1".equals(cid)) {
@@ -243,7 +243,7 @@ public class ArchivesController extends BaseController {
 	
 	@Log(operType = OperatorType.UPDATE, module = "文章管理", content = "修改文章")
 	@RequestMapping(value ="/edit")
-	@RequiresPermissions("th018nx3")
+	@RequiresPermissions("system:article:update")
 	public String edit(Model model, @RequestParam Map<String,String> entity) throws CmsException {
 		Archives archives = new Archives();
 		archives.setId(entity.get("id"));
@@ -343,7 +343,7 @@ public class ArchivesController extends BaseController {
 	
 	@Log(operType = OperatorType.DELETE, module = "文章管理", content = "删除文章")
 	@RequestMapping(value ="/delete")
-	@RequiresPermissions("n4lyn017")
+	@RequiresPermissions("system:article:delete")
 	public String delete(Model model, String id,String cid) throws CmsException {
 		Map<String,Object> params = new HashMap<String,Object>();
 		String categoryCode = "";

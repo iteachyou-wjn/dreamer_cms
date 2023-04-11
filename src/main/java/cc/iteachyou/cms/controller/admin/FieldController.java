@@ -39,7 +39,7 @@ public class FieldController extends BaseController {
 	
 	@Log(operType = OperatorType.OTHER, module = "表单模型", content = "添加字段页面")
 	@RequestMapping("/toAdd")
-	@RequiresPermissions("02srqt14")
+	@RequiresPermissions("system:field:toadd")
 	public String toAdd(Model model, String formId) {
 		model.addAttribute("formId", formId);
 		return "admin/field/add";
@@ -47,7 +47,7 @@ public class FieldController extends BaseController {
 	
 	@Log(operType = OperatorType.INSERT, module = "表单模型", content = "添加字段")
 	@RequestMapping("/add")
-	@RequiresPermissions("8435902p")
+	@RequiresPermissions("system:field:add")
 	public String add(Model model,Field field) throws CmsException {
 		field.setId(IdUtil.getSnowflakeNextIdStr());
 		field.setCreateBy(TokenManager.getToken().getId());
@@ -68,7 +68,7 @@ public class FieldController extends BaseController {
 	
 	@Log(operType = OperatorType.OTHER, module = "表单模型", content = "修改字段页面")
 	@RequestMapping(value = "/toEdit", method = RequestMethod.GET)
-	@RequiresPermissions("n6mszszy")
+	@RequiresPermissions("system:field:toedit")
 	public String toEdit(Model model, String id) {
 		Field field = fieldService.queryFieldById(id);
 		Form form = formService.queryFormById(field.getFormId());
@@ -81,7 +81,7 @@ public class FieldController extends BaseController {
 	
 	@Log(operType = OperatorType.UPDATE, module = "表单模型", content = "修改字段")
 	@RequestMapping("/edit")
-	@RequiresPermissions("2f830o48")
+	@RequiresPermissions("system:field:update")
 	public String edit(Model model,Field newField) throws CmsException {
 		Form form = formService.queryFormById(newField.getFormId());
 		
@@ -104,7 +104,7 @@ public class FieldController extends BaseController {
 	
 	@Log(operType = OperatorType.DELETE, module = "表单模型", content = "删除字段")
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	@RequiresPermissions("602lmb6w")
+	@RequiresPermissions("system:field:delete")
 	public String delete(Model model, String id) throws CmsException {
 		Field field = fieldService.queryFieldById(id);
 		Form form = formService.queryFormById(field.getFormId());

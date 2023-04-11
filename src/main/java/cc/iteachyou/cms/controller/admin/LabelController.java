@@ -3,6 +3,7 @@ package cc.iteachyou.cms.controller.admin;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,6 +31,7 @@ public class LabelController extends BaseController{
 	
 	@Log(operType = OperatorType.SELECT, module = "标签管理", content = "标签分组查询")
 	@RequestMapping({"","/toIndex"})
+	@RequiresPermissions("system:label:index")
 	public String toIndex(Model model) {
 		String[] classs = {"label-default","label-primary","label-success","label-info","label-inverse","label-warning","label-danger"};
 		Map<String,List<Map<String,String>>> map = labelService.queryLabel();
@@ -40,6 +42,7 @@ public class LabelController extends BaseController{
 	
 	@Log(operType = OperatorType.DELETE, module = "标签管理", content = "删除标签")
 	@RequestMapping("/delete")
+	@RequiresPermissions("system:label:delete")
 	public String delete(String tagName) {
 		List<Archives> list = archivesService.queryListByTagName(tagName);
 		if(list != null && list.size()>0) {

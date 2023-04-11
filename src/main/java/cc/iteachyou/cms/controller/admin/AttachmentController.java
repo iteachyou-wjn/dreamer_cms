@@ -54,7 +54,7 @@ public class AttachmentController extends BaseController {
 	
 	@Log(operType = OperatorType.PAGE, module = "附件管理", content = "附件分页列表")
 	@RequestMapping({"","/list"})
-	@RequiresPermissions("5z1mj7i6")
+	@RequiresPermissions("system:attachment:page")
 	public String toIndex(Model model ,SearchEntity params) {
 		System system = systemService.getSystem();
 		PageInfo<Attachment> page = attachmentService.queryListByPage(params);
@@ -65,7 +65,7 @@ public class AttachmentController extends BaseController {
 	
 	@Log(operType = OperatorType.INSERT, module = "附件管理", content = "添加附件")
 	@RequestMapping("/add")
-	@RequiresPermissions("ors4k771")
+	@RequiresPermissions("system:attachment:add")
 	public String add(Attachment attachment) throws CmsException {
 		System system = systemService.getSystem();
 		if(attachment.getFilepath().contains("../") || attachment.getFilepath().contains("..\\")) {
@@ -93,7 +93,7 @@ public class AttachmentController extends BaseController {
 	
 	@Log(operType = OperatorType.DELETE, module = "附件管理", content = "删除附件")
 	@RequestMapping("/delete")
-	@RequiresPermissions("7b3w257s")
+	@RequiresPermissions("system:attachment:delete")
 	public String delete(String id) throws AdminGeneralException {
 		System system = systemService.getSystem();
 		Attachment attachment = attachmentService.queryAttachmentById(id);

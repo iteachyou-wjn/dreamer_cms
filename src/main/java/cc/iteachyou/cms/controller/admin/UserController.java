@@ -58,7 +58,7 @@ public class UserController extends BaseController {
 	
 	@Log(operType = OperatorType.PAGE, module = "用户管理", content = "用户分页列表")
 	@RequestMapping({"","list"})
-	@RequiresPermissions("498jkr41")
+	@RequiresPermissions("system:user:page")
 	public ModelAndView list(Model model, SearchEntity searchEntity) {
 		ModelAndView mv = new ModelAndView();
 		PageInfo<User> page = userService.listByPage(searchEntity);
@@ -69,7 +69,7 @@ public class UserController extends BaseController {
 	
 	@Log(operType = OperatorType.OTHER, module = "用户管理", content = "添加用户页面")
 	@RequestMapping("toAdd")
-	@RequiresPermissions("db9xb4dy")
+	@RequiresPermissions("system:user:toadd")
 	public ModelAndView toAdd() {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("admin/user/add");
@@ -84,7 +84,7 @@ public class UserController extends BaseController {
 	 */
 	@Log(operType = OperatorType.INSERT, module = "用户管理", content = "添加用户")
 	@RequestMapping("add")
-	@RequiresPermissions("00esg6hw")
+	@RequiresPermissions("system:user:add")
 	public String add(User user) throws CmsException {
 		User temp = userService.getByUserName(user.getUsername());
 		if(temp != null) {
@@ -113,7 +113,7 @@ public class UserController extends BaseController {
 	
 	@Log(operType = OperatorType.OTHER, module = "用户管理", content = "修改用户页面")
 	@RequestMapping("toEdit")
-	@RequiresPermissions("f9wezq49")
+	@RequiresPermissions("system:user:toedit")
 	public ModelAndView toEdit(String id) {
 		ModelAndView mv = new ModelAndView();
 		User user = userService.getByID(id);
@@ -130,7 +130,7 @@ public class UserController extends BaseController {
 	 */
 	@Log(operType = OperatorType.UPDATE, module = "用户管理", content = "修改用户")
 	@RequestMapping("update")
-	@RequiresPermissions("q85s17tm")
+	@RequiresPermissions("system:user:update")
 	public String update(User user) throws CmsException {
 		user.setUpdateBy(TokenManager.getToken().getId());
 		user.setUpdateTime(new Date());
@@ -150,7 +150,7 @@ public class UserController extends BaseController {
 	 */
 	@Log(operType = OperatorType.UPDATE, module = "用户管理", content = "删除用户")
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	@RequiresPermissions("p39sena0")
+	@RequiresPermissions("system:user:delete")
 	public String delete(Model model, String id) {
 		userService.deleteUser(id);
 		return "redirect:/admin/user/list";
@@ -161,7 +161,7 @@ public class UserController extends BaseController {
 	 */
 	@Log(operType = OperatorType.OTHER, module = "用户管理", content = "用户授权角色页面")
 	@RequestMapping(value = "/toGrant", method = RequestMethod.GET)
-	@RequiresPermissions("2tvig6l7")
+	@RequiresPermissions("system:user:togrant")
 	public ModelAndView toGrant(Model model, String userId) {
 		ModelAndView mv = new ModelAndView();
 		User user = userService.getByID(userId);
@@ -189,7 +189,7 @@ public class UserController extends BaseController {
 	 */
 	@Log(operType = OperatorType.OTHER, module = "用户管理", content = "用户授权角色")
 	@RequestMapping(value = "/grant", method = RequestMethod.POST)
-	@RequiresPermissions("2o2sny2j")
+	@RequiresPermissions("system:user:grant")
 	public String grant(Model model, String userId, @RequestParam(value = "roles", required = false) List<String> roles) throws CmsException {
 		try {
 			if(roles == null) {

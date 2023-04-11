@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -25,7 +25,7 @@
 </div>
 <section class="panel">
 	<header class="panel-heading tab-bg-dark-navy-blue">
-        <ul class="nav nav-tabs">
+        <ul class="nav nav-tabs" shiro:hasAnyPermissions="system:static:generate">
             <li class="active">
                 <a data-toggle="tab" href="#home"><i class="fa fa-print"></i> <b>生成首页</b></a>
             </li>
@@ -42,7 +42,7 @@
 						<label for="homeTemplateFile">首页模版文件：</label>
 						<input type="text" id="homeTemplateFile" class="form-control" th:value="'/templates/' + *{themePath} + '/index.html'" readonly="readonly">
 					</div>
-					<div class="form-btn-group-center">
+					<div class="form-btn-group-center" shiro:hasAnyPermissions="system:static:generate">
 						<button type="button" class="btn btn-info" onclick="generate('1');">一键生成首页</button>
 					</div>
 				</form>
@@ -65,7 +65,7 @@
                             <input type="radio" name="updateChild" id="subscribe-no" value="0">否
                         </label>
 					</div>
-					<div class="form-btn-group-center">
+					<div class="form-btn-group-center" shiro:hasAnyPermissions="system:static:generate">
 			          	<button type="button" class="btn btn-info" onclick="generate('2');">开始生成HTML</button>
 			        </div>
 				</form>

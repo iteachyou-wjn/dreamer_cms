@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -39,7 +39,7 @@
             <pre id="codeEditor" class="ace_editor" style="min-height:600px">
             	<textarea name="content" class="ace_text-input"></textarea>
             </pre>
-            <div class="form-btn-group-left">
+            <div class="form-btn-group-left" shiro:hasAnyPermissions="system:template:toedit,system:template:save">
             	<button type="submit" class="btn btn-info">保存</button>
             </div>
 		</form>

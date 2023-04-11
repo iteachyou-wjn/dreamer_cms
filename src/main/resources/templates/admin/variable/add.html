@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -35,7 +35,7 @@
 				<label for="value">变量值：</label>
 				<input id="value" name="value" type="text" class="form-control" placeholder="变量值" />
 			</div>
-			<div class="form-btn-group-left">
+			<div class="form-btn-group-left" shiro:hasAnyPermissions="system:variable:toadd,system:variable:add">
             	<button type="submit" class="btn btn-info">保存</button>
             </div>
 		</form>

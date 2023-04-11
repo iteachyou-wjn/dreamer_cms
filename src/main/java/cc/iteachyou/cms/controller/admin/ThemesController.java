@@ -53,7 +53,7 @@ public class ThemesController extends BaseController {
 	
 	@Log(operType = OperatorType.PAGE, module = "主题管理", content = "主题分页列表")
 	@RequestMapping({"","/list"})
-	@RequiresPermissions("t5atzaz6")
+	@RequiresPermissions("system:theme:page")
 	public String list(Model model, SearchEntity params) {
 		System system = systemService.getSystem();
 		List<Theme> themes = themeService.queryListByPage(params);
@@ -64,7 +64,7 @@ public class ThemesController extends BaseController {
 	
 	@Log(operType = OperatorType.INSERT, module = "主题管理", content = "添加主题")
 	@RequestMapping("/add")
-	@RequiresPermissions("j8rj0lp8")
+	@RequiresPermissions("system:theme:add")
 	public String add(String themePath) throws IOException, CmsException {
 		Theme theme;
 		String rootPath = fileConfiguration.getResourceDir();
@@ -152,7 +152,7 @@ public class ThemesController extends BaseController {
 	
 	@Log(operType = OperatorType.UPDATE, module = "主题管理", content = "修改主题状态")
 	@RequestMapping("/updateStatus")
-	@RequiresPermissions("g1u4y47a")
+	@RequiresPermissions("system:theme:status")
 	public String updateStatus(String id, int status) {
 		Theme theme = new Theme();
 		theme.setId(id);
@@ -171,7 +171,7 @@ public class ThemesController extends BaseController {
 	
 	@Log(operType = OperatorType.UPDATE, module = "主题管理", content = "修改主题")
 	@RequestMapping("/update")
-	@RequiresPermissions("g1u4y47a")
+	@RequiresPermissions("system:theme:update")
 	public String update(Theme theme) {
 		Theme temp = new Theme();
 		temp.setId(theme.getId());
@@ -182,7 +182,7 @@ public class ThemesController extends BaseController {
 	
 	@Log(operType = OperatorType.DELETE, module = "主题管理", content = "删除主题")
 	@RequestMapping("/delete")
-	@RequiresPermissions("4ng92074")
+	@RequiresPermissions("system:theme:delete")
 	public String delete(String id) {
 		int rows = themeService.delete(id);
 		return "redirect:/admin/theme/list";

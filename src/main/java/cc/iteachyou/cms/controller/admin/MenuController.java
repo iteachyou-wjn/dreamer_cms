@@ -24,6 +24,7 @@ import cc.iteachyou.cms.security.token.TokenManager;
 import cc.iteachyou.cms.service.MenuService;
 import cc.iteachyou.cms.utils.RandomUtil;
 import cn.hutool.core.util.IdUtil;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * 菜单管理
@@ -41,7 +42,7 @@ public class MenuController extends BaseController {
 	 */
 	@Log(operType = OperatorType.PAGE, module = "菜单管理", content = "菜单分页列表")
 	@RequestMapping({"","/list"})
-	@RequiresPermissions("i17jcg5g")
+	@RequiresPermissions("system:menu:page")
 	public String list(Model model, SearchEntity params) {
 		PageInfo<Menu> page = menuService.queryListByPage(params);
 		model.addAttribute("page", page);
@@ -53,7 +54,7 @@ public class MenuController extends BaseController {
 	 */
 	@Log(operType = OperatorType.OTHER, module = "菜单管理", content = "添加菜单页面")
 	@RequestMapping("/toAdd")
-	@RequiresPermissions("n51w5y84")
+	@RequiresPermissions("system:menu:toadd")
 	public String toAdd(Model model) {
 		List<Menu> list = menuService.queryAll();
 		model.addAttribute("parentList", list);
@@ -66,10 +67,12 @@ public class MenuController extends BaseController {
 	 */
 	@Log(operType = OperatorType.INSERT, module = "菜单管理", content = "添加菜单")
 	@RequestMapping("/add")
-	@RequiresPermissions("75m8k4mk")
+	@RequiresPermissions("system:menu:add")
 	public String add(Model model, Menu menu) throws CmsException {
 		menu.setId(IdUtil.getSnowflakeNextIdStr());
-		menu.setMenuCode(RandomUtil.getCharAndNumr(8));
+		if(StrUtil.isBlank(menu.getMenuCode())) {
+			menu.setMenuCode(RandomUtil.getCharAndNumr(8));
+		}
 		menu.setCreateBy(TokenManager.getToken().getId());
 		menu.setCreateTime(new Date());
 		try {
@@ -88,7 +91,7 @@ public class MenuController extends BaseController {
 	 */
 	@Log(operType = OperatorType.OTHER, module = "菜单管理", content = "修改菜单页面")
 	@RequestMapping(value = "/toEdit", method = RequestMethod.GET)
-	@RequiresPermissions("6sva81i7")
+	@RequiresPermissions("system:menu:toedit")
 	public String toEdit(Model model, String id) {
 		List<Menu> list = menuService.queryAll();
 		Menu menu = menuService.queryMenuById(id);
@@ -102,7 +105,7 @@ public class MenuController extends BaseController {
 	 */
 	@Log(operType = OperatorType.UPDATE, module = "菜单管理", content = "修改菜单")
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	@RequiresPermissions("43rk6390")
+	@RequiresPermissions("system:menu:update")
 	public String update(Model model, Menu menu) {
 		menuService.update(menu);
 		return "redirect:/admin/menu/list";
@@ -112,7 +115,7 @@ public class MenuController extends BaseController {
 	 */
 	@Log(operType = OperatorType.DELETE, module = "菜单管理", content = "删除菜单")
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	@RequiresPermissions("r55v68qg")
+	@RequiresPermissions("system:menu:delete")
 	public String delete(Model model, String id) {
 		menuService.delete(id);
 		return "redirect:/admin/menu/list";

@@ -76,7 +76,7 @@ public class StaticController extends BaseController {
 	 */
 	@Log(operType = OperatorType.OTHER, module = "静态化", content = "静态化页面")
 	@RequestMapping({"","toIndex"})
-	@RequiresPermissions("49sbzt90")
+	@RequiresPermissions("system:static:index")
 	public ModelAndView toIndex() {
 		System system = systemService.getSystem();
 		ModelAndView mv = new ModelAndView();
@@ -100,7 +100,7 @@ public class StaticController extends BaseController {
 	 */
 	@Log(operType = OperatorType.UPDATE, module = "静态化", content = "静态化首页")
 	@RequestMapping("generateIndex/{clientId}")
-	@RequiresPermissions("g2pse5y0")
+	@RequiresPermissions("system:static:generate")
 	@ResponseBody
 	public ResponseResult generateIndex(@PathVariable String clientId) throws CmsException, IOException, EncodeException {
 		Message message = new Message(StateCodeEnum.HTTP_SUCCESS.getCode(),"准备生成首页HTML...",3);
@@ -155,7 +155,7 @@ public class StaticController extends BaseController {
 	 */
 	@Log(operType = OperatorType.UPDATE, module = "静态化", content = "静态化栏目页")
 	@RequestMapping("generateCategory/{clientId}")
-	@RequiresPermissions("ji766569")
+	@RequiresPermissions("system:static:generate")
 	@ResponseBody
 	public ResponseResult generateCategory(@PathVariable String clientId, @RequestBody CategoryVO categoryVo) throws CmsException, IOException, EncodeException {
 		Message message = new Message(StateCodeEnum.HTTP_SUCCESS.getCode(),"准备生成栏目HTML...",3);

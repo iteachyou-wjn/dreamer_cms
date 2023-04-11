@@ -51,7 +51,7 @@ public class CategoryController extends BaseController{
 	
 	@Log(operType = OperatorType.PAGE, module = "栏目管理", content = "栏目分页列表")
 	@RequestMapping({"","/list"})
-	@RequiresPermissions("up0t1rv4")
+	@RequiresPermissions("system:category:page")
 	public String list(Model model,SearchEntity params) {
 		PageInfo<Category> page = categoryService.queryListByPage(params);
 		model.addAttribute("page", page);
@@ -60,7 +60,7 @@ public class CategoryController extends BaseController{
 	
 	@Log(operType = OperatorType.OTHER, module = "栏目管理", content = "添加栏目页面")
 	@RequestMapping("/toAdd")
-	@RequiresPermissions("o6499pg5")
+	@RequiresPermissions("system:category:toadd")
 	public String toAdd(Model model,String id) {
 		Category category = null;
 		if(id.equals("-1")) {
@@ -82,7 +82,7 @@ public class CategoryController extends BaseController{
 	
 	@Log(operType = OperatorType.OTHER, module = "栏目管理", content = "修改栏目页面")
 	@RequestMapping("/toEdit")
-	@RequiresPermissions("0157q6w4")
+	@RequiresPermissions("system:category:toedit")
 	public String toEdit(Model model,String id) {
 		Category category = categoryService.selectById(id);
 		if(category.getParentId().equals("-1")) {
@@ -102,7 +102,7 @@ public class CategoryController extends BaseController{
 	
 	@Log(operType = OperatorType.INSERT, module = "栏目管理", content = "添加栏目")
 	@RequestMapping("/add")
-	@RequiresPermissions("pdr1y803")
+	@RequiresPermissions("system:category:add")
 	public String add(Category category) throws CmsException {
 		category.setId(IdUtil.getSnowflakeNextIdStr());
 		category.setCode(RandomUtil.getCharAndNumr(8));
@@ -156,7 +156,7 @@ public class CategoryController extends BaseController{
 	
 	@Log(operType = OperatorType.UPDATE, module = "栏目管理", content = "修改栏目")
 	@RequestMapping(value ="/edit")
-	@RequiresPermissions("bira5jia")
+	@RequiresPermissions("system:category:update")
 	public String edit(Category category) throws CmsException {
 		category.setUpdateBy(TokenManager.getToken().getId());
 		category.setUpdateTime(new Date());
@@ -200,7 +200,7 @@ public class CategoryController extends BaseController{
 	
 	@Log(operType = OperatorType.DELETE, module = "栏目管理", content = "删除栏目")
 	@RequestMapping(value ="/delete")
-	@RequiresPermissions("56p8k0im")
+	@RequiresPermissions("system:category:delete")
 	public String delete(String id) throws CmsException {
 		int num = categoryService.delete(id);
 		return "redirect:/admin/category/list";
@@ -208,7 +208,7 @@ public class CategoryController extends BaseController{
 	
 	@Log(operType = OperatorType.SELECT, module = "栏目管理", content = "加载下级栏目")
 	@RequestMapping(value = "/loadSon", method = RequestMethod.GET)
-	@RequiresPermissions("tvu49h42")
+	@RequiresPermissions("system:category:page")
 	public void loadSon(String id) {
 		List<Category> list = categoryService.selectByParentId(id);
 		ResponseResult result = ResponseResult.Factory.newInstance(Boolean.TRUE,
@@ -219,7 +219,7 @@ public class CategoryController extends BaseController{
 	
 	@Log(operType = OperatorType.UPDATE, module = "栏目管理", content = "修改栏目排序")
 	@RequestMapping(value = "/updateSort")
-	@RequiresPermissions("3ywkqhmv")
+	@RequiresPermissions("system:category:sort")
 	@ResponseBody
 	public void updateSort(@RequestBody List<Category> list) {
 		categoryService.updateSort(list);

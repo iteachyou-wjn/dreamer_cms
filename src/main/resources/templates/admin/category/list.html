@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -25,11 +25,10 @@
 </div>
 <section class="panel">
 	<div class="panel-body">
-         <!-- <span class="pull-right badge badge-info">32</span> -->
-         <button class="btn btn-primary btn-addon btn-sm" onclick="toAddCategory();">
-             <i class="fa fa-plus"></i> 添加顶级栏目
-         </button>
-         <button class="btn btn-primary btn-addon btn-sm" onclick="updateSort();">更新排序</button>
+        <button class="btn btn-primary btn-addon btn-sm" onclick="toAddCategory();" shiro:hasAnyPermissions="system:category:toadd,system:category:add">
+            <i class="fa fa-plus"></i> 添加顶级栏目
+        </button>
+        <button class="btn btn-primary btn-addon btn-sm" onclick="updateSort();" shiro:hasAnyPermissions="system:category:sort">更新排序</button>
     </div>
     <div class="panel-body table-responsive">
 		<table class="table table-hover">
@@ -60,12 +59,11 @@
 					<td>
 						<input name="orderBy" type="text" th:attr="cid=${category.id}" class="form-control input-sm" th:value="${category.sort}" style="width:50px;height:20px;">
 					</td>
-					<td>
-						<a th:href="@{/admin/category/toAdd(id=${category.id})}" class="btn btn-xs btn-success">添加下级栏目</a>
+					<td class="operate">
+						<a th:href="@{/admin/category/toAdd(id=${category.id})}" class="btn btn-xs btn-success" shiro:hasAnyPermissions="system:category:toadd,system:category:add">添加下级栏目</a>
+						<a th:href="@{/admin/category/toEdit(id=${category.id})}" class="btn btn-xs btn-success" shiro:hasAnyPermissions="system:category:toedit,system:category:update">编辑</a>
 						<span>&nbsp;|&nbsp;</span>
-						<a th:href="@{/admin/category/toEdit(id=${category.id})}" class="btn btn-xs btn-success">编辑</a>
-						<span>&nbsp;|&nbsp;</span>
-						<a href="javascript:void(0)" data-toggle="modal" class="btn btn-xs btn-danger" th:typeid="${category.id}" th:onclick="javascript:confrimRemove(this.getAttribute('typeid'))">删除</a>
+						<a href="javascript:void(0)" data-toggle="modal" class="btn btn-xs btn-danger" th:typeid="${category.id}" th:onclick="javascript:confrimRemove(this.getAttribute('typeid'))" shiro:hasAnyPermissions="system:category:delete">删除</a>
 					</td>
 				</tr>
 				<tr th:if="${#lists.isEmpty(page.list)}">

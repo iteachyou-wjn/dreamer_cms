@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -25,10 +25,10 @@
     </div>
 </div>
 <section class="panel">
-	<div class="panel-body">
-         <button class="btn btn-primary btn-addon btn-sm" th:typeid="${#strings.isEmpty(cid) ? '-1' : cid}" th:onclick="javascript: toAddArticle(this.getAttribute('typeid'))">
-             <i class="fa fa-plus"></i> 发布文章
-         </button>
+	<div class="panel-body" shiro:hasAnyPermissions="system:article:toadd,system:article:add">
+        <button class="btn btn-primary btn-addon btn-sm" th:typeid="${#strings.isEmpty(cid) ? '-1' : cid}" th:onclick="javascript: toAddArticle(this.getAttribute('typeid'))">
+            <i class="fa fa-plus"></i> 发布文章
+        </button>
     </div>
     <div class="panel-body table-responsive">
 		<table class="table table-hover table-border">
@@ -53,14 +53,12 @@
 					<td th:text="${article.clicks}"></td>
 					<td th:text="${article.weight}"></td>
 					<td><span th:text="${article.status}=='1'?'已发布':'未发布'" th:class="${article.status}=='1'?'label label-success':'label label-danger'">否</span></td>
-					<td>
+					<td class="operate">
 						<a target="_blank" th:href="'/article/' + ${article.aid}" class="btn btn-xs btn-warning">预览</a>
-						<span>&nbsp;|&nbsp;</span>
 						<a href="javascript:void(0)" class="btn btn-xs btn-success copyArticleIdBtn" th:aid="${article.aid}" th:onclick="javascript:copyArticleId(this.getAttribute('aid'))">复制文章ID</a>
+						<a th:href="@{/admin/archives/toEdit(id=${article.aid},cid=${article.categoryId})}" class="btn btn-xs btn-success" shiro:hasAnyPermissions="system:article:toedit,system:article:update">编辑</a>
 						<span>&nbsp;|&nbsp;</span>
-						<a th:href="@{/admin/archives/toEdit(id=${article.aid},cid=${article.categoryId})}" class="btn btn-xs btn-success">编辑</a>
-						<span>&nbsp;|&nbsp;</span>
-						<a href="javascript:void(0)" data-toggle="modal" class="btn btn-xs btn-danger" th:aid="${article.aid}" th:typeid="${article.categoryId}" th:onclick="javascript:confrimRemove(this.getAttribute('aid'),this.getAttribute('typeid'))">删除</a>
+						<a href="javascript:void(0)" data-toggle="modal" class="btn btn-xs btn-danger" th:aid="${article.aid}" th:typeid="${article.categoryId}" th:onclick="javascript:confrimRemove(this.getAttribute('aid'),this.getAttribute('typeid'))" shiro:hasAnyPermissions="system:article:delete">删除</a>
 					</td>
 				</tr>
 				<tr th:if="${#lists.isEmpty(page.list)}">

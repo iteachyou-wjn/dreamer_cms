@@ -37,9 +37,10 @@
             class: "form-control",
             defaultKey: "",
             defaultValue: "",
-            zTreeOnClick:function (event, treeId, treeNode) {
+            zTreeOnClick: function (event, treeId, treeNode) {
                 $_textinput.val(treeNode.menuName);
                 $_texthidden.val(treeNode.id);
+                $(ele).removeClass("showtree")
             }
         };
         //将一个新的空对象做为$.extend的第一个参数，defaults和用户传递的参数对象紧随其后，
@@ -119,19 +120,15 @@
                                 }
                                 break;
                         }
-
                     }
-					
                     //showNodes_array = unique(showNodes_array)
                     zTreeObj.hideNodes(zTreeObj.transformToArray(zTreeObj.getNodes()));
                     zTreeObj.showNodes(showNodes_array);
                     zTreeObj.expandAll(true);
-
                 }else{
                     zTreeObj.showNodes(zTreeObj.transformToArray(zTreeObj.getNodes()));
                     zTreeObj.expandAll(false);
                 }
-
             })
         },
         dropdownMenu: function(){
@@ -181,5 +178,4 @@
         var ts = new tSelect(this, opts); //接收两个参数，主元素 + 设置参数 this: 使用这个插件的容器  opts: 外部配置
         return ts.init();
     };
-
 })(jQuery,window,document);

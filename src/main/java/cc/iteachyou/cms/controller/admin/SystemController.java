@@ -29,7 +29,7 @@ public class SystemController extends BaseController {
 	 */
 	@Log(operType = OperatorType.SELECT, module = "系统设置", content = "查询系统设置")
 	@RequestMapping({"","toIndex"})
-	@RequiresPermissions("8q1735f2")
+	@RequiresPermissions("system:setting:update")
 	public String toIndex(Model model) {
 		System system = systemService.getSystem();
 		model.addAttribute("system", system);
@@ -42,7 +42,7 @@ public class SystemController extends BaseController {
 	 */
 	@Log(operType = OperatorType.UPDATE, module = "系统设置", content = "修改系统设置")
 	@RequestMapping("update")
-	@RequiresPermissions("66e0j92s")
+	@RequiresPermissions("system:setting:update")
 	public String update(System system) {
 		int num = systemService.update(system);
 		return "redirect:/admin/system/toIndex";

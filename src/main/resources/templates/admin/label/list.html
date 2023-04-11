@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -32,7 +32,7 @@
 				<h3 th:id="${item.id}" class="label-h3" th:each="item :${key.current.value}">
 					<span th:class="'label '+${obj}" th:if="${iterStat.index} eq ${item.cls}" th:each="obj,iterStat:${classs}">
 						<span th:text="${item.tagName}+| (${item.tagCount})|"></span>
-							<a data-toggle="modal" th:class="'label-close'" th:tagname="${item.tagName}" th:onclick="javascript: confrimRemove(this.getAttribute('tagname'))">
+							<a data-toggle="modal" th:class="'label-close'" th:tagname="${item.tagName}" th:onclick="javascript: confrimRemove(this.getAttribute('tagname'))" shiro:hasAnyPermissions="system:label:delete">
 								<i th:class="'fa fa-times'"></i>
 							</a>
 						</span>

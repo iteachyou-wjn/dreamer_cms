@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,8 +10,8 @@
     <link href="/resource/css/iCheck/all.css" rel="stylesheet" type="text/css" />
     <link href="/resource/css/style.css" rel="stylesheet" type="text/css" />
     <link href="/resource/js/editor.md-master/css/editormd.css" rel="stylesheet" type="text/css" />
-    <link href="/resource/js/tagit/jquery.tagit.css" rel="stylesheet" type="text/css" />
-    <link href="/resource/js/tagit/tagit.ui-zendesk.css" rel="stylesheet" type="text/css" />
+    <link href="/resource/js/plugins/tagit/jquery.tagit.css" rel="stylesheet" type="text/css" />
+    <link href="/resource/js/plugins/tagit/tagit.ui-zendesk.css" rel="stylesheet" type="text/css" />
     <link href="/resource/js/webuploader-0.1.5/webuploader.css" rel="stylesheet" type="text/css" />
     <link href="/resource/js/my97datepicker/skin/WdatePicker.css" rel="stylesheet" type="text/css" />
     <style type="text/css">
@@ -187,7 +187,7 @@
                 </div>
                 <div style="clear:both;"></div>
 			</div>
-			<div class="form-btn-group-left">
+			<div class="form-btn-group-left" shiro:hasAnyPermissions="system:article:toadd,system:article:add">
             	<button type="submit" class="btn btn-info">保存</button>
             </div>
 		</form>
@@ -197,8 +197,8 @@
 <script src="/resource/js/editor.md-master/editormd.min.js"></script>
 <script charset="utf-8" src="/resource/js/ueditor-1.4.3.3/ueditor.config.js"></script>
 <script charset="utf-8" src="/resource/js/ueditor-1.4.3.3/ueditor.all.min.js"></script>
-<script src="/resource/js/tagit/jquery-ui.min.js"></script>
-<script src="/resource/js/tagit/tag-it.js"></script>
+<script src="/resource/js/plugins/tagit/jquery-ui.min.js"></script>
+<script src="/resource/js/plugins/tagit/tag-it.js"></script>
 <script src="/resource/js/webuploader-0.1.5/webuploader.js"></script>
 <script src="/resource/js/coco-message/coco-message.js"></script>
 <script src="/resource/js/my97datepicker/WdatePicker.js"></script>

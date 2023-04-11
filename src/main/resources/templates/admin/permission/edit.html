@@ -1,13 +1,13 @@
 ﻿<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
     <meta charset="utf-8" />
   	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dreamer CMS - 后台管理系统</title> 
     <link href="/resource/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="/resource/css/style.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" type="text/css" media="all" href="/resource/js/plugins/treeSelect/css/zTreeStyle.css"/>
-	<link rel="stylesheet" type="text/css" media="all" href="/resource/js/plugins/treeSelect/css/treeSelect.css"/>
+    <link rel="stylesheet" type="text/css" media="all" href="/resource/js/plugins/treeSelect/css/treeSelect.css"/>
+	<link rel="stylesheet" type="text/css" href="/resource/js/plugins/ztree-v3/css/bootstrapZTreeStyle.css"/>
 </head>
 
 <body>
@@ -46,7 +46,7 @@
 				<label for="remark">备注：</label>
 				<textarea rows="5" name="remark" class="form-control" th:text="${permission.remark}" placeholder="备注"></textarea>
 			</div>
-			<div class="form-btn-group-left">
+			<div class="form-btn-group-left" shiro:hasAnyPermissions="system:permission:toedit,system:permission:update">
             	<button type="submit" class="btn btn-info">保存</button>
             </div>
 		</form>

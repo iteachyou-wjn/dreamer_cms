@@ -36,7 +36,7 @@ public class DataBaseController extends BaseController {
 	 */
 	@Log(operType = OperatorType.SELECT, module = "备份/还原", content = "数据库表列表")
 	@RequestMapping({"","/showTables"})
-	@RequiresPermissions("5mqvsn91")
+	@RequiresPermissions("system:database:tables")
 	public String list(Model model) {
 		List<String> tables = databaseService.showTables();
 		model.addAttribute("tables", tables);
@@ -49,7 +49,7 @@ public class DataBaseController extends BaseController {
 	@Log(operType = OperatorType.OTHER, module = "备份/还原", content = "数据库表备份")
 	@ResponseBody
 	@RequestMapping(value = "/backup", method = RequestMethod.GET)
-	@RequiresPermissions("4540gpdi")
+	@RequiresPermissions("system:database:backup")
 	public ResponseResult backup(Model model, String tableName) {
 		int i = databaseService.backup(tableName);
 		return ResponseResult.Factory.newInstance(Boolean.TRUE, StateCodeEnum.HTTP_SUCCESS.getCode(), null, StateCodeEnum.HTTP_SUCCESS.getDescription());
@@ -61,7 +61,7 @@ public class DataBaseController extends BaseController {
 	@Log(operType = OperatorType.OTHER, module = "备份/还原", content = "数据库表结构")
 	@ResponseBody
 	@RequestMapping(value = "/showStruct", method = RequestMethod.GET)
-	@RequiresPermissions("f6qo3hpd")
+	@RequiresPermissions("system:database:struct")
 	public ResponseResult showStruct(Model model, String tableName) {
 		String struct = databaseService.showStruct(tableName);
 		return ResponseResult.Factory.newInstance(Boolean.TRUE, StateCodeEnum.HTTP_SUCCESS.getCode(), struct, StateCodeEnum.HTTP_SUCCESS.getDescription());
@@ -69,7 +69,7 @@ public class DataBaseController extends BaseController {
 
 	@Log(operType = OperatorType.OTHER, module = "备份/还原", content = "数据库表还原")
 	@RequestMapping({"/toRestore"})
-	@RequiresPermissions("6d829jy0")
+	@RequiresPermissions("system:database:torestore")
 	public String toRestore(Model model) throws SQLException, FileNotFoundException {
 		return "admin/database/restore";
 	}
@@ -79,7 +79,7 @@ public class DataBaseController extends BaseController {
 	@Log(operType = OperatorType.OTHER, module = "备份/还原", content = "数据库表还原")
 	@ResponseBody
 	@RequestMapping(value = "/restore", method = RequestMethod.POST)
-	@RequiresPermissions("8438k0j3")
+	@RequiresPermissions("system:database:restore")
 	public ResponseResult restore(Model model, @RequestBody String[] files) {
 		int i = databaseService.restore(files);
 		return ResponseResult.Factory.newInstance(Boolean.TRUE, StateCodeEnum.HTTP_SUCCESS.getCode(), null, StateCodeEnum.HTTP_SUCCESS.getDescription());

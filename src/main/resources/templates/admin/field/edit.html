@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -120,7 +120,7 @@
                 <label for="maxLength">字段长度：</label>
                 <input id="maxLength" name="maxLength" type="text" class="form-control" th:value="*{maxLength}" placeholder="字段长度" />
 			</div>
-			<div class="form-btn-group-left">
+			<div class="form-btn-group-left" shiro:hasAnyPermissions="system:field:toedit,system:field:update">
             	<button type="submit" class="btn btn-info">保存</button>
             </div>
 		</form>

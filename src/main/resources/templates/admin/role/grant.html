@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -32,7 +32,7 @@
     </div>
     <div class="panel-body">
 		<ul id="tree" class="ztree"></ul>		        	
-        <div class="form-btn-group-left">
+        <div class="form-btn-group-left" shiro:hasAnyPermissions="system:role:togrant,system:role:grant">
         	<button type="button" onclick="grant();" class="btn btn-info" id="save">分配权限</button>
         </div>
     </div>

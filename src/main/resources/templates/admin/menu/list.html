@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -24,8 +24,7 @@
     </div>
 </div>
 <section class="panel">
-	<div class="panel-body">
-         <!-- <span class="pull-right badge badge-info">32</span> -->
+	<div class="panel-body" shiro:hasAnyPermissions="system:menu:toadd,system:menu:add">
          <button class="btn btn-primary btn-addon btn-sm" th:onclick="toAdd();">
              <i class="fa fa-plus"></i> 添加菜单
          </button>
@@ -49,10 +48,9 @@
 					<td th:text="${item.menuCode}"></td>
 					<td th:text="${item.menuUrl}"></td>
 					<td th:text="${item.parentMenuName}"></td>
-					<td>
-						<a th:href="@{/admin/menu/toEdit(id=${item.id})}" class="btn btn-xs btn-success">编辑</a>
-						<span>&nbsp;|&nbsp;</span>
-						<a href="javascript:void(0)" data-toggle="modal" class="btn btn-xs btn-danger" th:userId="${item.id}" th:onclick="confrimRemove(this.getAttribute('userId'));">删除</a>
+					<td class="operate">
+						<a th:href="@{/admin/menu/toEdit(id=${item.id})}" class="btn btn-xs btn-success" shiro:hasAnyPermissions="system:menu:toedit,system:menu:update">编辑</a>
+						<a href="javascript:void(0)" data-toggle="modal" class="btn btn-xs btn-danger" th:userId="${item.id}" th:onclick="confrimRemove(this.getAttribute('userId'));" shiro:hasAnyPermissions="system:menu:delete">删除</a>
 					</td>
 				</tr>
 				<tr th:if="${#lists.isEmpty(page.list)}">

@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -48,18 +48,20 @@
                 	<div class="btn-group">
                     	<button data-toggle="dropdown" class="btn btn-primary btn-addon btn-sm dropdown-toggle"><i class="fa fa-cog"></i>主题设置 <span class="caret"></span></button>
 						<ul class="dropdown-menu">
-							<li>
+							<li shiro:hasAnyPermissions="system:theme:status">
 								<a th:href="@{'/admin/theme/updateStatus?id=' + ${item.id} + '&status=1'}" th:if="${item.status} eq '0'">启用</a>
 							</li>
-							<li>
+							<li shiro:hasAnyPermissions="system:theme:update">
 								<a href="javascript:void(0)" data-toggle="modal" th:themeid="${item.id}" th:onclick="javascript: reUploadLitpic(this.getAttribute('themeid'))">缩略图</a>
 							</li>
-							<li th:if="${item.themePath != 'default'}"><a href="javascript:void(0)" data-toggle="modal" th:themeid="${item.id}" th:onclick="javascript: confrimRemove(this.getAttribute('themeid'))">删除</a></li>
+							<li th:if="${item.themePath != 'default'}" shiro:hasAnyPermissions="system:theme:delete">
+								<a href="javascript:void(0)" data-toggle="modal" th:themeid="${item.id}" th:onclick="javascript: confrimRemove(this.getAttribute('themeid'))">删除</a>
+							</li>
 						</ul>
 					</div>
                 </div>
             </div>
-            <div class="col-md-2 theme-box">
+            <div class="col-md-2 theme-box" shiro:hasAnyPermissions="system:theme:add">
             	<a href="javascript:void(0)" data-toggle="modal" th:onclick="javascript: openUploadDialog()">
                     <div class="theme-img">
                     	<img src="/resource/img/theme-plus.png" data-toggle="modal"  />

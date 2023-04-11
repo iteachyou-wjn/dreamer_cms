@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -24,11 +24,10 @@
     </div>
 </div>
 <section class="panel">
-	<div class="panel-body">
-         <!-- <span class="pull-right badge badge-info">32</span> -->
-         <button class="btn btn-primary btn-addon btn-sm" data-toggle="modal" th:onclick="javascript: openUploadDialog()">
-             <i class="fa fa-plus"></i> 上传附件
-         </button>
+	<div class="panel-body" shiro:hasAnyPermissions="system:attachment:add">
+        <button class="btn btn-primary btn-addon btn-sm" data-toggle="modal" th:onclick="javascript: openUploadDialog()">
+            <i class="fa fa-plus"></i> 上传附件
+        </button>
     </div>
     <div class="panel-body table-responsive">
 		<table class="table table-hover">
@@ -49,12 +48,10 @@
 					<td th:text="${attachment.filename}"></td>
 					<td th:text="${attachment.filetype}"></td>
 					<td th:text="${attachment.filesize}"></td>
-					<td>
+					<td class="operate">
 						<a th:href="@{/admin/attachment/download(id=${attachment.id})}" target="_blank" class="btn btn-xs btn-success">下载预览</a>
-						<span>&nbsp;|&nbsp;</span>
 						<a href="javascript:void(0)" th:aid="${attachment.id}" class="btn btn-xs btn-success copyDownloadUrlBtn" th:onclick="javascript:copyDownloadUrl(this.getAttribute('aid'))">复制下载链接</a>
-						<span>&nbsp;|&nbsp;</span>
-						<a href="javascript:void(0)" data-toggle="modal" class="btn btn-xs btn-danger" th:aid="${attachment.id}" th:onclick="javascript:confrimRemove(this.getAttribute('aid'))">删除</a>
+						<a href="javascript:void(0)" data-toggle="modal" class="btn btn-xs btn-danger" th:aid="${attachment.id}" th:onclick="javascript:confrimRemove(this.getAttribute('aid'))" shiro:hasAnyPermissions="system:attachment:delete">删除</a>
 					</td>
 				</tr>
 				<tr th:if="${#lists.isEmpty(page.list)}">

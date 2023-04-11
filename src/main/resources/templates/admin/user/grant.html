@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -33,7 +33,7 @@
         	<div class="form-group" th:each="item : ${roles}">
 				<input th:id="${item.id}" class="flat-grey list-child" name="roles" type="checkbox" th:value="${item.id}" th:checked="${item.checked}"/> <span th:text="${item.roleName}"></span>
             </div>
-            <div class="form-btn-group-left">
+            <div class="form-btn-group-left" shiro:hasAnyPermissions="system:user:togrant,system:user:grant">
             	<button type="submit" class="btn btn-info" id="save">分配角色</button>
             </div>
         </form>
