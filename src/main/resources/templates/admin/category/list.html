@@ -49,7 +49,7 @@
 				<tr th:id="${category.id}" th:attr="parent=${category.parentId}" th:each="category : ${page.list}">
 					<td><input type="checkbox" class="flat-grey list-child" th:value="${category.id}" /></td>
 					<td>
-						<img src="/resource/img/explode.gif" th:if="${category.childrenFlag}==1" style="cursor:pointer;" th:typeid="${category.id}" th:attr="level=${category.level}" onclick="javascript:loadSons(this.getAttribute('typeid'),this)" width="11" height="11" />
+						<i class="fa fa-plus-square-o" th:if="${category.childrenFlag}==1" style="cursor:pointer;" th:typeid="${category.id}" th:attr="level=${category.level}" onclick="javascript:loadSons(this.getAttribute('typeid'),this)"></i>
 					</td>
 					<td th:text="${category.code}"></td>
 					<td><a th:href="@{/admin/archives/list(entity[cid]=${category.code})}" th:text="${category.cnname}"></a></td>
@@ -62,7 +62,6 @@
 					<td class="operate">
 						<a th:href="@{/admin/category/toAdd(id=${category.id})}" class="btn btn-xs btn-success" shiro:hasAnyPermissions="system:category:toadd,system:category:add">添加下级栏目</a>
 						<a th:href="@{/admin/category/toEdit(id=${category.id})}" class="btn btn-xs btn-success" shiro:hasAnyPermissions="system:category:toedit,system:category:update">编辑</a>
-						<span>&nbsp;|&nbsp;</span>
 						<a href="javascript:void(0)" data-toggle="modal" class="btn btn-xs btn-danger" th:typeid="${category.id}" th:onclick="javascript:confrimRemove(this.getAttribute('typeid'))" shiro:hasAnyPermissions="system:category:delete">删除</a>
 					</td>
 				</tr>
@@ -113,6 +112,19 @@
 <script src="/resource/js/Director/app.js"></script>
 <script src="/resource/js/jquery.serializejson.js"></script>
 <script>
+	var hasAddPermission = false, hasEditPermission = false, hasDeletePermission = false;
+</script>
+<script shiro:hasAnyPermissions="system:category:toadd,system:category:add">
+	var hasAddPermission = true;
+</script>
+<script shiro:hasAnyPermissions="system:category:toedit,system:category:update">
+	var hasEditPermission = true;
+</script>
+<script shiro:hasAnyPermissions="system:category:delete">
+	var hasDeletePermission = true;
+</script>
+
+<script>
 	window.onload = function(){
 		renderCheckBox();
 	}
@@ -120,11 +132,9 @@
 	function renderCheckBox(){
 		$('input').on('ifChecked', function(event) {
 		    $(this).parents('li').addClass("task-done");
-		    console.log('ok');
 		});
 		$('input').on('ifUnchecked', function(event) {
 		    $(this).parents('li').removeClass("task-done");
-		    console.log('not');
 		});
 		
 		$('input[type="checkbox"].flat-grey, input[type="radio"].flat-grey').iCheck({
@@ -138,7 +148,6 @@
 	}
 	function removeRows (parentId) {
         var parentDOM = $("tr[parent='" + parentId + "']");
-        console.log(parentDOM)
         if (parentDOM && parentDOM.length > 0) {
             $(parentDOM).each(function () {
                 var pid = $(this).attr('id');
@@ -148,9 +157,10 @@
             $(parentDOM).remove();
         }
     }
-	function loadSons(cid,obj){
+	function loadSons(cid, obj){
 		var parentDOM = $("tr[parent='" + cid + "']");
         $level = parseInt($(obj).attr("level"));
+        
 		if(parentDOM == null || parentDOM.length <= 0){
 			$.ajax({
 				url: "/admin/category/loadSon?id="+cid,
@@ -159,17 +169,17 @@
 			    contentType:"application/json;charset=utf-8",
 				success: function(data) {
 					var trstr = "";
-					for(var i=0;i<data.list.length;i++){
+					for(var i = 0;i < data.list.length;i++){
 						trstr += buildHTML(data.list[i]);
 					}
 					$("#" + cid).after(trstr);
 					renderCheckBox();
 				}
 			});
-		    $(obj).attr("src","/resource/img/contract.gif");
+		    $(obj).attr("class","fa fa-minus-square-o");
 		}else{
 			removeRows(cid);
-			$(obj).attr("src","/resource/img/explode.gif");
+			$(obj).attr("class","fa fa-plus-square-o");
 		}
 		renderCheckBox();
 	}
@@ -177,21 +187,25 @@
 	function buildHTML(element){
 		var trstr = '<tr id="' + element.id + '" parent="' + element.parentId + '">';
 	    trstr += '<td><input type="checkbox" class="flat-grey list-child"/></td>';
-	    trstr += '<td>' + (element.childrenFlag == 1 ? '<img src="/resource/img/explode.gif" style="cursor:pointer;" onclick="loadSons(\''+ element.id +'\',this);" width="11" height="11" />':'') + '</td>';
+	    trstr += '<td>' + (element.childrenFlag == 1 ? '<i class="fa fa-plus-square-o" style="cursor:pointer;" onclick="loadSons(\''+ element.id +'\',this);" />':'') + '</td>';
 	    trstr += '<td>' + element.code + '</td>';
-	    trstr += '<td style="padding-left:' + ((element.level++)*20) + 'px;"><a href="/admin/archives/list?entity%5Bcid%5D='+element.code+'">' + element.cnname + '</a></td>';
+	    trstr += '<td style="padding-left:' + ((element.level - 1)*40) + 'px;" level="' + element.level + '"><i class="fa fa-angle-right"></i> <a href="/admin/archives/list?entity%5Bcid%5D='+element.code+'">' + element.cnname + '</a></td>';
 	    trstr += '<td>' + element.enname + '</td>';
 		trstr += '<td>' + (element.isInput == 1 ? '<span class="label label-success">是</span>' : '<span class="label label-danger">否</span>') + '</td>';
 	    trstr += '<td>' + (element.isShow == 1 ? '<span class="label label-success">是</span>' : '<span class="label label-danger">否</span>') + '</td>';
 	    trstr += '<td>';
-	    trstr += '<input name="orderBy" type="text" cid="'+element.id+'" class="form-control input-sm" value="'+element.sort+'" style="width:50px;height:20px;">';
+	    trstr += '<input name="orderBy" type="text" cid="' + element.id + '" class="form-control input-sm" value="'+element.sort+'" style="width:50px;height:20px;">';
 	    trstr += '</td>';
-	    trstr += '<td>';
-	    trstr += '<a href="/admin/category/toAdd?id='+element.id+'" class="btn btn-xs btn-success">添加下级栏目</a>';
-	    trstr += '<span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>';
-	    trstr += '<a href="/admin/category/toEdit?id=' + element.id + '" class="btn btn-xs btn-success">编辑</a>';
-	    trstr += '<span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>';
-	    trstr += '<a href="javascript:void(0)" data-toggle="modal" class="btn btn-xs btn-danger" onclick="confrimRemove(\''+element.id+'\')">删除</a>';
+	    trstr += '<td class="operate">';
+	    if(hasAddPermission){
+	    	trstr += '<a href="/admin/category/toAdd?id=' + element.id + '" class="btn btn-xs btn-success">添加下级栏目</a> ';
+	    }
+	    if(hasEditPermission){
+	    	trstr += '<a href="/admin/category/toEdit?id=' + element.id + '" class="btn btn-xs btn-success">编辑</a> ';
+	    }
+	    if(hasDeletePermission){
+	    	trstr += '<a href="javascript:void(0)" data-toggle="modal" class="btn btn-xs btn-danger" onclick="confrimRemove(\''+element.id+'\')">删除</a> ';
+	    }
 	    trstr += '</td>';
 	    trstr += '</tr>';
 	    return trstr;

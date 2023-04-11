@@ -238,6 +238,16 @@
     }
     
     function validateForm(){
+		var formId = $("#formId").val();
+    	var cnname = $("#cnname").val();
+    	if(formId == null || formId==''){
+    		cocoMessage.error("表单模型不能为空");
+    		return false;
+    	}
+    	if(cnname == null || cnname==''){
+    		cocoMessage.error("栏目名称不能为空");
+    		return false;
+    	}
     	$("#htmlContent").val(ueEditor.getContent());
     	return true;
     }

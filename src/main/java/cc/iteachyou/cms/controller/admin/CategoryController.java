@@ -106,7 +106,7 @@ public class CategoryController extends BaseController{
 	public String add(Category category) throws CmsException {
 		category.setId(IdUtil.getSnowflakeNextIdStr());
 		category.setCode(RandomUtil.getCharAndNumr(8));
-		category.setLevel(category.getParentId().equals("-1")?"1":category.getLevel());
+		category.setLevel(category.getParentId().equals("-1") ? "1" : category.getLevel());
 		category.setParentId(StringUtil.isBlank(category.getParentId())? "-1" : category.getParentId());
 		category.setCreateBy(TokenManager.getToken().getId());
 		category.setCreateTime(new Date());
