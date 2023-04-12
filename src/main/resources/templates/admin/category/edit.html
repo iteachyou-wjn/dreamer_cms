@@ -59,7 +59,7 @@
 					</div>
 					<div class="form-group form-control-small">
 						<label for="arcdir">表单模型：</label>
-						<select class="form-control m-b-10" name="formId">
+						<select class="form-control m-b-10" name="formId" id="formId">
 							<option>请选择表单模型</option>
                             <option th:each="form : ${forms}" th:text="${form.formName}+' | '+${form.code}" th:value="${form.id}" th:selected="${category.formId eq form.id}"></option>
                         </select>
