@@ -61,7 +61,9 @@ public class BackupThread implements Runnable {
 			sb.append("*/").append(LINE_CHARACTER);
 			//查询数据库创建表语句
 			Map<String, String> structMap = databaseMapper.showTableStruct(tableName);
-			sb.append(structMap.get("Create Table")).append(";").append(LINE_CHARACTER);
+			String structSQL = structMap.get("Create Table");
+			structSQL = structSQL.replace("'0000-00-00 00:00:00'", "CURRENT_TIMESTAMP");
+			sb.append(structSQL).append(";").append(LINE_CHARACTER);
 			
 			String database = databaseMapper.selectDatabase();
 			List<Map<String,Object>> columns = databaseMapper.showTableColumns(database, tableName);
@@ -77,9 +79,9 @@ public class BackupThread implements Runnable {
 				Map<String, Object> map = datas.get(j);
 				sb.append("INSERT INTO `" + tableName + "`(");
 				for(int c = 0;c < columns.size();c++) {
-					sb.append(columns.get(c).get("COLUMN_NAME").toString());
+					sb.append("`" + columns.get(c).get("COLUMN_NAME").toString() + "`");
 					if(c != columns.size() - 1) {
-						sb.append(",");
+						sb.append(", ");
 					}
 				}
 				sb.append(") VALUES (");
@@ -122,11 +124,13 @@ public class BackupThread implements Runnable {
 								SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 								String dateVal = simpleDateFormat.format(date);
 								sb.append("STR_TO_DATE('" + dateVal + "','%Y-%m-%d %H:%i:%s')");
+							}else {
+								sb.append("NULL");
 							}
 						}
 					}
 					if(c != columns.size() - 1) {
-						sb.append(",");
+						sb.append(", ");
 					}
 				}
 				

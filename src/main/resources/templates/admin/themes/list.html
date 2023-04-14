@@ -38,7 +38,7 @@
 		<div class="row" style="margin-bottom:5px;">
 			<div class="col-md-2 theme-box" th:each="item : ${themes}">
                 <div class="theme-img">
-                	<img th:src="${'/resources/' + system.uploaddir + item.themeImg}" />
+                	<img th:src="${'/resources/' + system.uploaddir + '/' + item.themeImg}" />
                 </div>
                 <div class="theme-text" th:text="${item.themeName}" th:if="${item.status} eq '0'"></div>
                 <div class="theme-text" th:if="${item.status} eq '1'">

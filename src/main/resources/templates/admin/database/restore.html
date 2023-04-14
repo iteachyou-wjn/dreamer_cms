@@ -11,7 +11,7 @@
     <link rel="stylesheet" type="text/css" href="/resource/js/webuploader-0.1.5/webuploader.css">
     <style type="text/css">
 	    .file-item{display:flex;align-items: center;height: 50px;justify-content: space-between;}
-	   	.file-item .info,.file-item .state{margin:0;padding:0;}
+	   	.file-item .info,.file-item .state{margin:0;padding:0;font-size: 14px;}
 	   	.file-item .state{margin-left:50px;}
 	   	.file-item .close{cursor: pointer;}
     </style>
@@ -137,9 +137,9 @@
 	
 	//删除文件上传队列
 	function removeFile(id){
-		uploader.removeFile(id, true);
 		$("#file-input-"+ id).remove();
-		$("#" + id).remove();	
+		$("#" + id).remove();
+		uploader.removeFile(id, true);
 	}
 	
 	function confrim(){
