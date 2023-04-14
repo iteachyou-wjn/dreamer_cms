@@ -393,7 +393,7 @@ public class FrontController extends BaseController {
 		    response.setContentType("multipart/form-data");
 		    response.setHeader("Content-Disposition", "attachment;fileName=" + attachment.getFilename());
 	        //打开本地文件流
-		    String filePath = fileConfiguration.getResourceDir() + system.getUploaddir() + attachment.getFilepath();
+		    String filePath = fileConfiguration.getResourceDir() + system.getUploaddir() + "/" + attachment.getFilepath();
 	        InputStream inputStream = new FileInputStream(filePath);
 	        //激活下载操作
 	        OutputStream os = response.getOutputStream();

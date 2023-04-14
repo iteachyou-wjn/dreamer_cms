@@ -55,7 +55,7 @@ public class UploadController extends BaseController{
 			String currentDate = DateUtils.getCurrentDate("yyyyMMdd");
 			System system = systemService.getSystem();
 			String uploadDir = system.getUploaddir();
-			File directory  = new File(rootPath + "/" + uploadDir + currentDate); 
+			File directory  = new File(rootPath + "/" + uploadDir + "/" + currentDate); 
 			if(!directory.exists()){
 				directory.mkdirs();
 			}
@@ -93,7 +93,7 @@ public class UploadController extends BaseController{
 			String currentDate = DateUtils.getCurrentDate("yyyyMMdd");
 			System system = systemService.getSystem();
 			String uploadDir = system.getUploaddir();
-			File directory  = new File(rootPath + "/" + uploadDir + currentDate); 
+			File directory  = new File(rootPath + "/" + uploadDir + "/" + currentDate); 
 			if(!directory.exists()){
 				directory.mkdirs();
 			}

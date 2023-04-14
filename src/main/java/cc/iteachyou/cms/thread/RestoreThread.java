@@ -38,7 +38,7 @@ public class RestoreThread implements Runnable {
 			for(int i = 0;i < files.length;i++) {
 				String filePath = files[i];
 				
-				filePath = resourceDir + system.getUploaddir() + filePath;
+				filePath = resourceDir + system.getUploaddir() + "/" + filePath;
 				java.lang.System.out.println(filePath);
 				runner.runScript(new FileReader(new File(filePath)));
 			}

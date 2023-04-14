@@ -71,13 +71,13 @@ public class ThemesController extends BaseController {
 		System system = systemService.getSystem();
 		String uploadDir = system.getUploaddir();
 		
-		String uploadpath = rootPath + File.separator + uploadDir + File.separator + themePath;
+		String uploadpath = rootPath + "/" + uploadDir + "/" + themePath;
 		File zipFile = new File(uploadpath);
 		
 		//解压zip
 		String targetDir = rootPath + "templates/";
 		theme = ZipUtils.unZipFiles(zipFile, targetDir);
-		String themeJsonFilePath = theme.getThemePath() + File.separator + "theme.json";
+		String themeJsonFilePath = theme.getThemePath() + "/" + "theme.json";
 		File themeJsonFile = new File(themeJsonFilePath);
 		if(!themeJsonFile.exists()) {
 			throw new FileNotFoundException(
