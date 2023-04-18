@@ -236,6 +236,10 @@ public class UserController extends BaseController {
 			return ResponseResult.Factory.newInstance(Boolean.FALSE, StateCodeEnum.USER_OLDPWD_ERROR.getCode(), null, StateCodeEnum.USER_OLDPWD_ERROR.getDescription());
 		}
 		
+		if(params.getNewPwd().length() < 8 || params.getNewPwd().length() > 30) {
+			return ResponseResult.Factory.newInstance(Boolean.FALSE, StateCodeEnum.PASSWORD_LENGTH_ERROR.getCode(), null, StateCodeEnum.PASSWORD_LENGTH_ERROR.getDescription());
+		}
+		
 		ByteSource newSalt = ByteSource.Util.bytes(user2.getUsername() + params.getNewPwd());
 		SimpleHash sh1 = new SimpleHash("MD5", params.getNewPwd(), newSalt, 1024);
 		user2.setSalt(newSalt.toString());

@@ -47,6 +47,7 @@ public enum StateCodeEnum {
 	USER_USER_NOPERMISSION("2012","用户未授权"),
 	USER_VCODE_ERROR("2013","服务器验证码出现异常"),
 	USER_OLDPWD_ERROR("2014","原密码输入错误"),
+	PASSWORD_LENGTH_ERROR("2015","密码长度应在8~30字符之间"),
 	
 	//用户信息Code 30
 	APP_TYPE_ERROR("3001","错误:没有版本发布"),
