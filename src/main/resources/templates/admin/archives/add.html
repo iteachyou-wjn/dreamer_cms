@@ -209,15 +209,15 @@
     
     $(document).ready(function () {
     	initUploader(
-    			"picker",
-    			"file-priview",
-    			"filepath", 
-    			{
-			        title: 'Images',
-			        extensions: 'gif,jpg,jpeg,bmp,png',
-			        mimeTypes: 'image/*'
-			    },
-			    "IMAGES");
+			"picker",
+			"file-priview",
+			"filepath", 
+			{
+		        title: 'Images',
+		        extensions: 'gif,jpg,jpeg,bmp,png',
+		        mimeTypes: 'image/*'
+		    },
+		    "IMAGES");
     	for(var i = 0;i < fields.length;i++){
     		var field = fields[i];
 	    	if(field.dataType == 'markdown'){
@@ -226,22 +226,22 @@
 	    		window[field.id] = UE.getEditor('ue-editor-' + field.id);
 	    	}else if(field.dataType == 'file'){
 	    		initUploader(
-	    				"picker-" + field.id, 
-	    				"file-priview-" + field.id, 
-	    				"input-" + field.id, 
-	    				{},
-	    				"FILES");
+    				"picker-" + field.id, 
+    				"file-priview-" + field.id, 
+    				"input-" + field.id, 
+    				{},
+    				"FILES");
 	    	}else if(field.dataType == 'image'){
 	    		initUploader(
-	    				"picker-" + field.id, 
-	    				"file-priview-" + field.id, 
-	    				"input-" + field.id, 
-	    				{
-					        title: 'Images',
-					        extensions: 'gif,jpg,jpeg,bmp,png',
-					        mimeTypes: 'image/*'
-					    },
-	    				"IMAGES");
+    				"picker-" + field.id, 
+    				"file-priview-" + field.id, 
+    				"input-" + field.id, 
+    				{
+				        title: 'Images',
+				        extensions: 'gif,jpg,jpeg,bmp,png',
+				        mimeTypes: 'image/*'
+				    },
+    				"IMAGES");
 	    	}else if(field.dataType == "imageset"){
 	    		imagesetUploader = WebUploader.create({
 			        // swf文件路径
