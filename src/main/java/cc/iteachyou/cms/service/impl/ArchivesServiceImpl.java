@@ -19,6 +19,7 @@ import cc.iteachyou.cms.entity.ArchivesWithRownum;
 import cc.iteachyou.cms.entity.vo.ArchivesVO;
 import cc.iteachyou.cms.exception.TransactionException;
 import cc.iteachyou.cms.service.ArchivesService;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * 文章管理处理类
@@ -114,7 +115,10 @@ public class ArchivesServiceImpl implements ArchivesService {
 		int num = 0;
 		try {
 			num= archivesMapper.deleteByPrimaryKey(id);
-			archivesMapper.deleteAdditional(params);
+			
+			if(params.containsKey("id") && params.get("id") != null && StrUtil.isNotBlank(params.get("id").toString())) {
+				archivesMapper.deleteAdditional(params);
+			}
 		} catch (Exception e) {
 			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();//手动事务回滚
 			throw new TransactionException(e.getMessage());

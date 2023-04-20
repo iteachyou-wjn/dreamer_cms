@@ -365,7 +365,7 @@ public class ArchivesController extends BaseController {
 				labelService.updateCount(tagArr);
 			}
 		}
-		params.put("id", article.get("id").toString());
+		params.put("id", article.get("id") == null ? "" : article.get("id").toString());
 		try {
 			archivesService.delete(id,params);
 		} catch (TransactionException e) {
