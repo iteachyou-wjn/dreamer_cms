@@ -68,7 +68,7 @@ public class UploadController extends BaseController{
 			result.put("originalFilename", file.getOriginalFilename());
 			result.put("filesize", file.getSize());
 			result.put("filetype", file.getContentType());
-			result.put("url", system.getWebsite() + Constant.UPLOAD_PREFIX + uploadDir + currentDate + "/" + newFileName);
+			result.put("url", system.getWebsite() + Constant.UPLOAD_PREFIX + uploadDir + "/" + currentDate + "/" + newFileName);
 			respResult = ResponseResult.Factory.newInstance(Boolean.TRUE,
 					StateCodeEnum.HTTP_SUCCESS.getCode(), result,
 					StateCodeEnum.HTTP_SUCCESS.getDescription());
@@ -103,7 +103,7 @@ public class UploadController extends BaseController{
 			file.transferTo(uploadpath);
 			result.put("message", "上传成功");
 			result.put("success", 1);
-			result.put("url", system.getWebsite() + Constant.UPLOAD_PREFIX + uploadDir + currentDate + "/" + newFileName);
+			result.put("url", system.getWebsite() + Constant.UPLOAD_PREFIX + uploadDir + "/" + currentDate + "/" + newFileName);
 		} catch (Exception e) {
 			result.put("message", "上传失败");
 			result.put("success", 0);
