@@ -92,7 +92,7 @@ arcurl|文章访问URL
 #### 范例
 ```html?linenums
 <div class="row">
-	{dreamer-cms:pagelist pagesize="10" formkey="LUVC0AW2" addfields="versionnum,notes"}
+	{dreamer-cms:pagelist formkey="LUVC0AW2" addfields="versionnum,notes"}
 	<div class="col-lg-4 col-md-6 col-sm-6">
 		<div class="blog-post">
 			<div class="blog-details">
