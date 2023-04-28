@@ -10,6 +10,7 @@
 `注：梦想家提供的标签，都是服务端解析并执行，要优先于客户端的javascript执行，利用该特性，可以服务端来准备数据，客户端来做效果`
 
 1. 循环导航，并在导航项目中添加自定义属性，代码如下：
+
 ```html
 <div class="navigation">
     <div>
@@ -32,17 +33,21 @@
     {/dreamer-cms:categoryartlist}
 </div>
 ```
+
 `注：其中的ref="[field:typeid /]"，该ref属性则为自定义属性。`
 
 2. 在body标签中，添加自定义属性，代码如下：
+
 ```html
 <header typeid="{dreamer-cms:category field='typeid' /}" parentId="{dreamer-cms:category field='parentid' /}">
     导航栏代码
 </header>
 ```
+
 `注：其中typeid和parentId均为自定义属性，该代码没必要一定加在header中，也可以加在页面根标签上，如body。要保证每个页面都有该属性即可。`
 
 3. 在Javascript中，进行判断，并添加高亮样式，代码如下：
+
 ```javascript
 $(document).ready(function () {
     var header = $("header");
@@ -63,11 +68,12 @@ $(document).ready(function () {
     }
 })
 ```
+
 4. 在CSS中，定义.active类样式，代码如下：
+
 ```css
 .active {
     color: #199fff;
     font-weight: bold;
 }
 ```
-

@@ -1049,45 +1049,51 @@
 </code></pre>
 <p>&#x5728;&#x4EE5;&#x4E0A;&#x5404;&#x680F;&#x76EE;&#x4E2D;&#xFF0C;&#x5747;&#x6DFB;&#x52A0;&#x6709;&#x4E0D;&#x540C;&#x7684;&#x4EA7;&#x54C1;&#xFF0C;&#x5177;&#x4F53;&#x5B9E;&#x73B0;&#x65B9;&#x5F0F;&#x5982;&#x4E0B;&#xFF1A;</p>
 <ol>
-<li>&#x5229;&#x7528;Channel&#x6807;&#x7B7E;&#xFF0C;&#x6E32;&#x67D3;&#x4EA7;&#x54C1;&#x5206;&#x7C7B;&#x680F;&#x76EE;&#xFF0C;&#x5982;&#x4E0B;&#xFF1A;
-```javascript
-<ul class="product-condition"> <!--渲染全部-->
- <li><pre><code> {dreamer-cms:type typeid=&quot;A54547W2&quot;}&lt;a href=&quot;[field:typeurl/]&quot;&gt;&#x5168;&#x90E8;&lt;/a&gt;{/dreamer-cms:type}
-</code></pre> &lt;/li&gt; <!--渲染子栏目-->
- {dreamer-cms:channel typeid=&quot;A54547W2&quot; showall=&quot;false&quot; type=&quot;son&quot;}<pre><code> &lt;li&gt;&lt;a href=&quot;[field:typeurl/]&quot;&gt;[field:typenamecn /]&lt;/a&gt;&lt;/li&gt;
-</code></pre> {/dreamer-cms:channel}
-&lt;/ul&gt;<!--产品列表-->        
-<div class="product-list">
-
-</div></li>
-</ul></li></ol>
-<p>&lt;/div&gt;</p>
-<pre><code>2. &#x5229;&#x7528;pagelist&#x6807;&#x7B7E;&#xFF0C;&#x6E32;&#x67D3;&#x4EA7;&#x54C1;&#x5217;&#x8868;
-&#x4EA7;&#x54C1;&#x5217;&#x8868;&#xFF0C;&#x6E32;&#x67D3;&#x5728;&#x4E0A;&#x65B9;&#x9884;&#x7559;&#x7684;div&#x4E2D;&#xFF0C;&#x9700;&#x8981;&#x6CE8;&#x610F;&#xFF0C;&#x5728;pagelist&#x6807;&#x7B7E;&#x4E0A;&#xFF0C;&#x4E00;&#x5B9A;&#x8981;&#x4F7F;&#x7528;cascade=&quot;true&quot;&#x5C5E;&#x6027;&#x3002;
-```javascript
+<li>&#x5229;&#x7528;Channel&#x6807;&#x7B7E;&#xFF0C;&#x6E32;&#x67D3;&#x4EA7;&#x54C1;&#x5206;&#x7C7B;&#x680F;&#x76EE;&#xFF0C;&#x5982;&#x4E0B;&#xFF1A;</li>
+</ol>
+<pre><code class="lang-javascript">&lt;ul <span class="hljs-class"><span class="hljs-keyword">class</span></span>=<span class="hljs-string">&quot;product-condition&quot;</span>&gt;
+    <span class="xml"><span class="hljs-comment">&lt;!--&#x6E32;&#x67D3;&#x5168;&#x90E8;--&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>
+        {dreamer-cms:type typeid=&quot;A54547W2&quot;}<span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;[field:typeurl/]&quot;</span>&gt;</span>&#x5168;&#x90E8;<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>{/dreamer-cms:type}
+    <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+    <span class="hljs-comment">&lt;!--&#x6E32;&#x67D3;&#x5B50;&#x680F;&#x76EE;--&gt;</span>
+    {dreamer-cms:channel typeid=&quot;A54547W2&quot; showall=&quot;false&quot; type=&quot;son&quot;}
+        <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;[field:typeurl/]&quot;</span>&gt;</span>[field:typenamecn /]<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+    {/dreamer-cms:channel}
+<span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></span>
 &lt;!--&#x4EA7;&#x54C1;&#x5217;&#x8868;--&gt;        
-&lt;div class=&quot;product-list&quot;&gt;
-    {dreamer-cms:pagelist cascade=&quot;true&quot;}
-    &lt;div class=&quot;product-list-item&quot;&gt;
-        &lt;div class=&quot;product-list-item-image&quot;&gt;
-            &lt;img src=&quot;[field:litpic /]&quot; width=&quot;180&quot; height=&quot;120&quot; /&gt;
-        &lt;/div&gt;
-        &lt;div class=&quot;product-list-item-title&quot;&gt;
-            &lt;a href=&quot;[field:arcurl /]&quot; title=&quot;[field:title /]&quot;&gt;[field:title /]&lt;/a&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-    {/dreamer-cms:pagelist}
-&lt;/div&gt;
-&lt;!--&#x5206;&#x9875;--&gt;
-&lt;div class=&quot;product-page&quot;&gt;&lt;/div&gt;
-</code></pre><ol>
-<li>&#x6DFB;&#x52A0;&#x5206;&#x9875;<pre><code class="lang-javascript">&lt;!--&#x5206;&#x9875;--&gt;
-<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;product-page&quot;</span>&gt;</span>
- {dreamer-cms:pagination /}
+<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;product-list&quot;</span>&gt;</span>
+
 <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
 </code></pre>
-</li>
+<ol>
+<li>&#x5229;&#x7528;pagelist&#x6807;&#x7B7E;&#xFF0C;&#x6E32;&#x67D3;&#x4EA7;&#x54C1;&#x5217;&#x8868;
+&#x4EA7;&#x54C1;&#x5217;&#x8868;&#xFF0C;&#x6E32;&#x67D3;&#x5728;&#x4E0A;&#x65B9;&#x9884;&#x7559;&#x7684;div&#x4E2D;&#xFF0C;&#x9700;&#x8981;&#x6CE8;&#x610F;&#xFF0C;&#x5728;pagelist&#x6807;&#x7B7E;&#x4E0A;&#xFF0C;&#x4E00;&#x5B9A;&#x8981;&#x4F7F;&#x7528;cascade=&quot;true&quot;&#x5C5E;&#x6027;&#x3002;</li>
 </ol>
+<pre><code class="lang-javascript">&lt;!--&#x4EA7;&#x54C1;&#x5217;&#x8868;--&gt;        
+<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;product-list&quot;</span>&gt;</span>
+    {dreamer-cms:pagelist cascade=&quot;true&quot;}
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;product-list-item&quot;</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;product-list-item-image&quot;</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;[field:litpic /]&quot;</span> <span class="hljs-attr">width</span>=<span class="hljs-string">&quot;180&quot;</span> <span class="hljs-attr">height</span>=<span class="hljs-string">&quot;120&quot;</span> /&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;product-list-item-title&quot;</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;[field:arcurl /]&quot;</span> <span class="hljs-attr">title</span>=<span class="hljs-string">&quot;[field:title /]&quot;</span>&gt;</span>[field:title /]<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    {/dreamer-cms:pagelist}
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-comment">&lt;!--&#x5206;&#x9875;--&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;product-page&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</span></code></pre>
+<ol>
+<li>&#x6DFB;&#x52A0;&#x5206;&#x9875;</li>
+</ol>
+<pre><code class="lang-javascript">&lt;!--&#x5206;&#x9875;--&gt;
+<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;product-page&quot;</span>&gt;</span>
+    {dreamer-cms:pagination /}
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+</code></pre>
 
                                 
                                 </section>
@@ -1127,7 +1133,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"多级栏目筛选","level":"7.3.6","depth":2,"next":{"title":"第八章 关于捐赠","level":"7.4","depth":1,"ref":"","articles":[{"title":"关于捐赠","level":"7.4.1","depth":2,"path":"chapter08/DonationList.md","ref":"chapter08/DonationList.md","articles":[]}]},"previous":{"title":"栏目分页","level":"7.3.5","depth":2,"path":"chapter07/CategoryPage.md","ref":"chapter07/CategoryPage.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors","favicon-absolute"],"styles":{"website":"./styles/website.css"},"pluginsConfig":{"favicon-absolute":{"appleTouchIconMore":{},"appleTouchIconPrecomposed152":"./source/images/favicon.png","appleTouchIconPrecomposedMore":{},"favicon":"./source/images/favicon.ico"},"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"王俊南","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"梦想家内容管理系统（Dreamer CMS）","language":"zh-hans","links":{"sidebar":{"I Teach You，我教你！":"http://www.iteachyou.cc","Dreamer CMS（Gitee）":"https://gitee.com/isoftforce/dreamer_cms","Dreamer CMS（Github）":"https://github.com/iteachyou-wjn/dreamer_cms"}},"gitbook":"3.2.3","description":"Dreamer CMS，梦想家内容管理系统官方使用文档"},"file":{"path":"chapter07/CategoryFilter.md","mtime":"2023-04-28T08:37:42.850Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2023-04-28T08:39:47.705Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"多级栏目筛选","level":"7.3.6","depth":2,"next":{"title":"第八章 关于捐赠","level":"7.4","depth":1,"ref":"","articles":[{"title":"关于捐赠","level":"7.4.1","depth":2,"path":"chapter08/DonationList.md","ref":"chapter08/DonationList.md","articles":[]}]},"previous":{"title":"栏目分页","level":"7.3.5","depth":2,"path":"chapter07/CategoryPage.md","ref":"chapter07/CategoryPage.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors","favicon-absolute","highlight"],"styles":{"website":"./styles/website.css"},"pluginsConfig":{"favicon-absolute":{"appleTouchIconMore":{},"appleTouchIconPrecomposed152":"./source/images/favicon.png","appleTouchIconPrecomposedMore":{},"favicon":"./source/images/favicon.ico"},"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"王俊南","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"梦想家内容管理系统（Dreamer CMS）","language":"zh-hans","links":{"sidebar":{"I Teach You，我教你！":"http://www.iteachyou.cc","Dreamer CMS（Gitee）":"https://gitee.com/isoftforce/dreamer_cms","Dreamer CMS（Github）":"https://github.com/iteachyou-wjn/dreamer_cms"}},"gitbook":"3.2.3","description":"Dreamer CMS，梦想家内容管理系统官方使用文档"},"file":{"path":"chapter07/CategoryFilter.md","mtime":"2023-04-28T08:47:56.871Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2023-04-28T08:58:21.993Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
