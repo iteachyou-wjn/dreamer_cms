@@ -19,7 +19,7 @@
 
 在以上各栏目中，均添加有不同的产品，具体实现方式如下：
 
-1. 利用Channel标签，渲染产品分类栏目，如下：
+#### 1. 利用Channel标签，渲染产品分类栏目，如下：
 
 ```javascript
 <ul class="product-condition">
@@ -38,7 +38,7 @@
 </div>
 ```
 
-2. 利用pagelist标签，渲染产品列表
+#### 2. 利用pagelist标签，渲染产品列表
 产品列表，渲染在上方预留的div中，需要注意，在pagelist标签上，一定要使用cascade="true"属性。
 
 ```javascript
@@ -59,7 +59,7 @@
 <div class="product-page"></div>
 ```
 
-3. 添加分页
+#### 3. 添加分页
 
 ```javascript
 <!--分页-->
