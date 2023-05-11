@@ -46,7 +46,7 @@ public class DataBaseController extends BaseController {
 	/**
 	 * 备份
 	 */
-	@Log(operType = OperatorType.OTHER, module = "备份/还原", content = "数据库表备份")
+	@Log(operType = OperatorType.GRANT, module = "备份/还原", content = "数据库表备份")
 	@ResponseBody
 	@RequestMapping(value = "/backup", method = RequestMethod.GET)
 	@RequiresPermissions("system:database:backup")
@@ -76,7 +76,7 @@ public class DataBaseController extends BaseController {
 	/**
 	 * 还原
 	 */
-	@Log(operType = OperatorType.OTHER, module = "备份/还原", content = "数据库表还原")
+	@Log(operType = OperatorType.GRANT, module = "备份/还原", content = "数据库表还原")
 	@ResponseBody
 	@RequestMapping(value = "/restore", method = RequestMethod.POST)
 	@RequiresPermissions("system:database:restore")

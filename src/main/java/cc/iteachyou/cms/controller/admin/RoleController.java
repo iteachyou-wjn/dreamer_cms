@@ -143,7 +143,7 @@ public class RoleController extends BaseController {
 		return "admin/role/grant";
 	}
 	
-	@Log(operType = OperatorType.OTHER, module = "角色管理", content = "角色分配权限")
+	@Log(operType = OperatorType.GRANT, module = "角色管理", content = "角色分配权限")
 	@PostMapping("grant/{roleId}")
 	@RequiresPermissions("system:role:grant")
 	@ResponseBody

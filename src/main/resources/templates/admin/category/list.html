@@ -228,6 +228,11 @@
 		    contentType:"application/json;charset=utf-8",
 			success: function(data) {
 				window.location.href = "/admin/category/list";
+			},
+			error: function(err){
+				if(err.status == 403){
+					window.location.href = "/exception/403"
+				}
 			}
 		});
 	}

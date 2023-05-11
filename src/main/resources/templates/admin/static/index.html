@@ -121,7 +121,6 @@
 			});
 		}else if(type == "2"){
 			var obj = $('#form2').serializeJSON();
-			console.log(obj);
 			$.ajax({
 				url : "/admin/static/generateCategory/" + clientId,
 				contentType : 'application/json',

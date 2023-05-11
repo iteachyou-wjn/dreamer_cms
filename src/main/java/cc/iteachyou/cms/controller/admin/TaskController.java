@@ -120,7 +120,7 @@ public class TaskController extends BaseController {
     /**
      * 执行定时任务
      */
-    @Log(operType = OperatorType.OTHER, module = "计划任务", content = "执行计划任务")
+    @Log(operType = OperatorType.RUN, module = "计划任务", content = "执行计划任务")
     @RequestMapping("/run")
     @RequiresPermissions("system:task:run")
     @ResponseBody

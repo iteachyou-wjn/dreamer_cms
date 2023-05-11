@@ -17,7 +17,7 @@ public @interface Log {
     Target target() default Target.ALL;//日志记录到哪
 
     enum OperatorType{
-    	SELECT, INSERT, UPDATE, DELETE, PAGE, OTHER
+    	SELECT, INSERT, UPDATE, DELETE, PAGE, OTHER, GRANT, DOWNLOAD, RUN
     }
     
     enum Level{

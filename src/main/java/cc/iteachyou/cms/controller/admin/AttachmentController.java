@@ -105,7 +105,7 @@ public class AttachmentController extends BaseController {
 		return "redirect:/admin/attachment/list";
 	}
 	
-	@Log(operType = OperatorType.OTHER, module = "附件管理", content = "下载附件")
+	@Log(operType = OperatorType.DOWNLOAD, module = "附件管理", content = "下载附件")
 	@RequestMapping("/download")
 	public void download(String id) throws AdminGeneralException {
 		try {

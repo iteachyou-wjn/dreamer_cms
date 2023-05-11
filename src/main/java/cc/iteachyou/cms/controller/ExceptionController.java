@@ -18,4 +18,12 @@ public class ExceptionController {
 				ExceptionEnum.XSS_SQL_EXCEPTION.getMessage(), 
 				"您所访问的页面请求中有违反安全规则元素存在，拒绝访问。");
 	}
+	
+	@RequestMapping("403")
+	public void exception403() throws CmsException {
+		throw new XssAndSqlException(
+				ExceptionEnum.HTTP_FORBIDDEN.getCode(), 
+				ExceptionEnum.HTTP_FORBIDDEN.getMessage(), 
+				"拒绝访问。");
+	}
 }

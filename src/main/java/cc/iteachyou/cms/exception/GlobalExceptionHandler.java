@@ -33,7 +33,7 @@ public class GlobalExceptionHandler {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("error/400");
         mv.addObject("code", ExceptionEnum.HTTP_BAD_REQUEST.getCode());
-        mv.addObject("message", ExceptionEnum.HTTP_BAD_REQUEST.getMessage());
+        mv.addObject("message", e.getMessage());
         return mv;
     }
     
@@ -47,7 +47,7 @@ public class GlobalExceptionHandler {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("error/403");
         mv.addObject("code", ExceptionEnum.HTTP_FORBIDDEN.getCode());
-        mv.addObject("message", ExceptionEnum.HTTP_FORBIDDEN.getMessage());
+        mv.addObject("message", e.getMessage());
         return mv;
     }
     
@@ -61,7 +61,7 @@ public class GlobalExceptionHandler {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("error/404");
         mv.addObject("code", ExceptionEnum.HTTP_NOT_FOUND.getCode());
-        mv.addObject("message", ExceptionEnum.HTTP_NOT_FOUND.getMessage());
+        mv.addObject("message", e.getMessage());
         return mv;
     }
     
@@ -75,7 +75,7 @@ public class GlobalExceptionHandler {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("error/405");
         mv.addObject("code", ExceptionEnum.HTTP_METHOD_NOT_ALLOWED.getCode());
-        mv.addObject("message", ExceptionEnum.HTTP_METHOD_NOT_ALLOWED.getMessage());
+        mv.addObject("message", e.getMessage());
         return mv;
     }
     
@@ -89,7 +89,7 @@ public class GlobalExceptionHandler {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("error/415");
         mv.addObject("code", ExceptionEnum.HTTP_UNSUPPORTED_MEDIA_TYPE.getCode());
-        mv.addObject("message", ExceptionEnum.HTTP_UNSUPPORTED_MEDIA_TYPE.getMessage());
+        mv.addObject("message", e.getMessage());
         return mv;
     }
 	
@@ -103,7 +103,7 @@ public class GlobalExceptionHandler {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("error/500");
         mv.addObject("code", ExceptionEnum.HTTP_INTERNAL_SERVER_ERROR.getCode());
-        mv.addObject("message", ExceptionEnum.HTTP_INTERNAL_SERVER_ERROR.getMessage());
+        mv.addObject("message", e.getMessage());
         return mv;
     }
     

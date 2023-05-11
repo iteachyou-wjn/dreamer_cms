@@ -148,7 +148,7 @@ public class UserController extends BaseController {
 	/**
 	 * 删除
 	 */
-	@Log(operType = OperatorType.UPDATE, module = "用户管理", content = "删除用户")
+	@Log(operType = OperatorType.DELETE, module = "用户管理", content = "删除用户")
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
 	@RequiresPermissions("system:user:delete")
 	public String delete(Model model, String id) {
@@ -187,7 +187,7 @@ public class UserController extends BaseController {
 	 * 分配角色
 	 * @throws CmsException 
 	 */
-	@Log(operType = OperatorType.OTHER, module = "用户管理", content = "用户授权角色")
+	@Log(operType = OperatorType.GRANT, module = "用户管理", content = "用户授权角色")
 	@RequestMapping(value = "/grant", method = RequestMethod.POST)
 	@RequiresPermissions("system:user:grant")
 	public String grant(Model model, String userId, @RequestParam(value = "roles", required = false) List<String> roles) throws CmsException {
@@ -224,7 +224,7 @@ public class UserController extends BaseController {
 	 * @param user
 	 * @return
 	 */
-	@Log(operType = OperatorType.OTHER, module = "用户管理", content = "用户修改密码")
+	@Log(operType = OperatorType.UPDATE, module = "用户管理", content = "用户修改密码")
 	@RequestMapping("/updatePwd")
 	@ResponseBody
 	public ResponseResult updatePwd(@RequestBody PasswordREQ params) {

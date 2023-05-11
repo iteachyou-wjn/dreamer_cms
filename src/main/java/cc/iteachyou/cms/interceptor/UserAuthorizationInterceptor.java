@@ -3,6 +3,7 @@ package cc.iteachyou.cms.interceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.shiro.authz.UnauthorizedException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -39,7 +40,7 @@ public class UserAuthorizationInterceptor implements HandlerInterceptor{
 				}
 				OperatorType operType = annotation.operType();
 				if(!OperatorType.PAGE.equals(operType) && !OperatorType.SELECT.equals(operType) && !OperatorType.OTHER.equals(operType)) {
-					throw new AdminGeneralException(ExceptionEnum.HTTP_FORBIDDEN.getCode(), ExceptionEnum.HTTP_FORBIDDEN.getMessage(), "演示环境不允许操作");
+					throw new UnauthorizedException("演示环境不允许操作");
 				}
 			}
 		}

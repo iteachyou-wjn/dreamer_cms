@@ -96,7 +96,7 @@ https://space.bilibili.com/482273402
 7. 运行项目DreamerCMSApplication.java
 8. 网站首页：https://localhost:8888 项目管理后台：https://localhost:8888/admin
 9. 管理后台用户名：wangjn；密码：123456
-10. 模版标签开发教程请参考：http://doc.www.iteachyou.cc 
+10. 模版标签开发教程请参考：http://doc.iteachyou.cc 
 
 # 捐赠详情 
 

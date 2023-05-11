@@ -102,6 +102,11 @@
 				}else{
 					cocoMessage.error(result.info);
 				}
+			},
+			error: function(err){
+				if(err.status == 403){
+					window.location.href = "/exception/403"
+				}
 			}
 		});
 		return false;
