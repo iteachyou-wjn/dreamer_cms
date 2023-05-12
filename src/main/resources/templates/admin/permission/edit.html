@@ -32,7 +32,7 @@
 			</div>
 			<div class="form-group form-control-medium">
 				<label for="permissionCode">权限编码：</label>
-				<input id="permissionCode" name="permissionCode" type="text" th:value="${permission.permissionCode}" readonly="readonly" class="form-control" placeholder="权限编码" />
+				<input id="permissionCode" name="permissionCode" type="text" th:value="${permission.permissionCode}" class="form-control" placeholder="权限编码" />
 			</div>
 			<div class="form-group form-control-medium">
 				<label for="permissionUrl">权限路径：</label>
@@ -73,12 +73,17 @@
     function validateForm(){
     	var permissionName = $("#permissionName").val();
     	var permissionUrl = $("#permissionUrl").val();
+    	var permissionCode = $("#permissionCode").val();
     	if(permissionName == null || permissionName==''){
     		cocoMessage.error("权限名称不能为空");
     		return false;
     	}
     	if(permissionUrl == null || permissionUrl==''){
     		cocoMessage.error("权限URL不能为空");
+    		return false;
+    	}
+    	if(permissionCode == null || permissionCode==''){
+    		cocoMessage.error("权限编码不能为空");
     		return false;
     	}
     	return true;

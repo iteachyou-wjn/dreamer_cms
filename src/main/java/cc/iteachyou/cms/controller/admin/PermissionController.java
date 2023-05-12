@@ -73,7 +73,6 @@ public class PermissionController extends BaseController {
 	@RequiresPermissions("system:permission:add")
 	public String add(Model model, Permission permission) throws CmsException {
 		permission.setId(IdUtil.getSnowflakeNextIdStr());
-		permission.setPermissionCode(RandomUtil.getCharAndNumr(8));
 		permission.setCreateBy(TokenManager.getToken().getId());
 		permission.setCreateTime(new Date());
 		try {
