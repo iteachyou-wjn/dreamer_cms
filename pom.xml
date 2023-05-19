@@ -6,7 +6,7 @@
 
 	<groupId>cc.iteachyou</groupId>
 	<artifactId>cms</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>4.1.3-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>dreamer-cms</name>

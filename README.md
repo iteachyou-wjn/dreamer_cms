@@ -10,9 +10,9 @@
 
 </div>
 
-# 梦想家CMS内容管理系统开源版J2EE代码 
+# 梦想家内容管理系统（Dreamer CMS）
 
-`注意：本人为个人开发者，精力和经济都有限，如有公司或个人想要商业使用，捐赠200即可，捐赠后，会将公司或个人名称列在下方捐赠列表，在列表中的被授权人，即表示授权。`
+`注意：本人为个人开发者，精力和经济都有限，如有公司或个人想要商业使用，捐赠200即可，捐赠后，会将公司或个人名称列在下方捐赠列表，在列表中的企业或个人，即表示授权。`
 
 当前版本：4.1.3
 
@@ -51,27 +51,25 @@ DreamerCMS从2.0.0版本开始采用了解析式引擎与编译式引擎并存�
 
 # 技术框架
 * 核心框架：Spring Boot 2
-* 安全框架：Apache Shiro 1.6
-* 视图框架：Spring MVC 4
-* 工具包：Hutool 5.3.7
-* 持久层框架：MyBatis 3
+* 安全框架：Apache Shiro 1.9.1
+* 工具包：Hutool 5.8.5
+* 持久层框架：MyBatis 2.2.2
 * 日志管理：Logback
 * 模版框架：Thymeleaf
 * JS框架：jQuery，Bootstrap
 * CSS框架：Bootstrap
 * 富文本：Ueditor、editor.md
-* Lombok
 
 # 系统结构
 ![系统结构](https://oss.iteachyou.cc/20200107103015.jpg "系统结构")
 
 # 开发环境
 建议开发者使用以下环境，这样避免版本带来的问题
-* IDE：Spring Tool Suite 4（STS）
-* DB：Mysql 5.7
 * JDK：Jdk8
+* IDE：Spring Tool Suite 4（STS）或 IntelliJ IDEA
+* DB：Mysql 5.7，Windows配置安装Mysql5.7，请参考：https://www.iteachyou.cc/article/a1db138b4a89402ab50f3499edeb30c2
 * Redis：3.2+，Windows配置安装Redis教程，请参考：https://www.iteachyou.cc/article/4b0a638f65fa4fb1b9644cf461dba602
-* LomBok 项目需要使用Lombok支持，Lombok安装教程，请参考https://www.iteachyou.cc/article/55ec2939c29147eca5bebabf19621655
+* LomBok 项目需要使用Lombok支持，Lombok安装教程，请参考：https://www.iteachyou.cc/article/55ec2939c29147eca5bebabf19621655
 
 # 快速入门
 CMS包括两个部分（代码部分、资源部分）代码不多说。资源就是图片、模版等，该目录在application.yml中web.resource-path配置项目中配置。视频教程：
@@ -214,6 +212,3 @@ https://space.bilibili.com/482273402
 <img src="https://oss.iteachyou.cc/20190820092156.png"/>
 <img src="https://oss.iteachyou.cc/20190820092157.png"/>
 <img src="https://oss.iteachyou.cc/20190820092158.png"/>
-
-
-
