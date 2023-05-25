@@ -4,7 +4,7 @@ server:
 
 spring:    
   profiles:
-    active: prd
+    active: dev
   mvc:
     static-path-pattern: /**
     favicon:
