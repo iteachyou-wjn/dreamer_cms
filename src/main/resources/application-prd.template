@@ -1,5 +1,5 @@
 web:
-  resource-path: /opt/resources/cms.iteachyou.io/
+  resource-path: /opt/resources/cms.iteachyou.io/ # docker中为/dreamer_cms/resources
 
 spring: 
   datasource: 
@@ -21,6 +21,6 @@ spring:
 
 # 日志配置
 logging:
-  path: /opt/resources/cms.iteachyou.io/logs/
+  path: /opt/resources/cms.iteachyou.io/logs/ # docker中为/dreamer_cms/logs
   level:
     root: info
