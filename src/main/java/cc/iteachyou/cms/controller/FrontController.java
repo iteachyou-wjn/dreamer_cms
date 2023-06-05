@@ -586,7 +586,7 @@ public class FrontController extends BaseController {
 		return ResponseResult.Factory.newInstance(Boolean.TRUE, StateCodeEnum.HTTP_SUCCESS.getCode(), null, StateCodeEnum.HTTP_SUCCESS.getDescription());
 	}
 	
-	@RequestMapping("sitemap")
+	@RequestMapping("sitemap.xml")
 	public void sitemap() throws IOException {
 		System system = systemService.getSystem();
 		
