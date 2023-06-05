@@ -180,5 +180,4 @@ public class ArchivesServiceImpl implements ArchivesService {
 	public List<Archives> queryAll(String id) {
 		return archivesMapper.queryAll(id);
 	}
-	
 }

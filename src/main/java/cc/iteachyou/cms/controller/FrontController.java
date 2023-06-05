@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,6 +59,7 @@ import cc.iteachyou.cms.taglib.ParseEngine;
 import cc.iteachyou.cms.taglib.utils.URLUtils;
 import cc.iteachyou.cms.utils.FileConfiguration;
 import cc.iteachyou.cms.utils.StringUtil;
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.IdUtil;
 
 @Controller
@@ -582,6 +584,40 @@ public class FrontController extends BaseController {
 		}
 		
 		return ResponseResult.Factory.newInstance(Boolean.TRUE, StateCodeEnum.HTTP_SUCCESS.getCode(), null, StateCodeEnum.HTTP_SUCCESS.getDescription());
+	}
+	
+	@RequestMapping("sitemap")
+	public void sitemap() throws IOException {
+		System system = systemService.getSystem();
+		
+		Map<String, Object> entity = new HashMap<>();
+		entity.put("isShow", "1");
+		entity.put("parentId", "-1");
+		List<Category> list = categoryService.getTreeList(entity);
+		
+		StringBuilder xml = new StringBuilder();
+		
+		xml.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>")
+		   .append("<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd\">");
+		xml.append("<url>");
+		xml.append("<loc>" + system.getWebsite() + "</loc>");
+		xml.append("<priority>" + 1.0 + "</priority>");
+		xml.append("<lastmod>" + DateUtil.format(new Date(), "yyyy-MM-dd") + "</lastmod>");
+		xml.append("<changefreq>always</changefreq>");
+		xml.append("</url>");
+		
+		URLUtils.parseSiteMap(system, archivesService, list, xml);
+		
+		xml.append("</urlset>");
+		HttpServletResponse httpServletResponse = getResponse();
+		httpServletResponse.setCharacterEncoding("UTF-8");
+		httpServletResponse.setContentType("text/xml;charset=utf-8");
+		httpServletResponse.setHeader("Cache-Control", "no-cache");
+		httpServletResponse.setHeader("Cache-Control", "no-store");
+		httpServletResponse.setHeader("Pragma", "no-cache");
+		httpServletResponse.setDateHeader("Expires", 0L);
+		httpServletResponse.getWriter().write(xml.toString());
+		httpServletResponse.flushBuffer();
 	}
 	
 	// 产生验证码

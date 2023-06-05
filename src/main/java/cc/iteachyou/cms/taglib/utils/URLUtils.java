@@ -1,11 +1,18 @@
 package cc.iteachyou.cms.taglib.utils;
 
+import java.util.List;
+
 import cc.iteachyou.cms.common.Constant;
+import cc.iteachyou.cms.entity.Archives;
 import cc.iteachyou.cms.entity.Category;
+import cc.iteachyou.cms.entity.System;
+import cc.iteachyou.cms.service.ArchivesService;
 import cc.iteachyou.cms.utils.PinyinUtils;
 import cc.iteachyou.cms.utils.StringUtil;
+import cn.hutool.core.date.DateUtil;
 
 public class URLUtils {
+	
 	/**
 	 * 生成栏目URL
 	 * @param system
@@ -60,5 +67,49 @@ public class URLUtils {
 			visitUrl = "/" + visitUrl;
 		}
 		return visitUrl;
+	}
+	
+	/**
+	 * 生成站点地图
+	 * @param system
+	 * @param lists
+	 * @param xml
+	 */
+	public static void parseSiteMap(System system, ArchivesService archivesService, List<Category> lists, StringBuilder xml) {
+		for (int i = 0; i < lists.size(); i++) {
+			Category category = lists.get(i);
+			String url = URLUtils.parseURL(system, category, system.getBrowseType() == 1 ? "P" : "S");
+			xml.append("<url>");
+			xml.append("<loc>" + system.getWebsite() + (url.startsWith("/") ? url.substring(1) : url) + "</loc>");
+			xml.append("<priority>" + 0.5 + "</priority>");
+			xml.append("<lastmod>" + DateUtil.format(category.getCreateTime(), "yyyy-MM-dd") + "</lastmod>");
+			xml.append("<changefreq>monthly</changefreq>");
+			xml.append("</url>");
+			
+			List<Archives> archives = archivesService.queryAll(category.getId());
+			
+			for (int j = 0; j < archives.size(); j++) {
+				Archives archive = archives.get(j);
+				String artUrl = "";
+				if(system.getBrowseType() == 1) {//解析
+					artUrl = "article/" + archive.getId();
+				} else {//生成
+					String categoryDir = URLUtils.getCategoryDir(category);
+					String artDate = DateUtil.format(archive.getCreateTime(), "yyyy-MM-dd");
+					artUrl = system.getStaticdir() + categoryDir + "/" + artDate + "/" + archive.getId() + ".html";
+				}
+				xml.append("<url>");
+				xml.append("<loc>" + system.getWebsite() + artUrl + "</loc>");
+				xml.append("<priority>" + 0.3 + "</priority>");
+				xml.append("<lastmod>" + DateUtil.format(archive.getCreateTime(), "yyyy-MM-dd") + "</lastmod>");
+				xml.append("<changefreq>weekly</changefreq>");
+				xml.append("</url>");
+			}
+			
+			List<Category> children = category.getNodes();
+			if(children != null) {
+				parseSiteMap(system, archivesService, children, xml);
+			}
+		}
 	}
 }
