@@ -71,11 +71,11 @@ public class PrevNextTag implements IParse {
 		ArchivesWithRownum currentArticle = archivesService.queryArticleRowNum(params);
 		
 		params.remove("arcid"); 
-		params.put("privNum", (currentArticle.getRownum() - 1) + ""); 
+		params.put("privNum", currentArticle == null ? 0 : (currentArticle.getRownum() - 1) + ""); 
 		ArchivesWithRownum prevArc = archivesService.queryArticleRowNum(params);
 		
 		params.remove("privNum"); 
-		params.put("nextNum", (currentArticle.getRownum() + 1) + ""); 
+		params.put("nextNum", currentArticle == null ? 0 : (currentArticle.getRownum() + 1) + ""); 
 		ArchivesWithRownum nextArc = archivesService.queryArticleRowNum(params); 
 		
 		for (int i = 0; i < all.size(); i++) {
