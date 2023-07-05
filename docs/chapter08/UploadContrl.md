@@ -36,3 +36,11 @@ spring:
   "fileMaxSize": 51200000, /* 上传大小限制，单位B，默认50MB */
 }
 ```
+
+#### 3. 上线后在Nginx中，上传大小控制在nginx.conf中，如下
+```shell
+# 此文件yum安装的nginx，一般在/etc/nginx/nginx.conf
+http {
+    client_max_body_size 50m; # 上传大小为50M
+}
+```
