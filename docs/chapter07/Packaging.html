@@ -1172,104 +1172,6 @@
 </li>
 </ol>
 </li>
-<li><p>&#x542F;&#x52A8;&#x5E94;&#x7528;</p>
-<pre><code class="lang-shell">cd /opt/programs/
-# &#x666E;&#x901A;&#x6253;&#x5305;&#xFF0C;&#x4EE5;&#x4E0B;&#x547D;&#x4EE4;&#x6839;&#x636E;&#x81EA;&#x5DF1;&#x5B9E;&#x9645;&#x60C5;&#x51B5;&#x6765;&#x9009;&#x62E9;
-nohup java -jar dreamer-cms.jar &gt; dreamer-cms.log &amp;
-# &#x5C06;jar&#x5305;&#x5355;&#x72EC;&#x6253;&#x5230;&#x76EE;&#x5F55;&#x4E2D;
-# nohup java -Dloader.path=libs/ -jar dreamer-cms.jar &gt; dreamer-cms.log &amp;
-</code></pre>
-</li>
-<li><p>&#x914D;&#x7F6E;Nginx</p>
-<ol>
-<li><p>&#x666E;&#x901A;&#x65B9;&#x5F0F;&#xFF08;Http&#xFF09;</p>
-<pre><code class="lang-shell">server {
-  listen       80;
-  server_name  www.iteachyou.cc iteachyou.cc;
-
-  location / {
-      add_header X-Via $upstream_addr;
-      proxy_ignore_client_abort on;
-      proxy_set_header Host  $http_host;
-      proxy_set_header Cookie $http_cookie;
-      proxy_set_header X-Real-IP $remote_addr;
-      proxy_set_header X-Forwarded-For $http_x_forwarded_for;
-      proxy_set_header X-Forwarded-Proto $scheme;
-      proxy_pass http://127.0.0.1:8888;
-      proxy_set_header Upgrade $http_upgrade;
-      proxy_set_header Connection &quot;upgrade&quot;;
-  }
-}
-</code></pre>
-</li>
-<li><p>SSL&#x65B9;&#x5F0F;&#xFF08;Https&#xFF09;</p>
-<pre><code class="lang-shell">server {
-  listen       80;
-  server_name  www.iteachyou.cc iteachyou.cc;
-  proxy_set_header X-Real-IP $remote_addr;
-
-  rewrite ^(.*)$ https://$host$1 permanent; # &#x5F3A;&#x5236;http&#x8FDB;&#x5165;https 
-
-  error_page  403 404  /update.html;
-      location = /update.html {
-      root html;
-  }
-  # redirect server error pages to the static page /50x.html
-  error_page   500 502 503 504  /50x.html;
-      location = /50x.html {
-      root   html;
-  }
-}
-server {
-#SSL &#x8BBF;&#x95EE;&#x7AEF;&#x53E3;&#x53F7;&#x4E3A; 443
-listen 443 ssl;
-#&#x586B;&#x5199;&#x7ED1;&#x5B9A;&#x8BC1;&#x4E66;&#x7684;&#x57DF;&#x540D;
-server_name www.iteachyou.cc iteachyou.cc;
-#&#x8BC1;&#x4E66;&#x6587;&#x4EF6;&#x540D;&#x79F0;&#xFF08;&#x4FEE;&#x6539;&#x4E3A;&#x81EA;&#x5DF1;&#x7684;&#x8DEF;&#x5F84;&#xFF09;
-ssl_certificate /opt/ssl/iteachyou.cc/1_iteachyou.cc_bundle.crt;
-#&#x79C1;&#x94A5;&#x6587;&#x4EF6;&#x540D;&#x79F0;&#xFF08;&#x4FEE;&#x6539;&#x4E3A;&#x81EA;&#x5DF1;&#x7684;&#x8DEF;&#x5F84;&#xFF09;
-ssl_certificate_key /opt/ssl/iteachyou.cc/2_iteachyou.cc.key;
-ssl_session_timeout 5m;
-#&#x8BF7;&#x6309;&#x7167;&#x8FD9;&#x4E2A;&#x534F;&#x8BAE;&#x914D;&#x7F6E;
-ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
-#&#x8BF7;&#x6309;&#x7167;&#x8FD9;&#x4E2A;&#x5957;&#x4EF6;&#x914D;&#x7F6E;&#xFF0C;&#x914D;&#x7F6E;&#x52A0;&#x5BC6;&#x5957;&#x4EF6;&#xFF0C;&#x5199;&#x6CD5;&#x9075;&#x5FAA; openssl &#x6807;&#x51C6;&#x3002;
-ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:HIGH:!aNULL:!MD5:!RC4:!DHE;
-ssl_prefer_server_ciphers on;
-location / {
-   add_header X-Via $upstream_addr;
-   proxy_ignore_client_abort on;
-   proxy_set_header Host  $http_host;
-   proxy_set_header Cookie $http_cookie;
-   proxy_set_header X-Real-IP $remote_addr;
-   proxy_set_header X-Forwarded-For $http_x_forwarded_for;
-   proxy_set_header X-Forwarded-Proto $scheme;
-   proxy_pass http://127.0.0.1:8888;
-   proxy_redirect ~^http://([^:]+)(:\d+)?(.*)$  https://$1$3;
-}
-}
-</code></pre>
-</li>
-<li>&#x914D;&#x7F6E;Websocket&#xFF0C;&#x5728;nginx.conf&#x4E2D;http&#x6A21;&#x5757;&#x4E2D;<pre><code class="lang-shell">#websocket
-map $http_upgrade $connection_upgrade {
- default upgrade;
- &apos;&apos; close;
-}
-</code></pre>
-</li>
-<li>&#x914D;&#x7F6E;Gzip&#x538B;&#x7F29;&#xFF0C;&#x5728;nginx.conf&#x4E2D;http&#x6A21;&#x5757;&#x4E2D;<pre><code class="lang-shell"># &#x5F00;&#x542F;gzip
-gzip on;
-# &#x542F;&#x7528;gzip&#x538B;&#x7F29;&#x7684;&#x6700;&#x5C0F;&#x6587;&#x4EF6;&#xFF1B;&#x5C0F;&#x4E8E;&#x8BBE;&#x7F6E;&#x503C;&#x7684;&#x6587;&#x4EF6;&#x5C06;&#x4E0D;&#x4F1A;&#x88AB;&#x538B;&#x7F29;
-gzip_min_length 1k;
-# gzip &#x538B;&#x7F29;&#x7EA7;&#x522B; 1-10 
-gzip_comp_level 4;
-# &#x8FDB;&#x884C;&#x538B;&#x7F29;&#x7684;&#x6587;&#x4EF6;&#x7C7B;&#x578B;&#x3002;
-gzip_types text/plain application/javascript application/x-javascript text/css application/xml text/javascript application/x-httpd-php image/jpeg image/gif image/png;
-# &#x662F;&#x5426;&#x5728;http header&#x4E2D;&#x6DFB;&#x52A0;Vary: Accept-Encoding&#xFF0C;&#x5EFA;&#x8BAE;&#x5F00;&#x542F;
-gzip_vary on;
-</code></pre>
-</li>
-</ol>
-</li>
 </ol>
 
                                 
@@ -1314,7 +1216,7 @@ gzip_vary on;
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"应用打包","level":"7.3.2","depth":2,"next":{"title":"项目上线","level":"7.3.3","depth":2,"path":"chapter07/Online.md","ref":"chapter07/Online.md","articles":[]},"previous":{"title":"环境准备","level":"7.3.1","depth":2,"path":"chapter07/Environment.md","ref":"chapter07/Environment.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors","favicon-absolute","highlight"],"styles":{"website":"./styles/website.css"},"pluginsConfig":{"favicon-absolute":{"appleTouchIconMore":{},"appleTouchIconPrecomposed152":"./source/images/favicon.png","appleTouchIconPrecomposedMore":{},"favicon":"./source/images/favicon.ico"},"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"王俊南","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"梦想家内容管理系统（Dreamer CMS）","language":"zh-hans","links":{"sidebar":{"I Teach You，我教你！":"http://www.iteachyou.cc","Dreamer CMS（Gitee）":"https://gitee.com/isoftforce/dreamer_cms","Dreamer CMS（Github）":"https://github.com/iteachyou-wjn/dreamer_cms"}},"gitbook":"3.2.3","description":"Dreamer CMS，梦想家内容管理系统官方使用文档"},"file":{"path":"chapter07/Packaging.md","mtime":"2023-07-05T02:22:11.912Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2023-07-05T02:26:57.593Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"应用打包","level":"7.3.2","depth":2,"next":{"title":"项目上线","level":"7.3.3","depth":2,"path":"chapter07/Online.md","ref":"chapter07/Online.md","articles":[]},"previous":{"title":"环境准备","level":"7.3.1","depth":2,"path":"chapter07/Environment.md","ref":"chapter07/Environment.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors","favicon-absolute","highlight"],"styles":{"website":"./styles/website.css"},"pluginsConfig":{"favicon-absolute":{"appleTouchIconMore":{},"appleTouchIconPrecomposed152":"./source/images/favicon.png","appleTouchIconPrecomposedMore":{},"favicon":"./source/images/favicon.ico"},"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"王俊南","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"梦想家内容管理系统（Dreamer CMS）","language":"zh-hans","links":{"sidebar":{"I Teach You，我教你！":"http://www.iteachyou.cc","Dreamer CMS（Gitee）":"https://gitee.com/isoftforce/dreamer_cms","Dreamer CMS（Github）":"https://github.com/iteachyou-wjn/dreamer_cms"}},"gitbook":"3.2.3","description":"Dreamer CMS，梦想家内容管理系统官方使用文档"},"file":{"path":"chapter07/Packaging.md","mtime":"2023-07-05T02:31:13.277Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2023-07-05T02:31:16.072Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
