@@ -57,7 +57,6 @@
 						<a target="_blank" th:href="'/article/' + ${article.aid}" class="btn btn-xs btn-warning">预览</a>
 						<a href="javascript:void(0)" class="btn btn-xs btn-success copyArticleIdBtn" th:aid="${article.aid}" th:onclick="javascript:copyArticleId(this.getAttribute('aid'))">复制文章ID</a>
 						<a th:href="@{/admin/archives/toEdit(id=${article.aid},cid=${article.categoryId})}" class="btn btn-xs btn-success" shiro:hasAnyPermissions="system:article:toedit,system:article:update">编辑</a>
-						<span>&nbsp;|&nbsp;</span>
 						<a href="javascript:void(0)" data-toggle="modal" class="btn btn-xs btn-danger" th:aid="${article.aid}" th:typeid="${article.categoryId}" th:onclick="javascript:confrimRemove(this.getAttribute('aid'),this.getAttribute('typeid'))" shiro:hasAnyPermissions="system:article:delete">删除</a>
 					</td>
 				</tr>

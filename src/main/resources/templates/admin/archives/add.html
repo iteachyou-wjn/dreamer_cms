@@ -275,7 +275,7 @@
 	    	        $("#" + file.id + "> .file-state").text("上传成功...");
 	    	        $("#" + file.id + "> .file-name").attr("filepath", response.data.filepath).attr("field-id", field.id);
 	    	        var crtVal = $("#input-" + field.id).val();
-	    			if(crtVal != null && crtVal != "" && crtVal != "undefined") crtVal += ",";
+	    			if(crtVal) crtVal += ",";
 	    			$("#input-" + field.id).val(crtVal + response.data.filepath);
 	    	        cocoMessage.success("上传成功");
 	    	    });
