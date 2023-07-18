@@ -50,10 +50,17 @@
     	$("#vcode").attr("src","/admin/u/getVerifyCode?t=" + new Date().getTime());
     	
     	$("#vcode").click(function(){
-    		var t = new Date().getTime();
-    		$(this).attr("src","/admin/u/getVerifyCode?t=" + t);
+    		refreshCaptcha();
     	});
 	});
+	
+	// 刷新验证码
+	function refreshCaptcha(){
+		var t = new Date().getTime();
+    	$("#vcode").attr("src","/admin/u/getVerifyCode?t=" + t);
+	}
+	
+	// 登录
     function login(){
 		// 创建RSA加密器
 		var encryptor = new JSEncrypt();
@@ -84,6 +91,7 @@
 						window.location.href = "/admin/u/toIndex";
 					}, 500);
 				}else{
+					refreshCaptcha();
 					cocoMessage.error(result.info);
 				}
 			}

@@ -49,7 +49,8 @@ public abstract class AbstractChannelTag {
 		item = item.replaceAll(FieldEnum.FIELD_TYPECODE.getRegexp(), typeCode);
 		item = item.replaceAll(FieldEnum.FIELD_TYPESEQ.getRegexp(), StringUtil.isBlank(category.getCatSeq()) ? "" : category.getCatSeq());
 		item = item.replaceAll(FieldEnum.FIELD_TYPEIMG.getRegexp(), system.getWebsite() + Constant.UPLOAD_PREFIX + system.getUploaddir() + "/" + imagePath);
-		item = item.replaceAll(FieldEnum.FIELD_DESCRIPTION.getRegexp(), StringUtil.isBlank(category.getDescription()) ? "" : category.getDescription());
+		
+		item = FunctionUtil.replaceByFunction(item, FieldEnum.FIELD_DESCRIPTION.getRegexp(), StringUtil.isBlank(category.getDescription()) ? "" : category.getDescription());
 		item = item.replaceAll(FieldEnum.FIELD_LINKTARGET.getRegexp(), StringUtil.isBlank(category.getLinkTarget()) ? "" : category.getLinkTarget());
 		item = item.replaceAll(FieldEnum.FIELD_PAGESIZE.getRegexp(), StringUtil.isBlank(category.getPageSize()) ? Constant.PAGE_SIZE_VALUE + "" : category.getPageSize().toString());
 		item = item.replaceAll(FieldEnum.FIELD_VISITURL.getRegexp(), visitUrl);
