@@ -120,7 +120,6 @@ public class UserLoginController extends BaseController {
 			CaptchaUtil.clear(request);
 			
 			String privateKey = (String) session.getAttribute(Constant.RSA_PRIVATE_KEY);
-			session.removeAttribute(Constant.RSA_PRIVATE_KEY);
 			RSA rsa = new RSA(privateKey, null);
 			
 			String username = new String(rsa.decrypt(entity.getUsername(), KeyType.PrivateKey));
@@ -140,6 +139,7 @@ public class UserLoginController extends BaseController {
 			result = ResponseResult.Factory.newInstance(Boolean.TRUE,
 					StateCodeEnum.HTTP_SUCCESS.getCode(), userVO,
 					StateCodeEnum.HTTP_SUCCESS.getDescription());
+			session.removeAttribute(Constant.RSA_PRIVATE_KEY);
 		} catch (DisabledAccountException e) {
 			// 帐号已经禁用
 			result = ResponseResult.Factory.newInstance(Boolean.FALSE,
