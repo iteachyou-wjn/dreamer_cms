@@ -22,7 +22,7 @@
 </div>
 <section class="panel">
 	<div class="panel-body">
-		<form class="col s12" id="form1" enctype="multipart/form-data" th:action="@{/admin/user/add}" onsubmit="return validateForm();" method="post">
+		<form class="col s12" id="form1" th:action="@{/admin/user/add}" onsubmit="return validateForm();" method="post">
 			<div class="form-group form-control-medium">
 				<label for="username">用户名：</label>
 				<input id="username" name="username" type="text" class="form-control" placeholder="用户名" />
@@ -78,6 +78,9 @@
 			cocoMessage.error("两次密码输入不一致");
     		return false;
     	}
+    	
+    	$("#password").val(encodeURIComponent(password));
+    	
     	return true;
     }
 </script>

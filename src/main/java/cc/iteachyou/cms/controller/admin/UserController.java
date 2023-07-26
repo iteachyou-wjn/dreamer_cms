@@ -1,5 +1,7 @@
 package cc.iteachyou.cms.controller.admin;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -39,6 +41,8 @@ import cc.iteachyou.cms.service.RoleService;
 import cc.iteachyou.cms.service.UserService;
 import cc.iteachyou.cms.utils.StringUtil;
 import cn.hutool.core.util.IdUtil;
+import cn.hutool.core.util.StrUtil;
+import cn.hutool.http.HtmlUtil;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -81,11 +85,12 @@ public class UserController extends BaseController {
 	 * @param user
 	 * @return
 	 * @throws CmsException
+	 * @throws UnsupportedEncodingException 
 	 */
 	@Log(operType = OperatorType.INSERT, module = "用户管理", content = "添加用户")
 	@RequestMapping("add")
 	@RequiresPermissions("system:user:add")
-	public String add(User user) throws CmsException {
+	public String add(User user) throws CmsException, UnsupportedEncodingException {
 		User temp = userService.getByUserName(user.getUsername());
 		if(temp != null) {
 			throw new AdminGeneralException(
@@ -93,6 +98,13 @@ public class UserController extends BaseController {
 					ExceptionEnum.USERNAME_EXIST_EXCEPTION.getMessage(),
 					"输入的用户名已经存在，请输入其它用户名再次尝试。");
 		}
+		
+		if(StrUtil.isNotBlank(user.getPassword())) {
+			URLDecoder decoder = new URLDecoder();
+			String pwd = decoder.decode(user.getPassword(), "UTF-8");
+			user.setPassword(pwd);
+		}
+		
 		user.setId(IdUtil.getSnowflakeNextIdStr());
 		user.setCreateBy(TokenManager.getToken().getId());
 		user.setCreateTime(new Date());
