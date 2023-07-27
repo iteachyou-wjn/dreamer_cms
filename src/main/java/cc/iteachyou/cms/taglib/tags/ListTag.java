@@ -85,6 +85,8 @@ public class ListTag extends AbstractListTag implements IParse {
 			}
 			String typeid = entity.containsKey("typeid") ? entity.get("typeid").toString() : "";
 			entity.put("cid", typeid);
+			// 查询状态为已发布
+			entity.put("status", 1);
 			entity.put("sortWay", entity.containsKey("sortWay") ? entity.get("sortWay") : "asc");
 			String cascade = entity.containsKey("cascade") ? entity.get("cascade").toString() : "false";
 			if("true".equals(cascade)) {
