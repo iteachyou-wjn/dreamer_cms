@@ -304,7 +304,7 @@
 | 字段名         | 类型            | 键  | 默认值               | 字段说明 |
 |-------------|---------------|----|-------------------|------|
 | id          | varchar(32)   | 主键 |                   | 主键   |
-| keywords    | varchar(128)} |    |                   | 关键字  |
+| keywords    | varchar(128) |    |                   | 关键字  |
 | create_time | timestamp     |    | CURRENT_TIMESTAMP | 创建时间 |
 
 ### 19. 其它表
