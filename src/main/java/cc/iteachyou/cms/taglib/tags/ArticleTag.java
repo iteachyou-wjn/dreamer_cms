@@ -43,6 +43,7 @@ public class ArticleTag implements IParse {
 	private ArchivesService archivesService;
 	@Autowired
 	private FormService formService;
+	private String t;
 	
 	@Override
 	public String parse(String html) {
@@ -129,7 +130,12 @@ public class ArticleTag implements IParse {
 				}else if (FieldEnum.FIELD_SUBSCRIBE.getField().equalsIgnoreCase(name)) {
 					newHtml = newHtml.replace(string, StringUtil.isBlank(archivesVo.get("subscribe")) ? "" : archivesVo.get("subscribe").toString());
 				}else if (FieldEnum.FIELD_CLICKS.getField().equalsIgnoreCase(name)) {
-					newHtml = newHtml.replace(string, StringUtil.isBlank(archivesVo.get("clicks")) ? "" : archivesVo.get("clicks").toString());
+					if("S".equals(this.t)){
+						String script = "<script src='/clicks/" + id + "'></script>";
+						newHtml = newHtml.replace(string, script);
+					}else {
+						newHtml = newHtml.replace(string, StringUtil.isBlank(archivesVo.get("clicks")) ? "" : archivesVo.get("clicks").toString());
+					}
 				}else if (FieldEnum.FIELD_WEIGHT.getField().equalsIgnoreCase(name)) {
 					newHtml = newHtml.replace(string, StringUtil.isBlank(archivesVo.get("weight")) ? "" : archivesVo.get("weight").toString());
 				}else if (FieldEnum.FIELD_STATUS.getField().equalsIgnoreCase(name)) {
@@ -166,5 +172,12 @@ public class ArticleTag implements IParse {
 		}
 		return newHtml;
 	}
-	
+
+	public String getT() {
+		return t;
+	}
+
+	public void setT(String t) {
+		this.t = t;
+	}
 }

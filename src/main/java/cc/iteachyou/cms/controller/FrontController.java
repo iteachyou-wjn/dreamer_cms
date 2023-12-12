@@ -14,6 +14,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
+import cn.hutool.core.util.StrUtil;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -377,12 +378,36 @@ public class FrontController extends BaseController {
 					"请仔细检查模版文件，或检查application.yml中的资源目录配置项（web.resource-path）。");
 		}
 	}
+
+	/**
+	 * 文章详情方法
+	 * @param id 文章ID
+	 * @throws CmsException
+	 * @throws IOException
+	 */
+	@RequestMapping("/clicks/{id}")
+	public void clicks(@PathVariable String id, HttpServletResponse response) throws CmsException, IOException{
+		response.setContentType("text/javascript");
+		if(StrUtil.isBlank(id)){
+			throw new TemplateReadException(
+					ExceptionEnum.ARTICLE_NOTFOUND_EXCEPTION.getCode(),
+					ExceptionEnum.ARTICLE_NOTFOUND_EXCEPTION.getMessage(),
+					"指定的文章不存在。");
+		}
+		// 查询文章
+		Archives archives = archivesService.selectByPrimaryKey(id);
+		// 对点击量加1
+		Archives temp = new Archives();
+		temp.setId(id);
+		temp.setClicks(archives.getClicks() == null ? 1 : archives.getClicks() + 1);
+		archivesService.update(temp);
+		// 输出点击量
+		response.getWriter().print("document.write(" + archives.getClicks() + ")");
+	}
 	
 	/**
 	 * 附件下载
 	 * @param id
-	 * @param request
-	 * @param response
 	 * @throws AdminGeneralException
 	 */
 	@RequestMapping("/download/{id}")
@@ -419,12 +444,11 @@ public class FrontController extends BaseController {
 	
 	/**
 	 * 搜索
-	 * @param model
 	 * @param params
 	 * @throws CmsException
 	 */
 	@RequestMapping(value = "/search")
-	public void search(Model model, SearchEntity params) throws CmsException {
+	public void search(SearchEntity params) throws CmsException {
 		System system = systemService.getSystem();
 		StringBuffer templatePath = new StringBuffer();
 		Theme theme = themeService.getCurrentTheme();
@@ -497,14 +521,13 @@ public class FrontController extends BaseController {
 	
 	/**
 	 * 前端投稿
-	 * @param model
 	 * @param params
 	 * @return
 	 * @throws CmsException
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/input",method = RequestMethod.POST)
-	public ResponseResult input(Model model, @RequestParam Map<String,Object> params) throws CmsException {
+	public ResponseResult input(@RequestParam Map<String,Object> params) throws CmsException {
 		// 验证码校验
 		if(!params.containsKey("captcha") || StringUtil.isBlank(params.get("captcha"))) {
 			return ResponseResult.Factory.newInstance(Boolean.FALSE, ExceptionEnum.FORM_PARAMETER_EXCEPTION.getCode(), null, "缺少验证码参数，请添加该参数后重试。");
@@ -631,7 +654,7 @@ public class FrontController extends BaseController {
 	
 	/**
 	 * 输出字符串到页面
-	 * @param str 字符
+	 * @param html 字符
 	 */
 	public void outHtml(String html) {
 		try {

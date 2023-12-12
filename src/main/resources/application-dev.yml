@@ -2,7 +2,7 @@ server:
   port: 8888
 
 web:
-  resource-path: D:/dreamer-cms/
+  resource-path: D:/WebResources/dreamer-cms/
 
 spring: 
   datasource: 

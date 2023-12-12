@@ -92,7 +92,7 @@ public class ParseEngine {
 	
 	/**
 	 * 栏目页解析
-	 * @param newHtml
+	 * @param html
 	 * @return
 	 */
 	public String parseCategory(String html, String typeid) throws CmsException {
@@ -155,9 +155,7 @@ public class ParseEngine {
 	/**
 	 * 列表页面解析
 	 * @param html
-	 * @param typeid
-	 * @param pageNum
-	 * @param pageSize
+	 * @param params
 	 * @return
 	 */
 	public String parsePageList(String html, SearchEntity params) throws CmsException{
@@ -193,7 +191,7 @@ public class ParseEngine {
 	
 	/**
 	 * 栏目页解析
-	 * @param newHtml
+	 * @param html
 	 * @return
 	 */
 	public String generateCategory(String html, String typeid) throws CmsException{
@@ -216,6 +214,24 @@ public class ParseEngine {
 		String newHtml = new String(html);
 		pageListTag.setT("S");
 		newHtml = pageListTag.parse(newHtml,typeid, pageNum,pageSize);
+		newHtml = labelTag.parse(newHtml);
+		newHtml = attachmentTag.parse(newHtml);
+		newHtml = sqlTag.parse(newHtml);
+		return newHtml;
+	}
+
+	/**
+	 * 文章详情页面解析
+	 * @param html
+	 * @param id
+	 * @return
+	 */
+	public String generateArticle(String html, String id) throws CmsException{
+		String newHtml = new String(html);
+		articleTag.setT("S");
+		newHtml = articleTag.parse(newHtml, id);
+		locationTag.setT("P");
+		newHtml = locationTag.parse(newHtml, id);
 		newHtml = labelTag.parse(newHtml);
 		newHtml = attachmentTag.parse(newHtml);
 		newHtml = sqlTag.parse(newHtml);

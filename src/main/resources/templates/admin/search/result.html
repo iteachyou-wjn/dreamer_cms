@@ -64,9 +64,8 @@
 					<td th:text="${article.clicks}"></td>
 					<td th:text="${article.weight}"></td>
 					<td><span th:text="${article.status}=='1'?'已发布':'未发布'" th:class="${article.status}=='1'?'label label-success':'label label-danger'">否</span></td>
-					<td>
+					<td class="operate">
 						<a target="_blank" th:href="'/article/' + ${article.id}" class="btn btn-xs btn-warning">预览</a>
-						<span>&nbsp;|&nbsp;</span>
 						<a href="javascript:void(0)" class="btn btn-xs btn-success copyArticleIdBtn" th:aid="${article.id}" th:onclick="javascript:copyArticleId(this.getAttribute('aid'))">复制文章ID</a>
 					</td>
 				</tr>
@@ -86,11 +85,9 @@
          </ul>
      </div>
 </section>
-<!-- jQuery 2.0.2 -->
+
 <script src="/resource/js/jquery.min.js"></script>
-<!-- Bootstrap -->
 <script src="/resource/js/bootstrap.min.js"></script>
-<!-- iCheck -->
 <script src="/resource/js/plugins/iCheck/icheck.min.js"></script>
 <script src="/resource/js/coco-message/coco-message.js"></script>
 <script src="/resource/js/clipboard.min.js"></script>

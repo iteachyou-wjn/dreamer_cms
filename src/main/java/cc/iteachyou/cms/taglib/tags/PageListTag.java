@@ -124,7 +124,7 @@ public class PageListTag extends AbstractListTag implements IParse {
 				addfields = addfieldsStr.split(",");
 			}
 			if(list == null || list.size() <= 0) {
-				newHtml = newHtml.replace(tag, "<div class='dreamer-empty'>暂无数据</div>");
+				newHtml = newHtml.replace(tag, "<div class='dreamer-empty'>无数据</div>");
 			}else {
 				for (int j = 0; j < list.size(); j++) {
 					Map<String, Object> archivesVo = list.get(j);
@@ -188,7 +188,7 @@ public class PageListTag extends AbstractListTag implements IParse {
 			
 			StringBuilder sb = new StringBuilder();
 			if(list == null || list.size() <= 0) {
-				newHtml = newHtml.replace(tag, "<div class='dreamer-empty'>暂无数据</div>");
+				newHtml = newHtml.replace(tag, "<div class='dreamer-empty'>无数据</div>");
 			}else {
 				for (int j = 0; j < list.size(); j++) {
 					ArchivesVO archivesVo = list.get(j);

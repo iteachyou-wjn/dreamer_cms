@@ -23,6 +23,8 @@ public enum ExceptionEnum {
 	CATEGORY_REMOVE_EXCEPTION("40011", "栏目存在下级栏目，删除失败"),
 	VARIABLE_EXIST_EXCEPTION("40012", "变量名称已存在"),
 	XSS_SQL_EXCEPTION("40013", "您的请求中有违反安全规则的元素"),
+
+	ARTICLE_NOTFOUND_EXCEPTION("40014","文章不存在"),
 	;
 	private String code;
 	private String message;

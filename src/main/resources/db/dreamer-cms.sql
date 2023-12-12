@@ -2,7 +2,8 @@
 SQLyog 企业版 - MySQL GUI v8.14 
 MySQL - 5.7.35 : Database - dreamer-cms
 *********************************************************************
-*/
+*/
+
 
 /*!40101 SET NAMES utf8 */;
 
@@ -627,7 +628,7 @@ CREATE TABLE `system_variable` (
 
 /*Data for the table `system_variable` */
 
-insert  into `system_variable`(`id`,`item_name`,`info`,`type`,`value`,`create_by`,`create_time`,`update_by`,`update_time`) values ('20d5a49940cd4f3e80dd604e4df1071a','cfg_global_telephone','官方电话',NULL,'15133334151','9f4b807db2e94670bb02cdc212ea7389','2023-01-09 14:46:09',NULL,'2023-01-09 14:46:09'),('2d3add7ac60949cc9035ea0bfd50f113','cfg_gitee_addr','码云下载地址','','https://gitee.com/isoftforce/dreamer_cms','','2019-08-16 22:38:59','','2019-08-16 22:38:59'),('383e2a267d0045e5aad93ed20ca1b038','cfg_github_addr','Github下载地址','','https://github.com/xinhudong/Dreamer_cms','9f4b807db2e94670bb02cdc212ea7389','2019-08-16 22:39:47','','2019-08-16 22:39:47'),('a4f2a198bd704bd5b728edf8a777b67f','cfg_global_doc','帮助文档',NULL,'http://doc.iteachyou.cc','9f4b807db2e94670bb02cdc212ea7389','2023-01-09 14:49:02',NULL,'2023-01-09 14:49:02'),('bffa5612ef734ea3adb5cb336a35c453','cfg_global_qqgroup','QQ技术交流群',NULL,'597652651','9f4b807db2e94670bb02cdc212ea7389','2023-01-09 14:46:53',NULL,'2023-01-09 14:46:52'),('d1d948765b63477f87bef2c218621215','cfg_global_qq','客服QQ',NULL,'153095904','9f4b807db2e94670bb02cdc212ea7389','2023-01-09 15:43:33',NULL,'2023-01-09 15:43:32');
+insert  into `system_variable`(`id`,`item_name`,`info`,`type`,`value`,`create_by`,`create_time`,`update_by`,`update_time`) values ('20d5a49940cd4f3e80dd604e4df1071a','cfg_global_telephone','官方电话',NULL,'138****8888','9f4b807db2e94670bb02cdc212ea7389','2023-01-09 14:46:09',NULL,'2023-01-09 14:46:09'),('2d3add7ac60949cc9035ea0bfd50f113','cfg_gitee_addr','码云下载地址','','https://gitee.com/isoftforce/dreamer_cms','','2019-08-16 22:38:59','','2019-08-16 22:38:59'),('383e2a267d0045e5aad93ed20ca1b038','cfg_github_addr','Github下载地址','','https://github.com/xinhudong/Dreamer_cms','9f4b807db2e94670bb02cdc212ea7389','2019-08-16 22:39:47','','2019-08-16 22:39:47'),('a4f2a198bd704bd5b728edf8a777b67f','cfg_global_doc','帮助文档',NULL,'http://doc.iteachyou.cc','9f4b807db2e94670bb02cdc212ea7389','2023-01-09 14:49:02',NULL,'2023-01-09 14:49:02'),('bffa5612ef734ea3adb5cb336a35c453','cfg_global_qqgroup','QQ技术交流群',NULL,'597652651','9f4b807db2e94670bb02cdc212ea7389','2023-01-09 14:46:53',NULL,'2023-01-09 14:46:52'),('d1d948765b63477f87bef2c218621215','cfg_global_qq','客服QQ',NULL,'153095904','9f4b807db2e94670bb02cdc212ea7389','2023-01-09 15:43:33',NULL,'2023-01-09 15:43:32');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

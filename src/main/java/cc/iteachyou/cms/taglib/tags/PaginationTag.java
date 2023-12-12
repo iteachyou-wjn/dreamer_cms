@@ -3,6 +3,8 @@ package cc.iteachyou.cms.taglib.tags;
 import java.util.HashMap;
 import java.util.Map;
 
+import cc.iteachyou.cms.entity.System;
+import cc.iteachyou.cms.service.SystemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -31,6 +33,8 @@ public class PaginationTag implements IParse {
 	 * S：生成静态化
 	 */
 	private String t;
+	@Autowired
+	private SystemService systemService;
 	
 	@Autowired
 	private CategoryService categoryService;
@@ -72,9 +76,9 @@ public class PaginationTag implements IParse {
 		if(StringUtil.isBlank(t) || "P".equals(t)) {//解析
 			pageurl = "/list-" + typeCode + visitUrl + "/{pageNum}/{pageSize}"; 
 		}else {
-			pageurl = visitUrl + "/list-{pageNum}.html";
+			System system = systemService.getSystem();
+			pageurl = "/" + system.getStaticdir() + visitUrl + "/list-{pageNum}.html";
 		}
-		
 		
 		Attribute[] attributes = annotations.attributes();
 		Map<String,Object> entity = new HashMap<String,Object>();

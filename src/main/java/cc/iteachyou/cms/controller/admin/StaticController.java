@@ -345,7 +345,7 @@ public class StaticController extends BaseController {
 				String dateDir = sdf.format(createTime);
 				newHtml = parseEngine.generate(html);
 				newHtml = parseEngine.generateCategory(newHtml, categoryWithBLOBs.getCode());
-				newHtml = parseEngine.parseArticle(newHtml, archives.getId());
+				newHtml = parseEngine.generateArticle(newHtml, archives.getId());
 				newHtml = parseEngine.generatePrevAndNext(newHtml, archives.getId());
 				File file = new File(fileConfiguration.getResourceDir() + system.getStaticdir() + catDir + "/" + dateDir + "/" + archives.getId() + ".html");
 				FileUtils.write(file, newHtml, "UTF-8");

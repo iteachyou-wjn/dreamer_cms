@@ -45,7 +45,7 @@ public class VariableServiceImpl implements VariableService{
 
 	@Override
 	public void updateVariable(Variable variable) {
-		variableMapper.updateByPrimaryKey(variable);		
+		variableMapper.updateByPrimaryKeySelective(variable);
 	}
 
 	@Override
