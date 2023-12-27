@@ -149,13 +149,13 @@
     <tr>
 		<td money="200.00" class="13810283861" web="http://www.rainbowi.cn">北京润保芳德公益基金会</td>
 		<td>企业</td>
-		<td>捐赠</td>
+		<td>永久</td>
 		<td>2023-12-17 17:06:49</td>
 	</tr>
     <tr>
 		<td money="200.00" class="18076578916" web="http://www.inverter-world.ru">码到成功</td>
 		<td>个人</td>
-		<td>捐赠</td>
+		<td>永久</td>
 		<td>2023-12-25 09:30:03</td>
 	</tr>
 </table>
