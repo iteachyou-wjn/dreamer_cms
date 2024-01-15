@@ -74,6 +74,12 @@
 		<td>永久</td>
 		<td>2023-05-23 17:09:16</td>
 	</tr>
+    <tr style="display: none;">
+		<td money="200.00" class="" web="https://www.isoftstone.com/">软通动力信息技术（集团）股份有限公司</td>
+		<td>企业</td>
+		<td>永久</td>
+		<td>2023-06-17 17:30:39</td>
+	</tr>
     <tr>
 		<td money="200.00" web="http://www.gongcheng666.com/">石家庄公诚勤朴科技有限公司</td>
 		<td>企业</td>
@@ -169,6 +175,12 @@
 		<td>企业</td>
 		<td>永久</td>
 		<td>2024-01-11 17:30:39</td>
+	</tr>
+    <tr style="display: none;">
+		<td money="200.00" class="" web="">成都贝壳优选电子商务有限公司</td>
+		<td>企业</td>
+		<td>永久</td>
+		<td>2024-01-11 22:47:06</td>
 	</tr>
 </table>
 
