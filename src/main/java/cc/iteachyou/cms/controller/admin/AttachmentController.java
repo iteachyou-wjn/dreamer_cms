@@ -74,7 +74,8 @@ public class AttachmentController extends BaseController {
 					ExceptionEnum.XSS_SQL_EXCEPTION.getMessage(),
 					"附件路径疑似不安全，详情：" + attachment.getFilepath());
 		}
-		File file = new File(fileConfiguration.getResourceDir() + system.getUploaddir() + attachment.getFilepath());
+
+		File file = new File(fileConfiguration.getResourceDir() + system.getUploaddir() + "/" + attachment.getFilepath());
 		if(!file.exists()) {
 			throw new FileNotFoundException(
 					ExceptionEnum.XSS_SQL_EXCEPTION.getCode(),
@@ -97,7 +98,7 @@ public class AttachmentController extends BaseController {
 	public String delete(String id) throws AdminGeneralException {
 		System system = systemService.getSystem();
 		Attachment attachment = attachmentService.queryAttachmentById(id);
-		File file = new File(fileConfiguration.getResourceDir() + system.getUploaddir() + attachment.getFilepath());
+		File file = new File(fileConfiguration.getResourceDir() + system.getUploaddir() + "/" + attachment.getFilepath());
 		if(file.exists()) {
 			file.delete();
 		}
