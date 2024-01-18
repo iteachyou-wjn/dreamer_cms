@@ -171,7 +171,7 @@
 		<td>2023-12-29 11:43:16</td>
 	</tr>
     <tr>
-		<td money="200.00" class="" web="https://www.hanisun.com">天津瀚海星云数字科技股份有限公司</td>
+		<td money="200.00" class="022-23757972" web="https://www.hanisun.com">天津瀚海星云数字科技股份有限公司</td>
 		<td>企业</td>
 		<td>永久</td>
 		<td>2024-01-11 17:30:39</td>
@@ -181,6 +181,12 @@
 		<td>企业</td>
 		<td>永久</td>
 		<td>2024-01-11 22:47:06</td>
+	</tr>
+    <tr>
+		<td money="200.00" class="19153228150" web="http://www.bokcad.com">山东博克时代科技开发有限公司</td>
+		<td>企业</td>
+		<td>永久</td>
+		<td>2024-01-17 13:38:23</td>
 	</tr>
 </table>
 
