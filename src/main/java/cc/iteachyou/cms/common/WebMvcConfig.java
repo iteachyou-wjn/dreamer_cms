@@ -48,8 +48,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(userAuthorizationInterceptor)
-						.addPathPatterns("/admin/**")
-						.excludePathPatterns("/admin/u/**");
+				.addPathPatterns("/admin/**")
+				.addPathPatterns("/upload/**")
+				.excludePathPatterns("/admin/u/**");
 	}
 
 	@Override

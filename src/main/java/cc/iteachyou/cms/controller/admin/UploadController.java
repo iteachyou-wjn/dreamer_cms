@@ -1,21 +1,5 @@
 package cc.iteachyou.cms.controller.admin;
 
-import java.io.File;
-import java.io.PrintWriter;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-
-import com.alibaba.fastjson.JSONObject;
-
 import cc.iteachyou.cms.common.BaseController;
 import cc.iteachyou.cms.common.Constant;
 import cc.iteachyou.cms.common.ResponseResult;
@@ -26,6 +10,20 @@ import cc.iteachyou.cms.ueditor.ActionEnter;
 import cc.iteachyou.cms.utils.DateUtils;
 import cc.iteachyou.cms.utils.FileConfiguration;
 import cn.hutool.core.util.IdUtil;
+import com.alibaba.fastjson.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.PrintWriter;
 
 /**
  * 上传控制器
@@ -45,7 +43,7 @@ public class UploadController extends BaseController{
 	 *   文件上传
 	 * @param file
 	 */
-	@RequestMapping("uploadFile")
+	@PostMapping("uploadFile")
 	public void upload(@RequestParam("file") MultipartFile file) {
 		ResponseResult respResult = null;
 		JSONObject result = new JSONObject();
@@ -83,7 +81,7 @@ public class UploadController extends BaseController{
 		this.outJson(respResult);
 	}
 	
-	@RequestMapping("uploadMarkDown")
+	@PostMapping("uploadMarkDown")
 	@ResponseBody
 	public void editormdPic(@RequestParam(value = "editormd-image-file", required = true) MultipartFile file, HttpServletRequest request,HttpServletResponse response) throws Exception{
 		JSONObject result = new JSONObject();
