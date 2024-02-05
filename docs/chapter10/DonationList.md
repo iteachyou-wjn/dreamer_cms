@@ -177,7 +177,7 @@
 		<td>2024-01-11 17:30:39</td>
 	</tr>
     <tr style="display: none;">
-		<td money="200.00" class="" web="">成都贝壳优选电子商务有限公司</td>
+		<td money="200.00" class="15308181110" web="http://www.bekky.cn">成都贝壳优选电子商务有限公司</td>
 		<td>企业</td>
 		<td>永久</td>
 		<td>2024-01-11 22:47:06</td>
@@ -187,6 +187,12 @@
 		<td>企业</td>
 		<td>永久</td>
 		<td>2024-01-17 13:38:23</td>
+	</tr>
+    <tr>
+		<td money="200.00" class="13878160055" web="http://www.runlian-tech.com">广西润联检测技术有限公司</td>
+		<td>企业</td>
+		<td>永久</td>
+		<td>2024-02-01 18:24:41</td>
 	</tr>
 </table>
 
