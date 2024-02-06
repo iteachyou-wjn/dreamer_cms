@@ -202,22 +202,20 @@
 		window.location.href="/admin/attachment/delete?id="+currentID;
 		$("#remove-dialog").modal('hide');
 	}
-	
-	function copyDownloadUrl(id){
-		var content = system.website + "/admin/attachment/download?id=" + id;
-		var clipboard = new Clipboard('.copyDownloadUrlBtn',{
-			text: function() {
-				return content;
-			}
-		});
-		clipboard.on('success', function(e) {
-			cocoMessage.success("复制成功");
-		});
-	
-		clipboard.on('error', function(e) {
-			cocoMessage.error("复制失败");
-		});
-	}
+
+    var clipboard = new Clipboard('.copyDownloadUrlBtn')
+    clipboard.on('success', function(e) {
+        cocoMessage.success("复制成功");
+    });
+    clipboard.on('error', function(e) {
+        cocoMessage.error("复制失败");
+    });
+    function copyDownloadUrl(id){
+        var content = system.website + "/admin/attachment/download?id=" + id;
+        clipboard.text = function() {
+            return content;
+        };
+    }
 </script>
 </body>
 </html>
