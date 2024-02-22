@@ -147,9 +147,9 @@
 		<td>2023-11-30 12:43:22</td>
 	</tr>
     <tr>
-		<td money="200.00" class="15999697494" web="">TY</td>
+		<td money="200.00" class="15999697494" web="http://www.ebc-control.com">陶勇</td>
 		<td>个人</td>
-		<td>捐赠</td>
+		<td>永久</td>
 		<td>2023-12-11 17:28:06</td>
 	</tr>
     <tr>
