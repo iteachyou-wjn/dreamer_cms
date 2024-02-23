@@ -77,11 +77,7 @@ public class LocationTag implements IParse {
 			Map<String,Object> entity = new HashMap<String,Object>();
 			
 			StringBuilder location = new StringBuilder();
-			location.append("<ul class='dreamer-location'>");
-			location.append("<li>");
-			location.append("<a href='/' title='首页'>").append("首页").append("</a>");
-			location.append("</li>");
-			
+
 			for (Attribute attribute : attributes) {
 				String condition = RegexUtil.parseFirst(tag, attribute.regex(), 0);
 				if(StringUtil.isBlank(condition)) {
@@ -92,7 +88,15 @@ public class LocationTag implements IParse {
 				key = key.trim();
 				value = value.replace("\"", "").replace("\'", "");
 				entity.put(key, value);
-				
+
+				location.append("<ul class='dreamer-location'>");
+				location.append("<li>");
+				if(entity.containsKey("lang") && "en".equalsIgnoreCase(entity.get("lang").toString())) {
+					location.append("<a href='/' title='Home'>").append("Home").append("</a>");
+				}else{
+					location.append("<a href='/' title='首页'>").append("首页").append("</a>");
+				}
+				location.append("</li>");
 				for(int j = 0;j < categorys.size();j++) {
 					Category cate = categorys.get(j);
 					String typeUrl = URLUtils.parseURL(system, cate, this.t);
@@ -104,10 +108,9 @@ public class LocationTag implements IParse {
 					}
 					location.append("</li>");
 				}
-				
+				location.append("</ul>");
 			}
-			
-			location.append("</ul>");
+
 			newHtml = newHtml.replace(tag, location.toString());
 		}
 		
