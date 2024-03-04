@@ -102,6 +102,9 @@ public class ListTag extends AbstractListTag implements IParse {
 			if(entity.containsKey("pagenum") && entity.containsKey("pagesize")) {
 				params.setPageNum(Integer.parseInt(entity.get("pagenum").toString()));
 				params.setPageSize(Integer.parseInt(entity.get("pagesize").toString()));
+				if(params.getPageNum() <= 0){
+					params.setPageNum(1);
+				}
 				PageHelper.startPage(params.getPageNum(), params.getPageSize());
 				list = archivesMapper.queryListByPage(entity);
 			}else {
