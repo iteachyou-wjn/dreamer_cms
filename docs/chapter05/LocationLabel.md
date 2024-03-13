@@ -28,7 +28,7 @@ Previous_Releases_4.0.0 +
 
 #### 文件
 ```java?linenums
-cc.iteachyou.cms.taglib.tags.LabelTag
+cc.iteachyou.cms.taglib.tags.LocationTag
 ```
 
 #### 参数
