@@ -96,7 +96,7 @@ https://space.bilibili.com/482273402
 5. 导入数据库src/main/resources/db/db.sql，要求Mysql5.7版本，并修改application-(dev|prd).yml中数据配置
 6. 将项目src/main/resources/db/dreamer-cms.zip文件解压，保证解压后的目录路径的名称和资源目录一致
 7. 运行项目DreamerCMSApplication.java
-8. 网站首页：https://localhost:8888 项目管理后台：https://localhost:8888/admin
+8. 网站首页：http://localhost:8888 项目管理后台：http://localhost:8888/admin
 9. 管理后台用户名：wangjn；密码：123456
 10. 模版标签开发教程请参考：http://doc.iteachyou.cc 
 
