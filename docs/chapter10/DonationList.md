@@ -324,11 +324,18 @@
 		<td>2024-11-27 19:09:34</td>
 	</tr>
     <tr>
-		<td money="288.00" class="18621266029" web="www.shchuangling.com" contact="Linda">上海创凌机械制造有限公司</td>
+		<td money="200.00" class="18621266029" web="www.shchuangling.com" contact="Linda">上海创凌机械制造有限公司</td>
 		<td>企业</td>
         <td>单域名版</td>
 		<td>永久</td>
 		<td>2025-03-10 12:43:56</td>
+	</tr>
+    <tr>
+		<td money="200.00" class="15281044820" web="" contact="张旺">成都零和文化传媒有限公司</td>
+		<td>企业</td>
+        <td>单域名版</td>
+		<td>永久</td>
+		<td>2025-03-17 11:31:31</td>
 	</tr>
 </table>
 

@@ -11,9 +11,7 @@
 </div>
 
 # 梦想家内容管理系统（Dreamer CMS）
-> 目前服务器快要到期，个人经济压力过大，该项目寻找接手公司，有意向者请与作者联系。
-
-> 本人为个人开发者，精力和经济都有限，如有公司或个人想要商业使用，捐赠200即可，捐赠后，会将公司或个人名称列在下方捐赠列表，在列表中的企业或个人，即表示授权。
+> 自2025-03-15开始，本项目不再提供演示地址和在线文档，用户可在项目中docs文件夹中自行查看文档，同时www.iteachyou.cc也不在维护。
 
 > 如未授权，根据软件使用协议，请务必保留官方版权。前后台页底必须保留 "Powered by I Teach You , 我教你！" 文字和链接！如未按要求保留官方版权且未授权用户，将依法追究法律责任。
 
@@ -28,7 +26,7 @@
 - 管理员：wangjn
 - 管理员密码：123456
 3. I Teach You,我教你! 官网：https://www.iteachyou.cc
-4. 模版标签开发教程请参考：http://doc.iteachyou.cc 或 https://iteachyou-wjn.github.io/dreamer_cms/
+4. 模版标签开发教程请参考：https://iteachyou-wjn.github.io/dreamer_cms/
 
 QQ交流群：
 - ①597652651（未满）
@@ -72,26 +70,18 @@ DreamerCMS从2.0.0版本开始采用了解析式引擎与编译式引擎并存�
 建议开发者使用以下环境，这样避免版本带来的问题
 * JDK：Jdk8
 * IDE：Spring Tool Suite 4（STS）或 IntelliJ IDEA
-* DB：Mysql 5.7，Windows配置安装Mysql5.7，请参考：https://www.iteachyou.cc/article/a1db138b4a89402ab50f3499edeb30c2
-* Redis：3.2+，Windows配置安装Redis教程，请参考：https://www.iteachyou.cc/article/4b0a638f65fa4fb1b9644cf461dba602
-* LomBok 项目需要使用Lombok支持，Lombok安装教程，请参考：https://www.iteachyou.cc/article/55ec2939c29147eca5bebabf19621655
+* DB：Mysql 5.7
+* Redis：3.2+
+* LomBok
 
 # 快速入门
 CMS包括两个部分（代码部分、资源部分）代码不多说。资源就是图片、模版等，该目录在application.yml中web.resource-path配置项目中配置。视频教程：
 ```
-Dreamer CMS后台使用教程：
-https://www.iteachyou.cc/list-6s3bg7tf/dreamercms/1/10
-Dreamer CMS模版开发教程：
-https://www.iteachyou.cc/list-l54xs53b/tempdev/1/10
-
-百度网盘下载链接：
-https://pan.baidu.com/s/16nLVa44OkloL8sTpW6e2QQ 提取码：2c8i 
-
 在线观看视频地址：
 https://space.bilibili.com/482273402
 ```
 1. 克隆项目到本地工作空间
-2. 导入Eclipse或Sts等开发工具（推荐使用Spring Tools Suite 4），项目需要使用Lombok支持，Lombok安装教程，请参考https://www.iteachyou.cc/article/55ec2939c29147eca5bebabf19621655
+2. 导入Eclipse或Sts等开发工具（推荐使用Spring Tools Suite 4），项目需要使用Lombok支持
 3. 项目需要Redis，请自行修改application.yml中Redis配置
 4. 修改项目资源目录，application.yml文件web.resource-path配置项（如D:/dreamer-cms/）
 5. 导入数据库src/main/resources/db/db.sql，要求Mysql5.7版本，并修改application-(dev|prd).yml中数据配置
@@ -99,11 +89,11 @@ https://space.bilibili.com/482273402
 7. 运行项目DreamerCMSApplication.java
 8. 网站首页：http://localhost:8888 项目管理后台：http://localhost:8888/admin
 9. 管理后台用户名：wangjn；密码：123456
-10. 模版标签开发教程请参考：http://doc.iteachyou.cc 
+10. 模版标签开发教程请参考：https://iteachyou-wjn.github.io/dreamer_cms/
 
 # 捐赠详情 
 
-感谢各位大佬的支持，同时也感谢各位开发者为社区作出的贡献。同时也希望更多的用户来捐赠本项目。您的支持，是我一直坚持下去的动力，另外为大家提供使用文档（ https://doc.iteachyou.cc ）、教程（ https://www.iteachyou.cc ）的网站及服务器也需要运营维护，个人精力、经费都有限，希望大家多多理解！！！捐赠详情请移步：http://doc.iteachyou.cc/chapter10/DonationList.html
+感谢各位大佬的支持，同时也感谢各位开发者为社区作出的贡献。同时也希望更多的用户来捐赠本项目。您的支持，是我一直坚持下去的动力，另外由于开销巨大，于2025-03-15起网站及服务器不在提供演示地址、在线文档等，希望大家多多理解！！！捐赠详情请移步：https://iteachyou-wjn.github.io/dreamer_cms/chapter10/DonationList.html
 
 <table>
 	<tr>
