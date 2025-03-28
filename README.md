@@ -1,5 +1,5 @@
 <p align="center">
-	<a href="https://www.iteachyou.cc/" target="_blank"><img src="https://oss.iteachyou.cc/logo.png" width="400" ></a>
+	<a href="https://www.iteachyou.cc/" target="_blank"><img src="http://121.8.219.2:18887/logo.png" width="400" ></a>
 </p>
 
 <div style="display: flex; justify-content: center;">
@@ -19,14 +19,14 @@
 
 当前版本：4.1.3
 
-1. 梦想家CMS官网：http://cms.iteachyou.cc
-2. 梦想家CMS管理后台：http://cms.iteachyou.cc/admin
+1. 梦想家CMS官网：http://121.8.219.2:18888/
+2. 梦想家CMS管理后台：http://121.8.219.2:18888/admin
 - 演示账号：demo1
 - 演示密码：123456
 - 管理员：wangjn
 - 管理员密码：123456
 3. I Teach You,我教你! 官网：https://www.iteachyou.cc
-4. 模版标签开发教程请参考：https://iteachyou-wjn.github.io/dreamer_cms/
+4. 模版标签开发教程请参考：http://121.8.219.2:18889/
 
 QQ交流群：
 - ①597652651（未满）
@@ -64,7 +64,7 @@ DreamerCMS从2.0.0版本开始采用了解析式引擎与编译式引擎并存�
 * 富文本：Ueditor、editor.md
 
 # 系统结构
-![系统结构](https://oss.iteachyou.cc/20200107103015.jpg "系统结构")
+![系统结构](http://121.8.219.2:18887/20200107103015.jpg "系统结构")
 
 # 开发环境
 建议开发者使用以下环境，这样避免版本带来的问题
@@ -89,32 +89,32 @@ https://space.bilibili.com/482273402
 7. 运行项目DreamerCMSApplication.java
 8. 网站首页：http://localhost:8888 项目管理后台：http://localhost:8888/admin
 9. 管理后台用户名：wangjn；密码：123456
-10. 模版标签开发教程请参考：https://iteachyou-wjn.github.io/dreamer_cms/
+10. 模版标签开发教程请参考：http://121.8.219.2:18889/
 
 # 捐赠详情 
 
-感谢各位大佬的支持，同时也感谢各位开发者为社区作出的贡献。同时也希望更多的用户来捐赠本项目。您的支持，是我一直坚持下去的动力，另外由于开销巨大，于2025-03-15起网站及服务器不在提供演示地址、在线文档等，希望大家多多理解！！！捐赠详情请移步：https://iteachyou-wjn.github.io/dreamer_cms/chapter10/DonationList.html
+感谢各位大佬的支持，同时也感谢各位开发者为社区作出的贡献。同时也希望更多的用户来捐赠本项目。您的支持，是我一直坚持下去的动力，另外由于开销巨大，于2025-03-15起网站及服务器不在提供演示地址、在线文档等，希望大家多多理解！！！捐赠详情请移步：http://121.8.219.2:18889/chapter10/DonationList.html
 
 <table>
 	<tr>
-		<td width="33.33%"><img src="https://oss.iteachyou.cc/20201201174329.png" /></td>
-		<td width="33.33%"><img src="https://oss.iteachyou.cc/20201201174339.jpg" /></td>
-		<td width="33.33%"><img src="https://oss.iteachyou.cc/20230327163517.jpg" /></td>
+		<td width="33.33%"><img src="http://121.8.219.2:18887/20201201174329.png" /></td>
+		<td width="33.33%"><img src="http://121.8.219.2:18887/20201201174339.jpg" /></td>
+		<td width="33.33%"><img src="http://121.8.219.2:18887/20230327163517.jpg" /></td>
 	</tr>
 </table>
 
 
 # 系统美图
 
-<img src="https://oss.iteachyou.cc/20190821102434.png"/>
-<img src="https://oss.iteachyou.cc/20190821102526.png"/>
-<img src="https://oss.iteachyou.cc/20190821102608.png"/>
-<img src="https://oss.iteachyou.cc/20190821102712.png"/>
-<img src="https://oss.iteachyou.cc/20190821102742.png"/>
-<img src="https://oss.iteachyou.cc/20190821102847.png"/>
-<img src="https://oss.iteachyou.cc/20190821102932.png"/>
-<img src="https://oss.iteachyou.cc/20190821103012.png"/>
-<img src="https://oss.iteachyou.cc/20190820092155.png"/>
-<img src="https://oss.iteachyou.cc/20190820092156.png"/>
-<img src="https://oss.iteachyou.cc/20190820092157.png"/>
-<img src="https://oss.iteachyou.cc/20190820092158.png"/>
+<img src="http://121.8.219.2:18887/20190821102434.png"/>
+<img src="http://121.8.219.2:18887/20190821102526.png"/>
+<img src="http://121.8.219.2:18887/20190821102608.png"/>
+<img src="http://121.8.219.2:18887/20190821102712.png"/>
+<img src="http://121.8.219.2:18887/20190821102742.png"/>
+<img src="http://121.8.219.2:18887/20190821102847.png"/>
+<img src="http://121.8.219.2:18887/20190821102932.png"/>
+<img src="http://121.8.219.2:18887/20190821103012.png"/>
+<img src="http://121.8.219.2:18887/20190820092155.png"/>
+<img src="http://121.8.219.2:18887/20190820092156.png"/>
+<img src="http://121.8.219.2:18887/20190820092157.png"/>
+<img src="http://121.8.219.2:18887/20190820092158.png"/>

@@ -1,5 +1,5 @@
 <div style="display: flex;">
-	<img src="https://oss.iteachyou.cc/logo.png" height="30" />
+	<img src="http://121.8.219.2:18887/logo.png" height="30" />
 	<div style="margin-left: 5px; font-size: 30px; line-height: 30px; font-weight: bold;">梦想家内容管理系统</div>
 </div>
 
@@ -19,7 +19,7 @@
 ```javascript?linenums
 在网站后台栏目管理中，要针对留言的栏目，必须要开启允许投稿。
 ```
-![list标签](https://oss.iteachyou.cc/20230227082602.png "留言投稿")
+![list标签](http://121.8.219.2:18887/20230227082602.png "留言投稿")
 
 2. 验证码地址
 ```javascript?linenums
@@ -75,4 +75,4 @@ cc.iteachyou.cms.controller.FrontController
 ```
 
 #### 范例
-![list标签](https://oss.iteachyou.cc/20230227083501.png "留言投稿")
+![list标签](http://121.8.219.2:18887/20230227083501.png "留言投稿")

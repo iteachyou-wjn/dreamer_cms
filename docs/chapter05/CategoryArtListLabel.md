@@ -1,5 +1,5 @@
 <div style="display: flex;">
-	<img src="https://oss.iteachyou.cc/logo.png" height="30" />
+	<img src="http://121.8.219.2:18887/logo.png" height="30" />
 	<div style="margin-left: 5px; font-size: 30px; line-height: 30px; font-weight: bold;">梦想家内容管理系统</div>
 </div>
 
@@ -73,4 +73,4 @@ showall|是否获取全部栏目（包括隐藏栏目）showall="1"
 ```
 
 #### 效果
-![categoryartlist标签](https://oss.iteachyou.cc/20190820095818.png "categoryartlist标签")
+![categoryartlist标签](http://121.8.219.2:18887/20190820095818.png "categoryartlist标签")

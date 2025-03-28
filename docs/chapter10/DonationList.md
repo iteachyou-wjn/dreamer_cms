@@ -1,5 +1,5 @@
 <div style="display: flex;">
-	<img src="https://oss.iteachyou.cc/logo.png" height="30" />
+	<img src="http://121.8.219.2:18887/logo.png" height="30" />
 	<div style="margin-left: 5px; font-size: 30px; line-height: 30px; font-weight: bold;">梦想家内容管理系统</div>
 </div>
 
@@ -343,7 +343,7 @@
 
 另外为大家提供使用文档（ http://doc.iteachyou.cc ）、教程（ https://www.iteachyou.cc ）的网站及服务器也需要运营维护，个人精力、经费都有限，希望大家多多理解！！！<center>
 <div style="display: flex; justify-content: space-between;">
-    <img src="https://oss.iteachyou.cc/20201201174329.png" width="200" />
-    <img src="https://oss.iteachyou.cc/20201201174339.jpg" width="200" />
-    <img src="https://oss.iteachyou.cc/20230327163517.jpg" width="200" />
+    <img src="http://121.8.219.2:18887/20201201174329.png" width="200" />
+    <img src="http://121.8.219.2:18887/20201201174339.jpg" width="200" />
+    <img src="http://121.8.219.2:18887/20230327163517.jpg" width="200" />
 </div>

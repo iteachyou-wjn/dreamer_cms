@@ -1,5 +1,5 @@
 <div style="display: flex;">
-	<img src="https://oss.iteachyou.cc/logo.png" height="30" />
+	<img src="http://121.8.219.2:18887/logo.png" height="30" />
 	<div style="margin-left: 5px; font-size: 30px; line-height: 30px; font-weight: bold;">梦想家内容管理系统</div>
 </div>
 
@@ -100,4 +100,4 @@ haschildren|是否有下级栏目（该属性在dreamer-cms:type标签下不可�
 ```
 
 #### 效果
-![type标签](https://oss.iteachyou.cc/1-1ZQ91P6090-L.png "type标签")
+![type标签](http://121.8.219.2:18887/1-1ZQ91P6090-L.png "type标签")

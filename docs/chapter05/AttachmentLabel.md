@@ -1,5 +1,5 @@
 <div style="display: flex;">
-	<img src="https://oss.iteachyou.cc/logo.png" height="30" />
+	<img src="http://121.8.219.2:18887/logo.png" height="30" />
 	<div style="margin-left: 5px; font-size: 30px; line-height: 30px; font-weight: bold;">梦想家内容管理系统</div>
 </div>
 
@@ -74,4 +74,4 @@ createtime|创建时间
 ```
 
 #### 效果
-![attachment标签](https://oss.iteachyou.cc/20191225142748.png "attachment标签")
+![attachment标签](http://121.8.219.2:18887/20191225142748.png "attachment标签")
