@@ -36,9 +36,9 @@ public class ZipUtils {
 			ZipEntry entry = (ZipEntry) entries.nextElement();
 			String entryName = entry.getName();
 
-			Pattern pattern = Pattern.compile("[^a-zA-Z0-9_]");
+			Pattern pattern = Pattern.compile("^[a-zA-Z0-9_-]{1,}[/]");
 			Matcher matcher = pattern.matcher(entryName);
-		    if(entryName.contains("../") || entryName.contains("..\\") || matcher.find()) {
+		    if(entryName.contains("../") || entryName.contains("..\\") || !matcher.find()) {
 				log.error("压缩包中文件名疑似不安全，详情：{}", entryName);
 				throw new AdminGeneralException(
 						ExceptionEnum.XSS_SQL_EXCEPTION.getCode(),
