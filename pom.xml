@@ -30,7 +30,7 @@
 		<pagehelper.version>1.4.3</pagehelper.version>
 		<mybatis.version>2.2.2</mybatis.version>
 		<tkmapper.version>2.0.3-beta1</tkmapper.version>
-		<commonsio.version>2.11.0</commonsio.version>
+		<commonsio.version>2.14.0</commonsio.version>
 		<commonscodec.version>1.15</commonscodec.version>
 		<commonsfileupload.version>1.4</commonsfileupload.version>
 		<easycaptcha.version>1.6.2</easycaptcha.version>
