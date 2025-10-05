@@ -26,7 +26,7 @@
 		<scheduler.version>4.2.0</scheduler.version>
 		<fastjson.version>1.2.83</fastjson.version>
 		<shiro.version>1.9.1</shiro.version>
-		<hutool.version>5.8.5</hutool.version>
+		<hutool.version>5.8.21</hutool.version>
 		<pagehelper.version>1.4.3</pagehelper.version>
 		<mybatis.version>2.2.2</mybatis.version>
 		<tkmapper.version>2.0.3-beta1</tkmapper.version>
